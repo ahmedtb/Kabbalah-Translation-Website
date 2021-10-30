@@ -2,7 +2,7 @@ import * as React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import ReactDOM from 'react-dom';
 
-function Example() {
+function Dashboard() {
   return (
     <Alert dismissible variant="danger">
       <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
@@ -12,8 +12,8 @@ function Example() {
     </Alert>
   )
 }
-export default Example;
+export default Dashboard;
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById('dashboard')) {
+    ReactDOM.render(<Dashboard />, document.getElementById('dashboard'));
 }

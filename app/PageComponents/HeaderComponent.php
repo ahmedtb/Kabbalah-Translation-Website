@@ -5,7 +5,7 @@ namespace App\PageComponents;
 use Faker\Generator;
 use Illuminate\Container\Container;
 
-class ImageComponent extends PageComponent
+class HeaderComponent extends PageComponent
 {
 
     private string $orignal;
@@ -13,8 +13,8 @@ class ImageComponent extends PageComponent
 
     public static function fromArray(array $array)
     {
-        if($array['class'] != ImageComponent::class)
-            throw new PageComponentsException('the array class is not ImageComponent class, it is: ' . $array['class']);
+        if($array['class'] != HeaderComponent::class)
+            throw new PageComponentsException('the array class is not HeaderComponent class, it is: ' . $array['class']);
         return new self($array['orignal'], $array['translated']);
     }
     public function __construct(string $orignal, ?string $translated = null)
@@ -24,8 +24,6 @@ class ImageComponent extends PageComponent
     }
     public function setOrignal(string $value)
     {
-        if (base64_encode(base64_decode($value)) != $value)
-            throw new PageComponentsException('not valid value base64 string..');
         $this->orignal = $value;
     }
     public function getOrignal()
@@ -34,8 +32,6 @@ class ImageComponent extends PageComponent
     }
     public function setTranslated(?string $value = null)
     {
-        if (base64_encode(base64_decode($value)) != $value && $value != null)
-            throw new PageComponentsException('not valid value base64 string..');
         $this->translated = $value;
     }
     public function getTranslated()
@@ -45,14 +41,14 @@ class ImageComponent extends PageComponent
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setOrignal(getBase64DefaultImage());
-        $this->setTranslated(getBase64DefaultImage());
+        $this->setOrignal($faker->sentence());
+        $this->setTranslated($faker->sentence());
 
     }
     public function isEqualTo(PageComponent $component)
     {
         if (
-            $component instanceof ImageComponent
+            $component instanceof HeaderComponent
             && $this->orignal == $component->getOrignal()
             && $this->translated == $component->getTranslated()
         ) {
@@ -65,7 +61,7 @@ class ImageComponent extends PageComponent
     public function jsonSerialize()
     {
         return [
-            'class' => ImageComponent::class,
+            'class' => HeaderComponent::class,
             'original' => $this->orignal,
             'translated' => $this->translated,
 

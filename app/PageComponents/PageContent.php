@@ -10,7 +10,7 @@ class PageContent  implements JsonSerializable, Countable
     private ?array $pageComponents = [];
     public static function fromArray(array $arrayForm)
     {
-        $instance = new self($arrayForm['pageComponent']);
+        $instance = new self($arrayForm['pageComponents']);
         return $instance;
     }
 
@@ -22,11 +22,9 @@ class PageContent  implements JsonSerializable, Countable
 
     public function setPageComponents($pageComponents)
     {
-        foreach ($pageComponents as $PageComponent) {
-            $this->setPageComponent($PageComponent);
+        foreach ($pageComponents as $pageComponent) {
+            $this->setPageComponent($pageComponent);
         }
-        // $this->pageComponent = $pageComponents;
-        return $this;
     }
 
     public function removePageComponent($index)
@@ -36,24 +34,24 @@ class PageContent  implements JsonSerializable, Countable
 
     public function getPageComponents()
     {
-        return $this->pageComponent;
+        return $this->pageComponents;
     }
 
-    public function setPageComponent($PageComponent, $index = null)
+    public function setPageComponent(PageComponent $pageComponent, $index = null)
     {
-        if ($index == null || count($this->pageComponent)  == 0) {
-            if (gettype($PageComponent) == 'array') {
-                $instance = $PageComponent['class']::fromArray($PageComponent);
-                array_push($this->pageComponent, $instance);
-            } elseif ($PageComponent instanceof PageComponent)
-                array_push($this->pageComponent, $PageComponent);
+        if ($index == null || count($this->pageComponents)  == 0) {
+            if (gettype($pageComponent) == 'array') {
+                $instance = $pageComponent['class']::fromArray($pageComponent);
+                array_push($this->pageComponents, $instance);
+            } elseif ($pageComponent instanceof PageComponent)
+                array_push($this->pageComponents, $pageComponent);
             return $this;
         }
 
-        if ($index >= count($this->pageComponent)) {
-            throw new PageComponentsException('index is larger than the max index...pageComponent size is = ' . count($this->pageComponent));
+        if ($index >= count($this->pageComponents)) {
+            throw new PageComponentsException('index is larger than the max index...pageComponents size is = ' . count($this->pageComponents));
         } else {
-            $this->pageComponent[$index] = $PageComponent;
+            $this->pageComponents[$index] = $pageComponent;
             return $this;
         }
     }
@@ -67,29 +65,30 @@ class PageContent  implements JsonSerializable, Countable
     {
         return array(
             'class' => static::class,
-            'pageComponent' => array_map(function ($PageComponent) {
-                return $PageComponent->jsonSerialize();
+            'pageComponent' => array_map(function ($pageComponent) {
+                return $pageComponent->jsonSerialize();
             }, $this->getPageComponents()),
         );
     }
 
     public function count()
     {
-        return count($this->pageComponent);
+        return count($this->pageComponents);
     }
 
     public function generateMockedValues()
     {
-        foreach ($this->pageComponent as $PageComponent) {
-            $PageComponent->generateMockedValue();
+        foreach ($this->pageComponents as $pageComponent) {
+            $pageComponent->generateMockedValues();
         }
     }
 
     public function isEqual(PageContent $PageContent)
     {
-        // dd($this);
-        foreach ($this->getPageComponents() as $index => $PageComponent) {
-            $PageComponent->isEqualTo($PageContent->getPageComponents()[$index]);
+        foreach ($this->getPageComponents() as $index => $pageComponent) {
+            if (! $pageComponent->isEqualTo($PageContent->getPageComponent($index)) )  
+                return false;
         }
+        return true;
     }
 }
