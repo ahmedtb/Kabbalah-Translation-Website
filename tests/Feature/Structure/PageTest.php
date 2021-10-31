@@ -27,8 +27,8 @@ class PageTest extends TestCase
             new TitleComponent('eeeeee'),
             new ImageComponent(getBase64DefaultImage()),
         ]);
-        $this->assertArrayHasKey('pageComponent', $pageContent->jsonSerialize());
-        foreach ($pageContent->jsonSerialize()['pageComponent'] as $component) {
+        $this->assertArrayHasKey('pageComponents', $pageContent->jsonSerialize());
+        foreach ($pageContent->jsonSerialize()['pageComponents'] as $component) {
             $this->assertArrayHasKey('original', $component);
             $this->assertArrayHasKey('translated', $component);
         }

@@ -65,7 +65,7 @@ class PageContent  implements JsonSerializable, Countable
     {
         return array(
             'class' => static::class,
-            'pageComponent' => array_map(function ($pageComponent) {
+            'pageComponents' => array_map(function ($pageComponent) {
                 return $pageComponent->jsonSerialize();
             }, $this->getPageComponents()),
         );

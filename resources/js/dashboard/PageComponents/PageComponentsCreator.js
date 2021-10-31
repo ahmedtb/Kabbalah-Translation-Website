@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown } from 'react-bootstrap'
+import { Dropdown, Button } from 'react-bootstrap'
 import { ParagraphComponentClass, ParagraphComponentCreator } from './ParagraphComponent'
 // import { TextAreaComponentClass, TextAreaComponentCreator } from './TextAreaComponent'
 // import { ImageComponentClass, ImageComponentCreator } from './ImageComponent'
@@ -7,7 +7,12 @@ import { ParagraphComponentClass, ParagraphComponentCreator } from './ParagraphC
 // import { OptionsComponentClass, OptionsComponentCreator } from './OptionsComponent'
 
 export const PageContentClass = 'App\\PageComponents\\PageContent'
-
+export function pageContentObject(pageComponents){
+    return {
+        class: PageContentClass,
+        pageComponents: pageComponents
+    }
+}
 const componentsTypes = {
     [ParagraphComponentClass]: 'حقل نص عادي',
     // [TextAreaComponentClass]: 'مساحة نصية',
@@ -16,9 +21,6 @@ const componentsTypes = {
     // [ImageComponentClass]: 'حقل صورة'
 }
 
-
-
-
 export default function PageComponentsCreator(props) {
 
     const addComponent = props.addComponent
@@ -26,27 +28,14 @@ export default function PageComponentsCreator(props) {
     const [component, setcomponent] = React.useState({});
 
     React.useEffect(() => {
-        // console.log('PageComponentsCreator', selectedType)
-    }, [selectedType])
+        // console.log('PageComponentsCreator', component)
+    }, [component])
 
     return (
         <div>
 
-            <div style={{ flexDirection: 'row' }}>
-                <div style={{ flex: 1, borderWidth: 0.5,  borderRadius: 8 }}>
-                    {/* <Picker
-                        style={{}}
-                        selectedValue={selectedType}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedType(itemValue)
-                        }>
-                        <Picker.Item label={'اختر نوع الحقل'} value={'dummey'} />
-                        {
-                            Object.keys(componentsTypes).map(function (key, index) {
-                                return <Picker.Item key={index} label={componentsTypes[key]} value={key} />
-                            })
-                        }
-                    </Picker> */}
+            <div>
+                <div style={{ flex: 1, borderWidth: 0.5, borderRadius: 8 }}>
                     <Dropdown onSelect={(e) => setSelectedType(e)}>
                         <Dropdown.Toggle variant="success" id="dropdown-basic">
                             اختر نوع العنصر
@@ -93,16 +82,11 @@ export default function PageComponentsCreator(props) {
                 })()
             }
 
-            <button
-                onClick={() => {
-                    addComponent(component)
-                    setcomponent({})
-                    setSelectedType(null)
-                }}
-                style={{ alignSelf: 'flex-end', backgroundColor: 'red', width: '20%', padding: 10,  justifyContent: 'center', borderRadius: 19 }}
-            >
-                <strong style={{ textAlign: 'center', color: 'white', fontSize: 40 }}>اضف</strong>
-            </button>
+            <Button onClick={() => {
+                addComponent(component)
+                setcomponent({})
+                setSelectedType(null)
+            }} variant="primary">اضف</Button>
         </div>
     )
 

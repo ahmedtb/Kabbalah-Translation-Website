@@ -30,11 +30,13 @@ export function ParagraphComponentInput(props) {
 export function ParagraphComponentRender(props) {
     const component = props.component
     return <div >
-        <strong >{component.label}</strong>
+        <strong >{component.original}</strong>
+        <strong >{component.translated}</strong>
+{/* 
         <input
             onChangeText={(text) => { }}
             value={component.value}
-        />
+        /> */}
     </div>
 }
 

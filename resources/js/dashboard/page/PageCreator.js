@@ -1,11 +1,43 @@
 import React from "react"
-import PageComponentsCreator from "../PageComponents/PageComponentsCreator"
+import PageComponentsCreator, { pageContentObject } from "../PageComponents/PageComponentsCreator"
+import PageContentRender from "../PageComponents/PageContentRender";
+import { Container, Row, Col } from "react-bootstrap";
+
+const creatorReducer = (pageContent, action) => {
+
+    switch (action.actionType) {
+        case 'remove component':
+            let filtered = pageContent.pageComponents.filter((value, index) => {
+                return index != action.index;
+            });
+            // console.log('arrayofcomponentscreator reducer', filtered)
+
+            return pageContentObject(filtered)
+        case 'add component':
+            const components = [...pageContent.pageComponents, action.component]
+            return pageContentObject(components)
+
+    }
+    return pageContent;
+}
+
 
 export default function PageCreator(props) {
 
-    function addComponent(config) {
+    const [pageContent, dispatch] = React.useReducer(creatorReducer, pageContentObject([]));
 
+    function addComponent(component) {
+        dispatch({ actionType: 'add component', component: component })
     }
+    // React.useEffect(() => {
+    //     console.log('PageCreator', pageContent)
+    // }, [pageContent])
 
-    return <PageComponentsCreator addComponent={addComponent} />
+    return <Container >
+        <Row className="d-flex justify-content-between">
+            <PageContentRender pageContent={pageContent} />
+            <PageComponentsCreator addComponent={addComponent} />
+        </Row>
+
+    </Container >
 }
