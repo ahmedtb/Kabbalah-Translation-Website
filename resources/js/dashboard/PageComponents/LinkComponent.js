@@ -1,18 +1,19 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
 import { FloatingLabel, Form } from 'react-bootstrap'
-export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'
+export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
 
-function paragraphObject(original, translated = null) {
+function linkObject(original, translated = null, label = null) {
 
     return {
-        class: ParagraphComponentClass,
+        class: LinkComponentClass,
         original: original,
-        translated: translated
+        translated: translated,
+        label: label
     }
 }
 
-export function ParagraphComponentInput(props) {
+export function LinkComponentInput(props) {
     const component = props.component
     const dispatch = props.dispatch
 
@@ -27,19 +28,19 @@ export function ParagraphComponentInput(props) {
     </div>
 }
 
-export function ParagraphComponentRender(props) {
+export function LinkComponentRender(props) {
     const component = props.component
     const [showTranslated, setShowTranslated] = React.useState(0)
     return <div >
-        <strong 
-        onMouseOver={()=>{setShowTranslated(1)}} 
-        onMouseLeave={()=>setShowTranslated(0)}
+        <strong
+            onMouseOver={() => { setShowTranslated(1) }}
+            onMouseLeave={() => setShowTranslated(0)}
         >{component.original}</strong>
         <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
     </div >
 }
 
-export function ParagraphComponentFormdiv(props) {
+export function LinkComponentFormdiv(props) {
     const component = props.component
     return <div >
         <div >
@@ -55,10 +56,11 @@ export function ParagraphComponentFormdiv(props) {
 
 
 
-export function ParagraphComponentCreator(props) {
+export function LinkComponentCreator(props) {
     const set = props.set
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
+    const [label, setlabel] = React.useState('')
 
     return <div className='my-3'>
         <FloatingLabel label="النص الاصلي">
@@ -67,7 +69,7 @@ export function ParagraphComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(paragraphObject(e.target.value, translated))
+                    set(linkObject(e.target.value, translated))
                 }}
             />
         </FloatingLabel>
@@ -77,14 +79,26 @@ export function ParagraphComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(paragraphObject(original, e.target.value))
+                    set(linkObject(original, e.target.value))
+                }}
+            />
+        </FloatingLabel>
+        <FloatingLabel label="نص الرابط">
+            <Form.Control
+                as="input"
+                type='text'
+                value={label}
+                style={{ height: '100px' }}
+                onChange={(e) => {
+                    setlabel(e.target.value)
+                    set(linkObject(original, translated, e.target.value))
                 }}
             />
         </FloatingLabel>
     </div>
 }
 
-export function ParagraphComponentEditor(props) {
+export function LinkComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
     const [label, setlabel] = React.useState(component.label)
@@ -101,7 +115,7 @@ export function ParagraphComponentEditor(props) {
                 onChangeText={(text) => {
                     setlabel(text)
                     dispatch({
-                        class: ParagraphComponentClass, label: text, value: value
+                        class: LinkComponentClass, label: text, value: value
                     })
                 }}
                 value={label}
@@ -112,7 +126,7 @@ export function ParagraphComponentEditor(props) {
                 onChangeText={(text) => {
                     setvalue(text)
                     dispatch({
-                        class: ParagraphComponentClass, label: label, value: value
+                        class: LinkComponentClass, label: label, value: value
                     })
                 }}
                 value={value}

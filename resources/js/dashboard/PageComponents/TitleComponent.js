@@ -1,18 +1,18 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
 import { FloatingLabel, Form } from 'react-bootstrap'
-export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'
+export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
 
-function paragraphObject(original, translated = null) {
+function titleObject(original, translated = null) {
 
     return {
-        class: ParagraphComponentClass,
+        class: TitleComponentClass,
         original: original,
-        translated: translated
+        translated: translated,
     }
 }
 
-export function ParagraphComponentInput(props) {
+export function TitleComponentInput(props) {
     const component = props.component
     const dispatch = props.dispatch
 
@@ -27,19 +27,19 @@ export function ParagraphComponentInput(props) {
     </div>
 }
 
-export function ParagraphComponentRender(props) {
+export function TitleComponentRender(props) {
     const component = props.component
     const [showTranslated, setShowTranslated] = React.useState(0)
     return <div >
-        <strong 
-        onMouseOver={()=>{setShowTranslated(1)}} 
-        onMouseLeave={()=>setShowTranslated(0)}
+        <strong
+            onMouseOver={() => { setShowTranslated(1) }}
+            onMouseLeave={() => setShowTranslated(0)}
         >{component.original}</strong>
         <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
     </div >
 }
 
-export function ParagraphComponentFormdiv(props) {
+export function TitleComponentFormdiv(props) {
     const component = props.component
     return <div >
         <div >
@@ -55,7 +55,7 @@ export function ParagraphComponentFormdiv(props) {
 
 
 
-export function ParagraphComponentCreator(props) {
+export function TitleComponentCreator(props) {
     const set = props.set
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
@@ -67,7 +67,7 @@ export function ParagraphComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(paragraphObject(e.target.value, translated))
+                    set(titleObject(e.target.value, translated))
                 }}
             />
         </FloatingLabel>
@@ -77,14 +77,15 @@ export function ParagraphComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(paragraphObject(original, e.target.value))
+                    set(titleObject(original, e.target.value))
                 }}
             />
         </FloatingLabel>
+        
     </div>
 }
 
-export function ParagraphComponentEditor(props) {
+export function TitleComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
     const [label, setlabel] = React.useState(component.label)
@@ -101,7 +102,7 @@ export function ParagraphComponentEditor(props) {
                 onChangeText={(text) => {
                     setlabel(text)
                     dispatch({
-                        class: ParagraphComponentClass, label: text, value: value
+                        class: TitleComponentClass, label: text, value: value
                     })
                 }}
                 value={label}
@@ -112,7 +113,7 @@ export function ParagraphComponentEditor(props) {
                 onChangeText={(text) => {
                     setvalue(text)
                     dispatch({
-                        class: ParagraphComponentClass, label: label, value: value
+                        class: TitleComponentClass, label: label, value: value
                     })
                 }}
                 value={value}

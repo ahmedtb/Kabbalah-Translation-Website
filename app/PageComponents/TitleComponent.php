@@ -22,6 +22,15 @@ class TitleComponent extends PageComponent
         $this->setOrignal($orignal);
         $this->setTranslated($translated);
     }
+    public function jsonSerialize()
+    {
+        return [
+            'class' => TitleComponent::class,
+            'original' => $this->orignal,
+            'translated' => $this->translated,
+
+        ];
+    }
     public function setOrignal(string $value)
     {
         $this->orignal = $value;
@@ -58,13 +67,4 @@ class TitleComponent extends PageComponent
         }
     }
 
-    public function jsonSerialize()
-    {
-        return [
-            'class' => TitleComponent::class,
-            'original' => $this->orignal,
-            'translated' => $this->translated,
-
-        ];
-    }
 }

@@ -23,14 +23,16 @@ function TopMenue(props) {
         <Navbar bg="light" expand="lg">
             <Container>
                 <LinkContainer to={Routes.dashboard}>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand >
                         Kabbalah Translation
                     </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
+                        <LinkContainer to={Routes.pageCreator}>
+                            <Nav.Link>انشاء صفحة</Nav.Link>
+                        </LinkContainer>
                         <Nav.Link href="#link">Link</Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

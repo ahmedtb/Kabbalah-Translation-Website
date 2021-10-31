@@ -1,24 +1,25 @@
 import React from 'react'
 import { Dropdown, Button } from 'react-bootstrap'
+import { HeaderComponentClass, HeaderComponentCreator } from './HeaderComponent'
 import { ParagraphComponentClass, ParagraphComponentCreator } from './ParagraphComponent'
-// import { TextAreaComponentClass, TextAreaComponentCreator } from './TextAreaComponent'
-// import { ImageComponentClass, ImageComponentCreator } from './ImageComponent'
-// import { LocationComponentClass, LocationComponentCreator } from './LocationComponent'
-// import { OptionsComponentClass, OptionsComponentCreator } from './OptionsComponent'
+import { TitleComponentClass, TitleComponentCreator } from './TitleComponent'
+import { ImageComponentClass, ImageComponentCreator } from './ImageComponent'
+import { LinkComponentClass, LinkComponentCreator } from './LinkComponent'
 
 export const PageContentClass = 'App\\PageComponents\\PageContent'
-export function pageContentObject(pageComponents){
+export function pageContentObject(pageComponents) {
     return {
         class: PageContentClass,
         pageComponents: pageComponents
     }
 }
 const componentsTypes = {
-    [ParagraphComponentClass]: 'حقل نص عادي',
-    // [TextAreaComponentClass]: 'مساحة نصية',
-    // [OptionsComponentClass]: 'قائمة اختيار',
-    // [LocationComponentClass]: 'تحديد موقع المستخدم',
-    // [ImageComponentClass]: 'حقل صورة'
+    [ParagraphComponentClass]: 'نص عادي',
+    [HeaderComponentClass]: 'عنوان فرعي',
+    [TitleComponentClass]: 'عنوان صفحة',
+    [ImageComponentClass]: 'صورة',
+    [LinkComponentClass]: 'رابط',
+
 }
 
 export default function PageComponentsCreator(props) {
@@ -32,7 +33,7 @@ export default function PageComponentsCreator(props) {
     }, [component])
 
     return (
-        <div>
+        <div >
 
             <div>
                 <div style={{ flex: 1, borderWidth: 0.5, borderRadius: 8 }}>
@@ -61,24 +62,23 @@ export default function PageComponentsCreator(props) {
                         return (
                             <ParagraphComponentCreator set={(component) => setcomponent(component)} />
                         )
+                    } else if (selectedType == HeaderComponentClass) {
+                        return (
+                            <HeaderComponentCreator set={(component) => setcomponent(component)} />
+                        )
+                    } else if (selectedType == TitleComponentClass) {
+                        return (
+                            <TitleComponentCreator set={(component) => setcomponent(component)} />
+                        )
+                    } else if (selectedType == ImageComponentClass) {
+                        return (
+                            <ImageComponentCreator set={(component) => setcomponent(component)} />
+                        )
+                    } else if (selectedType == LinkComponentClass) {
+                        return (
+                            <LinkComponentCreator set={(component) => setcomponent(component)} />
+                        )
                     }
-                    //  else if (selectedType == TextAreaComponentClass) {
-                    //     return (
-                    //         <strongAreaComponentCreator set={(component) => setcomponent(component)} />
-                    //     )
-                    // } else if (selectedType == OptionsComponentClass) {
-                    //     return (
-                    //         <OptionsComponentCreator set={(component) => setcomponent(component)} />
-                    //     )
-                    // } else if (selectedType == LocationComponentClass) {
-                    //     return (
-                    //         <LocationComponentCreator set={(component) => setcomponent(component)} />
-                    //     )
-                    // } else if (selectedType == ImageComponentClass) {
-                    //     return (
-                    //         <ImageComponentCreator set={(component) => setcomponent(component)} />
-                    //     )
-                    // }
                 })()
             }
 
