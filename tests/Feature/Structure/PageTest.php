@@ -37,8 +37,5 @@ class PageTest extends TestCase
         $page = Page::factory()->activated(false)->create();
         $this->assertFalse($page->activated);
     }
-
-    public function test_page_paragraph_text_could_be_compared_to_original_and_edited_by_admin()
-    {
-    }
+    
 }

@@ -17,6 +17,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/example', function () {
-    return view('Example');
-});
+Route::view('dashboard/{path}', 'dashboard')->where('path', '([A-z\d\-\/_.]+)?');
+Route::view('dashboard', 'dashboard');
