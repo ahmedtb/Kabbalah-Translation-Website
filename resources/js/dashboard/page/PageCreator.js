@@ -4,19 +4,15 @@ import PageContentRender from "../PageComponents/PageContentRender";
 import { Container, Row, Col } from "react-bootstrap";
 
 const creatorReducer = (pageContent, action) => {
-
     switch (action.actionType) {
         case 'remove component':
             let filtered = pageContent.pageComponents.filter((value, index) => {
                 return index != action.index;
             });
-            // console.log('arrayofcomponentscreator reducer', filtered)
-
             return pageContentObject(filtered)
         case 'add component':
             const components = [...pageContent.pageComponents, action.component]
             return pageContentObject(components)
-
     }
     return pageContent;
 }
@@ -34,10 +30,10 @@ export default function PageCreator(props) {
     // }, [pageContent])
 
     return <Container >
-        <Row className="d-flex justify-content-between">
+        <Col xs={12}>
             <PageContentRender pageContent={pageContent} />
             <PageComponentsCreator addComponent={addComponent} />
-        </Row>
+        </Col>
 
     </Container >
 }

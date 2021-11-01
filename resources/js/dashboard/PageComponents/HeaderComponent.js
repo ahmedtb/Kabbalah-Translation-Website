@@ -1,6 +1,8 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import {
+    FloatingLabel, Form, Popover, OverlayTrigger, Col
+} from 'react-bootstrap'
 export const HeaderComponentClass = 'App\\PageComponents\\HeaderComponent'
 
 function headerObject(original, translated = null, size = 1) {
@@ -30,14 +32,34 @@ export function HeaderComponentInput(props) {
 
 export function HeaderComponentRender(props) {
     const component = props.component
-    const [showTranslated, setShowTranslated] = React.useState(0)
-    return <div >
-        <strong
-            onMouseOver={() => { setShowTranslated(1) }}
-            onMouseLeave={() => setShowTranslated(0)}
-        >{component.original}</strong>
-        <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
-    </div >
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+                {component.translated}
+            </Popover.Body>
+        </Popover>
+    );
+
+
+
+    return <Col xs={12} className='mx-2'>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            {(() => {
+                if (component.size == 1)
+                    return <h1>{component.original}</h1>
+                else if (component.size == 2)
+                    return <h2>{component.original}</h2>
+                else if (component.size == 3)
+                    return <h3>{component.original}</h3>
+                else if (component.size == 4)
+                    return <h4>{component.original}</h4>
+                else if (component.size == 5)
+                    return <h5>{component.original}</h5>
+                return <h1>{component.original}</h1>
+            })()}
+        </OverlayTrigger>
+    </Col >
 }
 
 export function HeaderComponentFormdiv(props) {

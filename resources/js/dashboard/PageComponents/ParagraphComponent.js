@@ -1,6 +1,8 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import {
+    FloatingLabel, Form, Popover, OverlayTrigger, Col
+} from 'react-bootstrap'
 export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'
 
 function paragraphObject(original, translated = null) {
@@ -29,14 +31,21 @@ export function ParagraphComponentInput(props) {
 
 export function ParagraphComponentRender(props) {
     const component = props.component
-    const [showTranslated, setShowTranslated] = React.useState(0)
-    return <div >
-        <strong 
-        onMouseOver={()=>{setShowTranslated(1)}} 
-        onMouseLeave={()=>setShowTranslated(0)}
-        >{component.original}</strong>
-        <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
-    </div >
+    
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+               {component.translated}
+            </Popover.Body>
+        </Popover>
+    );
+
+    return <Col xs={12} className='mx-auto'>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <strong>{component.original}</strong>
+        </OverlayTrigger>
+    </Col >
 }
 
 export function ParagraphComponentFormdiv(props) {

@@ -1,6 +1,8 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import {
+    FloatingLabel, Form, Popover, OverlayTrigger
+} from 'react-bootstrap'
 export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
 
 function titleObject(original, translated = null) {
@@ -29,17 +31,24 @@ export function TitleComponentInput(props) {
 
 export function TitleComponentRender(props) {
     const component = props.component
-    const [showTranslated, setShowTranslated] = React.useState(0)
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+               {component.translated}
+            </Popover.Body>
+        </Popover>
+    );
+
     return <div >
-        <strong
-            onMouseOver={() => { setShowTranslated(1) }}
-            onMouseLeave={() => setShowTranslated(0)}
-        >{component.original}</strong>
-        <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <h1 className='text-center'>{component.original}</h1>
+        </OverlayTrigger>
     </div >
 }
 
-export function TitleComponentFormdiv(props) {
+export function TitleComponentFormView(props) {
     const component = props.component
     return <div >
         <div >
@@ -81,7 +90,7 @@ export function TitleComponentCreator(props) {
                 }}
             />
         </FloatingLabel>
-        
+
     </div>
 }
 

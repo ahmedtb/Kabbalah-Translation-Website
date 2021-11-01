@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dropdown, Button } from 'react-bootstrap'
+import { Dropdown, Button, Col } from 'react-bootstrap'
 import { HeaderComponentClass, HeaderComponentCreator } from './HeaderComponent'
 import { ParagraphComponentClass, ParagraphComponentCreator } from './ParagraphComponent'
 import { TitleComponentClass, TitleComponentCreator } from './TitleComponent'
@@ -33,28 +33,27 @@ export default function PageComponentsCreator(props) {
     }, [component])
 
     return (
-        <div >
+        <div>
 
-            <div>
-                <div style={{ flex: 1, borderWidth: 0.5, borderRadius: 8 }}>
-                    <Dropdown onSelect={(e) => setSelectedType(e)}>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            اختر نوع العنصر
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            {
-                                Object.keys(componentsTypes).map(function (key, index) {
-                                    return <Dropdown.Item
-                                        key={index}
-                                        eventKey={key} >
-                                        {componentsTypes[key]}
-                                    </Dropdown.Item>
-                                })
-                            }
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-            </div>
+
+            <Col xs={2} className='mx-auto'>
+                <Dropdown onSelect={(e) => setSelectedType(e)}>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        اختر نوع العنصر
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        {
+                            Object.keys(componentsTypes).map(function (key, index) {
+                                return <Dropdown.Item
+                                    key={index}
+                                    eventKey={key} >
+                                    {componentsTypes[key]}
+                                </Dropdown.Item>
+                            })
+                        }
+                    </Dropdown.Menu>
+                </Dropdown>
+            </Col>
 
             {
                 (() => {
@@ -81,12 +80,16 @@ export default function PageComponentsCreator(props) {
                     }
                 })()
             }
+            <Col xs={1} className='mx-auto'>
+                <Button
+                    className='my-2'
+                    onClick={() => {
+                        addComponent(component)
+                        setcomponent({})
+                        setSelectedType(null)
+                    }} variant="primary">اضف</Button>
+            </Col>
 
-            <Button onClick={() => {
-                addComponent(component)
-                setcomponent({})
-                setSelectedType(null)
-            }} variant="primary">اضف</Button>
         </div>
     )
 

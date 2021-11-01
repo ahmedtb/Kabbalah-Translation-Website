@@ -6,12 +6,12 @@ export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 
 function convertFileToBase64(file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
     });
-  }
+}
 
 function imageObject(original, translated = null) {
 
@@ -84,9 +84,8 @@ export function ImageComponentCreator(props) {
                     convertFileToBase64(file).then((base64) => {
                         console.log('convertImgToBase64URL', base64)
                         setoriginal(base64)
+                        set(imageObject(base64, translated))
                     })
-                    // setoriginal(e.target.value)
-                    // set(imageObject(e.target.value, translated))
                 }}
             />
         </FloatingLabel>
@@ -104,6 +103,7 @@ export function ImageComponentCreator(props) {
                     convertFileToBase64(file).then((base64) => {
                         console.log('convertImgToBase64URL', base64)
                         settranslated(base64)
+                        set(imageObject(original, base64))
                     })
                 }}
             />
