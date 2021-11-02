@@ -8,6 +8,8 @@ import TopMenue from './components/TopMenue'
 import Routes from './utility/Routes';
 import Home from './Home';
 import PageCreator from './page/PageCreator';
+import PagesIndex from './page/PagesIndex';
+import PageShow from './page/PageShow';
 export default function Dashboard() {
 
   return (
@@ -19,6 +21,8 @@ export default function Dashboard() {
         <Switch>
           <Route  exact={true} title={'Home'} path={Routes.dashboard}  component={Home}  />
           <Route  exact={true} title={'PageCreator'} path={Routes.pageCreator}  component={PageCreator}  />
+          <Route  exact={true} title={'PagesIndex'} path={Routes.pagesIndex}  component={PagesIndex}  />
+          <Route  exact={true} title={'PageShow'} path={Routes.pageShow}  component={PageShow}  />
 
           <Route component={NotFound} />
 

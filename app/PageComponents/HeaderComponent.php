@@ -8,7 +8,7 @@ use Illuminate\Container\Container;
 class HeaderComponent extends PageComponent
 {
 
-    private string $orignal;
+    private string $original;
     private ?string $translated = null;
     private int $size = 1;
 
@@ -16,11 +16,11 @@ class HeaderComponent extends PageComponent
     {
         if($array['class'] != HeaderComponent::class)
             throw new PageComponentsException('the array class is not HeaderComponent class, it is: ' . $array['class']);
-        return new self($array['orignal'], $array['translated'], $array['size']);
+        return new self($array['original'], $array['translated'], $array['size']);
     }
-    public function __construct(string $orignal, ?string $translated = null, int $size = 1)
+    public function __construct(string $original, ?string $translated = null, int $size = 1)
     {
-        $this->setOrignal($orignal);
+        $this->setoriginal($original);
         $this->setTranslated($translated);
         $this->size = $size;
     }
@@ -29,20 +29,20 @@ class HeaderComponent extends PageComponent
     {
         return [
             'class' => HeaderComponent::class,
-            'original' => $this->orignal,
+            'original' => $this->original,
             'translated' => $this->translated,
             'size' => $this->size,
         ];
     }
 
 
-    public function setOrignal(string $value)
+    public function setoriginal(string $value)
     {
-        $this->orignal = $value;
+        $this->original = $value;
     }
-    public function getOrignal()
+    public function getoriginal()
     {
-        return $this->orignal;
+        return $this->original;
     }
     public function setTranslated(?string $value = null)
     {
@@ -55,7 +55,7 @@ class HeaderComponent extends PageComponent
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setOrignal($faker->sentence());
+        $this->setoriginal($faker->sentence());
         $this->setTranslated($faker->sentence());
 
     }
@@ -63,7 +63,7 @@ class HeaderComponent extends PageComponent
     {
         if (
             $component instanceof HeaderComponent
-            && $this->orignal == $component->getOrignal()
+            && $this->original == $component->getoriginal()
             && $this->translated == $component->getTranslated()
         ) {
             return true;

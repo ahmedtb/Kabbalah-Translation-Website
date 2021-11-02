@@ -1,6 +1,8 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import {
+    FloatingLabel, Form, Popover, OverlayTrigger, Col
+} from 'react-bootstrap'
 export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 
 
@@ -39,14 +41,21 @@ export function ImageComponentInput(props) {
 
 export function ImageComponentRender(props) {
     const component = props.component
-    const [showTranslated, setShowTranslated] = React.useState(0)
-    return <div >
-        <strong
-            onMouseOver={() => { setShowTranslated(1) }}
-            onMouseLeave={() => setShowTranslated(0)}
-        >{component.original}</strong>
-        <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
-    </div >
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+                <img src={component.translated} width='100%' />
+
+            </Popover.Body>
+        </Popover>
+    );
+    return <Col xs={10} className='mx-auto'>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <img src={component.original} width='100%' />
+        </OverlayTrigger>
+
+    </Col >
 }
 
 export function ImageComponentFormdiv(props) {

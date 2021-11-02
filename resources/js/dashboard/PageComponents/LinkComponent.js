@@ -1,15 +1,21 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
-import { FloatingLabel, Form } from 'react-bootstrap'
+import {
+    FloatingLabel, 
+    Form, 
+    Popover, 
+    OverlayTrigger
+} from 'react-bootstrap'
 export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
 
-function linkObject(original, translated = null, label = null) {
+function linkObject(originalLink, originalLabel = null, translatedLink = null, translatedLabel = null) {
 
     return {
         class: LinkComponentClass,
-        original: original,
-        translated: translated,
-        label: label
+        originalLink: originalLink,
+        originalLabel: originalLabel,
+        translatedLink: translatedLink,
+        translatedLabel: translatedLabel
     }
 }
 
@@ -30,17 +36,24 @@ export function LinkComponentInput(props) {
 
 export function LinkComponentRender(props) {
     const component = props.component
-    const [showTranslated, setShowTranslated] = React.useState(0)
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+                {component.translatedLink}
+            </Popover.Body>
+        </Popover>
+    );
+
     return <div >
-        <strong
-            onMouseOver={() => { setShowTranslated(1) }}
-            onMouseLeave={() => setShowTranslated(0)}
-        >{component.original}</strong>
-        <strong style={{ opacity: showTranslated }}>{component.translated}</strong>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <div>{component.originalLink}</div>
+        </OverlayTrigger>
     </div >
 }
 
-export function LinkComponentFormdiv(props) {
+export function LinkComponentFormView(props) {
     const component = props.component
     return <div >
         <div >
@@ -60,38 +73,51 @@ export function LinkComponentCreator(props) {
     const set = props.set
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
-    const [label, setlabel] = React.useState('')
+    const [originalLabel, setoriginalLabel] = React.useState('')
+    const [translatedLabel, settranslatedLabel] = React.useState('')
 
     return <div className='my-3'>
-        <FloatingLabel label="النص الاصلي">
+        <FloatingLabel label="الرابط الاصلي">
             <Form.Control
                 as="textarea"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(linkObject(e.target.value, translated))
+                    set(linkObject(e.target.value, originalLabel, translated, translatedLabel))
                 }}
             />
         </FloatingLabel>
-        <FloatingLabel label="النص المترجم">
+        <FloatingLabel label="نص الرابط الاصلي">
+            <Form.Control
+                as="input"
+                type='text'
+                value={originalLabel}
+                style={{ height: '100px' }}
+                onChange={(e) => {
+                    setoriginalLabel(e.target.value)
+                    set(linkObject(original, e.target.value, translated, translatedLabel))
+                }}
+            />
+        </FloatingLabel>
+        <FloatingLabel label="الرابط المترجم">
             <Form.Control
                 as="textarea"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(linkObject(original, e.target.value))
+                    set(linkObject(original, originalLabel, e.target.value, translatedLabel))
                 }}
             />
         </FloatingLabel>
-        <FloatingLabel label="نص الرابط">
+        <FloatingLabel label="نص الرابط مترجم">
             <Form.Control
                 as="input"
                 type='text'
-                value={label}
+                value={translatedLabel}
                 style={{ height: '100px' }}
                 onChange={(e) => {
-                    setlabel(e.target.value)
-                    set(linkObject(original, translated, e.target.value))
+                    settranslatedLabel(e.target.value)
+                    set(linkObject(original, originalLabel, translated, e.target.value))
                 }}
             />
         </FloatingLabel>

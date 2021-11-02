@@ -8,29 +8,29 @@ use Illuminate\Container\Container;
 class ImageComponent extends PageComponent
 {
 
-    private string $orignal;
+    private string $original;
     private ?string $translated = null;
 
     public static function fromArray(array $array)
     {
         if($array['class'] != ImageComponent::class)
             throw new PageComponentsException('the array class is not ImageComponent class, it is: ' . $array['class']);
-        return new self($array['orignal'], $array['translated']);
+        return new self($array['original'], $array['translated']);
     }
-    public function __construct(string $orignal, ?string $translated = null)
+    public function __construct(string $original, ?string $translated = null)
     {
-        $this->setOrignal($orignal);
+        $this->setoriginal($original);
         $this->setTranslated($translated);
     }
-    public function setOrignal(string $value)
+    public function setoriginal(string $value)
     {
         if (base64_encode(base64_decode($value)) != $value)
             throw new PageComponentsException('not valid value base64 string..');
-        $this->orignal = $value;
+        $this->original = $value;
     }
-    public function getOrignal()
+    public function getoriginal()
     {
-        return $this->orignal;
+        return $this->original;
     }
     public function setTranslated(?string $value = null)
     {
@@ -45,7 +45,7 @@ class ImageComponent extends PageComponent
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setOrignal(getBase64DefaultImage());
+        $this->setoriginal(getBase64DefaultImage());
         $this->setTranslated(getBase64DefaultImage());
 
     }
@@ -53,7 +53,7 @@ class ImageComponent extends PageComponent
     {
         if (
             $component instanceof ImageComponent
-            && $this->orignal == $component->getOrignal()
+            && $this->original == $component->getoriginal()
             && $this->translated == $component->getTranslated()
         ) {
             return true;
@@ -66,7 +66,7 @@ class ImageComponent extends PageComponent
     {
         return [
             'class' => ImageComponent::class,
-            'original' => $this->orignal,
+            'original' => $this->original,
             'translated' => $this->translated,
 
         ];

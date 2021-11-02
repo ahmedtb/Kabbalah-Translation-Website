@@ -33,6 +33,9 @@ function TopMenue(props) {
                         <LinkContainer to={Routes.pageCreator}>
                             <Nav.Link>انشاء صفحة</Nav.Link>
                         </LinkContainer>
+                        <LinkContainer to={Routes.pagesIndex}>
+                            <Nav.Link>الصفحات</Nav.Link>
+                        </LinkContainer>
                         <Nav.Link href="#link">Link</Nav.Link>
                         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>

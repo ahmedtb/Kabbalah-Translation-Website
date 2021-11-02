@@ -13,4 +13,8 @@ class Page extends Model
     protected $casts = [
         'page_content' => Json::class
     ];
+
+    protected $fillable = [
+        'page_content'
+    ];
 }

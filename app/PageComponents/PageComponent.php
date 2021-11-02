@@ -12,8 +12,8 @@ abstract class PageComponent  implements JsonSerializable
     }
 
     abstract public static function fromArray(array $array);
-    // abstract public function setOrignal($value);
-    abstract public function getOrignal();
+    // abstract public function setoriginal($value);
+    abstract public function getoriginal();
     // abstract public function setTranslated($value);
     abstract public function getTranslated();
     abstract public function generateMockedValues();

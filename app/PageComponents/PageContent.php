@@ -37,7 +37,7 @@ class PageContent  implements JsonSerializable, Countable
         return $this->pageComponents;
     }
 
-    public function setPageComponent(PageComponent $pageComponent, $index = null)
+    public function setPageComponent($pageComponent, $index = null)
     {
         if ($index == null || count($this->pageComponents)  == 0) {
             if (gettype($pageComponent) == 'array') {

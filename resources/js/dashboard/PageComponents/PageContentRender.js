@@ -10,7 +10,7 @@ export default function PageContentRender(props) {
     const pageContent = props.pageContent
 
     return <Col xs={12} className='bg-white'>
-        <Col xs={8} className='mx-auto'>
+        <Col xs={10} className='mx-auto'>
             {
                 pageContent.pageComponents.map((pageComponent, index) => {
                     if (pageComponent.class == ParagraphComponentClass) {

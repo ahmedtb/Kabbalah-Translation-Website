@@ -8,72 +8,74 @@ use Illuminate\Container\Container;
 class LinkComponent extends PageComponent
 {
 
-    private string $orignal;
-    private ?string $translated = null;
-    private ?string $label = null;
+    private array $originalLink;
+    private ?array $translatedLink = null;
+    private ?string $originalLabel = null;
+    private ?string $translatedLabel = null;
 
     public static function fromArray(array $array)
     {
         if($array['class'] != LinkComponent::class)
             throw new PageComponentsException('the array class is not LinkComponent class, it is: ' . $array['class']);
-        return new self($array['orignal'], $array['translated'], $array['translated'], $array['label']);
-    }
-    public function __construct(string $orignal, ?string $translated = null,  ?string $label = null)
-    {
-        $this->setOrignal($orignal);
-        $this->setTranslated($translated);
-        $this->setLabel($label);
 
+        return new self($array['originalLink'], $array['originalLabel'], $array['translatedLink'], $array['translatedLabel']);
+    }
+    public function __construct(string $originalLink,  ?string $originalLabel = null, ?string $translatedLink = null,  ?string $translatedLabel = null)
+    {
+        $this->originalLink = $originalLink;
+        $this->originalLabel = $originalLabel;
+        $this->translatedLink = $translatedLink;
+        $this->translatedLabel = $translatedLabel;
+    }
+
+    public function getoriginal()
+    {
+        return [
+            'link' => $this->originalLink,
+            'label' => $this->originalLabel, 
+        ];
+    }
+
+    public function getTranslated()
+    {
+        return [
+            'link' => $this->translatedLink,
+            'label' => $this->translatedLabel, 
+        ];
     }
 
     public function jsonSerialize()
     {
         return [
             'class' => LinkComponent::class,
-            'original' => $this->orignal,
-            'translated' => $this->translated,
-            'label' => $this->label,
+            'originalLink' => $this->originalLink,
+            'originalLabel' => $this->originalLabel,
+            'translatedLink' => $this->translatedLink,
+            'translatedLabel' => $this->translatedLabel,
 
         ];
     }
 
-    public function setOrignal(string $value)
-    {
-        $this->orignal = $value;
-    }
-    public function getOrignal()
-    {
-        return $this->orignal;
-    }
-    public function setTranslated(?string $value = null)
-    {
-        $this->translated = $value;
-    }
-    public function getTranslated()
-    {
-        return $this->translated;
-    }
-    public function setLabel(?string $value = null)
-    {
-        $this->label = $value;
-    }
-    public function getLabel()
-    {
-        return $this->label;
-    }
+   
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setOrignal($faker->url());
-        $this->setTranslated($faker->url());
+        
+        $this->originalLink = $faker->url();
+        $this->originalLabel = $faker->sentance();
+        $this->translatedLink = $faker->url();
+        $this->translatedLabel = $faker->sentance();
 
     }
     public function isEqualTo(PageComponent $component)
     {
         if (
             $component instanceof LinkComponent
-            && $this->orignal == $component->getOrignal()
-            && $this->translated == $component->getTranslated()
+            && $this->originalLink == $component->getoriginal()['link']
+            && $this->originalLabel == $component->getoriginal()['label']
+            && $this->translatedLink == $component->getTranslated()['link']
+            && $this->translatedLabel == $component->getTranslated()['label']
+
         ) {
             return true;
         } else {

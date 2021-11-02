@@ -11,27 +11,27 @@ use App\PageComponents\PageComponentsException;
 class ParagraphComponent extends PageComponent
 {
 
-    private string $orignal;
+    private string $original;
     private ?string $translated = null;
 
     public static function fromArray(array $array)
     {
         if($array['class'] != ParagraphComponent::class)
             throw new PageComponentsException('the array class is not ParagraphComponent class, it is: ' . $array['class']);
-        return new self($array['orignal'], $array['translated']);
+        return new self($array['original'], $array['translated']);
     }
-    public function __construct(string $orignal, ?string $translated = null)
+    public function __construct(string $original, ?string $translated = null)
     {
-        $this->setOrignal($orignal);
+        $this->setoriginal($original);
         $this->setTranslated($translated);
     }
-    public function setOrignal(string $value)
+    public function setoriginal(string $value)
     {
-        $this->orignal = $value;
+        $this->original = $value;
     }
-    public function getOrignal()
+    public function getoriginal()
     {
-        return $this->orignal;
+        return $this->original;
     }
     public function setTranslated(?string $value = null)
     {
@@ -44,7 +44,7 @@ class ParagraphComponent extends PageComponent
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setOrignal($faker->sentence());
+        $this->setoriginal($faker->sentence());
         $this->setTranslated($faker->sentence());
 
     }
@@ -52,7 +52,7 @@ class ParagraphComponent extends PageComponent
     {
         if (
             $component instanceof ParagraphComponent
-            && $this->orignal == $component->getOrignal()
+            && $this->original == $component->getoriginal()
             && $this->translated == $component->getTranslated()
         ) {
             return true;
@@ -65,7 +65,7 @@ class ParagraphComponent extends PageComponent
     {
         return [
             'class' => ParagraphComponent::class,
-            'original' => $this->orignal,
+            'original' => $this->original,
             'translated' => $this->translated,
 
         ];
