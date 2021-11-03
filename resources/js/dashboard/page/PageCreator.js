@@ -31,7 +31,13 @@ export default function PageCreator(props) {
 
     async function submit() {
         console.log(pageContent)
-        ApiEndpoints.createPage(pageContent, true)
+        try {
+            const response = await ApiEndpoints.createPage(pageContent, true)
+            console.log('PageCreator submit', response.data)
+        } catch (error) {
+            console.log(error.response.data)
+            // logError(error, 'PageCreator submit')
+        }
 
     }
     // React.useEffect(() => {

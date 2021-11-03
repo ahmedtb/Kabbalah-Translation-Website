@@ -3,17 +3,11 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger, Col
 } from 'react-bootstrap'
+import convertFileToBase64 from '../utility/convertFileToBase64'
+import ImagePicker from '../components/ImagePicker'
 export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 
 
-function convertFileToBase64(file) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-    });
-}
 
 function imageObject(original, translated = null) {
 
@@ -124,36 +118,28 @@ export function ImageComponentCreator(props) {
 export function ImageComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
-    const [label, setlabel] = React.useState(component.label)
-    const [value, setvalue] = React.useState(component.value)
+    const [original, setoriginal] = React.useState(component.original)
+    const [translated, settranslated] = React.useState(component.translated)
+
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">النص المترجم</Popover.Header>
+            <Popover.Body>
+                <img src={translated} width='100%' />
+                <ImagePicker setImage={settranslated} />
+            </Popover.Body>
+        </Popover>
+    );
 
     return (
-        <div style={{ marginVertical: 15 }}>
-
-            <div style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <strong>حقل نصي</strong>
-            </div>
-
-            <input style={{ fontSize: 12, borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10 }}
-                onChangeText={(text) => {
-                    setlabel(text)
-                    dispatch({
-                        class: ImageComponentClass, label: text, value: value
-                    })
-                }}
-                value={label}
-            />
-            <input
-                type='textarea'
-                style={{ borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10, marginVertical: 5 }}
-                onChangeText={(text) => {
-                    setvalue(text)
-                    dispatch({
-                        class: ImageComponentClass, label: label, value: value
-                    })
-                }}
-                value={value}
-            />
+        <div className='my-3'>
+            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                <div>
+                    <img src={original} width='100%' />
+                    <ImagePicker setImage={setoriginal} />
+                </div>
+            </OverlayTrigger>
 
         </div>
     )

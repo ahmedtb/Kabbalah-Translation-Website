@@ -1,9 +1,9 @@
 import React from 'react'
 import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
-    FloatingLabel, 
-    Form, 
-    Popover, 
+    FloatingLabel,
+    Form,
+    Popover,
     OverlayTrigger
 } from 'react-bootstrap'
 export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
@@ -127,37 +127,41 @@ export function LinkComponentCreator(props) {
 export function LinkComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
-    const [label, setlabel] = React.useState(component.label)
-    const [value, setvalue] = React.useState(component.value)
+    const [originalLink, setoriginalLink] = React.useState(component.originalLink)
+    const [originalLabel, setoriginalLabel] = React.useState(component.originalLabel)
+    const [translatedLink, settranslatedLink] = React.useState(component.translatedLink)
+    const [translatedLabel, settranslatedLabel] = React.useState(component.translatedLabel)
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">ترجمة</Popover.Header>
+            <Popover.Body>
+                {translatedLink}
+                <Form.Control
+                    as="input"
+                    value={translatedLabel}
+                    onChange={(e) => {
+                        settranslatedLabel(e.target.value)
+                        dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
+                    }}
+                />
+            </Popover.Body>
+        </Popover>
+    );
 
-    return (
-        <div style={{ marginVertical: 15 }}>
-
-            <div style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <strong>حقل نصي</strong>
+    return <div >
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <div>
+                <div>{originalLink}</div>
+                <Form.Control
+                    as="input"
+                    value={originalLabel}
+                    onChange={(e) => {
+                        setoriginalLabel(e.target.value)
+                        dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
+                    }}
+                />
             </div>
+        </OverlayTrigger>
+    </div >
 
-            <input style={{ fontSize: 12, borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10 }}
-                onChangeText={(text) => {
-                    setlabel(text)
-                    dispatch({
-                        class: LinkComponentClass, label: text, value: value
-                    })
-                }}
-                value={label}
-            />
-            <input
-                type='textarea'
-                style={{ borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10, marginVertical: 5 }}
-                onChangeText={(text) => {
-                    setvalue(text)
-                    dispatch({
-                        class: LinkComponentClass, label: label, value: value
-                    })
-                }}
-                value={value}
-            />
-
-        </div>
-    )
 }

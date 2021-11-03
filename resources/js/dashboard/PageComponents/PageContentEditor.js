@@ -8,6 +8,7 @@ import { HeaderComponentClass, HeaderComponentEditor } from './HeaderComponent'
 
 import PageComponentsCreator, { PageContentClass } from './PageComponentsCreator'
 import { Col } from 'react-bootstrap'
+import Button from '@restart/ui/esm/Button'
 
 const reducer = (page_content, action) => {
 
@@ -41,7 +42,7 @@ export default function PageContentEditor(props) {
     const [page_content, dispatch] = React.useReducer(reducer, props.pageContent)
 
     React.useEffect(() => {
-        console.log('PageContentEditor useEffect', props.pageContent)
+        // console.log('PageContentEditor useEffect', props.pageContent)
         dispatch({ actionType: 'set page_content', page_content: props.pageContent })
     }, [props.pageContent])
 
@@ -95,6 +96,7 @@ export default function PageContentEditor(props) {
                     })
                 }
                 <PageComponentsCreator addComponent={addNewComponent} />
+
             </Col>
         </Col>
 

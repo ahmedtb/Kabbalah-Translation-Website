@@ -1,7 +1,7 @@
 
 export default function logError(error, sourceName = null) {
     if (sourceName)
-        logError('error from: ', sourceName)
+        console.log('error from: ', sourceName)
     if (error.response) {
         // Request made and server responded
         console.log(error.response.data);

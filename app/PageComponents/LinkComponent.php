@@ -8,8 +8,8 @@ use Illuminate\Container\Container;
 class LinkComponent extends PageComponent
 {
 
-    private array $originalLink;
-    private ?array $translatedLink = null;
+    private string $originalLink;
+    private ?string $translatedLink = null;
     private ?string $originalLabel = null;
     private ?string $translatedLabel = null;
 

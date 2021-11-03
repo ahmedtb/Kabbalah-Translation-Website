@@ -24,7 +24,7 @@ class ImageComponent extends PageComponent
     }
     public function setoriginal(string $value)
     {
-        if (base64_encode(base64_decode($value)) != $value)
+        if (!isValidBase64($value))
             throw new PageComponentsException('not valid value base64 string..');
         $this->original = $value;
     }
@@ -34,7 +34,7 @@ class ImageComponent extends PageComponent
     }
     public function setTranslated(?string $value = null)
     {
-        if (base64_encode(base64_decode($value)) != $value && $value != null)
+        if (!isValidBase64($value) && $value != null)
             throw new PageComponentsException('not valid value base64 string..');
         $this->translated = $value;
     }
