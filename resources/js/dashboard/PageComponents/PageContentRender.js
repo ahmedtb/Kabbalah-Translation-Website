@@ -12,7 +12,7 @@ export default function PageContentRender(props) {
     return <Col xs={12} className='bg-white'>
         <Col xs={10} className='mx-auto'>
             {
-                pageContent.pageComponents.map((pageComponent, index) => {
+                pageContent?.pageComponents.map((pageComponent, index) => {
                     if (pageComponent.class == ParagraphComponentClass) {
                         return <ParagraphComponentRender key={index} component={pageComponent} />
                     } else if (pageComponent.class == HeaderComponentClass) {

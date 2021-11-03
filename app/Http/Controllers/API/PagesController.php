@@ -10,7 +10,7 @@ use App\Http\Controllers\Controller;
 class PagesController extends Controller
 {
 
-    public function createPage(Request $request)
+    public function create(Request $request)
     {
         $data = $request->validate([
             'page_content' => ['required', new PageContentRule()],
@@ -23,5 +23,10 @@ class PagesController extends Controller
     public function index(Request $request)
     {
         return Page::all();
+    }
+
+    public function show($id)
+    {
+        return Page::where('id', $id)->first();
     }
 }

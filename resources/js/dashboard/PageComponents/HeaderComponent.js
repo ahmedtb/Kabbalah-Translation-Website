@@ -62,7 +62,7 @@ export function HeaderComponentRender(props) {
     </Col >
 }
 
-export function HeaderComponentFormdiv(props) {
+export function HeaderComponentFormView(props) {
     const component = props.component
     return <div >
         <div >
@@ -125,36 +125,49 @@ export function HeaderComponentCreator(props) {
 export function HeaderComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
-    const [label, setlabel] = React.useState(component.label)
-    const [value, setvalue] = React.useState(component.value)
+    const [original, setoriginal] = React.useState(component.original)
+    const [translated, settranslated] = React.useState(component.translated)
+    const [size, setsize] = React.useState(component.size)
+
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">النص المترجم</Popover.Header>
+            <Popover.Body>
+                <FloatingLabel label="النص المترجم">
+                    <Form.Control
+                        as="textarea"
+                        onChange={(e) => {
+                            settranslated(e.target.value)
+                            dispatch(titleObject(original, e.target.value))
+                        }}
+                        value={translated}
+
+                    />
+                </FloatingLabel>
+            </Popover.Body>
+        </Popover>
+    );
 
     return (
-        <div style={{ marginVertical: 15 }}>
+        <div className='my-3'>
+            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
 
-            <div style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <strong>حقل نصي</strong>
-            </div>
+                <input
+                    style={{
+                        backgroundColor: 'white',
+                        borderWidth: 0,
+                        fontSize: 50/size,
+                        width: '100%',
+                    }}
+                    onChange={(e) => {
+                        setoriginal(e.target.value)
+                        dispatch(titleObject(e.target.value, translated))
+                    }}
+                    value={original}
 
-            <input style={{ fontSize: 12, borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10 }}
-                onChangeText={(text) => {
-                    setlabel(text)
-                    dispatch({
-                        class: HeaderComponentClass, label: text, value: value
-                    })
-                }}
-                value={label}
-            />
-            <input
-                type='textarea'
-                style={{ borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10, marginVertical: 5 }}
-                onChangeText={(text) => {
-                    setvalue(text)
-                    dispatch({
-                        class: HeaderComponentClass, label: label, value: value
-                    })
-                }}
-                value={value}
-            />
+                />
+            </OverlayTrigger>
 
         </div>
     )

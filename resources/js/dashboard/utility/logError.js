@@ -1,7 +1,7 @@
 
 export default function logError(error, sourceName = null) {
     if (sourceName)
-        console.log('error from:', sourceName)
+        logError('error from: ', sourceName)
     if (error.response) {
         // Request made and server responded
         console.log(error.response.data);
@@ -14,4 +14,5 @@ export default function logError(error, sourceName = null) {
         // Something happened in setting up the request that triggered an Error
         console.log('Error', error.message);
     }
+    console.log(error.stack)
 }

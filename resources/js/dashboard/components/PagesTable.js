@@ -18,7 +18,7 @@ export default function PagesTable(props) {
                     pages?.map((page, index) => (
                         <tr key={index}>
                             <td>
-                                <Link to={Routes.pageShow.replace(':id', page.id)}>
+                                <Link to={Routes.pageShow(page.id)}>
                                     {page.id}
                                 </Link>
                             </td>

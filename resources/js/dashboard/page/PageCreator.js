@@ -29,17 +29,10 @@ export default function PageCreator(props) {
         dispatch({ actionType: 'add component', component: component })
     }
 
-    async function submit(){
+    async function submit() {
         console.log(pageContent)
-        try{
-            const response = await axios.post(ApiEndpoints.createPage,{
-                page_content: pageContent,
-                activated: true
-            })
-            console.log('PageCreator', response.data)
-        }catch(error){
-            logError(error,'PageCreator')
-        }
+        ApiEndpoints.createPage(pageContent, true)
+
     }
     // React.useEffect(() => {
     //     console.log('PageCreator', pageContent)

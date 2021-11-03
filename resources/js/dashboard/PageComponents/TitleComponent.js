@@ -36,7 +36,7 @@ export function TitleComponentRender(props) {
         <Popover id="popover-basic">
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-               {component.translated}
+                {component.translated}
             </Popover.Body>
         </Popover>
     );
@@ -97,36 +97,51 @@ export function TitleComponentCreator(props) {
 export function TitleComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
-    const [label, setlabel] = React.useState(component.label)
-    const [value, setvalue] = React.useState(component.value)
+    const [original, setoriginal] = React.useState(component.original)
+    const [translated, settranslated] = React.useState(component.translated)
+
+
+    const popover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">النص المترجم</Popover.Header>
+            <Popover.Body>
+                <FloatingLabel label="النص المترجم">
+                    <Form.Control
+                        as="textarea"
+                        style={{ height: '100px' }}
+                        onChange={(e) => {
+                            settranslated(e.target.value)
+                            dispatch(titleObject(original, e.target.value))
+                        }}
+                        value={translated}
+
+                    />
+                </FloatingLabel>
+            </Popover.Body>
+        </Popover>
+    );
 
     return (
-        <div style={{ marginVertical: 15 }}>
+        <div className='my-3'>
+            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
 
-            <div style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <strong>حقل نصي</strong>
-            </div>
+                <input
+                    style={{
+                        backgroundColor: 'white',
+                        textAlign: 'center',
+                        borderWidth: 0,
+                        width: '100%',
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                    }}
+                    onChange={(e) => {
+                        setoriginal(e.target.value)
+                        dispatch(titleObject(e.target.value, translated))
+                    }}
+                    value={original}
 
-            <input style={{ fontSize: 12, borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10 }}
-                onChangeText={(text) => {
-                    setlabel(text)
-                    dispatch({
-                        class: TitleComponentClass, label: text, value: value
-                    })
-                }}
-                value={label}
-            />
-            <input
-                type='textarea'
-                style={{ borderWidth: 1, borderColor: '#dec9c8', borderRadius: 10, marginVertical: 5 }}
-                onChangeText={(text) => {
-                    setvalue(text)
-                    dispatch({
-                        class: TitleComponentClass, label: label, value: value
-                    })
-                }}
-                value={value}
-            />
+                />
+            </OverlayTrigger>
 
         </div>
     )

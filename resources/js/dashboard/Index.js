@@ -10,6 +10,8 @@ import Home from './Home';
 import PageCreator from './page/PageCreator';
 import PagesIndex from './page/PagesIndex';
 import PageShow from './page/PageShow';
+import PageEditor from './page/PageEditor';
+
 export default function Dashboard() {
 
   return (
@@ -22,7 +24,8 @@ export default function Dashboard() {
           <Route  exact={true} title={'Home'} path={Routes.dashboard}  component={Home}  />
           <Route  exact={true} title={'PageCreator'} path={Routes.pageCreator}  component={PageCreator}  />
           <Route  exact={true} title={'PagesIndex'} path={Routes.pagesIndex}  component={PagesIndex}  />
-          <Route  exact={true} title={'PageShow'} path={Routes.pageShow}  component={PageShow}  />
+          <Route  exact={true} title={'PageShow'} path={Routes.pageShow()}  component={PageShow}  />
+          <Route  exact={true} title={'PageEditor'} path={Routes.pageEdit()}  component={PageEditor}  />
 
           <Route component={NotFound} />
 

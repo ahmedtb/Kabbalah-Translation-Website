@@ -19,6 +19,15 @@ class PageContent  implements JsonSerializable, Countable
         if ($pageComponents)
             $this->setPageComponents($pageComponents);
     }
+    public function jsonSerialize()
+    {
+        return array(
+            'class' => static::class,
+            'pageComponents' => array_map(function ($pageComponent) {
+                return $pageComponent->jsonSerialize();
+            }, $this->getPageComponents()),
+        );
+    }
 
     public function setPageComponents($pageComponents)
     {
@@ -61,15 +70,6 @@ class PageContent  implements JsonSerializable, Countable
         return $this->pageComponents[$index];
     }
 
-    public function jsonSerialize()
-    {
-        return array(
-            'class' => static::class,
-            'pageComponents' => array_map(function ($pageComponent) {
-                return $pageComponent->jsonSerialize();
-            }, $this->getPageComponents()),
-        );
-    }
 
     public function count()
     {

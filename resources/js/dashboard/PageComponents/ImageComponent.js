@@ -58,7 +58,7 @@ export function ImageComponentRender(props) {
     </Col >
 }
 
-export function ImageComponentFormdiv(props) {
+export function ImageComponentFormView(props) {
     const component = props.component
     return <div >
         <div >
@@ -85,13 +85,13 @@ export function ImageComponentCreator(props) {
             <Form.Control
                 as="input"
                 type='file'
-                accept=".jpg"
+                accept=".jpg,.jpeg,.png"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     const file = e.target.files[0]
-                    console.log('ImageComponentCreator', file)
+                    // console.log('ImageComponentCreator', file)
                     convertFileToBase64(file).then((base64) => {
-                        console.log('convertImgToBase64URL', base64)
+                        // console.log('convertImgToBase64URL', base64)
                         setoriginal(base64)
                         set(imageObject(base64, translated))
                     })
@@ -104,13 +104,13 @@ export function ImageComponentCreator(props) {
             <Form.Control
                 as="input"
                 type='file'
-                accept=".jpg"
+                accept=".jpg,.jpeg,.png"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     const file = e.target.files[0]
-                    console.log('ImageComponentCreator', file)
+                    // console.log('ImageComponentCreator', file)
                     convertFileToBase64(file).then((base64) => {
-                        console.log('convertImgToBase64URL', base64)
+                        // console.log('convertImgToBase64URL', base64)
                         settranslated(base64)
                         set(imageObject(original, base64))
                     })

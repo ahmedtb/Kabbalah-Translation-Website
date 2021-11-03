@@ -1,95 +1,102 @@
 import React from 'react'
 
-import { StringFieldClass, StringFieldEditor } from './StringField'
-import { TextAreaFieldClass, TextAreaFieldEditor } from './TextAreaField'
-import { ImageFieldClass, ImageFieldEditor } from './ImageField'
-import { LocationFieldClass, LocationFieldEditor } from './LocationField'
-import { OptionsFieldClass, OptionsFieldEditor } from './OptionsField'
-import { ArrayOfFieldsClass } from './ArrayOfFieldsCreator'
-import ArrayOfFieldsCreator from './ArrayOfFieldsCreator'
+import { ParagraphComponentClass, ParagraphComponentEditor } from './ParagraphComponent'
+import { TitleComponentClass, TitleComponentEditor } from './TitleComponent'
+import { LinkComponentClass, LinkComponentEditor } from './LinkComponent'
+import { ImageComponentClass, ImageComponentEditor } from './ImageComponent'
+import { HeaderComponentClass, HeaderComponentEditor } from './HeaderComponent'
 
-const reducer = (array_of_fields, action) => {
+import PageComponentsCreator, { PageContentClass } from './PageComponentsCreator'
+import { Col } from 'react-bootstrap'
+
+const reducer = (page_content, action) => {
 
     switch (action.actionType) {
-        case 'change field':
-            let fields1 = array_of_fields.fields.map((field, index) => {
+        case 'set page_content':
+            return action.page_content
+        case 'change component':
+            let pageComponents1 = page_content.pageComponents.map((component, index) => {
                 if (index == action.index)
-                    return action.field;
-                return field;
+                    return action.component;
+                return component;
             })
-            return { class: ArrayOfFieldsClass, fields: fields1 }
-        case 'remove field':
-            let filtered = array_of_fields.fields.filter((value, index) => {
+            return { class: PageContentClass, pageComponents: pageComponents1 }
+        case 'remove component':
+            let filtered = page_content.pageComponents.filter((value, index) => {
                 return index != action.index;
             });
-            return { class: ArrayOfFieldsClass, fields: filtered }
-        case 'add field':
-            let increased = [...array_of_fields.fields, action.newField]
-            return { class: ArrayOfFieldsClass, fields: increased }
+            return { class: PageContentClass, pageComponents: filtered }
+        case 'add component':
+            let increased = [...page_content.pageComponents, action.newComponent]
+            return { class: PageContentClass, pageComponents: increased }
     }
-    return array_of_fields;
+    return page_content;
 }
 
 
 
 
 export default function PageContentEditor(props) {
-    const setEditedArrayOfFields = props.setEditedArrayOfFields
-    const [array_of_fields, dispatch] = React.useReducer(reducer, props.array_of_fields)
+    const setEditedPageContent = props.setEditedPageContent
+    const [page_content, dispatch] = React.useReducer(reducer, props.pageContent)
 
     React.useEffect(() => {
-        // console.log('ArrayOfFieldsEditor useEffect', array_of_fields)
-        setEditedArrayOfFields(array_of_fields)
-    }, [array_of_fields])
+        console.log('PageContentEditor useEffect', props.pageContent)
+        dispatch({ actionType: 'set page_content', page_content: props.pageContent })
+    }, [props.pageContent])
 
-    
-    function addNewField(fieldConfig) {
-        dispatch({ actionType: 'add field', newField: fieldConfig })
+    React.useEffect(() => {
+        setEditedPageContent(page_content)
+    }, [page_content])
+
+    function addNewComponent(componentConfig) {
+        dispatch({ actionType: 'add component', newComponent: componentConfig })
     }
 
     return (
-        <View style={{ padding: 25 }}>
-            <ScrollView>
+        <Col xs={12} className='bg-white'>
+            <Col xs={10} className='mx-auto'>
+
                 {
-                    array_of_fields.fields?.map((field, index) => {
-                        if (field.class == StringFieldClass) {
-                            return <StringFieldEditor
+                    page_content?.pageComponents?.map((component, index) => {
+                        if (component.class == ParagraphComponentClass) {
+                            return <ParagraphComponentEditor
                                 key={index}
-                                field={field}
-                                dispatch={(field) => dispatch({ actionType: 'change field', index: index, field: field })}
+                                component={component}
+                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
-                        } else if (field.class == TextAreaFieldClass) {
-                            return <TextAreaFieldEditor
+                        } else if (component.class == TitleComponentClass) {
+                            return <TitleComponentEditor
                                 key={index}
-                                field={field}
-                                dispatch={(field) => dispatch({ actionType: 'change field', index: index, field: field })}
+                                component={component}
+                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
-                        } else if (field.class == ImageFieldClass) {
-                            return <ImageFieldEditor
+                        } else if (component.class == LinkComponentClass) {
+                            return <LinkComponentEditor
                                 key={index}
-                                field={field}
-                                dispatch={(field) => dispatch({ actionType: 'change field', index: index, field: field })}
+                                component={component}
+                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                             />
-                        } else if (field.class == OptionsFieldClass) {
-                            return <OptionsFieldEditor
+                        } else if (component.class == HeaderComponentClass) {
+                            return <HeaderComponentEditor
                                 key={index}
-                                field={field}
-                                dispatch={(field) => dispatch({ actionType: 'change field', index: index, field: field })}
+                                component={component}
+                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
-                        } else if (field.class == LocationFieldClass) {
-                            return <LocationFieldEditor
+                        } else if (component.class == ImageComponentClass) {
+                            return <ImageComponentEditor
                                 key={index}
-                                field={field}
-                                dispatch={(field) => dispatch({ actionType: 'change field', index: index, field: field })}
+                                component={component}
+                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                             />
                         }
                     })
                 }
-                <ArrayOfFieldsCreator addField={addNewField} />
+                <PageComponentsCreator addComponent={addNewComponent} />
+            </Col>
+        </Col>
 
-            </ScrollView>
-        </View>
     )
 }
