@@ -8,16 +8,22 @@ use JsonSerializable;
 class PageContent  implements JsonSerializable, Countable
 {
     private ?array $pageComponents = [];
+    private string $originalDir = 'ltr';
+    private string $translatedDir = 'rtl';
+
     public static function fromArray(array $arrayForm)
     {
         $instance = new self($arrayForm['pageComponents']);
         return $instance;
     }
 
-    public function __construct(?array $pageComponents = null)
+    public function __construct(?array $pageComponents = null, string $originalDir = 'ltr', string $translatedDir = 'rtl')
     {
         if ($pageComponents)
             $this->setPageComponents($pageComponents);
+        $this->setOriginalDir($originalDir);
+        $this->setTranslatedDir($translatedDir);
+
     }
     public function jsonSerialize()
     {
@@ -26,6 +32,9 @@ class PageContent  implements JsonSerializable, Countable
             'pageComponents' => array_map(function ($pageComponent) {
                 return $pageComponent->jsonSerialize();
             }, $this->getPageComponents()),
+            'originalDir' => $this->originalDir,
+            'translatedDir' => $this->translatedDir,
+
         );
     }
 
@@ -35,7 +44,18 @@ class PageContent  implements JsonSerializable, Countable
             $this->setPageComponent($pageComponent);
         }
     }
-
+    public function setOriginalDir(string $dir)
+    {
+        if ($dir != 'rtl' && $dir != 'ltr')
+            throw new PageComponentsException('the text direction can be either rtl or ltr');
+        $this->originalDir = $dir;
+    }
+    public function setTranslatedDir(string $dir)
+    {
+        if ($dir != 'rtl' && $dir != 'ltr')
+            throw new PageComponentsException('the text direction can be either rtl or ltr');
+        $this->translatedDir = $dir;
+    }
     public function removePageComponent($index)
     {
         unset($this->pageComponent[$index]);

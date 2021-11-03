@@ -22,14 +22,14 @@ class ParagraphComponent extends PageComponent
     }
     public function __construct(string $original, ?string $translated = null)
     {
-        $this->setoriginal($original);
+        $this->setOriginal($original);
         $this->setTranslated($translated);
     }
-    public function setoriginal(string $value)
+    public function setOriginal(string $value)
     {
         $this->original = $value;
     }
-    public function getoriginal()
+    public function getOriginal()
     {
         return $this->original;
     }
@@ -44,15 +44,15 @@ class ParagraphComponent extends PageComponent
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
-        $this->setoriginal($faker->sentence());
-        $this->setTranslated($faker->sentence());
+        $this->setOriginal($faker->text());
+        $this->setTranslated($faker->text());
 
     }
     public function isEqualTo(PageComponent $component)
     {
         if (
             $component instanceof ParagraphComponent
-            && $this->original == $component->getoriginal()
+            && $this->original == $component->getOriginal()
             && $this->translated == $component->getTranslated()
         ) {
             return true;

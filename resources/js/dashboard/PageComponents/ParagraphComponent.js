@@ -31,19 +31,20 @@ export function ParagraphComponentInput(props) {
 
 export function ParagraphComponentRender(props) {
     const component = props.component
-
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
     const popover = (
         <Popover id="popover-basic">
             <Popover.Header as="h3">ترجمة</Popover.Header>
-            <Popover.Body>
+            <Popover.Body dir={translatedDir}>
                 {component.translated}
             </Popover.Body>
         </Popover>
     );
 
-    return <Col xs={12} className='mx-auto'>
+    return <Col xs={12} className='mx-auto my-2'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <strong>{component.original}</strong>
+            <p dir={originalDir}>{component.original}</p>
         </OverlayTrigger>
     </Col >
 }

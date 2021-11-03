@@ -62,9 +62,9 @@ class LinkComponent extends PageComponent
         $faker = Container::getInstance()->make(Generator::class);
         
         $this->originalLink = $faker->url();
-        $this->originalLabel = $faker->sentance();
+        $this->originalLabel = $faker->text();
         $this->translatedLink = $faker->url();
-        $this->translatedLabel = $faker->sentance();
+        $this->translatedLabel = $faker->text();
 
     }
     public function isEqualTo(PageComponent $component)

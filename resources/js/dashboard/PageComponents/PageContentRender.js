@@ -8,21 +8,47 @@ import { Col } from 'react-bootstrap'
 
 export default function PageContentRender(props) {
     const pageContent = props.pageContent
+    console.log(pageContent)
 
     return <Col xs={12} className='bg-white'>
         <Col xs={10} className='mx-auto'>
             {
                 pageContent?.pageComponents.map((pageComponent, index) => {
                     if (pageComponent.class == ParagraphComponentClass) {
-                        return <ParagraphComponentRender key={index} component={pageComponent} />
+                        return <ParagraphComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            component={pageComponent}
+                        />
                     } else if (pageComponent.class == HeaderComponentClass) {
-                        return <HeaderComponentRender key={index} component={pageComponent} />
+                        return <HeaderComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            component={pageComponent}
+                        />
                     } else if (pageComponent.class == TitleComponentClass) {
-                        return <TitleComponentRender key={index} component={pageComponent} />
+                        return <TitleComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            component={pageComponent}
+                        />
                     } else if (pageComponent.class == ImageComponentClass) {
-                        return <ImageComponentRender key={index} component={pageComponent} />
+                        return <ImageComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            component={pageComponent}
+                        />
                     } else if (pageComponent.class == LinkComponentClass) {
-                        return <LinkComponentRender key={index} component={pageComponent} />
+                        return <LinkComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            component={pageComponent}
+                        />
                     }
                 })
             }

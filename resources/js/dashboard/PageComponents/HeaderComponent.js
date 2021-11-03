@@ -32,6 +32,9 @@ export function HeaderComponentInput(props) {
 
 export function HeaderComponentRender(props) {
     const component = props.component
+    const originalDir = component.originalDir
+    const translatedDir = component.translatedDir
+    
     const popover = (
         <Popover id="popover-basic">
             <Popover.Header as="h3">ترجمة</Popover.Header>

@@ -41,9 +41,10 @@ class PageFactory extends Factory
 
     public function definition()
     {
-
+        $page_content = new PageContent($this->generateRandomPageComponents());
+        $page_content->generateMockedValues();
         return [
-            'page_content' => new PageContent($this->generateRandomPageComponents()),
+            'page_content' => $page_content,
             'activated' => $this->faker->boolean()
         ];
     }
