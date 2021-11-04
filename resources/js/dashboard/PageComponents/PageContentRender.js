@@ -8,8 +8,10 @@ import { Col } from 'react-bootstrap'
 
 export default function PageContentRender(props) {
     const pageContent = props.pageContent
-    console.log(pageContent)
 
+    React.useEffect(() => {
+        console.log('PageContentRender', pageContent)
+    }, [])
     return <Col xs={12} className='bg-white'>
         <Col xs={10} className='mx-auto'>
             {

@@ -13,11 +13,10 @@ class PageContent  implements JsonSerializable, Countable
 
     public static function fromArray(array $arrayForm)
     {
-        $instance = new self($arrayForm['pageComponents']);
-        return $instance;
+        return new self($arrayForm['pageComponents'], $arrayForm['originalDir'], $arrayForm['translatedDir']);
     }
 
-    public function __construct(?array $pageComponents = null, string $originalDir = 'ltr', string $translatedDir = 'rtl')
+    public function __construct(?array $pageComponents = null, string $originalDir, string $translatedDir)
     {
         if ($pageComponents)
             $this->setPageComponents($pageComponents);

@@ -7,10 +7,13 @@ import { ImageComponentClass, ImageComponentCreator } from './ImageComponent'
 import { LinkComponentClass, LinkComponentCreator } from './LinkComponent'
 
 export const PageContentClass = 'App\\PageComponents\\PageContent'
-export function pageContentObject(pageComponents) {
+export function pageContentObject(pageComponents, originalDir, translatedDir) {
     return {
         class: PageContentClass,
-        pageComponents: pageComponents
+        pageComponents: pageComponents,
+        originalDir: originalDir,
+        translatedDir: translatedDir,
+
     }
 }
 const componentsTypes = {

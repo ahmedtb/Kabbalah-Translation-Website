@@ -3,6 +3,7 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger, Col
 } from 'react-bootstrap'
+import { mapRandomKey } from '../utility/helpers'
 export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'
 
 function paragraphObject(original, translated = null) {
@@ -44,7 +45,7 @@ export function ParagraphComponentRender(props) {
 
     return <Col xs={12} className='mx-auto my-2'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <p dir={originalDir}>{component.original}</p>
+            <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
         </OverlayTrigger>
     </Col >
 }
@@ -96,6 +97,8 @@ export function ParagraphComponentCreator(props) {
 
 export function ParagraphComponentEditor(props) {
     const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState(component.original)
     const [translated, settranslated] = React.useState(component.translated)
@@ -104,7 +107,20 @@ export function ParagraphComponentEditor(props) {
     const popover = (
         <Popover id="popover-basic">
             <Popover.Header as="h3">النص المترجم</Popover.Header>
-            <Popover.Body>
+            <Popover.Body >
+                <textarea
+                    style={{
+                        backgroundColor: 'white',
+                        borderWidth: 0,
+                        width: '100%',
+                    }}
+                    onChange={(e) => {
+                        setoriginal(e.target.value)
+                        dispatch(titleObject(e.target.value, translated))
+                    }}
+                    value={original??''}
+                />
+
                 <FloatingLabel label="النص المترجم">
                     <Form.Control
                         as="textarea"
@@ -112,7 +128,7 @@ export function ParagraphComponentEditor(props) {
                             settranslated(e.target.value)
                             dispatch(titleObject(original, e.target.value))
                         }}
-                        value={translated}
+                        value={translated??''}
 
                     />
                 </FloatingLabel>
@@ -124,19 +140,13 @@ export function ParagraphComponentEditor(props) {
         <div className='my-3'>
             <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
 
-                <textarea
-                    style={{
-                        backgroundColor: 'white',
-                        borderWidth: 0,
-                        width: '100%',
-                    }}
-                    onChange={(e) => {
-                        setoriginal(e.target.value)
-                        dispatch(titleObject(e.target.value, translated))
-                    }}
-                    value={original}
 
-                />
+                <Col xs={12} className='mx-auto my-2'>
+                    <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                        <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
+                    </OverlayTrigger>
+                </Col >
+
             </OverlayTrigger>
 
         </div>

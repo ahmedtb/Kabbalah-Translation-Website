@@ -64,18 +64,24 @@ export default function PageContentEditor(props) {
                             return <ParagraphComponentEditor
                                 key={index}
                                 component={component}
+                                originalDir={page_content.originalDir}
+                                translatedDir={page_content.translatedDir}
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
                         } else if (component.class == TitleComponentClass) {
                             return <TitleComponentEditor
                                 key={index}
                                 component={component}
+                                originalDir={page_content.originalDir}
+                                translatedDir={page_content.translatedDir}
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
                         } else if (component.class == LinkComponentClass) {
                             return <LinkComponentEditor
                                 key={index}
                                 component={component}
+                                originalDir={page_content.originalDir}
+                                translatedDir={page_content.translatedDir}
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                             />
@@ -83,12 +89,16 @@ export default function PageContentEditor(props) {
                             return <HeaderComponentEditor
                                 key={index}
                                 component={component}
+                                originalDir={page_content.originalDir}
+                                translatedDir={page_content.translatedDir}
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                             />
                         } else if (component.class == ImageComponentClass) {
                             return <ImageComponentEditor
                                 key={index}
                                 component={component}
+                                originalDir={page_content.originalDir}
+                                translatedDir={page_content.translatedDir}
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                             />

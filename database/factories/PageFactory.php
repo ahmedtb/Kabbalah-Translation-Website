@@ -44,6 +44,7 @@ class PageFactory extends Factory
         $page_content = new PageContent($this->generateRandomPageComponents());
         $page_content->generateMockedValues();
         return [
+            'title' => $this->faker->title(),
             'page_content' => $page_content,
             'activated' => $this->faker->boolean()
         ];

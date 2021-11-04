@@ -3,7 +3,7 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger, Col
 } from 'react-bootstrap'
-import convertFileToBase64 from '../utility/convertFileToBase64'
+import { convertFileToBase64 }from '../utility/helpers.js'
 import ImagePicker from '../components/ImagePicker'
 export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 

@@ -5,13 +5,19 @@ import { Link } from "react-router-dom";
 import PageContentRender from "../PageComponents/PageContentRender";
 import { Col, Container, Button } from "react-bootstrap";
 import Routes from '../utility/Routes'
+import {logError} from "../utility/helpers";
 export default function PageShow(props) {
 
     let { id } = useParams();
     const [page, setpage] = React.useState(null)
     async function setup() {
-        ApiEndpoints.fetchPage(id, setpage)
-        // get(ApiEndpoints.fetchPage.replace(':id', id), null, 'PageShow', setpage)
+        try {
+            const response = await ApiEndpoints.fetchPage(id)
+            setpage(response.data)
+            console.log('fetchPage', response.data)
+        } catch (error) {
+            logError(error, 'fetchPage')
+        }  
     }
     React.useEffect(() => {
         setup()
@@ -21,6 +27,9 @@ export default function PageShow(props) {
             <Link to={Routes.pageEdit(page?.id)}>
                 edit
             </Link>
+            <div>original Dir {page?.page_content.originalDir}</div>
+            <div>translated Dir {page?.page_content.translatedDir}</div>
+
             <Col xs={12}>
                 <PageContentRender pageContent={page?.page_content} />
             </Col>

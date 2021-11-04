@@ -14,7 +14,5 @@ class Page extends Model
         'page_content' => Json::class
     ];
 
-    protected $fillable = [
-        'page_content'
-    ];
+    protected $guarded = [];
 }

@@ -3,7 +3,8 @@ import ApiEndpoints from "../utility/ApiEndpoints";
 import { useParams } from "react-router";
 import PageContentEditor from "../PageComponents/PageContentEditor";
 import { Col, Container, Button } from "react-bootstrap";
-import logError from "../utility/logError";
+import {logError} from "../utility/helpers";
+import PageContentRender from "../PageComponents/PageContentRender";
 
 export default function PageEditor(props) {
 
@@ -12,8 +13,13 @@ export default function PageEditor(props) {
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
 
     async function setup() {
-        ApiEndpoints.fetchPage(id, (data) => { setpage(data); setEditedPageContent(data.page_content); })
-    }
+        try {
+            const response = await ApiEndpoints.fetchPage(id)
+            setpage(response.data)
+            console.log('PageEditor fetchPage', response.data)
+        } catch (error) {
+            logError(error, 'PageEditor fetchPage')
+        }     }
     React.useEffect(() => {
         setup()
     }, [])
@@ -35,6 +41,8 @@ export default function PageEditor(props) {
         <Container >
             <Col xs={12}>
                 <PageContentEditor pageContent={page?.page_content} setEditedPageContent={setEditedPageContent} />
+                {/* <PageContentRender pageContent={page?.page_content} /> */}
+
                 <Button onClick={submit}>submit</Button>
             </Col>
         </Container>

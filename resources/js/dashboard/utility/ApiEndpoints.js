@@ -1,9 +1,9 @@
 import axios from 'axios'
-import logError from './logError'
+import {logError} from './helpers'
 
 export default {
-    createPage: async (page_content, activated) => {
-        return await axios.post('/api/dashboard/pages', { page_content: page_content, activated: activated })
+    createPage: async (title, page_content, activated) => {
+        return await axios.post('/api/dashboard/pages', { title:title, page_content: page_content, activated: activated })
     },
     editPage: async (id, page_content, activated) => {
         return await axios.put('/api/dashboard/pages/' + id, { page_content: page_content, activated: activated })
@@ -18,13 +18,5 @@ export default {
             logError(error, 'fetchPages')
         }
     },
-    fetchPage: async (id, setData) => {
-        try {
-            const response = await axios.get('/api/dashboard/pages/' + id)
-            setData(response.data)
-            // console.log('fetchPage', response.data)
-        } catch (error) {
-            logError(error, 'fetchPage')
-        }
-    }
+    fetchPage: async (id) =>  await axios.get('/api/dashboard/pages/' + id)
 }

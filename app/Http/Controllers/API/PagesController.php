@@ -14,10 +14,16 @@ class PagesController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
+            'title' => ['required', 'string'],
             'page_content' => ['required', new PageContentRule()],
             'activated' => ['required', 'boolean']
         ]);
-        Page::create($data);
+        // return $data;
+        Page::create([
+            'title' => $request->title,
+            'page_content' => $request->page_content,
+            'activated' => $request->activated
+        ]);
         return response()->json(['success' => 'page content successfully created'], 201);
     }
 
@@ -37,6 +43,7 @@ class PagesController extends Controller
         if (!$page)
             throw new ValidationException('there is no such page with id = ' . $id);
         $data = $request->validate([
+            'title' => ['required', 'string'],
             'page_content' => ['required', new PageContentRule()],
             'activated' => ['required', 'boolean']
         ]);
