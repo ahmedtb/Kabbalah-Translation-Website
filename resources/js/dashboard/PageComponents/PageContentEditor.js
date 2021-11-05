@@ -6,7 +6,7 @@ import { LinkComponentClass, LinkComponentEditor } from './LinkComponent'
 import { ImageComponentClass, ImageComponentEditor } from './ImageComponent'
 import { HeaderComponentClass, HeaderComponentEditor } from './HeaderComponent'
 
-import PageComponentsCreator, { PageContentClass } from './PageComponentsCreator'
+import PageComponentsCreator, { PageContentClass, pageContentObject } from './PageComponentsCreator'
 import { Col } from 'react-bootstrap'
 import Button from '@restart/ui/esm/Button'
 
@@ -21,15 +21,16 @@ const reducer = (page_content, action) => {
                     return action.component;
                 return component;
             })
-            return { class: PageContentClass, pageComponents: pageComponents1 }
+            return pageContentObject(pageComponents1,page_content.originalDir, page_content.translatedDir)
         case 'remove component':
             let filtered = page_content.pageComponents.filter((value, index) => {
                 return index != action.index;
             });
-            return { class: PageContentClass, pageComponents: filtered }
+            return pageContentObject(filtered,page_content.originalDir, page_content.translatedDir)
         case 'add component':
             let increased = [...page_content.pageComponents, action.newComponent]
-            return { class: PageContentClass, pageComponents: increased }
+            return pageContentObject(increased,page_content.originalDir, page_content.translatedDir)
+
     }
     return page_content;
 }
@@ -39,10 +40,9 @@ const reducer = (page_content, action) => {
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
-    const [page_content, dispatch] = React.useReducer(reducer, props.pageContent)
+    const [page_content, dispatch] = React.useReducer(reducer, null)
 
     React.useEffect(() => {
-        // console.log('PageContentEditor useEffect', props.pageContent)
         dispatch({ actionType: 'set page_content', page_content: props.pageContent })
     }, [props.pageContent])
 
@@ -105,9 +105,10 @@ export default function PageContentEditor(props) {
                         }
                     })
                 }
-                <PageComponentsCreator addComponent={addNewComponent} />
 
             </Col>
+            <PageComponentsCreator addComponent={addNewComponent} />
+
         </Col>
 
     )

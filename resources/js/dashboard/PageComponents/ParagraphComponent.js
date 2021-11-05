@@ -15,27 +15,12 @@ function paragraphObject(original, translated = null) {
     }
 }
 
-export function ParagraphComponentInput(props) {
-    const component = props.component
-    const dispatch = props.dispatch
-
-    return <div >
-        <strong >{component.label}</strong>
-        <input
-            onChangeText={(text) => {
-                dispatch(text)
-            }}
-            value={component.value}
-        />
-    </div>
-}
-
 export function ParagraphComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body dir={translatedDir}>
                 {component.translated}
@@ -49,22 +34,6 @@ export function ParagraphComponentRender(props) {
         </OverlayTrigger>
     </Col >
 }
-
-export function ParagraphComponentFormView(props) {
-    const component = props.component
-    return <div >
-        <div >
-            <AiOutlineOrderedList />
-            <div style={{ marginLeft: 5, flex: 1, }}>
-                <strong style={{ color: 'black', fontSize: 17, flex: 1, fontWeight: 'bold' }}>{component.label}</strong>
-                <strong style={{ color: 'grey', fontSize: 10, }}>حقل نصي</strong>
-            </div>
-        </div>
-        <strong style={{ color: 'black', fontSize: 20, flex: 1, textAlign: 'center', padding: 10, backgroundColor: '#f5f0f0' }}>{component.value}</strong>
-    </div>
-}
-
-
 
 export function ParagraphComponentCreator(props) {
     const set = props.set
@@ -103,33 +72,21 @@ export function ParagraphComponentEditor(props) {
     const [original, setoriginal] = React.useState(component.original)
     const [translated, settranslated] = React.useState(component.translated)
 
+    const [scrollHeight, setscrollHeight] = React.useState(100)
 
     const popover = (
-        <Popover id="popover-basic">
-            <Popover.Header as="h3">النص المترجم</Popover.Header>
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
+            <Popover.Header as="h3">تعديل</Popover.Header>
             <Popover.Body >
-                <textarea
-                    style={{
-                        backgroundColor: 'white',
-                        borderWidth: 0,
-                        width: '100%',
-                    }}
-                    onChange={(e) => {
-                        setoriginal(e.target.value)
-                        dispatch(titleObject(e.target.value, translated))
-                    }}
-                    value={original??''}
-                />
-
                 <FloatingLabel label="النص المترجم">
                     <Form.Control
                         as="textarea"
                         onChange={(e) => {
                             settranslated(e.target.value)
-                            dispatch(titleObject(original, e.target.value))
+                            dispatch(paragraphObject(original, e.target.value))
                         }}
-                        value={translated??''}
-
+                        value={translated ?? ''}
+                        style={{ width: 900 }}
                     />
                 </FloatingLabel>
             </Popover.Body>
@@ -137,18 +94,27 @@ export function ParagraphComponentEditor(props) {
     );
 
     return (
-        <div className='my-3'>
+
+        <Col xs={12} className='mx-auto my-2'>
             <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                <textarea
+                    style={{
+                        backgroundColor: 'white',
+                        borderWidth: 0,
+                        width: 900,
+                        height: scrollHeight,
+                    }}
+                    onChange={(e) => {
+                        setoriginal(e.target.value)
+                        dispatch(paragraphObject(e.target.value, translated))
+                        setscrollHeight(e.target.scrollHeight)
+                    }}
+                    onClick={e => setscrollHeight(e.target.scrollHeight)}
+                    value={original ?? ''}
 
-
-                <Col xs={12} className='mx-auto my-2'>
-                    <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                        <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
-                    </OverlayTrigger>
-                </Col >
-
+                />
             </OverlayTrigger>
+        </Col >
 
-        </div>
     )
 }

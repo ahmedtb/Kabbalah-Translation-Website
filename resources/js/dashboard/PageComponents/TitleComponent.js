@@ -14,26 +14,11 @@ function titleObject(original, translated = null) {
     }
 }
 
-export function TitleComponentInput(props) {
-    const component = props.component
-    const dispatch = props.dispatch
-
-    return <div >
-        <strong >{component.label}</strong>
-        <input
-            onChangeText={(text) => {
-                dispatch(text)
-            }}
-            value={component.value}
-        />
-    </div>
-}
-
 export function TitleComponentRender(props) {
     const component = props.component
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
                 {component.translated}
@@ -47,21 +32,6 @@ export function TitleComponentRender(props) {
         </OverlayTrigger>
     </div >
 }
-
-export function TitleComponentFormView(props) {
-    const component = props.component
-    return <div >
-        <div >
-            <AiOutlineOrderedList />
-            <div style={{ marginLeft: 5, flex: 1, }}>
-                <strong style={{ color: 'black', fontSize: 17, flex: 1, fontWeight: 'bold' }}>{component.label}</strong>
-                <strong style={{ color: 'grey', fontSize: 10, }}>حقل نصي</strong>
-            </div>
-        </div>
-        <strong style={{ color: 'black', fontSize: 20, flex: 1, textAlign: 'center', padding: 10, backgroundColor: '#f5f0f0' }}>{component.value}</strong>
-    </div>
-}
-
 
 
 export function TitleComponentCreator(props) {
@@ -102,18 +72,18 @@ export function TitleComponentEditor(props) {
 
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" >
             <Popover.Header as="h3">النص المترجم</Popover.Header>
             <Popover.Body>
                 <FloatingLabel label="النص المترجم">
                     <Form.Control
-                        as="textarea"
-                        style={{ height: '100px' }}
+                        as="input"
                         onChange={(e) => {
                             settranslated(e.target.value)
                             dispatch(titleObject(original, e.target.value))
                         }}
-                        value={translated}
+                        value={translated ?? ''}
+                        style={{ width: 900 }}
 
                     />
                 </FloatingLabel>

@@ -13,7 +13,6 @@ export function pageContentObject(pageComponents, originalDir, translatedDir) {
         pageComponents: pageComponents,
         originalDir: originalDir,
         translatedDir: translatedDir,
-
     }
 }
 const componentsTypes = {

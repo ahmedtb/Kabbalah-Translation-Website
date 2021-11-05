@@ -15,28 +15,13 @@ function headerObject(original, translated = null, size = 1) {
     }
 }
 
-export function HeaderComponentInput(props) {
-    const component = props.component
-    const dispatch = props.dispatch
-
-    return <div >
-        <strong >{component.label}</strong>
-        <input
-            onChangeText={(text) => {
-                dispatch(text)
-            }}
-            value={component.value}
-        />
-    </div>
-}
-
 export function HeaderComponentRender(props) {
     const component = props.component
     const originalDir = component.originalDir
     const translatedDir = component.translatedDir
     
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{maxWidth:1000}}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
                 {component.translated}
@@ -64,22 +49,6 @@ export function HeaderComponentRender(props) {
         </OverlayTrigger>
     </Col >
 }
-
-export function HeaderComponentFormView(props) {
-    const component = props.component
-    return <div >
-        <div >
-            <AiOutlineOrderedList />
-            <div style={{ marginLeft: 5, flex: 1, }}>
-                <strong style={{ color: 'black', fontSize: 17, flex: 1, fontWeight: 'bold' }}>{component.label}</strong>
-                <strong style={{ color: 'grey', fontSize: 10, }}>حقل نصي</strong>
-            </div>
-        </div>
-        <strong style={{ color: 'black', fontSize: 20, flex: 1, textAlign: 'center', padding: 10, backgroundColor: '#f5f0f0' }}>{component.value}</strong>
-    </div>
-}
-
-
 
 export function HeaderComponentCreator(props) {
     const set = props.set
@@ -134,7 +103,7 @@ export function HeaderComponentEditor(props) {
 
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{maxWidth:1000}}>
             <Popover.Header as="h3">النص المترجم</Popover.Header>
             <Popover.Body>
                 <FloatingLabel label="النص المترجم">

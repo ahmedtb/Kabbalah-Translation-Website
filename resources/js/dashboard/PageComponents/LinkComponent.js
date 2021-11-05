@@ -19,26 +19,11 @@ function linkObject(originalLink, originalLabel = null, translatedLink = null, t
     }
 }
 
-export function LinkComponentInput(props) {
-    const component = props.component
-    const dispatch = props.dispatch
-
-    return <div >
-        <strong >{component.label}</strong>
-        <input
-            onChangeText={(text) => {
-                dispatch(text)
-            }}
-            value={component.value}
-        />
-    </div>
-}
-
 export function LinkComponentRender(props) {
     const component = props.component
 
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{maxWidth:1000}}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
                 {component.translatedLink}
@@ -52,22 +37,6 @@ export function LinkComponentRender(props) {
         </OverlayTrigger>
     </div >
 }
-
-export function LinkComponentFormView(props) {
-    const component = props.component
-    return <div >
-        <div >
-            <AiOutlineOrderedList />
-            <div style={{ marginLeft: 5, flex: 1, }}>
-                <strong style={{ color: 'black', fontSize: 17, flex: 1, fontWeight: 'bold' }}>{component.label}</strong>
-                <strong style={{ color: 'grey', fontSize: 10, }}>حقل نصي</strong>
-            </div>
-        </div>
-        <strong style={{ color: 'black', fontSize: 20, flex: 1, textAlign: 'center', padding: 10, backgroundColor: '#f5f0f0' }}>{component.value}</strong>
-    </div>
-}
-
-
 
 export function LinkComponentCreator(props) {
     const set = props.set
@@ -132,7 +101,7 @@ export function LinkComponentEditor(props) {
     const [translatedLink, settranslatedLink] = React.useState(component.translatedLink)
     const [translatedLabel, settranslatedLabel] = React.useState(component.translatedLabel)
     const popover = (
-        <Popover id="popover-basic">
+        <Popover id="popover-basic" style={{maxWidth:1000}}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
                 {translatedLink}
