@@ -1,14 +1,14 @@
 import React from 'react'
 
-import { ParagraphComponentClass, ParagraphComponentEditor } from './ParagraphComponent'
-import { TitleComponentClass, TitleComponentEditor } from './TitleComponent'
-import { LinkComponentClass, LinkComponentEditor } from './LinkComponent'
-import { ImageComponentClass, ImageComponentEditor } from './ImageComponent'
-import { HeaderComponentClass, HeaderComponentEditor } from './HeaderComponent'
-
-import PageComponentsCreator, { PageContentClass, pageContentObject } from './PageComponentsCreator'
+import {  ParagraphComponentEditor } from '../PageComponents/ParagraphComponent'
+import {  TitleComponentEditor } from '../PageComponents/TitleComponent'
+import {  LinkComponentEditor } from '../PageComponents/LinkComponent'
+import {  ImageComponentEditor } from '../PageComponents/ImageComponent'
+import {  HeaderComponentEditor } from '../PageComponents/HeaderComponent'
+import PageComponentsCreator from './PageComponentsCreator'
 import { Col } from 'react-bootstrap'
-import Button from '@restart/ui/esm/Button'
+import { pageContentObject } from '../PageComponents/structure'
+
 
 const reducer = (page_content, action) => {
 

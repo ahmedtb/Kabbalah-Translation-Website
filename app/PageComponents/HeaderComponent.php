@@ -9,20 +9,20 @@ class HeaderComponent extends PageComponent
 {
 
     private string $original;
-    private ?string $translated = null;
-    private int $size = 1;
+    private string $translated = '';
+    private array $style = [];
 
     public static function fromArray(array $array)
     {
         if($array['class'] != HeaderComponent::class)
             throw new PageComponentsException('the array class is not HeaderComponent class, it is: ' . $array['class']);
-        return new self($array['original'], $array['translated'], $array['size']);
+        return new self($array['original'], $array['translated'], $array['style']);
     }
-    public function __construct(string $original, ?string $translated = null, int $size = 1)
+    public function __construct(string $original, string $translated = '', array $style = [])
     {
         $this->setoriginal($original);
         $this->setTranslated($translated);
-        $this->size = $size;
+        $this->style = $style;
     }
     
     public function jsonSerialize()
@@ -31,7 +31,7 @@ class HeaderComponent extends PageComponent
             'class' => HeaderComponent::class,
             'original' => $this->original,
             'translated' => $this->translated,
-            'size' => $this->size,
+            'style' => $this->style,
         ];
     }
 
@@ -44,7 +44,7 @@ class HeaderComponent extends PageComponent
     {
         return $this->original;
     }
-    public function setTranslated(?string $value = null)
+    public function setTranslated(string $value = '')
     {
         $this->translated = $value;
     }

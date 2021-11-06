@@ -3,19 +3,11 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger
 } from 'react-bootstrap'
-export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
 
-function titleObject(original, translated = null) {
-
-    return {
-        class: TitleComponentClass,
-        original: original,
-        translated: translated,
-    }
-}
 
 export function TitleComponentRender(props) {
     const component = props.component
+    const render = props.render
 
     const popover = (
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
@@ -28,7 +20,11 @@ export function TitleComponentRender(props) {
 
     return <div >
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <h1 className='text-center'>{component.original}</h1>
+            {render == 'original' ?
+                <h1 className='text-center'>{component.original}</h1>
+                :
+                <h1 className='text-center'>{component.translated}</h1>
+            }
         </OverlayTrigger>
     </div >
 }

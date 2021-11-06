@@ -48,6 +48,15 @@ class PagesController extends Controller
             'activated' => ['required', 'boolean']
         ]);
         $page->update($data);
-        return response()->json(['success'=>'page with id = ' . $id . ' is updated']);
+        return response()->json(['success' => 'page with id = ' . $id . ' is updated']);
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $page = Page::where('id', $id)->first();
+        if (!$page)
+            throw new ValidationException('there is no such page with id = ' . $id);
+        $page->delete();
+        return response()->json(['success' => 'page with id = ' . $id . ' is deleted']);
     }
 }

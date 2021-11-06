@@ -22,6 +22,17 @@ class ImageComponent extends PageComponent
         $this->setoriginal($original);
         $this->setTranslated($translated);
     }
+    
+    public function jsonSerialize()
+    {
+        return [
+            'class' => ImageComponent::class,
+            'original' => $this->original,
+            'translated' => $this->translated,
+
+        ];
+    }
+    
     public function setoriginal(string $value)
     {
         if (!isValidBase64($value))
@@ -62,13 +73,4 @@ class ImageComponent extends PageComponent
         }
     }
 
-    public function jsonSerialize()
-    {
-        return [
-            'class' => ImageComponent::class,
-            'original' => $this->original,
-            'translated' => $this->translated,
-
-        ];
-    }
 }

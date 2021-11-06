@@ -6,18 +6,7 @@ import {
     Popover,
     OverlayTrigger
 } from 'react-bootstrap'
-export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
-
-function linkObject(originalLink, originalLabel = null, translatedLink = null, translatedLabel = null) {
-
-    return {
-        class: LinkComponentClass,
-        originalLink: originalLink,
-        originalLabel: originalLabel,
-        translatedLink: translatedLink,
-        translatedLabel: translatedLabel
-    }
-}
+import { linkObject } from './structure'
 
 export function LinkComponentRender(props) {
     const component = props.component

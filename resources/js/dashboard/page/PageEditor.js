@@ -1,10 +1,10 @@
 import React from "react";
 import ApiEndpoints from "../utility/ApiEndpoints";
 import { useParams } from "react-router";
-import PageContentEditor from "../PageComponents/PageContentEditor";
+import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
 import { logError } from "../utility/helpers";
-import PageContentRender from "../PageComponents/PageContentRender";
+import PageContentRender from "../components/PageContentRender";
 
 export default function PageEditor(props) {
 

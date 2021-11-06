@@ -28,7 +28,6 @@ class TitleComponent extends PageComponent
             'class' => TitleComponent::class,
             'original' => $this->original,
             'translated' => $this->translated,
-
         ];
     }
     public function setoriginal(string $value)

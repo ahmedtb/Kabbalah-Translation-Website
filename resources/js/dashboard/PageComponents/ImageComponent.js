@@ -5,18 +5,6 @@ import {
 } from 'react-bootstrap'
 import { convertFileToBase64 }from '../utility/helpers.js'
 import ImagePicker from '../components/ImagePicker'
-export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
-
-
-
-function imageObject(original, translated = null) {
-
-    return {
-        class: ImageComponentClass,
-        original: original,
-        translated: translated,
-    }
-}
 
 export function ImageComponentRender(props) {
     const component = props.component

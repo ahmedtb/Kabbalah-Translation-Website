@@ -12,19 +12,34 @@ class ParagraphComponent extends PageComponent
 {
 
     private string $original;
-    private ?string $translated = null;
+    private string $translated = '';
+    private array $style = [];
 
     public static function fromArray(array $array)
     {
         if($array['class'] != ParagraphComponent::class)
             throw new PageComponentsException('the array class is not ParagraphComponent class, it is: ' . $array['class']);
-        return new self($array['original'], $array['translated']);
+
+        return new self($array['original'], $array['translated'], $array['style']);
     }
-    public function __construct(string $original, ?string $translated = null)
+    public function __construct(string $original, string $translated = '', array $style = [])
     {
         $this->setOriginal($original);
         $this->setTranslated($translated);
+        $this->setStyle($style);
+
     }
+    
+    public function jsonSerialize()
+    {
+        return [
+            'class' => ParagraphComponent::class,
+            'original' => $this->original,
+            'translated' => $this->translated,
+            'style' => $this->style,
+        ];
+    }
+
     public function setOriginal(string $value)
     {
         $this->original = $value;
@@ -33,7 +48,7 @@ class ParagraphComponent extends PageComponent
     {
         return $this->original;
     }
-    public function setTranslated(?string $value = null)
+    public function setTranslated(string $value = '')
     {
         $this->translated = $value;
     }
@@ -41,12 +56,20 @@ class ParagraphComponent extends PageComponent
     {
         return $this->translated;
     }
+    public function setStyle(array $style = [])
+    {
+        $this->style = $style;
+    }
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
     public function generateMockedValues()
     {
         $faker = Container::getInstance()->make(Generator::class);
         $this->setOriginal($faker->text());
         $this->setTranslated($faker->text());
-
     }
     public function isEqualTo(PageComponent $component)
     {
@@ -61,13 +84,4 @@ class ParagraphComponent extends PageComponent
         }
     }
 
-    public function jsonSerialize()
-    {
-        return [
-            'class' => ParagraphComponent::class,
-            'original' => $this->original,
-            'translated' => $this->translated,
-
-        ];
-    }
 }

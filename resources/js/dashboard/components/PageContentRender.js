@@ -1,13 +1,24 @@
 import React from 'react'
-import { ParagraphComponentRender, ParagraphComponentClass } from './ParagraphComponent'
-import { HeaderComponentRender, HeaderComponentClass } from './HeaderComponent'
-import { TitleComponentRender, TitleComponentClass } from './TitleComponent'
-import { ImageComponentRender, ImageComponentClass } from './ImageComponent'
-import { LinkComponentRender, LinkComponentClass } from './LinkComponent'
+import { ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
+import { HeaderComponentRender } from '../PageComponents/HeaderComponent'
+import { TitleComponentRender } from '../PageComponents/TitleComponent'
+import { ImageComponentRender, } from '../PageComponents/ImageComponent'
+import { LinkComponentRender } from '../PageComponents/LinkComponent'
+
+import { 
+    ParagraphComponentClass, 
+    HeaderComponentClass, 
+    TitleComponentClass, 
+    ImageComponentClass, 
+    LinkComponentClass 
+} from '../PageComponents/structure'
+
 import { Col } from 'react-bootstrap'
 
 export default function PageContentRender(props) {
     const pageContent = props.pageContent
+    const render = props.render
+
 
     React.useEffect(() => {
         console.log('PageContentRender', pageContent)
@@ -21,6 +32,7 @@ export default function PageContentRender(props) {
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}
+                            render={render}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == HeaderComponentClass) {
@@ -28,6 +40,7 @@ export default function PageContentRender(props) {
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}
+                            render={render}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == TitleComponentClass) {
@@ -35,6 +48,7 @@ export default function PageContentRender(props) {
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}
+                            render={render}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == ImageComponentClass) {
@@ -42,6 +56,7 @@ export default function PageContentRender(props) {
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}
+                            render={render}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == LinkComponentClass) {
@@ -49,6 +64,7 @@ export default function PageContentRender(props) {
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}
+                            render={render}
                             component={pageComponent}
                         />
                     }

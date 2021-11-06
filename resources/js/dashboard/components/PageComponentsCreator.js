@@ -1,20 +1,20 @@
 import React from 'react'
 import { Dropdown, Button, Col } from 'react-bootstrap'
-import { HeaderComponentClass, HeaderComponentCreator } from './HeaderComponent'
-import { ParagraphComponentClass, ParagraphComponentCreator } from './ParagraphComponent'
-import { TitleComponentClass, TitleComponentCreator } from './TitleComponent'
-import { ImageComponentClass, ImageComponentCreator } from './ImageComponent'
-import { LinkComponentClass, LinkComponentCreator } from './LinkComponent'
+import { HeaderComponentCreator } from '../PageComponents/HeaderComponent'
+import { ParagraphComponentCreator } from '../PageComponents/ParagraphComponent'
+import { TitleComponentCreator } from '../PageComponents/TitleComponent'
+import { ImageComponentCreator } from '../PageComponents/ImageComponent'
+import { LinkComponentCreator } from '../PageComponents/LinkComponent'
 
-export const PageContentClass = 'App\\PageComponents\\PageContent'
-export function pageContentObject(pageComponents, originalDir, translatedDir) {
-    return {
-        class: PageContentClass,
-        pageComponents: pageComponents,
-        originalDir: originalDir,
-        translatedDir: translatedDir,
-    }
-}
+import {
+    ParagraphComponentClass,
+    TitleComponentClass,
+    LinkComponentClass,
+    ImageComponentClass,
+    HeaderComponentClass
+} from '../PageComponents/structure'
+
+
 const componentsTypes = {
     [ParagraphComponentClass]: 'نص عادي',
     [HeaderComponentClass]: 'عنوان فرعي',

@@ -1,10 +1,9 @@
 import React from "react"
-import PageComponentsCreator, { pageContentObject } from "../PageComponents/PageComponentsCreator"
-import PageContentRender from "../PageComponents/PageContentRender";
+import PageComponentsCreator from "../components/PageComponentsCreator"
+import PageContentRender from "../components/PageContentRender";
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
-import axios from "axios";
 import ApiEndpoints from "../utility/ApiEndpoints";
-import {logError} from "../utility/helpers";
+import { pageContentObject } from "../PageComponents/structure";
 
 const creatorReducer = (pageContent, action) => {
     switch (action.actionType) {
@@ -55,6 +54,7 @@ export default function PageCreator(props) {
     function setTranslatedDir(dir) {
         dispatch({ actionType: 'set translated dir', translatedDir: dir })
     }
+    const [render, setrender] = React.useState('original')
 
     return <Container >
         <div className='d-flex flex-row justify-content-between'>
@@ -84,14 +84,15 @@ export default function PageCreator(props) {
                     <FormCheck.Label>ltr</FormCheck.Label>
                 </FormCheck>
             </div>
-            <FormCheck>
-                <FormCheck.Label>عنوان المقالة</FormCheck.Label>
-                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
-            </FormCheck>
+
         </div>
+        <FormCheck>
+            <FormCheck.Label>عنوان المقالة</FormCheck.Label>
+            <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
+        </FormCheck>
 
         <Col xs={12}>
-            <PageContentRender pageContent={pageContent} />
+            <PageContentRender pageContent={pageContent} render='original' />
             <PageComponentsCreator addComponent={addComponent} />
             <Button onClick={submit}>submit</Button>
         </Col>

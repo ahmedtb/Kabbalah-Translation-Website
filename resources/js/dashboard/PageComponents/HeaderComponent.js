@@ -3,17 +3,7 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger, Col
 } from 'react-bootstrap'
-export const HeaderComponentClass = 'App\\PageComponents\\HeaderComponent'
-
-function headerObject(original, translated = null, size = 1) {
-
-    return {
-        class: HeaderComponentClass,
-        original: original,
-        translated: translated,
-        size: size
-    }
-}
+import {headerObject} from './structure'
 
 export function HeaderComponentRender(props) {
     const component = props.component
