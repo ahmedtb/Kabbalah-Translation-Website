@@ -3,15 +3,15 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger, Col
 } from 'react-bootstrap'
-import {headerObject} from './structure'
+import { headerObject } from './structure'
 
 export function HeaderComponentRender(props) {
     const component = props.component
     const originalDir = component.originalDir
     const translatedDir = component.translatedDir
-    
+
     const popover = (
-        <Popover id="popover-basic" style={{maxWidth:1000}}>
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
                 {component.translated}
@@ -93,19 +93,11 @@ export function HeaderComponentEditor(props) {
 
 
     const popover = (
-        <Popover id="popover-basic" style={{maxWidth:1000}}>
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">النص المترجم</Popover.Header>
             <Popover.Body>
                 <FloatingLabel label="النص المترجم">
-                    <Form.Control
-                        as="textarea"
-                        onChange={(e) => {
-                            settranslated(e.target.value)
-                            dispatch(titleObject(original, e.target.value))
-                        }}
-                        value={translated}
 
-                    />
                 </FloatingLabel>
             </Popover.Body>
         </Popover>
@@ -113,23 +105,32 @@ export function HeaderComponentEditor(props) {
 
     return (
         <div className='my-3'>
-            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
 
-                <input
-                    style={{
-                        backgroundColor: 'white',
-                        borderWidth: 0,
-                        fontSize: 50/size,
-                        width: '100%',
-                    }}
-                    onChange={(e) => {
-                        setoriginal(e.target.value)
-                        dispatch(titleObject(e.target.value, translated))
-                    }}
-                    value={original}
+            <input
+                style={{
+                    backgroundColor: 'white',
+                    borderWidth: 0,
+                    fontSize: 50 / size,
+                    width: '100%',
+                }}
+                onChange={(e) => {
+                    setoriginal(e.target.value)
+                    dispatch(titleObject(e.target.value, translated))
+                }}
+                value={original}
 
-                />
-            </OverlayTrigger>
+            />
+            <Form.Control
+                as="textarea"
+                onChange={(e) => {
+                    settranslated(e.target.value)
+                    dispatch(titleObject(original, e.target.value))
+                }}
+                value={translated}
+
+            />
+            {/* </OverlayTrigger> */}
 
         </div>
     )

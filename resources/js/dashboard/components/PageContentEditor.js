@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { ParagraphComponentEditor } from '../PageComponents/ParagraphComponent'
-import { TitleComponentEditor } from '../PageComponents/TitleComponent'
-import { LinkComponentEditor } from '../PageComponents/LinkComponent'
-import { ImageComponentEditor } from '../PageComponents/ImageComponent'
-import { HeaderComponentEditor } from '../PageComponents/HeaderComponent'
+import { ParagraphComponentEditor, ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
+import { TitleComponentEditor, TitleComponentRender } from '../PageComponents/TitleComponent'
+import { LinkComponentEditor, LinkComponentRender } from '../PageComponents/LinkComponent'
+import { ImageComponentEditor, ImageComponentRender } from '../PageComponents/ImageComponent'
+import { HeaderComponentEditor, HeaderComponentRender } from '../PageComponents/HeaderComponent'
 import PageComponentsCreator from './PageComponentsCreator'
-import { Col } from 'react-bootstrap'
+import { Col, FormCheck } from 'react-bootstrap'
 import {
     ParagraphComponentClass,
     HeaderComponentClass,
@@ -16,7 +16,7 @@ import {
     pageContentObject
 } from '../PageComponents/structure'
 import { mapRandomKey } from '../utility/helpers'
-import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai'
+import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
 
 
 const reducer = (page_content, action) => {
@@ -24,6 +24,7 @@ const reducer = (page_content, action) => {
     switch (action.actionType) {
         case 'set page_content':
             return action.page_content
+
         case 'change component':
             let pageComponents1 = page_content.pageComponents.map((component, index) => {
                 if (index == action.index)
@@ -31,6 +32,7 @@ const reducer = (page_content, action) => {
                 return component;
             })
             return pageContentObject(pageComponents1, page_content.originalDir, page_content.translatedDir)
+
         case 'remove component':
             let filtered = page_content.pageComponents.filter((value, index) => {
                 return index != action.index;
@@ -39,6 +41,7 @@ const reducer = (page_content, action) => {
         case 'add component':
             let increased = [...page_content.pageComponents, action.newComponent]
             return pageContentObject(increased, page_content.originalDir, page_content.translatedDir)
+
         case 'left up component':
             let leftup = [...page_content.pageComponents];
             if (action.index >= 1)
@@ -49,6 +52,11 @@ const reducer = (page_content, action) => {
             if (action.index < leftdown.length - 1)
                 [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
             return pageContentObject(leftdown, page_content.originalDir, page_content.translatedDir)
+
+        case 'set original dir':
+            return pageContentObject(page_content.pageComponents, action.dir, page_content.translatedDir)
+        case 'set translated dir':
+            return pageContentObject(page_content.pageComponents, page_content.originalDir, action.dir)
     }
     return page_content;
 }
@@ -59,7 +67,7 @@ const reducer = (page_content, action) => {
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
     const [page_content, dispatch] = React.useReducer(reducer, null)
-
+    const [editComponent, seteditComponent] = React.useState(null)
     React.useEffect(() => {
         dispatch({ actionType: 'set page_content', page_content: props.pageContent })
     }, [props.pageContent])
@@ -73,91 +81,166 @@ export default function PageContentEditor(props) {
     }
 
     return (
-        <Col xs={12} className='bg-white'>
-            <Col xs={10} className='mx-auto'>
+        <div>
+            <div className='d-flex flex-row justify-content-between'>
+                <div>
+                    original direction
 
-                {
-                    page_content?.pageComponents?.map((component, index) => {
-                        if (component.class == ParagraphComponentClass) {
-                            return <div key={mapRandomKey()} className='d-flex flex-row'>
-                                <div>
-                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                    <FormCheck>
+                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
+                        <FormCheck.Label>rtl</FormCheck.Label>
+                    </FormCheck>
+
+                    <FormCheck>
+                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'ltr' })} />
+                        <FormCheck.Label>ltr</FormCheck.Label>
+                    </FormCheck>
+                </div>
+                <div>
+                    translated direction
+
+                    <FormCheck>
+                        <FormCheck.Input type='radio' name='translatedDir' onClick={() => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />
+                        <FormCheck.Label>rtl</FormCheck.Label>
+                    </FormCheck>
+
+                    <FormCheck>
+                        <FormCheck.Input type='radio' name='translatedDir' onClick={() => dispatch({ actionType: 'set translated dir', dir: 'ltr' })} />
+                        <FormCheck.Label>ltr</FormCheck.Label>
+                    </FormCheck>
+                </div>
+
+            </div>
+            <Col xs={12} className='bg-white'>
+                <Col xs={10} className='mx-auto'>
+
+                    {
+                        page_content?.pageComponents?.map((component, index) => {
+                            if (component.class == ParagraphComponentClass) {
+                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                    </div>
+                                    {
+                                        editComponent == index ? <ParagraphComponentEditor
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                        /> : <ParagraphComponentRender
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            render='original'
+                                        />
+                                    }
+
                                 </div>
-                                <ParagraphComponentEditor
-                                    component={component}
-                                    originalDir={page_content.originalDir}
-                                    translatedDir={page_content.translatedDir}
-                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                                />
-                            </div>
-                        } else if (component.class == TitleComponentClass) {
-                            return <div key={mapRandomKey()} className='d-flex flex-row'>
-                                <div>
-                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                            } else if (component.class == TitleComponentClass) {
+                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                    </div>
+                                    {
+                                        editComponent == index ? <TitleComponentEditor
+                                            key={index}
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                        /> : <TitleComponentRender
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            render='original'
+                                        />
+                                    }
                                 </div>
-                                <TitleComponentEditor
-                                    key={index}
-                                    component={component}
-                                    originalDir={page_content.originalDir}
-                                    translatedDir={page_content.translatedDir}
-                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                                />
-                            </div>
 
-                        } else if (component.class == LinkComponentClass) {
-                            return <div key={mapRandomKey()} className='d-flex flex-row'>
-                                <div>
-                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                            } else if (component.class == LinkComponentClass) {
+                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                    </div>
+                                    {
+                                        editComponent == index ? <LinkComponentEditor
+                                            key={index}
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+
+                                        /> : <LinkComponentRender
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            render='original'
+                                        />
+                                    }
                                 </div>
-                                <LinkComponentEditor
-                                    key={index}
-                                    component={component}
-                                    originalDir={page_content.originalDir}
-                                    translatedDir={page_content.translatedDir}
-                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
-                                />
-                            </div>
+                            } else if (component.class == HeaderComponentClass) {
+                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
 
-                        } else if (component.class == HeaderComponentClass) {
-                            return <div key={mapRandomKey()} className='d-flex flex-row'>
-                                <div>
-                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                    </div>
+                                    {
+                                        editComponent == index ? <HeaderComponentEditor
+                                            key={index}
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                        /> : <HeaderComponentRender
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            render='original'
+                                        />
+                                    }
                                 </div>
-                                <HeaderComponentEditor
-                                    key={index}
-                                    component={component}
-                                    originalDir={page_content.originalDir}
-                                    translatedDir={page_content.translatedDir}
-                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                                />
-                            </div>
-                        } else if (component.class == ImageComponentClass) {
-                            return <div key={mapRandomKey()} className='d-flex flex-row'>
-                                <div>
-                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
-                                </div> <ImageComponentEditor
-                                key={index}
-                                component={component}
-                                originalDir={page_content.originalDir}
-                                translatedDir={page_content.translatedDir}
-                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                            } else if (component.class == ImageComponentClass) {
+                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
 
-                            />
-                            </div>
-                        }
-                    })
-                }
+                                    </div>
+                                    {
+                                        editComponent == index ? <ImageComponentEditor
+                                            key={index}
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+
+                                        /> : <ImageComponentRender
+                                            component={component}
+                                            originalDir={page_content.originalDir}
+                                            translatedDir={page_content.translatedDir}
+                                            render='original'
+                                        />
+                                    }
+                                </div>
+                            }
+                        })
+                    }
+
+                </Col>
+                <PageComponentsCreator addComponent={addNewComponent} />
 
             </Col>
-            <PageComponentsCreator addComponent={addNewComponent} />
-
-        </Col>
+        </div>
 
     )
 }

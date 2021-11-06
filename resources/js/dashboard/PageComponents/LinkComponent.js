@@ -93,21 +93,13 @@ export function LinkComponentEditor(props) {
         <Popover id="popover-basic" style={{maxWidth:1000}}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                {translatedLink}
-                <Form.Control
-                    as="input"
-                    value={translatedLabel}
-                    onChange={(e) => {
-                        settranslatedLabel(e.target.value)
-                        dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
-                    }}
-                />
+                
             </Popover.Body>
         </Popover>
     );
 
     return <div >
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+        {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
             <div>
                 <div>{originalLink}</div>
                 <Form.Control
@@ -118,8 +110,17 @@ export function LinkComponentEditor(props) {
                         dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
                     }}
                 />
+                {translatedLink}
+                <Form.Control
+                    as="input"
+                    value={translatedLabel}
+                    onChange={(e) => {
+                        settranslatedLabel(e.target.value)
+                        dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
+                    }}
+                />
             </div>
-        </OverlayTrigger>
+        {/* </OverlayTrigger> */}
     </div >
 
 }

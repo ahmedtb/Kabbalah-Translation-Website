@@ -59,7 +59,7 @@ export function ParagraphComponentCreator(props) {
                 label="bold"
                 name="bold"
                 type={'checkbox'}
-                onChange={(e) => setstyle(pre => ({ ...pre, fontWeight: e.target.checked ? 'bold' : undefined }))}
+                onChange={(e) => setstyle(pre => ({ ...pre, fontStyle: e.target.checked ? 'italic' : undefined }))}
             />
             <Form.Check
                 inline
@@ -102,61 +102,54 @@ export function ParagraphComponentEditor(props) {
     const [translated, settranslated] = React.useState(component.translated)
     const [style, setstyle] = React.useState({})
 
-    const popover = (
-        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
-            <Popover.Header as="h3">تعديل</Popover.Header>
-            <Popover.Body >
-                <div className="mb-1">
-                    <div>styling</div>
-                    <Form.Check
-                        inline
-                        label="bold"
-                        name="bold"
-                        type={'checkbox'}
-                        onChange={(e) => setstyle(pre => ({ ...pre, fontWeight: e.target.checked ? 'bold' : undefined }))}
-                    />
-                    <Form.Check
-                        inline
-                        label="italic"
-                        name="italic"
-                        onChange={(e) => setstyle(pre => ({ ...pre, fontStyle: e.target.checked ? 'italic' : undefined }))}
-                        type={'checkbox'}
-                    />
-                </div>
-                <textarea
-                    style={{
-                        backgroundColor: 'white',
-                        borderWidth: 0,
-                        width: 900, minHeight: 100,
-                    }}
-                    onChange={(e) => {
-                        setoriginal(e.target.value)
-                        dispatch(paragraphObject(e.target.value, translated, style))
-                    }}
-                    value={original ?? ''}
-                />
-                <textarea
-                    onChange={(e) => {
-                        settranslated(e.target.value)
-                        dispatch(paragraphObject(original, e.target.value, style))
-                    }}
-                    value={translated ?? ''}
-                    style={{ width: 900, minHeight: 100 }}
-                />
-            </Popover.Body>
-        </Popover>
-    );
-
     return (
 
         <Col xs={12} className='mx-auto my-2'>
-
-            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-
-                <div dir={originalDir} style={style}>
-                    {component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
-                </div>
-            </OverlayTrigger>
+            <div className="mb-1">
+                <div>styling</div>
+                <Form.Check
+                    inline
+                    label="bold"
+                    name="bold"
+                    type={'checkbox'}
+                    onChange={(e) => {
+                        let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
+                        setstyle(newstyle)
+                        dispatch(paragraphObject(original, translated, newstyle))
+                    }}
+                />
+                <Form.Check
+                    inline
+                    label="italic"
+                    name="italic"
+                    onChange={(e) => {
+                        let newstyle = { ...style, fontStyle: e.target.checked ? 'italic' : undefined }
+                        setstyle(newstyle)
+                        dispatch(paragraphObject(original, translated, newstyle))
+                    }}
+                    type={'checkbox'}
+                />
+            </div>
+            <textarea
+                style={{
+                    backgroundColor: 'white',
+                    borderWidth: 0,
+                    width: 900, minHeight: 100,
+                }}
+                onChange={(e) => {
+                    setoriginal(e.target.value)
+                    dispatch(paragraphObject(e.target.value, translated, style))
+                }}
+                value={original ?? ''}
+            />
+            <textarea
+                onChange={(e) => {
+                    settranslated(e.target.value)
+                    dispatch(paragraphObject(original, e.target.value, style))
+                }}
+                value={translated ?? ''}
+                style={{ width: 900, minHeight: 100 }}
+            />
         </Col >
 
     )

@@ -72,16 +72,7 @@ export function TitleComponentEditor(props) {
             <Popover.Header as="h3">النص المترجم</Popover.Header>
             <Popover.Body>
                 <FloatingLabel label="النص المترجم">
-                    <Form.Control
-                        as="input"
-                        onChange={(e) => {
-                            settranslated(e.target.value)
-                            dispatch(titleObject(original, e.target.value))
-                        }}
-                        value={translated ?? ''}
-                        style={{ width: 900 }}
 
-                    />
                 </FloatingLabel>
             </Popover.Body>
         </Popover>
@@ -89,7 +80,7 @@ export function TitleComponentEditor(props) {
 
     return (
         <div className='my-3'>
-            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
 
                 <input
                     style={{
@@ -107,7 +98,17 @@ export function TitleComponentEditor(props) {
                     value={original}
 
                 />
-            </OverlayTrigger>
+                <Form.Control
+                    as="input"
+                    onChange={(e) => {
+                        settranslated(e.target.value)
+                        dispatch(titleObject(original, e.target.value))
+                    }}
+                    value={translated ?? ''}
+                    style={{ width: 900 }}
+
+                />
+            {/* </OverlayTrigger> */}
 
         </div>
     )

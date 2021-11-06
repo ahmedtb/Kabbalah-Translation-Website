@@ -17,19 +17,19 @@ class ParagraphComponent extends PageComponent
 
     public static function fromArray(array $array)
     {
-        if($array['class'] != ParagraphComponent::class)
+        if ($array['class'] != ParagraphComponent::class)
             throw new PageComponentsException('the array class is not ParagraphComponent class, it is: ' . $array['class']);
+        $style = array_key_exists('style', $array) ? $array['style'] : [];
 
-        return new self($array['original'], $array['translated'], $array['style']);
+        return new self($array['original'], $array['translated'], $style);
     }
     public function __construct(string $original, string $translated = '', array $style = [])
     {
         $this->setOriginal($original);
         $this->setTranslated($translated);
         $this->setStyle($style);
-
     }
-    
+
     public function jsonSerialize()
     {
         return [
@@ -83,5 +83,4 @@ class ParagraphComponent extends PageComponent
             return false;
         }
     }
-
 }
