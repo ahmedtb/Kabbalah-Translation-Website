@@ -1,13 +1,22 @@
 import React from 'react'
 
-import {  ParagraphComponentEditor } from '../PageComponents/ParagraphComponent'
-import {  TitleComponentEditor } from '../PageComponents/TitleComponent'
-import {  LinkComponentEditor } from '../PageComponents/LinkComponent'
-import {  ImageComponentEditor } from '../PageComponents/ImageComponent'
-import {  HeaderComponentEditor } from '../PageComponents/HeaderComponent'
+import { ParagraphComponentEditor } from '../PageComponents/ParagraphComponent'
+import { TitleComponentEditor } from '../PageComponents/TitleComponent'
+import { LinkComponentEditor } from '../PageComponents/LinkComponent'
+import { ImageComponentEditor } from '../PageComponents/ImageComponent'
+import { HeaderComponentEditor } from '../PageComponents/HeaderComponent'
 import PageComponentsCreator from './PageComponentsCreator'
 import { Col } from 'react-bootstrap'
-import { pageContentObject } from '../PageComponents/structure'
+import {
+    ParagraphComponentClass,
+    HeaderComponentClass,
+    TitleComponentClass,
+    LinkComponentClass,
+    ImageComponentClass,
+    pageContentObject
+} from '../PageComponents/structure'
+import { mapRandomKey } from '../utility/helpers'
+import { AiOutlineArrowUp, AiOutlineArrowDown } from 'react-icons/ai'
 
 
 const reducer = (page_content, action) => {
@@ -21,16 +30,25 @@ const reducer = (page_content, action) => {
                     return action.component;
                 return component;
             })
-            return pageContentObject(pageComponents1,page_content.originalDir, page_content.translatedDir)
+            return pageContentObject(pageComponents1, page_content.originalDir, page_content.translatedDir)
         case 'remove component':
             let filtered = page_content.pageComponents.filter((value, index) => {
                 return index != action.index;
             });
-            return pageContentObject(filtered,page_content.originalDir, page_content.translatedDir)
+            return pageContentObject(filtered, page_content.originalDir, page_content.translatedDir)
         case 'add component':
             let increased = [...page_content.pageComponents, action.newComponent]
-            return pageContentObject(increased,page_content.originalDir, page_content.translatedDir)
-
+            return pageContentObject(increased, page_content.originalDir, page_content.translatedDir)
+        case 'left up component':
+            let leftup = [...page_content.pageComponents];
+            if (action.index >= 1)
+                [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
+            return pageContentObject(leftup, page_content.originalDir, page_content.translatedDir)
+        case 'left down component':
+            leftdown = [...page_content.pageComponents];
+            if (action.index < leftdown.length - 1)
+                [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
+            return pageContentObject(leftdown, page_content.originalDir, page_content.translatedDir)
     }
     return page_content;
 }
@@ -61,40 +79,69 @@ export default function PageContentEditor(props) {
                 {
                     page_content?.pageComponents?.map((component, index) => {
                         if (component.class == ParagraphComponentClass) {
-                            return <ParagraphComponentEditor
-                                key={index}
-                                component={component}
-                                originalDir={page_content.originalDir}
-                                translatedDir={page_content.translatedDir}
-                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                            />
+                            return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                <div>
+                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                </div>
+                                <ParagraphComponentEditor
+                                    component={component}
+                                    originalDir={page_content.originalDir}
+                                    translatedDir={page_content.translatedDir}
+                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                />
+                            </div>
                         } else if (component.class == TitleComponentClass) {
-                            return <TitleComponentEditor
-                                key={index}
-                                component={component}
-                                originalDir={page_content.originalDir}
-                                translatedDir={page_content.translatedDir}
-                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                            />
+                            return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                <div>
+                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                </div>
+                                <TitleComponentEditor
+                                    key={index}
+                                    component={component}
+                                    originalDir={page_content.originalDir}
+                                    translatedDir={page_content.translatedDir}
+                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                />
+                            </div>
+
                         } else if (component.class == LinkComponentClass) {
-                            return <LinkComponentEditor
-                                key={index}
-                                component={component}
-                                originalDir={page_content.originalDir}
-                                translatedDir={page_content.translatedDir}
-                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                            return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                <div>
+                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                </div>
+                                <LinkComponentEditor
+                                    key={index}
+                                    component={component}
+                                    originalDir={page_content.originalDir}
+                                    translatedDir={page_content.translatedDir}
+                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
-                            />
+                                />
+                            </div>
+
                         } else if (component.class == HeaderComponentClass) {
-                            return <HeaderComponentEditor
-                                key={index}
-                                component={component}
-                                originalDir={page_content.originalDir}
-                                translatedDir={page_content.translatedDir}
-                                dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                            />
+                            return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                <div>
+                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                </div>
+                                <HeaderComponentEditor
+                                    key={index}
+                                    component={component}
+                                    originalDir={page_content.originalDir}
+                                    translatedDir={page_content.translatedDir}
+                                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                                />
+                            </div>
                         } else if (component.class == ImageComponentClass) {
-                            return <ImageComponentEditor
+                            return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                <div>
+                                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                </div> <ImageComponentEditor
                                 key={index}
                                 component={component}
                                 originalDir={page_content.originalDir}
@@ -102,6 +149,7 @@ export default function PageContentEditor(props) {
                                 dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                             />
+                            </div>
                         }
                     })
                 }

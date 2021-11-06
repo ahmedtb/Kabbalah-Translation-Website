@@ -3,7 +3,7 @@ import { AiOutlineOrderedList } from 'react-icons/ai'
 import {
     FloatingLabel, Form, Popover, OverlayTrigger
 } from 'react-bootstrap'
-
+import { titleObject } from './structure'
 
 export function TitleComponentRender(props) {
     const component = props.component

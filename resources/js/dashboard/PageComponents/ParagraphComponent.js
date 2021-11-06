@@ -29,11 +29,11 @@ export function ParagraphComponentRender(props) {
                     case 'original':
                         return <div dir={originalDir} style={component.style}>
                             {component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
-                            </div>
+                        </div>
                     case 'translated':
                         return <div dir={translatedDir} style={component.style}>
                             {component.translated.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
-                            </div>
+                        </div>
                     case 'both':
                         return <div style={component.style}>
                             <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
@@ -100,11 +100,29 @@ export function ParagraphComponentEditor(props) {
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState(component.original)
     const [translated, settranslated] = React.useState(component.translated)
+    const [style, setstyle] = React.useState({})
 
     const popover = (
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">تعديل</Popover.Header>
             <Popover.Body >
+                <div className="mb-1">
+                    <div>styling</div>
+                    <Form.Check
+                        inline
+                        label="bold"
+                        name="bold"
+                        type={'checkbox'}
+                        onChange={(e) => setstyle(pre => ({ ...pre, fontWeight: e.target.checked ? 'bold' : undefined }))}
+                    />
+                    <Form.Check
+                        inline
+                        label="italic"
+                        name="italic"
+                        onChange={(e) => setstyle(pre => ({ ...pre, fontStyle: e.target.checked ? 'italic' : undefined }))}
+                        type={'checkbox'}
+                    />
+                </div>
                 <textarea
                     style={{
                         backgroundColor: 'white',
@@ -113,14 +131,14 @@ export function ParagraphComponentEditor(props) {
                     }}
                     onChange={(e) => {
                         setoriginal(e.target.value)
-                        dispatch(paragraphObject(e.target.value, translated))
+                        dispatch(paragraphObject(e.target.value, translated, style))
                     }}
                     value={original ?? ''}
                 />
                 <textarea
                     onChange={(e) => {
                         settranslated(e.target.value)
-                        dispatch(paragraphObject(original, e.target.value))
+                        dispatch(paragraphObject(original, e.target.value, style))
                     }}
                     value={translated ?? ''}
                     style={{ width: 900, minHeight: 100 }}
@@ -132,8 +150,12 @@ export function ParagraphComponentEditor(props) {
     return (
 
         <Col xs={12} className='mx-auto my-2'>
+
             <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-                <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
+
+                <div dir={originalDir} style={style}>
+                    {component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
+                </div>
             </OverlayTrigger>
         </Col >
 
