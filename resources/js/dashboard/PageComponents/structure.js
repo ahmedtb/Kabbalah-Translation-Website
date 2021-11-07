@@ -63,3 +63,43 @@ export function pageContentObject(pageComponents, originalDir, translatedDir) {
         translatedDir: translatedDir,
     }
 }
+
+export function pageContentReducer(page_content, action) {
+    switch (action.actionType) {
+        case 'change component':
+            let pageComponents1 = page_content.pageComponents.map((component, index) => {
+                if (index == action.index)
+                    return action.component;
+                return component;
+            })
+            return pageContentObject(pageComponents1, page_content.originalDir, page_content.translatedDir)
+
+        case 'remove component':
+            let filtered = page_content.pageComponents.filter((value, index) => {
+                return index != action.index;
+            });
+            return pageContentObject(filtered)
+        case 'add component':
+            const components = [...page_content.pageComponents, action.component]
+            return pageContentObject(components, page_content.originalDir, page_content.translatedDir)
+
+        case 'set original dir':
+            return pageContentObject(page_content.pageComponents, action.originalDir, page_content.translatedDir)
+        case 'set translated dir':
+            return pageContentObject(page_content.pageComponents, page_content.originalDir, action.translatedDir)
+
+
+        case 'left up component':
+            let leftup = [...page_content.pageComponents];
+            if (action.index >= 1)
+                [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
+            return pageContentObject(leftup, page_content.originalDir, page_content.translatedDir)
+        case 'left down component':
+            let leftdown = [...page_content.pageComponents];
+            if (action.index < leftdown.length - 1)
+                [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
+            return pageContentObject(leftdown, page_content.originalDir, page_content.translatedDir)
+
+    }
+    return page_content;
+}
