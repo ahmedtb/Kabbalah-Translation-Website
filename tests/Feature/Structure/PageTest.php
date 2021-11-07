@@ -29,8 +29,10 @@ class PageTest extends TestCase
         ], 'ltr', 'rtl');
         $this->assertArrayHasKey('pageComponents', $pageContent->jsonSerialize());
         foreach ($pageContent->jsonSerialize()['pageComponents'] as $component) {
-            $this->assertArrayHasKey('original', $component);
-            $this->assertArrayHasKey('translated', $component);
+            if ($component['class'] != LinkComponent::class) {
+                $this->assertArrayHasKey('original', $component);
+                $this->assertArrayHasKey('translated', $component);
+            }
         }
         $page = Page::factory()->activated()->create();
         $this->assertTrue($page->activated);

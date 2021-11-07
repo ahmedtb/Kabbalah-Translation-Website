@@ -15,4 +15,9 @@ class Page extends Model
     ];
 
     protected $guarded = [];
+
+    public function pageable()
+    {
+        return $this->morphTo();
+    }
 }

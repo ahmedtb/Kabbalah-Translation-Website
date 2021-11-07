@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Book;
+use App\Models\BookChapter;
+use App\Models\Category;
 use App\PageComponents\PageContent;
 use App\PageComponents\LinkComponent;
 use App\PageComponents\ImageComponent;
@@ -37,7 +40,7 @@ class PageFactory extends Factory
             } else if ($type == 4) {
                 array_push($pageComponents, new HeaderComponent($this->faker->sentence()));
             } else if ($type == 5) {
-                array_push($pageComponents, new ImageComponent(getBase64DefaultImage()));
+                // array_push($pageComponents, new ImageComponent(getBase64DefaultImage()));
             }
         }
         return $pageComponents;
@@ -50,9 +53,8 @@ class PageFactory extends Factory
         return [
             'title' => $this->faker->sentence(),
             'description' => $this->faker->text(),
-
             'page_content' => $page_content,
-            'activated' => $this->faker->boolean()
+            'activated' => $this->faker->boolean(),
         ];
     }
 
@@ -61,6 +63,34 @@ class PageFactory extends Factory
         return $this->state(function (array $attributes) use ($bool) {
             return [
                 'activated' => $bool
+            ];
+        });
+    }
+
+    public function forBook(Book $book)
+    {
+        return $this->state(function (array $attributes) use ($book) {
+            return [
+                'pageable_id' => $book->id,
+                'pageable_type' => Book::class
+            ];
+        });
+    }
+    public function forChapter(BookChapter $chapter)
+    {
+        return $this->state(function (array $attributes) use ($chapter) {
+            return [
+                'pageable_id' => $chapter->id,
+                'pageable_type' => BookChapter::class
+            ];
+        });
+    }
+    public function forCategory(Category $category)
+    {
+        return $this->state(function (array $attributes) use ($category) {
+            return [
+                'pageable_id' => $category->id,
+                'pageable_type' => Category::class
             ];
         });
     }

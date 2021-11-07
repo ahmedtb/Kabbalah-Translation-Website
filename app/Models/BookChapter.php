@@ -10,4 +10,9 @@ class BookChapter extends Model
     use HasFactory;
     
     protected $guarded = [];
+
+    public function pages()
+    {
+        return $this->morphMany(Page::class, 'pageable');
+    }
 }
