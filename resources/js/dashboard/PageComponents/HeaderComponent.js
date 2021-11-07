@@ -50,7 +50,7 @@ export function HeaderComponentRender(props) {
 }
 
 export function HeaderComponentCreator(props) {
-    const set = props.set
+    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
     const [size, setsize] = React.useState(1)
@@ -62,7 +62,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(headerObject(e.target.value, translated))
+                    dispatch(headerObject(e.target.value, translated))
                 }}
             />
         </FloatingLabel>
@@ -72,7 +72,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(headerObject(original, e.target.value))
+                    dispatch(headerObject(original, e.target.value))
                 }}
             />
         </FloatingLabel>
@@ -86,7 +86,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setsize(e.target.value)
-                    set(headerObject(original, translated, e.target.value))
+                    dispatch(headerObject(original, translated, e.target.value))
                 }}
             />
         </FloatingLabel>

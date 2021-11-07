@@ -9,7 +9,7 @@ class TitleComponent extends PageComponent
 {
 
     private string $original;
-    private ?string $translated = null;
+    private ?string $translated;
 
     public static function fromArray(array $array)
     {
@@ -38,7 +38,7 @@ class TitleComponent extends PageComponent
     {
         return $this->original;
     }
-    public function setTranslated(?string $value = null)
+    public function setTranslated(?string $value)
     {
         $this->translated = $value;
     }

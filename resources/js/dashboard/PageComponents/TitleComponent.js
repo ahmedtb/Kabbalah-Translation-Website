@@ -45,9 +45,9 @@ export function TitleComponentRender(props) {
 
 
 export function TitleComponentCreator(props) {
-    const set = props.set
+    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
-    const [translated, settranslated] = React.useState(null)
+    const [translated, settranslated] = React.useState('')
 
     return <div className='my-3'>
         <FloatingLabel label="النص الاصلي">
@@ -56,7 +56,7 @@ export function TitleComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(titleObject(e.target.value, translated))
+                    dispatch(titleObject(e.target.value, translated))
                 }}
             />
         </FloatingLabel>
@@ -66,7 +66,7 @@ export function TitleComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(titleObject(original, e.target.value))
+                    dispatch(titleObject(original, e.target.value))
                 }}
             />
         </FloatingLabel>

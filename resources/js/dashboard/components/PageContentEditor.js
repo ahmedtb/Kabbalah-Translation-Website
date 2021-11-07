@@ -65,20 +65,22 @@ const reducer = (page_content, action) => {
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
+    const pageContent = props.pageContent
     const [page_content, dispatch] = React.useReducer(reducer, null)
-    const [editComponent, seteditComponent] = React.useState(null)
+    
     React.useEffect(() => {
-        dispatch({ actionType: 'set page_content', page_content: props.pageContent })
-    }, [props.pageContent])
-
+        dispatch({ actionType: 'set page_content', page_content: pageContent })
+    }, [pageContent])
+    
     React.useEffect(() => {
         setEditedPageContent(page_content)
     }, [page_content])
-
+    
     function addNewComponent(componentConfig) {
         dispatch({ actionType: 'add component', newComponent: componentConfig })
     }
-
+    
+    const [editComponent, seteditComponent] = React.useState(null)
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
 
@@ -90,7 +92,7 @@ export default function PageContentEditor(props) {
                     original direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='originalDir'  onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 

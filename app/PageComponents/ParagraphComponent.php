@@ -12,7 +12,7 @@ class ParagraphComponent extends PageComponent
 {
 
     private string $original;
-    private string $translated = '';
+    private ?string $translated = null;
     private array $style = [];
 
     public static function fromArray(array $array)
@@ -23,7 +23,7 @@ class ParagraphComponent extends PageComponent
 
         return new self($array['original'], $array['translated'], $style);
     }
-    public function __construct(string $original, string $translated = '', array $style = [])
+    public function __construct(string $original, ?string $translated = null, array $style = [])
     {
         $this->setOriginal($original);
         $this->setTranslated($translated);
@@ -48,7 +48,7 @@ class ParagraphComponent extends PageComponent
     {
         return $this->original;
     }
-    public function setTranslated(string $value = '')
+    public function setTranslated(?string $value)
     {
         $this->translated = $value;
     }

@@ -39,7 +39,7 @@ export function LinkComponentRender(props) {
 }
 
 export function LinkComponentCreator(props) {
-    const set = props.set
+    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
     const [originalLabel, setoriginalLabel] = React.useState('')
@@ -52,7 +52,7 @@ export function LinkComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(linkObject(e.target.value, originalLabel, translated, translatedLabel))
+                    dispatch(linkObject(e.target.value, originalLabel, translated, translatedLabel))
                 }}
             />
         </FloatingLabel>
@@ -64,7 +64,7 @@ export function LinkComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginalLabel(e.target.value)
-                    set(linkObject(original, e.target.value, translated, translatedLabel))
+                    dispatch(linkObject(original, e.target.value, translated, translatedLabel))
                 }}
             />
         </FloatingLabel>
@@ -74,7 +74,7 @@ export function LinkComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(linkObject(original, originalLabel, e.target.value, translatedLabel))
+                    dispatch(linkObject(original, originalLabel, e.target.value, translatedLabel))
                 }}
             />
         </FloatingLabel>
@@ -86,7 +86,7 @@ export function LinkComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslatedLabel(e.target.value)
-                    set(linkObject(original, originalLabel, translated, e.target.value))
+                    dispatch(linkObject(original, originalLabel, translated, e.target.value))
                 }}
             />
         </FloatingLabel>

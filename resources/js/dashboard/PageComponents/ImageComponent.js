@@ -27,7 +27,7 @@ export function ImageComponentRender(props) {
 }
 
 export function ImageComponentCreator(props) {
-    const set = props.set
+    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState('')
 
@@ -38,7 +38,7 @@ export function ImageComponentCreator(props) {
                 maxSize={100000}
                 setImage={(base64) => {
                     setoriginal(base64)
-                    set(imageObject(base64, translated))
+                    dispatch(imageObject(base64, translated))
                 }}
             />
         </FloatingLabel>
@@ -49,7 +49,7 @@ export function ImageComponentCreator(props) {
                 maxSize={100000}
                 setImage={(base64) => {
                     settranslated(base64)
-                    set(imageObject(original, base64))
+                    dispatch(imageObject(original, base64))
                 }}
             />
         </FloatingLabel>

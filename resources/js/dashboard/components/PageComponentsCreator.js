@@ -28,7 +28,7 @@ export default function PageComponentsCreator(props) {
 
     const addComponent = props.addComponent
     const [selectedType, setSelectedType] = React.useState();
-    const [component, setcomponent] = React.useState({});
+    const [component, setcomponent] = React.useState(null);
 
     React.useEffect(() => {
         // console.log('PageComponentsCreator', component)
@@ -61,35 +61,37 @@ export default function PageComponentsCreator(props) {
                 (() => {
                     if (selectedType == ParagraphComponentClass) {
                         return (
-                            <ParagraphComponentCreator set={(component) => setcomponent(component)} />
+                            <ParagraphComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     } else if (selectedType == HeaderComponentClass) {
                         return (
-                            <HeaderComponentCreator set={(component) => setcomponent(component)} />
+                            <HeaderComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     } else if (selectedType == TitleComponentClass) {
                         return (
-                            <TitleComponentCreator set={(component) => setcomponent(component)} />
+                            <TitleComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     } else if (selectedType == ImageComponentClass) {
                         return (
-                            <ImageComponentCreator set={(component) => setcomponent(component)} />
+                            <ImageComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     } else if (selectedType == LinkComponentClass) {
                         return (
-                            <LinkComponentCreator set={(component) => setcomponent(component)} />
+                            <LinkComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     }
                 })()
             }
             <Col xs={1} className='mx-auto'>
-                <Button
-                    className='my-2'
-                    onClick={() => {
-                        addComponent(component)
-                        setcomponent({})
-                        setSelectedType(null)
-                    }} variant="primary">اضف</Button>
+                {component ?
+                    <Button
+                        className='my-2'
+                        onClick={() => {
+                            addComponent(component)
+                            setcomponent(null)
+                            setSelectedType(null)
+                        }} variant="primary">اضف</Button>
+                    : null}
             </Col>
 
         </div>
