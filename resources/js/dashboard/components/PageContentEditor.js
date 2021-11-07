@@ -15,7 +15,6 @@ import {
     ImageComponentClass,
     pageContentObject
 } from '../PageComponents/structure'
-import { mapRandomKey } from '../utility/helpers'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
 
 
@@ -48,7 +47,7 @@ const reducer = (page_content, action) => {
                 [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
             return pageContentObject(leftup, page_content.originalDir, page_content.translatedDir)
         case 'left down component':
-            leftdown = [...page_content.pageComponents];
+            let leftdown = [...page_content.pageComponents];
             if (action.index < leftdown.length - 1)
                 [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
             return pageContentObject(leftdown, page_content.originalDir, page_content.translatedDir)
@@ -80,6 +79,10 @@ export default function PageContentEditor(props) {
         dispatch({ actionType: 'add component', newComponent: componentConfig })
     }
 
+    const originalDir = page_content?.originalDir
+    const translatedDir = page_content?.translatedDir
+
+
     return (
         <div>
             <div className='d-flex flex-row justify-content-between'>
@@ -87,7 +90,7 @@ export default function PageContentEditor(props) {
                     original direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' name='originalDir'  onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 
@@ -117,7 +120,7 @@ export default function PageContentEditor(props) {
                     {
                         page_content?.pageComponents?.map((component, index) => {
                             if (component.class == ParagraphComponentClass) {
-                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
@@ -126,20 +129,20 @@ export default function PageContentEditor(props) {
                                     {
                                         editComponent == index ? <ParagraphComponentEditor
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                                         /> : <ParagraphComponentRender
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             render='original'
                                         />
                                     }
 
                                 </div>
                             } else if (component.class == TitleComponentClass) {
-                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
@@ -149,20 +152,20 @@ export default function PageContentEditor(props) {
                                         editComponent == index ? <TitleComponentEditor
                                             key={index}
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                                         /> : <TitleComponentRender
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             render='original'
                                         />
                                     }
                                 </div>
 
                             } else if (component.class == LinkComponentClass) {
-                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
@@ -172,21 +175,21 @@ export default function PageContentEditor(props) {
                                         editComponent == index ? <LinkComponentEditor
                                             key={index}
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                                         /> : <LinkComponentRender
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             render='original'
                                         />
                                     }
                                 </div>
 
                             } else if (component.class == HeaderComponentClass) {
-                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
@@ -197,19 +200,19 @@ export default function PageContentEditor(props) {
                                         editComponent == index ? <HeaderComponentEditor
                                             key={index}
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
                                         /> : <HeaderComponentRender
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             render='original'
                                         />
                                     }
                                 </div>
                             } else if (component.class == ImageComponentClass) {
-                                return <div key={mapRandomKey()} className='d-flex flex-row'>
+                                return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
@@ -220,14 +223,14 @@ export default function PageContentEditor(props) {
                                         editComponent == index ? <ImageComponentEditor
                                             key={index}
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                                         /> : <ImageComponentRender
                                             component={component}
-                                            originalDir={page_content.originalDir}
-                                            translatedDir={page_content.translatedDir}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
                                             render='original'
                                         />
                                     }

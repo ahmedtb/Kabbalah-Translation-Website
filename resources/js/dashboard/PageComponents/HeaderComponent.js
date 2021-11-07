@@ -7,14 +7,18 @@ import { headerObject } from './structure'
 
 export function HeaderComponentRender(props) {
     const component = props.component
-    const originalDir = component.originalDir
-    const translatedDir = component.translatedDir
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+    
+    const original = component.original
+    const translated = component.translated
+    const size = component.size
 
     const popover = (
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                {component.translated}
+                {translated}
             </Popover.Body>
         </Popover>
     );
@@ -23,19 +27,24 @@ export function HeaderComponentRender(props) {
 
     return <Col xs={12} className='mx-2'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+            <div dir={originalDir} className='text-center'>
             {(() => {
-                if (component.size == 1)
-                    return <h1>{component.original}</h1>
-                else if (component.size == 2)
-                    return <h2>{component.original}</h2>
-                else if (component.size == 3)
-                    return <h3>{component.original}</h3>
-                else if (component.size == 4)
-                    return <h4>{component.original}</h4>
-                else if (component.size == 5)
-                    return <h5>{component.original}</h5>
-                return <h1>{component.original}</h1>
+                switch (size) {
+                    case 1:
+                        return <h1>{original}</h1>
+                    case 2:
+                        return <h2>{original}</h2>
+                    case 3:
+                        return <h3>{original}</h3>
+                    case 4:
+                        return <h4>{original}</h4>
+                    case 5:
+                        return <h5>{original}</h5>
+                    default:
+                        return <h1>{original}</h1>
+                }
             })()}
+            </div>
         </OverlayTrigger>
     </Col >
 }

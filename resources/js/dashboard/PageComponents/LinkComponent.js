@@ -10,19 +10,30 @@ import { linkObject } from './structure'
 
 export function LinkComponentRender(props) {
     const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+
+    const originalLink = component.originalLink
+    const originalLabel = component.originalLabel
+    const translatedLink = component.translatedLink
+    const translatedLabel = component.translatedLabel
 
     const popover = (
-        <Popover id="popover-basic" style={{maxWidth:1000}}>
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                {component.translatedLink}
+                <div>
+                    <p>الرابط الاصلي: {originalLink}</p>
+                    <p>الرابط المترجم: {translatedLink}</p>
+                    <p>النص المترجم: {translatedLabel}</p>
+                </div>
             </Popover.Body>
         </Popover>
     );
 
     return <div >
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <div>{component.originalLink}</div>
+            <div href='#' dir={'ltr'} ><u>{originalLabel}</u></div>
         </OverlayTrigger>
     </div >
 }
@@ -90,36 +101,36 @@ export function LinkComponentEditor(props) {
     const [translatedLink, settranslatedLink] = React.useState(component.translatedLink)
     const [translatedLabel, settranslatedLabel] = React.useState(component.translatedLabel)
     const popover = (
-        <Popover id="popover-basic" style={{maxWidth:1000}}>
+        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                
+
             </Popover.Body>
         </Popover>
     );
 
     return <div >
         {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
-            <div>
-                <div>{originalLink}</div>
-                <Form.Control
-                    as="input"
-                    value={originalLabel}
-                    onChange={(e) => {
-                        setoriginalLabel(e.target.value)
-                        dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
-                    }}
-                />
-                {translatedLink}
-                <Form.Control
-                    as="input"
-                    value={translatedLabel}
-                    onChange={(e) => {
-                        settranslatedLabel(e.target.value)
-                        dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
-                    }}
-                />
-            </div>
+        <div>
+            <div>{originalLink}</div>
+            <Form.Control
+                as="input"
+                value={originalLabel}
+                onChange={(e) => {
+                    setoriginalLabel(e.target.value)
+                    dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
+                }}
+            />
+            {translatedLink}
+            <Form.Control
+                as="input"
+                value={translatedLabel}
+                onChange={(e) => {
+                    settranslatedLabel(e.target.value)
+                    dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
+                }}
+            />
+        </div>
         {/* </OverlayTrigger> */}
     </div >
 

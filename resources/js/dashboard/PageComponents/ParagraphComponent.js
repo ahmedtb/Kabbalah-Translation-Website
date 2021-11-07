@@ -17,7 +17,7 @@ export function ParagraphComponentRender(props) {
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body dir={translatedDir}>
-                <div dir={translatedDir}>{component.translated.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
+                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
             </Popover.Body>
         </Popover>
     );
@@ -28,16 +28,16 @@ export function ParagraphComponentRender(props) {
                 switch (render) {
                     case 'original':
                         return <div dir={originalDir} style={component.style}>
-                            {component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
+                            {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
                         </div>
                     case 'translated':
                         return <div dir={translatedDir} style={component.style}>
-                            {component.translated.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}
+                            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
                         </div>
                     case 'both':
                         return <div style={component.style}>
-                            <div dir={originalDir}>{component.original.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
-                            <div dir={translatedDir}>{component.translated.split('\n').map(str => <p key={mapRandomKey()}>{str}</p>)}</div>
+                            <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                            <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
                         </div>
                 }
             })()}
@@ -95,12 +95,12 @@ export function ParagraphComponentCreator(props) {
 
 export function ParagraphComponentEditor(props) {
     const component = props.component
+    const dispatch = props.dispatch
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
-    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState(component.original)
     const [translated, settranslated] = React.useState(component.translated)
-    const [style, setstyle] = React.useState({})
+    const [style, setstyle] = React.useState(component.style)
 
     return (
 
@@ -112,6 +112,8 @@ export function ParagraphComponentEditor(props) {
                     label="bold"
                     name="bold"
                     type={'checkbox'}
+                    checked={style.fontWeight == 'bold'}
+
                     onChange={(e) => {
                         let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
                         setstyle(newstyle)
@@ -127,28 +129,32 @@ export function ParagraphComponentEditor(props) {
                         setstyle(newstyle)
                         dispatch(paragraphObject(original, translated, newstyle))
                     }}
+                    checked={style.fontStyle == 'italic'}
                     type={'checkbox'}
                 />
             </div>
             <textarea
                 style={{
+                    ...style,
                     backgroundColor: 'white',
                     borderWidth: 0,
-                    width: 900, minHeight: 100,
+                    width: '100%', minHeight: 100, maxHeight: 500
                 }}
+                dir={originalDir}
                 onChange={(e) => {
                     setoriginal(e.target.value)
                     dispatch(paragraphObject(e.target.value, translated, style))
                 }}
-                value={original ?? ''}
+                defaultValue={original ?? ''}
             />
             <textarea
+                style={{ ...style, width: '100%', minHeight: 100, maxHeight: 500 }}
+                dir={translatedDir}
                 onChange={(e) => {
                     settranslated(e.target.value)
                     dispatch(paragraphObject(original, e.target.value, style))
                 }}
-                value={translated ?? ''}
-                style={{ width: 900, minHeight: 100 }}
+                defaultValue={translated ?? ''}
             />
         </Col >
 

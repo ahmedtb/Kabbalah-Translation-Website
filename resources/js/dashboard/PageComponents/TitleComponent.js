@@ -7,7 +7,11 @@ import { titleObject } from './structure'
 
 export function TitleComponentRender(props) {
     const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
     const render = props.render
+
+    const style = component.style
 
     const popover = (
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
@@ -19,12 +23,22 @@ export function TitleComponentRender(props) {
     );
 
     return <div >
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            {render == 'original' ?
-                <h1 className='text-center'>{component.original}</h1>
-                :
-                <h1 className='text-center'>{component.translated}</h1>
-            }
+        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
+            {(() => {
+                switch (render) {
+                    case 'original':
+                        return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
+
+                    case 'translated':
+                        return <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
+
+                    case 'both':
+                        return <div style={style}>
+                            <h1 dir={originalDir} className='text-center' >{component.original}</h1>
+                            <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
+                        </div>
+                }
+            })()}
         </OverlayTrigger>
     </div >
 }
@@ -82,32 +96,32 @@ export function TitleComponentEditor(props) {
         <div className='my-3'>
             {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
 
-                <input
-                    style={{
-                        backgroundColor: 'white',
-                        textAlign: 'center',
-                        borderWidth: 0,
-                        width: '100%',
-                        fontSize: 40,
-                        fontWeight: 'bold'
-                    }}
-                    onChange={(e) => {
-                        setoriginal(e.target.value)
-                        dispatch(titleObject(e.target.value, translated))
-                    }}
-                    value={original}
+            <input
+                style={{
+                    backgroundColor: 'white',
+                    textAlign: 'center',
+                    borderWidth: 0,
+                    width: '100%',
+                    fontSize: 40,
+                    fontWeight: 'bold'
+                }}
+                onChange={(e) => {
+                    setoriginal(e.target.value)
+                    dispatch(titleObject(e.target.value, translated))
+                }}
+                value={original}
 
-                />
-                <Form.Control
-                    as="input"
-                    onChange={(e) => {
-                        settranslated(e.target.value)
-                        dispatch(titleObject(original, e.target.value))
-                    }}
-                    value={translated ?? ''}
-                    style={{ width: 900 }}
+            />
+            <Form.Control
+                as="input"
+                onChange={(e) => {
+                    settranslated(e.target.value)
+                    dispatch(titleObject(original, e.target.value))
+                }}
+                value={translated ?? ''}
+                style={{ width: 900 }}
 
-                />
+            />
             {/* </OverlayTrigger> */}
 
         </div>

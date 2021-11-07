@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap'
 import { convertFileToBase64 } from '../utility/helpers.js'
 import ImagePicker from '../components/ImagePicker'
+import { imageObject } from './structure.js'
 
 export function ImageComponentRender(props) {
     const component = props.component
@@ -28,43 +29,27 @@ export function ImageComponentRender(props) {
 export function ImageComponentCreator(props) {
     const set = props.set
     const [original, setoriginal] = React.useState('')
-    const [translated, settranslated] = React.useState(null)
+    const [translated, settranslated] = React.useState('')
 
     return <div className='my-3'>
         <img src={original} width={100} />
         <FloatingLabel label="الصورة الاصلي">
-            <Form.Control
-                as="input"
-                type='file'
-                accept=".jpg,.jpeg,.png"
-                style={{ height: '100px' }}
-                onChange={(e) => {
-                    const file = e.target.files[0]
-                    // console.log('ImageComponentCreator', file)
-                    convertFileToBase64(file).then((base64) => {
-                        // console.log('convertImgToBase64URL', base64)
-                        setoriginal(base64)
-                        set(imageObject(base64, translated))
-                    })
+            <ImagePicker
+                maxSize={100000}
+                setImage={(base64) => {
+                    setoriginal(base64)
+                    set(imageObject(base64, translated))
                 }}
             />
         </FloatingLabel>
         <img src={translated} width={100} />
 
         <FloatingLabel label="الصورة المترجم">
-            <Form.Control
-                as="input"
-                type='file'
-                accept=".jpg,.jpeg,.png"
-                style={{ height: '100px' }}
-                onChange={(e) => {
-                    const file = e.target.files[0]
-                    // console.log('ImageComponentCreator', file)
-                    convertFileToBase64(file).then((base64) => {
-                        // console.log('convertImgToBase64URL', base64)
-                        settranslated(base64)
-                        set(imageObject(original, base64))
-                    })
+            <ImagePicker
+                maxSize={100000}
+                setImage={(base64) => {
+                    settranslated(base64)
+                    set(imageObject(original, base64))
                 }}
             />
         </FloatingLabel>
@@ -93,9 +78,21 @@ export function ImageComponentEditor(props) {
             {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
             <div>
                 <img src={original} width='100%' />
-                <ImagePicker setImage={setoriginal} />
+                <ImagePicker
+                    maxSize={100000}
+                    setImage={(base64) => {
+                        setoriginal(base64)
+                        dispatch(imageObject(base64, translated))
+                    }}
+                />
                 <img src={translated} width='100%' />
-                <ImagePicker setImage={settranslated} />
+                <ImagePicker
+                    maxSize={100000}
+                    setImage={(base64) => {
+                        settranslated(base64)
+                        dispatch(imageObject(original, base64))
+                    }}
+                />
             </div>
             {/* </OverlayTrigger> */}
 

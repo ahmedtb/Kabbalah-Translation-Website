@@ -3,7 +3,7 @@ import ApiEndpoints from "../utility/ApiEndpoints";
 import { useParams } from "react-router";
 import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
-import { logError } from "../utility/helpers";
+import { logError, ApiCallHandler } from "../utility/helpers";
 import PageContentRender from "../components/PageContentRender";
 
 export default function PageEditor(props) {
@@ -14,14 +14,12 @@ export default function PageEditor(props) {
     const [title, settitle] = React.useState('');
 
     async function setup() {
-        try {
-            const response = await ApiEndpoints.fetchPage(id)
-            setpage(response.data)
-            settitle(response.data.title)
-            console.log('PageEditor fetchPage', response.data)
-        } catch (error) {
-            logError(error, 'PageEditor fetchPage')
-        }
+        ApiCallHandler(
+            async () => await ApiEndpoints.fetchPage(id),
+            (data) => { setpage(data); settitle(data.title) },
+            'PageEditor fetchPage',
+            true
+        )
     }
     React.useEffect(() => {
         setup()
@@ -31,13 +29,12 @@ export default function PageEditor(props) {
     }, [EditedPageContent])
 
     async function submit() {
-        try {
-            console.log('PageEditor submit', EditedPageContent)
-            const response = await ApiEndpoints.editPage(id, title, EditedPageContent, true)
-            console.log('PageEditor submit', response.data)
-        } catch (error) {
-            logError(error, 'PageEditor submit')
-        }
+        ApiCallHandler(
+            async () => await ApiEndpoints.editPage(id, title, EditedPageContent, true),
+            null,
+            'PageEditor submit',
+            true
+        )
     }
 
     return (
