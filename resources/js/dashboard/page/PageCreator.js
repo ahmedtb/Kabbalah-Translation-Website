@@ -1,6 +1,5 @@
 import React from "react"
 import PageComponentsCreator from "../components/PageComponentsCreator"
-import PageContentRender from "../components/PageContentRender";
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
 import ApiEndpoints from "../utility/ApiEndpoints";
 import { ApiCallHandler } from "../utility/helpers";
@@ -22,8 +21,9 @@ import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai
 
 export default function PageCreator(props) {
 
-    const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([]));
+    const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([], 'ltr', 'rtl'));
     const [title, settitle] = React.useState('');
+    const [description, setdescription] = React.useState('');
 
     function addComponent(component) {
         dispatch({ actionType: 'add component', component: component })
@@ -36,7 +36,7 @@ export default function PageCreator(props) {
     async function submit() {
 
         ApiCallHandler(
-            async () => await ApiEndpoints.createPage(title, page_content, true),
+            async () => await ApiEndpoints.createPage(title, description, page_content, true),
             null,
             'PageCreator submit',
             true
@@ -87,7 +87,10 @@ export default function PageCreator(props) {
             <FormCheck.Label>عنوان المقالة</FormCheck.Label>
             <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
         </FormCheck>
-
+        <FormCheck>
+            <FormCheck.Label>وصف المقالة</FormCheck.Label>
+            <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
+        </FormCheck>
         <Col xs={12}>
             {
                 page_content?.pageComponents?.map((component, index) => {

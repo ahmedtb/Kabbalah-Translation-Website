@@ -9,7 +9,7 @@ class HeaderComponent extends PageComponent
 {
 
     private string $original;
-    private string $translated = '';
+    private ?string $translated = null;
     private array $style = [];
 
     public static function fromArray(array $array)
@@ -18,7 +18,7 @@ class HeaderComponent extends PageComponent
             throw new PageComponentsException('the array class is not HeaderComponent class, it is: ' . $array['class']);
         return new self($array['original'], $array['translated'], $array['style']);
     }
-    public function __construct(string $original, string $translated = '', array $style = [])
+    public function __construct(string $original, ?string $translated = null, array $style = [])
     {
         $this->setoriginal($original);
         $this->setTranslated($translated);
@@ -44,7 +44,7 @@ class HeaderComponent extends PageComponent
     {
         return $this->original;
     }
-    public function setTranslated(string $value = '')
+    public function setTranslated(?string $value = null)
     {
         $this->translated = $value;
     }

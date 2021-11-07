@@ -12,6 +12,7 @@ export default function PageEditor(props) {
     const [page, setpage] = React.useState(null)
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
     const [title, settitle] = React.useState('');
+    const [description, setdescription] = React.useState('');
 
     async function setup() {
         ApiCallHandler(
@@ -30,7 +31,7 @@ export default function PageEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await ApiEndpoints.editPage(id, title, EditedPageContent, true),
+            async () => await ApiEndpoints.editPage(id, title, description, EditedPageContent, true),
             null,
             'PageEditor submit',
             true
@@ -43,6 +44,11 @@ export default function PageEditor(props) {
             <FormCheck>
                 <FormCheck.Label>عنوان المقالة</FormCheck.Label>
                 <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title} />
+            </FormCheck>
+
+            <FormCheck>
+                <FormCheck.Label>وصف المقالة</FormCheck.Label>
+                <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
             </FormCheck>
             <Col xs={12}>
                 <PageContentEditor pageContent={page?.page_content} setEditedPageContent={setEditedPageContent} />

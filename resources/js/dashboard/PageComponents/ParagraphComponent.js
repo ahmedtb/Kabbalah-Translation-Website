@@ -46,7 +46,7 @@ export function ParagraphComponentRender(props) {
 }
 
 export function ParagraphComponentCreator(props) {
-    const set = props.set
+    const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState('')
     const [style, setstyle] = React.useState({})
@@ -59,13 +59,24 @@ export function ParagraphComponentCreator(props) {
                 label="bold"
                 name="bold"
                 type={'checkbox'}
-                onChange={(e) => setstyle(pre => ({ ...pre, fontStyle: e.target.checked ? 'italic' : undefined }))}
+                checked={style.fontWeight == 'bold'}
+
+                onChange={(e) => {
+                    let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
+                    setstyle(newstyle)
+                    dispatch(paragraphObject(original, translated, newstyle))
+                }}
             />
             <Form.Check
                 inline
                 label="italic"
                 name="italic"
-                onChange={(e) => setstyle(pre => ({ ...pre, fontStyle: e.target.checked ? 'italic' : undefined }))}
+                onChange={(e) => {
+                    let newstyle = { ...style, fontStyle: e.target.checked ? 'italic' : undefined }
+                    setstyle(newstyle)
+                    dispatch(paragraphObject(original, translated, newstyle))
+                }}
+                checked={style.fontStyle == 'italic'}
                 type={'checkbox'}
             />
         </div>
@@ -75,7 +86,7 @@ export function ParagraphComponentCreator(props) {
                 style={style}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    set(paragraphObject(e.target.value, translated, style))
+                    dispatch(paragraphObject(e.target.value, translated, style))
                 }}
             />
         </div>
@@ -85,7 +96,7 @@ export function ParagraphComponentCreator(props) {
                 style={style}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    set(paragraphObject(original, e.target.value, style))
+                    dispatch(paragraphObject(original, e.target.value, style))
                 }}
             />
         </div>
