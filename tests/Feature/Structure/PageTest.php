@@ -26,7 +26,7 @@ class PageTest extends TestCase
             new LinkComponent('http://www.google.com'),
             new TitleComponent('eeeeee'),
             new ImageComponent(getBase64DefaultImage()),
-        ]);
+        ], 'ltr', 'rtl');
         $this->assertArrayHasKey('pageComponents', $pageContent->jsonSerialize());
         foreach ($pageContent->jsonSerialize()['pageComponents'] as $component) {
             $this->assertArrayHasKey('original', $component);
@@ -37,5 +37,4 @@ class PageTest extends TestCase
         $page = Page::factory()->activated(false)->create();
         $this->assertFalse($page->activated);
     }
-    
 }
