@@ -2,7 +2,7 @@ import React from 'react'
 import ChapterCreator from './components/ChapterCreator'
 import { ApiCallHandler } from '../utility/helpers'
 import axios from 'axios'
-import { Dropdown, Button, Col } from 'react-bootstrap'
+import { Dropdown, Form, Col, Button } from 'react-bootstrap'
 
 function reducer(contentTable, action) {
 
@@ -34,31 +34,6 @@ function reducer(contentTable, action) {
     }
 }
 
-function Section(props) {
-    const section = props.section
-    return <div>
-        <div>{section.title}</div>
-        <div>{section.page_id}</div>
-    </div>
-}
-
-function Sections(props) {
-    const sections = props.sections
-    return sections.map((section, index) => <div key={index}>
-        <Section section={section} />
-    </div>)
-
-}
-
-function Chapter(props) {
-    const chapter = props.chapter
-
-    return <div key={index}>
-        <div>{chapter.title}</div>
-        <Sections sections={chapter.sections} />
-    </div>
-}
-
 const elementTypes = {
     chapter: 'فصل',
     section: 'عنوان'
@@ -71,12 +46,36 @@ function sectionObject(title, page_id) {
     return { type: 'section', title: title, page_id: page_id }
 }
 
+function SectionCreator(props) {
+    const pages = props.pages
+    const dispatch = props.dispatch
+
+    const [title, setitle] = React.useState('')
+    const [page_id, sepage_id] = React.useState('')
+
+    return <div>
+        <input type='text' placeholder='section title' onChange={e => {
+            setitle(e.target.value)
+            dispatch(sectionObject(e.target.value, page_id))
+        }} />
+        <Form.Select
+            aria-label="Default select example"
+            onChange={e => {
+                sepage_id(e.target.value)
+                dispatch(sectionObject(title, e.target.value))
+            }}
+        >
+            <option>اختر صفحة</option>
+            {
+                pages.map((page, index) => <option key={index} value={page.id}>{page.title}</option>)
+            }
+        </Form.Select>
+    </div>
+}
+
 export default function BookCreator(props) {
     const [contentTable, dispatch] = React.useReducer(reducer, [])
     const [avaliablepages, setavaliablepages] = React.useState([])
-
-    const [selectedType, setSelectedType] = React.useState();
-    const [element, setelement] = React.useState(null);
 
     function setup() {
 
@@ -87,6 +86,9 @@ export default function BookCreator(props) {
             true
         )
     }
+    React.useEffect(() => {
+        console.log('BookCreator', contentTable)
+    }, [contentTable])
 
     React.useEffect(() => {
         setup()
@@ -98,16 +100,40 @@ export default function BookCreator(props) {
             {
                 contentTable.map((element, index) => {
                     if (element.type == 'chapter')
-                        return <Chapter key={index} chapter={element} />
+                        return <div key={index}>
+                            <Button
+                                className='my-2'
+                                onClick={() => { dispatch({ type: 'remove', index: index }) }}
+                                variant="primary"
+                            >
+                                حدف
+                            </Button>
+                            <ChapterCreator pages={avaliablepages} dispatch={chapter => dispatch({ type: 'edit', index: index, element: chapter })} />
+                        </div>
                     else if (element.type == 'section') {
-                        return <Section key={index} section={element} />
+                        return <div key={index}>
+                            <Button
+                                className='my-2'
+                                onClick={() => { dispatch({ type: 'remove', index: index }) }}
+                                variant="primary"
+                            >
+                                حدف
+                            </Button>
+                            <SectionCreator key={index} pages={avaliablepages} dispatch={chapter => dispatch({ type: 'edit', index: index, element: chapter })} />
+                        </div>
                     }
                 })
             }
 
 
             <Col xs={2} className='mx-auto'>
-                <Dropdown onSelect={(e) => setSelectedType(e)}>
+                <Dropdown onSelect={(e) => {
+                    if (e == 'chapter')
+                        dispatch({ type: 'add', element: chapterObject('', []) })
+                    else if (e == 'section')
+                        dispatch({ type: 'add', element: sectionObject('', '') })
+
+                }}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         فصل ام عنوان
                     </Dropdown.Toggle>
@@ -123,47 +149,6 @@ export default function BookCreator(props) {
                         }
                     </Dropdown.Menu>
                 </Dropdown>
-            </Col>
-
-
-            {
-                (() => {
-                    if (selectedType == 'chapter') {
-                        // return (
-                        //     <ChapterCreator dispatch={setelement} />
-                        // )
-                        return (
-                            <div>
-                                <input type='text' placeholder='عنوان الفصل'
-                                    onChange={e => setelement(old => chapterObject(e.target.value, old.sections))}
-                                />
-                                <input type='text' placeholder='عنوان الجزء'
-                                    onChange={e => {
-                                        newsections = [...element.sections]
-                                        newsections[newsections.length - 1].title = e.target.value
-                                        setelement(old => chapterObject(element.title, newsections))                                    }}
-                                />
-                            </div>
-                        )
-                    } else if (selectedType == 'section') {
-                        return (
-                            <div>
-                                <input type='text' placeholder='عنوان الجزء' />
-                            </div>
-                        )
-                    }
-                })()
-            }
-            <Col xs={1} className='mx-auto'>
-                {element ?
-                    <Button
-                        className='my-2'
-                        onClick={() => {
-                            dispatch({ type: 'add', element: element })
-                            setelement(null)
-                            setSelectedType(null)
-                        }} variant="primary">اضف</Button>
-                    : null}
             </Col>
 
         </div>

@@ -1,7 +1,9 @@
 import React from "react"
+import { Redirect } from "react-router";
 import PageComponentsCreator from "../components/PageComponentsCreator"
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
 import ApiEndpoints from "../utility/ApiEndpoints";
+import Routes from "../utility/Routes";
 import { ApiCallHandler } from "../utility/helpers";
 import { ParagraphComponentEditor, ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
 import { TitleComponentEditor, TitleComponentRender } from '../PageComponents/TitleComponent'
@@ -33,11 +35,14 @@ export default function PageCreator(props) {
         console.log('PageCreator', page_content)
     }, [page_content])
 
-    async function submit() {
+    function submit() {
 
         ApiCallHandler(
             async () => await ApiEndpoints.createPage(title, description, page_content, true),
-            null,
+            (data) => {
+                alert(data)
+                setredirect(Routes.dashboard)
+            },
             'PageCreator submit',
             true
         )
@@ -52,6 +57,11 @@ export default function PageCreator(props) {
     const [editComponent, seteditComponent] = React.useState(null)
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
+
+    const [redirect, setredirect] = React.useState(null)
+
+    if (redirect)
+        return <Redirect to={redirect} />
 
     return <Container >
         <div className='d-flex flex-row justify-content-between'>

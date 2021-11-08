@@ -26,7 +26,7 @@ function reducer(sections, action) {
     }
 }
 
-export default function ChapterCreator(props) {
+export default function SectionCreator(props) {
     const dispatch = props.dispatch
     const pages = props.pages
     const [title, settitle] = React.useState('')

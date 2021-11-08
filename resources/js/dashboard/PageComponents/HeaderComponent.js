@@ -9,7 +9,7 @@ export function HeaderComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
-    
+
     const original = component.original
     const translated = component.translated
     const size = component.size
@@ -28,22 +28,22 @@ export function HeaderComponentRender(props) {
     return <Col xs={12} className='mx-2'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <div dir={originalDir} className='text-center'>
-            {(() => {
-                switch (size) {
-                    case 1:
-                        return <h1>{original}</h1>
-                    case 2:
-                        return <h2>{original}</h2>
-                    case 3:
-                        return <h3>{original}</h3>
-                    case 4:
-                        return <h4>{original}</h4>
-                    case 5:
-                        return <h5>{original}</h5>
-                    default:
-                        return <h1>{original}</h1>
-                }
-            })()}
+                {(() => {
+                    switch (size) {
+                        case 1:
+                            return <h1>{original}</h1>
+                        case 2:
+                            return <h2>{original}</h2>
+                        case 3:
+                            return <h3>{original}</h3>
+                        case 4:
+                            return <h4>{original}</h4>
+                        case 5:
+                            return <h5>{original}</h5>
+                        default:
+                            return <h1>{original}</h1>
+                    }
+                })()}
             </div>
         </OverlayTrigger>
     </Col >
@@ -53,6 +53,8 @@ export function HeaderComponentCreator(props) {
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState(null)
+    const [style, setstyle] = React.useState({})
+
     const [size, setsize] = React.useState(1)
 
     return <div className='my-3'>
@@ -62,7 +64,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
-                    dispatch(headerObject(e.target.value, translated))
+                    dispatch(headerObject(e.target.value, translated, size, style))
                 }}
             />
         </FloatingLabel>
@@ -72,7 +74,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
-                    dispatch(headerObject(original, e.target.value))
+                    dispatch(headerObject(original, e.target.value, size, style))
                 }}
             />
         </FloatingLabel>
@@ -86,7 +88,7 @@ export function HeaderComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setsize(e.target.value)
-                    dispatch(headerObject(original, translated, e.target.value))
+                    dispatch(headerObject(original, translated, e.target.value, style))
                 }}
             />
         </FloatingLabel>

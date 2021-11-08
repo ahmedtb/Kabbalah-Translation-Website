@@ -1,3 +1,5 @@
+import { size } from "lodash"
+
 export const PageContentClass = 'App\\PageComponents\\PageContent'
 export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'
 export const HeaderComponentClass = 'App\\PageComponents\\HeaderComponent'
@@ -16,12 +18,13 @@ export function paragraphObject(original, translated = '', style = {}) {
     }
 }
 
-export function headerObject(original, translated = '', style = {}) {
+export function headerObject(original, translated = '', size = 1, style = {}) {
 
     return {
         class: HeaderComponentClass,
         original: original,
         translated: translated,
+        size: size,
         style: style
     }
 }
@@ -80,8 +83,7 @@ export function pageContentReducer(page_content, action) {
             });
             return pageContentObject(filtered)
         case 'add component':
-            const components = [...page_content.pageComponents, action.component]
-            return pageContentObject(components, page_content.originalDir, page_content.translatedDir)
+            return pageContentObject([...page_content.pageComponents, action.component], page_content.originalDir, page_content.translatedDir)
 
         case 'set original dir':
             return pageContentObject(page_content.pageComponents, action.originalDir, page_content.translatedDir)

@@ -104,6 +104,7 @@ export function ParagraphComponentCreator(props) {
     </div>
 }
 
+
 export function ParagraphComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
@@ -112,6 +113,10 @@ export function ParagraphComponentEditor(props) {
     const [original, setoriginal] = React.useState(component.original)
     const [translated, settranslated] = React.useState(component.translated)
     const [style, setstyle] = React.useState(component.style)
+
+    const [translatedScrollHeight, settranslatedScrollHeight] = React.useState(100)
+    const [originalScrollHeight, setoriginalScrollHeight] = React.useState(100)
+
 
     return (
 
@@ -149,20 +154,26 @@ export function ParagraphComponentEditor(props) {
                     ...style,
                     backgroundColor: 'white',
                     borderWidth: 0,
-                    width: '100%', minHeight: 100, maxHeight: 500
+                    width: '100%',
+                    height: originalScrollHeight
                 }}
                 dir={originalDir}
                 onChange={(e) => {
                     setoriginal(e.target.value)
+                    setoriginalScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(e.target.value, translated, style))
                 }}
                 defaultValue={original ?? ''}
             />
             <textarea
-                style={{ ...style, width: '100%', minHeight: 100, maxHeight: 500 }}
+                style={{
+                    ...style, width: '100%',
+                    height: translatedScrollHeight
+                }}
                 dir={translatedDir}
                 onChange={(e) => {
                     settranslated(e.target.value)
+                    settranslatedScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(original, e.target.value, style))
                 }}
                 defaultValue={translated ?? ''}
