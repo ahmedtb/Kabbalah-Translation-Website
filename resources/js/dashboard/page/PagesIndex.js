@@ -5,13 +5,17 @@ import { ApiCallHandler } from '../utility/helpers'
 export default function PagesIndex(props) {
     const [pages, setpages] = React.useState([])
     async function setup() {
-        ApiEndpoints.fetchPages(setpages)
+        ApiCallHandler(async () => await ApiEndpoints.fetchPages(),
+            setpages,
+            'PagesIndex setup',
+            true
+        )
     }
     React.useEffect(() => {
         setup()
     }, [])
 
-     function deletePage(id) {
+    function deletePage(id) {
         ApiCallHandler(async () => await ApiEndpoints.deletePage(id),
             setup,
             'PagesIndex deletePage',
@@ -20,7 +24,7 @@ export default function PagesIndex(props) {
     }
     return (
         <div>
-            <PagesTable pages={pages} deletePage={deletePage}/>
+            <PagesTable pages={pages} deletePage={deletePage} />
         </div>
     )
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Filters\PageFilters;
 use App\Models\Page;
 use Illuminate\Http\Request;
 use App\Rules\PageContentRule;
@@ -25,9 +26,9 @@ class PagesController extends Controller
         return response()->json(['success' => 'page content successfully created'], 201);
     }
 
-    public function index(Request $request)
+    public function index(Request $request, PageFilters $filters)
     {
-        return Page::all();
+        return Page::filter($filters)->get();
     }
 
     public function show($id)

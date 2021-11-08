@@ -1,5 +1,6 @@
 import React from "react"
 import { Dropdown, Button, Form } from 'react-bootstrap'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 function chapterObject(title, sections) {
     return { type: 'chapter', title: title, sections: sections }
@@ -37,7 +38,7 @@ export default function ChapterCreator(props) {
     }, [sections, title])
 
     return (
-        <div>
+        <div className='d-flex flex-column'>
             <input type='text' placeholder='عنوان الفصل'
                 onChange={e => {
                     settitle(e.target.value)
@@ -46,29 +47,34 @@ export default function ChapterCreator(props) {
 
             {
                 sections.map((section, index) => <div key={index}>
-                    <input
-                        type='text'
-                        placeholder='عنوان'
-                        onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(e.target.value, section.page_id) })}
-                    />
-                    <Form.Select
-                        aria-label="Default select example"
-                        onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(section.title, e.target.value) })}
-                    >
-                        <option>اختر صفحة</option>
-                        {
-                            pages.map((page, index) => <option key={index} value={page.id}>{page.title}</option>)
-                        }
-                    </Form.Select>
-                    <Button
-                        className='my-2'
-                        onClick={() => {
-                            sectionsDispatch({ type: 'remove', index: index })
-                        }}
-                        variant="primary"
-                    >
-                        حدف
-                    </Button>
+                    <div className='d-flex flex-row justify-content-end h-100 '>
+                        <AiOutlineCloseCircle
+                            className='my-2'
+                            onClick={() => {
+                                sectionsDispatch({ type: 'remove', index: index })
+                            }}
+                            variant="primary"
+                        />
+                    </div>
+                    <div className='d-flex flex-row justify-content-center '>
+
+                        <input
+                            type='text'
+                            placeholder='عنوان'
+                            style={{flexGrow:1}}
+                            onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(e.target.value, section.page_id) })}
+                        />
+                        <Form.Select
+                            aria-label="Default select example"
+                            onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(section.title, e.target.value) })}
+                        >
+                            <option>اختر صفحة</option>
+                            {
+                                pages.map((page, index) => <option key={index} value={page.id}>{page.title}</option>)
+                            }
+                        </Form.Select>
+                    </div>
+
                 </div>)
             }
 
@@ -77,7 +83,7 @@ export default function ChapterCreator(props) {
                 onClick={() => {
                     sectionsDispatch({ type: 'add' })
                 }}
-                variant="primary"
+                variant="secondary"
             >
                 اضف عنوان
             </Button>

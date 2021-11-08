@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Casts\Json;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Filters\PageFilters;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Page extends Model
 {
@@ -19,5 +20,10 @@ class Page extends Model
     public function pageable()
     {
         return $this->morphTo();
+    }
+
+    public function scopeFilter($query, PageFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }

@@ -9,15 +9,7 @@ export default {
         return await axios.put('/dashboardAPI/pages/' + id, { title: title, description: description, page_content: page_content, activated: activated })
 
     },
-    fetchPages: async (setData) => {
-        try {
-            const response = await axios.get('/dashboardAPI/pages/')
-            setData(response.data)
-            console.log('fetchPages', response.data)
-        } catch (error) {
-            logError(error, 'fetchPages')
-        }
-    },
+    fetchPages: async (params) => await axios.get('/dashboardAPI/pages/', { params: params }),
     fetchPage: async (id) => await axios.get('/dashboardAPI/pages/' + id),
     deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id),
 
