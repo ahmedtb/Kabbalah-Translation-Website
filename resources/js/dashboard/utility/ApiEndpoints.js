@@ -19,5 +19,6 @@ export default {
         }
     },
     fetchPage: async (id) => await axios.get('/dashboardAPI/pages/' + id),
-    deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id)
+    deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id),
+
 }
