@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 
 const INITIAL_STATE = {
     user: null,
-    allowedRoutes: []
 };scrollBy
 
 const stateReducer = (state = INITIAL_STATE, action) => {

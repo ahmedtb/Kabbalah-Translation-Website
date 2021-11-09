@@ -1,12 +1,12 @@
 import React from "react";
-import ApiEndpoints from "../utility/ApiEndpoints";
+import {Api} from "../utility/URLs";
 import { useParams } from "react-router";
 import { Redirect } from "react-router";
 import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
 import { logError, ApiCallHandler } from "../utility/helpers";
 import PageContentRender from "../components/PageContentRender";
-import Routes from "../utility/Routes";
+import {Routes} from "../utility/URLs";
 
 export default function PageEditor(props) {
 
@@ -18,7 +18,7 @@ export default function PageEditor(props) {
 
     async function setup() {
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchPage(id),
+            async () => await Api.fetchPage(id),
             (data) => { setpage(data); settitle(data.title) },
             'PageEditor fetchPage',
             true
@@ -33,7 +33,7 @@ export default function PageEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await ApiEndpoints.editPage(id, title, description, EditedPageContent, true),
+            async () => await Api.editPage(id, title, description, EditedPageContent, true),
             (data) => { alert('page is updated'); setredirect(Routes.pagesIndex); },
             'PageEditor submit',
             true

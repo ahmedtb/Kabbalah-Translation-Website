@@ -1,14 +1,14 @@
 import React from "react";
 import { Container, Col, Table } from "react-bootstrap";
-import ApiEndpoints from "../utility/ApiEndpoints";
-import Routes from "../utility/Routes";
+import {Api} from "../utility/URLs";
+import {Routes} from "../utility/URLs";
 import { ApiCallHandler } from "../utility/helpers";
 import { Link } from "react-router-dom";
 export default function BooksIndex(props) {
     const [books, setbooks] = React.useState([])
     function setup() {
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchBooks(),
+            async () => await Api.fetchBooks(),
             setbooks,
             'BooksIndex setup',
             true

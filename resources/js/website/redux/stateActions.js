@@ -5,10 +5,3 @@ export const refreshUser = (user) => {
         user: user
     }
 }
-
-export const setAllowedRoutes = (allowedRoutes) => {
-    return {
-        type: 'setAllowedRoutes',
-        allowedRoutes: allowedRoutes
-    }
-}

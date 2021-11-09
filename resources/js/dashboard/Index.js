@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import NotFound from './NotFound';
 import TopMenue from './components/TopMenue'
-import Routes from './utility/Routes';
+import {Routes} from './utility/URLs';
 import Home from './Home';
 import PageCreator from './page/PageCreator';
 import PagesIndex from './page/PagesIndex';

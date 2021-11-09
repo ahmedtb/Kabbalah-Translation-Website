@@ -19,7 +19,6 @@ class PagesController extends Controller
             'title' => ['required', 'string'],
             'description' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
-            'activated' => ['required', 'boolean']
         ]);
         // return $data;
         Page::create($data);

@@ -1,7 +1,18 @@
 import axios from 'axios'
-import { logError } from './helpers'
 
-export default {
+export const Routes = {
+    dashboard: () => '/dashboard/',
+    pageCreator: () => '/dashboard/createPage',
+    pagesIndex: () => '/dashboard/pagesIndex',
+    pageShow: (id) => id ? '/dashboard/pages/' + id : '/dashboard/pages/:id',
+    pageEdit: (id) => id ? '/dashboard/pages/' + id + '/edit' : '/dashboard/pages/:id/edit',
+
+    bookCreator: () => '/dashboard/createBook',
+    booksIndex: () => '/dashboard/books',
+    bookShow: (id) => id ? '/dashboard/books/' + id : '/dashboard/books/:id',
+}
+
+export const Api = {
     createPage: async (title, description, page_content, activated) => {
         return await axios.post('/dashboardAPI/pages', { title: title, description: description, page_content: page_content, activated: activated })
     },
@@ -18,4 +29,7 @@ export default {
     }),
     fetchBooks: async (params) => await axios.get('/dashboardAPI/books/', { params: params }),
     fetchBook: async (id, params) => await axios.get('/dashboardAPI/books/' + id, { params: params }),
+
+    createArticle: async (page_id, category_id, activated) => await axios.post('/dashboardAPI/articles', { page_id: page_id, category_id: category_id, activated: activated }),
+    fetchArticle: async (id) => await axios.get('/dashboardAPI/articles/' + id),
 }

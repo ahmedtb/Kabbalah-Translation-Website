@@ -1,13 +1,12 @@
 import React from 'react'
-import ArticlesTable from '../components/ArticlesTable'
-import ApiEndpoints from '../utility/ApiEndpoints'
+import {Api} from '../utility/URLs'
 import { ApiCallHandler } from '../utility/helpers'
 
 export default function ArticlesIndex(props) {
-    const [pages, setpages] = React.useState([])
+    const [articles, setarticles] = React.useState([])
     async function setup() {
-        ApiCallHandler(async () => await ApiEndpoints.fetchArticles(),
-            setpages,
+        ApiCallHandler(async () => await Api.fetchArticles(),
+            setarticles,
             'ArticlesIndex setup',
             true
         )
@@ -17,7 +16,7 @@ export default function ArticlesIndex(props) {
     }, [])
 
     function deleteArticle(id) {
-        ApiCallHandler(async () => await ApiEndpoints.deleteArticle(id),
+        ApiCallHandler(async () => await Api.deleteArticle(id),
             setup,
             'ArticlesIndex deleteArticle',
             true
@@ -25,7 +24,6 @@ export default function ArticlesIndex(props) {
     }
     return (
         <div>
-            <ArticlesTable pages={pages} deleteArticle={deleteArticle} />
         </div>
     )
 }

@@ -2,9 +2,9 @@ import React from "react";
 import { Col, Container, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import ApiEndpoints from "../utility/ApiEndpoints";
+import {Api} from "../utility/URLs";
 import { ApiCallHandler } from "../utility/helpers";
-import Routes from '../utility/Routes'
+import {Routes} from '../utility/URLs'
 
 function SectionElements(props) {
     const sections = props.sections
@@ -25,7 +25,7 @@ export default function BookShow(props) {
     const [book, setbook] = React.useState(null)
     function setup() {
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchBook(id, {}),
+            async () => await Api.fetchBook(id, {}),
             setbook,
             'BooksIndex setup',
             true

@@ -15,10 +15,8 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description', 1000)->nullable();
-            $table->json('page_content');
             $table->boolean('activated')->default(false);
+            $table->foreignId('page_id');
             $table->foreignId('category_id');
             $table->timestamps();
         });

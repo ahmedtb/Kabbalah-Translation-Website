@@ -2,8 +2,8 @@ import React from "react"
 import { Redirect } from "react-router";
 import PageComponentsCreator from "../components/PageComponentsCreator"
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
-import ApiEndpoints from "../utility/ApiEndpoints";
-import Routes from "../utility/Routes";
+import {Api} from "../utility/URLs";
+import {Routes} from "../utility/URLs";
 import { ApiCallHandler } from "../utility/helpers";
 import { ParagraphComponentEditor, ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
 import { TitleComponentEditor, TitleComponentRender } from '../PageComponents/TitleComponent'
@@ -38,7 +38,7 @@ export default function PageCreator(props) {
     function submit() {
 
         ApiCallHandler(
-            async () => await ApiEndpoints.createPage(title, description, page_content, true),
+            async () => await Api.createPage(title, description, page_content, true),
             (data) => {
                 alert(data)
                 setredirect(Routes.dashboard)

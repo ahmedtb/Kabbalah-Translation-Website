@@ -18,7 +18,6 @@ class CreatePagesTable extends Migration
             $table->string('title');
             $table->string('description', 1000)->nullable();
             $table->json('page_content');
-            $table->boolean('activated')->default(false);
             $table->timestamps();
         });
     }

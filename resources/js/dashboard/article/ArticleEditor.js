@@ -1,25 +1,23 @@
 import React from "react";
-import ApiEndpoints from "../utility/ApiEndpoints";
 import { useParams } from "react-router";
 import { Redirect } from "react-router";
-import ArticleContentEditor from "../components/ArticleContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
-import { logError, ApiCallHandler } from "../utility/helpers";
-import ArticleContentRender from "../components/ArticleContentRender";
-import Routes from "../utility/Routes";
+import { ApiCallHandler } from "../utility/helpers";
+import {Routes, Api} from "../utility/URLs";
 
 export default function ArticleEditor(props) {
 
     let { id } = useParams();
     const [article, setarticle] = React.useState(null)
-    const [EditedArticleContent, setEditedArticleContent] = React.useState(null)
-    const [title, settitle] = React.useState('');
-    const [description, setdescription] = React.useState('');
+    
+    const [page_id, setpage_id] = React.useState(null);
+    const [category_id, setcategory_id] = React.useState(null);
+    const [activated, setactivated] = React.useState(null);
 
     async function setup() {
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchArticle(id),
-            (data) => { setarticle(data); settitle(data.title) },
+            async () => await Api.fetchArticle(id),
+            (data) => { setarticle(data) },
             'ArticleEditor fetchArticle',
             true
         )
@@ -27,13 +25,10 @@ export default function ArticleEditor(props) {
     React.useEffect(() => {
         setup()
     }, [])
-    React.useEffect(() => {
-        // console.log('ArticleEditor', EditedArticleContent)
-    }, [EditedArticleContent])
 
     async function submit() {
         ApiCallHandler(
-            async () => await ApiEndpoints.editArticle(id, title, description, EditedArticleContent, true),
+            async () => await Api.editArticle(id, page_id, category_id, activated),
             (data) => { alert('article is updated'); setredirect(Routes.articlesIndex); },
             'ArticleEditor submit',
             true
@@ -47,19 +42,8 @@ export default function ArticleEditor(props) {
     return (
         <Container >
 
-            <FormCheck>
-                <FormCheck.Label>عنوان المقالة</FormCheck.Label>
-                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title} />
-            </FormCheck>
-
-            <FormCheck>
-                <FormCheck.Label>وصف المقالة</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
-            </FormCheck>
+            
             <Col xs={12}>
-                <ArticleContentEditor articleContent={article?.article_content} setEditedArticleContent={setEditedArticleContent} />
-                {/* <ArticleContentRender articleContent={article?.article_content} /> */}
-
                 <Button onClick={submit}>submit</Button>
             </Col>
         </Container>

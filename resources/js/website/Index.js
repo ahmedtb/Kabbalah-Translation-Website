@@ -5,20 +5,25 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import NotFound from './NotFound';
 import Home from './Home';
+import TopMenue from './components/TopMenue';
+import { Container } from 'react-bootstrap';
 
-export default function Dashboard() {
+export default function Website() {
 
   return (
 
-    <BrowserRouter  dir="rtl">
-
+    <BrowserRouter dir="rtl">
       <Provider store={store}>
-        <Switch>
-          <Route  exact={true} title={'Home'} path={'/'}  component={Home}  />
+        
+        <TopMenue />
 
-          <Route component={NotFound} />
-
-        </Switch>
+        <Container>
+          <Switch>
+            <Route exact={true} title={'Home'} path={'/'} component={Home} />
+            <Route component={NotFound} />
+          </Switch>
+        </Container>
+        
       </Provider>
 
     </BrowserRouter>
@@ -26,5 +31,5 @@ export default function Dashboard() {
 }
 
 if (document.getElementById('website')) {
-  ReactDOM.render(<Dashboard />, document.getElementById('website'));
+  ReactDOM.render(<Website />, document.getElementById('website'));
 }

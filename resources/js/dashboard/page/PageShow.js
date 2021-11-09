@@ -1,10 +1,9 @@
 import React from "react";
-import ApiEndpoints from "../utility/ApiEndpoints";
+import { Api, Routes } from "../utility/URLs";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import PageContentRender from "../components/PageContentRender";
 import { Col, Container, Button } from "react-bootstrap";
-import Routes from '../utility/Routes'
 import { logError } from "../utility/helpers";
 export default function PageShow(props) {
 
@@ -13,7 +12,7 @@ export default function PageShow(props) {
 
     async function setup() {
         try {
-            const response = await ApiEndpoints.fetchPage(id)
+            const response = await Api.fetchPage(id)
             setpage(response.data)
             console.log('fetchPage', response.data)
         } catch (error) {
@@ -32,7 +31,7 @@ export default function PageShow(props) {
             </Link>
             <div>original Dir {page?.page_content.originalDir}</div>
             <div>translated Dir {page?.page_content.translatedDir}</div>
-            <Button onClick={() => setrender( 'original' )}>
+            <Button onClick={() => setrender('original')}>
                 عرض النص الاصلي
             </Button>
             <Button onClick={() => setrender('translated')}>

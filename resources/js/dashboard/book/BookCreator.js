@@ -1,7 +1,7 @@
 import React from 'react'
 import ChapterCreator from './components/ChapterCreator'
 import { ApiCallHandler } from '../utility/helpers'
-import ApiEndpoints from '../utility/ApiEndpoints'
+import {Api} from '../utility/URLs'
 import axios from 'axios'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
@@ -84,7 +84,7 @@ export default function BookCreator(props) {
     function setup() {
 
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchPages({ exclude: ['page_content'] }),
+            async () => await Api.fetchPages({ exclude: ['page_content'] }),
             setavaliablepages,
             'BookCreator setup',
             true
@@ -92,7 +92,7 @@ export default function BookCreator(props) {
     }
     function submit() {
         ApiCallHandler(
-            async () => await ApiEndpoints.createBook(bookTitle, bookDescription, contentTable),
+            async () => await Api.createBook(bookTitle, bookDescription, contentTable),
             null,
             'BookCreator submit',
             true

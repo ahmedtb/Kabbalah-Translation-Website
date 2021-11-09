@@ -1,11 +1,12 @@
 import React from 'react'
 import PagesTable from '../components/PagesTable'
-import ApiEndpoints from '../utility/ApiEndpoints'
+import {Api} from '../utility/URLs'
 import { ApiCallHandler } from '../utility/helpers'
+
 export default function PagesIndex(props) {
     const [pages, setpages] = React.useState([])
     async function setup() {
-        ApiCallHandler(async () => await ApiEndpoints.fetchPages(),
+        ApiCallHandler(async () => await Api.fetchPages(),
             setpages,
             'PagesIndex setup',
             true
@@ -16,7 +17,7 @@ export default function PagesIndex(props) {
     }, [])
 
     function deletePage(id) {
-        ApiCallHandler(async () => await ApiEndpoints.deletePage(id),
+        ApiCallHandler(async () => await Api.deletePage(id),
             setup,
             'PagesIndex deletePage',
             true
