@@ -16,6 +16,7 @@ class BookChapterFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
+            'index' => $this->faker->numberBetween(1,100),
             'book_id' => Book::inRandomOrder()->first()->id ?? Book::factory()->create()->id
         ];
     }

@@ -60,7 +60,7 @@ export default function PagesTable(props) {
                 <tr>
                     <th>#</th>
                     <th>العنوان</th>
-                    <th>محتوى الصفحة</th>
+                    {/* <th>محتوى الصفحة</th> */}
                     <th>مفعل؟</th>
                     <th></th>
 
@@ -76,7 +76,7 @@ export default function PagesTable(props) {
                                 </Link>
                             </td>
                             <td>{page.title}</td>
-                            <td><ContentPageStatistics page_content={page.page_content} /></td>
+                            {/* <td><ContentPageStatistics page_content={page.page_content} /></td> */}
                             <td>{page.activated == 1 ? 'نعم' : 'لا'}</td>
                             <td onClick={() => deletePage(page.id)}>حدف</td>
                         </tr>

@@ -6,6 +6,7 @@ use App\Models\Book;
 use Tests\TestCase;
 use App\Models\Page;
 use App\Models\BookChapter;
+use App\Models\BookSection;
 use App\Rules\ContentTableRule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -13,42 +14,48 @@ class BookTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_book_chapters_can_have_many_pages()
+    public function test_book_chapters_can_have_many_sections()
     {
         $chapter = BookChapter::factory()->create();
-        $pages = Page::factory(5)->forChapter($chapter)->create();
-        $this->assertEquals($chapter->pages()->count(), $pages->count());
+        $sections = BookSection::factory(5)->forChapter($chapter)->create();
+        $this->assertEquals($chapter->sections()->count(), $sections->count());
     }
 
-    public function test_book_chapters_can_have_many_chapters()
+    public function test_book_can_have_many_chapters_and_sections()
     {
         $book = Book::factory()->create();
+
         $chapters = BookChapter::factory(5)->forBook($book)->create();
         $this->assertEquals($book->bookChapters()->count(), $chapters->count());
+
+        $sections = BookSection::factory(2)->forBook($book)->create();
+        $this->assertEquals($book->sections()->count(), $sections->count());
     }
 
     public function test_book_content_table_consists_of_pages_and_chapters()
     {
         $book = Book::factory()->create();
 
-        // two pages
-        Page::factory(2)->forBook($book)->create();
+        // two chapters
+        BookChapter::factory(2)->create();
 
-        // one chapter
-        $chapter = BookChapter::factory()->forBook($book)->create();
-        Page::factory(5)->forChapter($chapter)->create();
+        // five section inside two chapters
+        BookSection::factory(5)->create();
 
-        $this->assertEquals($book->contentTable()->count(), 3);
+        // dd($book->contentTable());
+
+        $this->assertEquals($book->contentTable()->count(), 2);
     }
 
     public function test_content_table_rule_validates_contentTables()
     {
         $validator = new ContentTableRule;
 
-        $page = Page::factory()->create(['pageable_id' => null]);
+        $page = Page::factory()->create();
         $contentTable = [
             [
                 'type' => 'section',
+                'title' => 'bbbbb',
                 'page_id' => $page->id
             ],
             [
@@ -57,16 +64,19 @@ class BookTest extends TestCase
                 'sections' => [
                     [
                         'type' => 'section',
+                        'title' => 'bbbbb',
                         'page_id' => $page->id
                     ],
                     [
                         'type' => 'section',
+                        'title' => 'bbbbb',
                         'page_id' => $page->id
                     ],
                 ]
             ],
             [
                 'type' => 'section',
+                'title' => 'bbbbb',
                 'page_id' => $page->id
             ],
         ];

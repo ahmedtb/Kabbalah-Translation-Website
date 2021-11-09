@@ -17,6 +17,7 @@ class Page extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['page_content'];
 
     public function scopeFilter($query, PageFilters $filters)
     {

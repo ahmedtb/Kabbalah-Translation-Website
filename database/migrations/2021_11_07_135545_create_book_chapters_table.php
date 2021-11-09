@@ -15,6 +15,7 @@ class CreateBookChaptersTable extends Migration
     {
         Schema::create('book_chapters', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('index');
             $table->string('title');
             $table->foreignId('book_id');
             $table->timestamps();

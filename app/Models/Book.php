@@ -24,17 +24,12 @@ class Book extends Model
 
     public function contentTable()
     {
-        // $pages = $this->pages;
-        // $bookChapters = $this->bookChapters;
-        // $contentTable = $pages->merge($bookChapters);
-
-        $merged = collect($this->bookChapters->all());
-        $this->pages->each(function ($page) use ($merged) {
-            $merged->push($page);
+        $merged = collect($this->bookChapters()->with('sections.page')->get());
+        $this->sections()->with('page')->get()->each(function ($section) use ($merged) {
+            $merged->push($section);
         });
+        
         return $merged;
-        // dd($contentTable);
-        // return $contentTable;
     }
     public function scopeFilter($query, BookFilters $filters)
     {

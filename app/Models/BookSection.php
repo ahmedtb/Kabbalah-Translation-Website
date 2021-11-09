@@ -10,7 +10,7 @@ class BookSection extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title','sectionable_type','sectionable_id','page_id'
+       'index', 'title','sectionable_type','sectionable_id','page_id'
     ];
     
     public function sectionable()
@@ -18,4 +18,8 @@ class BookSection extends Model
         return $this->morphTo();
     }
 
+    public function page()
+    {
+        return $this->belongsTo(Page::class);
+    }
 }

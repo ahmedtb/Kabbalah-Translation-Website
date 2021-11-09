@@ -15,6 +15,7 @@ class CreateBookSectionsTable extends Migration
     {
         Schema::create('book_sections', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('index');
             $table->string('title');
             $table->morphs('sectionable');
             $table->foreignId('page_id');

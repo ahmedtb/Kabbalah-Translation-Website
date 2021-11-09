@@ -19,25 +19,29 @@ class BooksController extends Controller
 
     public function createContentTable($contentTable, $book_id)
     {
-        foreach ($contentTable as $element) {
+        foreach ($contentTable as $index => $element) {
+            // dd($index);
             if ($element['type'] == 'section') {
                 BookSection::create([
                     'title' => $element['title'],
+                    'index' => $index,
                     'sectionable_type' => Book::class,
                     'sectionable_id' => $book_id,
-                    'page_id' => $element['page_id']
+                    'page_id' => $element['page_id'],
                 ]);
             } else if ($element['type'] == 'chapter') {
                 $bookChapter = BookChapter::create([
+                    'index' => $index,
                     'title' => $element['title'],
                     'book_id' => $book_id,
                 ]);
-                foreach ($element['sections'] as $section) {
+                foreach ($element['sections'] as $sectionIndex => $section) {
                     BookSection::create([
                         'title' => $section['title'],
+                        'index' => $sectionIndex,
                         'sectionable_type' => BookChapter::class,
                         'sectionable_id' => $bookChapter->id,
-                        'page_id' => $section['page_id']
+                        'page_id' => $section['page_id'],
                     ]);
                 }
             }
@@ -70,6 +74,7 @@ class BooksController extends Controller
     public function show(Request $request, $id)
     {
         $book =  Book::where('id', $id)->with($request->with ?? [])->first();
+        $book->content_table = $book->contentTable();
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book id exists']);
         return $book;
