@@ -12,6 +12,8 @@ import PagesIndex from './page/PagesIndex';
 import PageShow from './page/PageShow';
 import PageEditor from './page/PageEditor';
 import BookCreator from './book/BookCreator';
+import BooksIndex from './book/BooksIndex';
+import BookShow from './book/BookShow'
 
 export default function Dashboard() {
 
@@ -23,11 +25,15 @@ export default function Dashboard() {
         <TopMenue />
         <Switch>
           <Route  exact={true} title={'Home'} path={Routes.dashboard()}  component={Home}  />
+
           <Route  exact={true} title={'PageCreator'} path={Routes.pageCreator()}  component={PageCreator}  />
           <Route  exact={true} title={'PagesIndex'} path={Routes.pagesIndex()}  component={PagesIndex}  />
           <Route  exact={true} title={'PageShow'} path={Routes.pageShow()}  component={PageShow}  />
           <Route  exact={true} title={'PageEditor'} path={Routes.pageEdit()}  component={PageEditor}  />
+          
           <Route  exact={true} title={'BookCreator'} path={Routes.bookCreator()}  component={BookCreator}  />
+          <Route  exact={true} title={'BooksIndex'} path={Routes.booksIndex()}  component={BooksIndex}  />
+          <Route  exact={true} title={'BookShow'} path={Routes.bookShow()}  component={BookShow}  />
 
           <Route component={NotFound} />
 

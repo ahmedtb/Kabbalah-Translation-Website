@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\BookFilters;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,9 +12,9 @@ class Book extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function pages()
+    public function sections()
     {
-        return $this->morphMany(Page::class, 'pageable');
+        return $this->morphMany(BookSection::class, 'sectionable');
     }
 
     public function bookChapters()
@@ -34,5 +35,9 @@ class Book extends Model
         return $merged;
         // dd($contentTable);
         // return $contentTable;
+    }
+    public function scopeFilter($query, BookFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }

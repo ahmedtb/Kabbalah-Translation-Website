@@ -10,11 +10,10 @@ class PageFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'pageable_id',
+        'exclude'
     ];
-
-    protected function pageable_id($pageable_id)
+    protected function exclude($exclude)
     {
-        return $this->builder->where('pageable_id', $pageable_id);
+        return $this->builder->exclude( $exclude);
     }
 }

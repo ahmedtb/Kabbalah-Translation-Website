@@ -10,5 +10,7 @@ Route::get('/pages/{id}', [PagesController::class, 'show']);
 Route::put('/pages/{id}', [PagesController::class, 'update']);
 Route::delete('/pages/{id}', [PagesController::class, 'delete']);
 
-Route::get('/books/listOfPages', [BooksController::class, 'listOfPages']);
-Route::post('/books/create', [BooksController::class, 'createBook']);
+Route::post('/books/create', [BooksController::class, 'create']);
+Route::get('/books/', [BooksController::class, 'index']);
+Route::get('/books/{id}', [BooksController::class, 'show']);
+

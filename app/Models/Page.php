@@ -17,13 +17,16 @@ class Page extends Model
 
     protected $guarded = [];
 
-    public function pageable()
-    {
-        return $this->morphTo();
-    }
 
     public function scopeFilter($query, PageFilters $filters)
     {
         return $filters->apply($query);
+    }
+
+    protected $columns = ['id', 'title', 'description', 'page_content', 'activated', 'created_at', 'updated_at'];
+
+    public function scopeExclude($query, $value = [])
+    {
+        return $query->select(array_diff($this->columns, (array) $value));
     }
 }

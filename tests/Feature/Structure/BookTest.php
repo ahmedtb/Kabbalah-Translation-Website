@@ -6,6 +6,7 @@ use App\Models\Book;
 use Tests\TestCase;
 use App\Models\Page;
 use App\Models\BookChapter;
+use App\Rules\ContentTableRule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class BookTest extends TestCase
@@ -29,7 +30,7 @@ class BookTest extends TestCase
     public function test_book_content_table_consists_of_pages_and_chapters()
     {
         $book = Book::factory()->create();
-        
+
         // two pages
         Page::factory(2)->forBook($book)->create();
 
@@ -39,5 +40,36 @@ class BookTest extends TestCase
 
         $this->assertEquals($book->contentTable()->count(), 3);
     }
-    
+
+    public function test_content_table_rule_validates_contentTables()
+    {
+        $validator = new ContentTableRule;
+
+        $page = Page::factory()->create(['pageable_id' => null]);
+        $contentTable = [
+            [
+                'type' => 'section',
+                'page_id' => $page->id
+            ],
+            [
+                'type' => 'chapter',
+                'title' => 'bbbbb',
+                'sections' => [
+                    [
+                        'type' => 'section',
+                        'page_id' => $page->id
+                    ],
+                    [
+                        'type' => 'section',
+                        'page_id' => $page->id
+                    ],
+                ]
+            ],
+            [
+                'type' => 'section',
+                'page_id' => $page->id
+            ],
+        ];
+        $this->assertTrue($validator->passes('', $contentTable));
+    }
 }

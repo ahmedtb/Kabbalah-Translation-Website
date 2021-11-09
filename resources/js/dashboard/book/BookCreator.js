@@ -84,18 +84,23 @@ export default function BookCreator(props) {
     function setup() {
 
         ApiCallHandler(
-            async () => await ApiEndpoints.fetchPages({ pageable_id: null }),
+            async () => await ApiEndpoints.fetchPages({ exclude: ['page_content'] }),
             setavaliablepages,
             'BookCreator setup',
             true
         )
     }
     function submit() {
-
+        ApiCallHandler(
+            async () => await ApiEndpoints.createBook(bookTitle, bookDescription, contentTable),
+            null,
+            'BookCreator submit',
+            true
+        )
     }
-    React.useEffect(() => {
-        console.log('BookCreator contentTable', contentTable)
-    }, [contentTable])
+    // React.useEffect(() => {
+    //     console.log('BookCreator contentTable', contentTable)
+    // }, [contentTable])
 
     React.useEffect(() => {
         setup()

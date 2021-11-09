@@ -41,7 +41,10 @@ function TopMenue(props) {
                                 <NavDropdown.Item >انشاء كتاب</NavDropdown.Item>
                             </LinkContainer>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.2">قائمة الكتب</NavDropdown.Item>
+                            <LinkContainer to={Routes.booksIndex()}>
+                                <NavDropdown.Item >قائمة الكتب</NavDropdown.Item>
+                            </LinkContainer>
+
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
