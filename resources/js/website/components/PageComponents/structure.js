@@ -1,4 +1,3 @@
-import { size } from "lodash"
 
 export const PageContentClass = 'App\\PageComponents\\PageContent'
 export const ParagraphComponentClass = 'App\\PageComponents\\ParagraphComponent'

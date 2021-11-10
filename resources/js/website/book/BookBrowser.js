@@ -2,17 +2,27 @@ import Button from "@restart/ui/esm/Button"
 import React from "react"
 import { useParams, useLocation } from "react-router"
 import { Link } from 'react-router-dom'
-import PageRender from '../components/PageRender'
+import PageContentRender from '../components/PageContentRender'
 import { Routes, Api, ApiCallHandler } from "../utility/Urls"
+
+function getSections(content_table) {
+    let sections = []
+    for (let i = 0; i < content_table.length; i++) {
+        if (content_table[i].sections) {
+            if (content_table[i].sections.length)
+                sections = sections.concat(content_table[i].sections)
+        } else {
+            sections = [...sections, content_table[i]]
+        }
+    }
+    return sections
+}
 
 export default function BookBrowser(props) {
     const { id, section_id } = useParams()
-    // let data = useLocation();
-    // console.log(data.state)
     const [book, setbook] = React.useState(useLocation().state ?? undefined)
-    const [section, setsection] = React.useState()
-    const [nextsection, setnextsection] = React.useState()
-    const [presection, setpresection] = React.useState()
+    const [sections, setsections] = React.useState([])
+    const [sectionIndex, setsectionIndex] = React.useState()
 
     const [page, setpage] = React.useState()
 
@@ -21,9 +31,8 @@ export default function BookBrowser(props) {
             async () => await Api.fetchBook(id),
             (data) => { setbook(data) },
             'BookBrowser setup',
-            false
+            true
         )
-
     }
     function fetchPage(page_id) {
         ApiCallHandler(
@@ -37,48 +46,40 @@ export default function BookBrowser(props) {
     React.useEffect(() => {
         if (!book)
             setup()
-        else
-            setSectionFromTable(book.content_table)
-    }, [book])
-
-    function setSectionFromTable(content_table) {
-        content_table.forEach((element, index) => {
-            if (element.sections) {
-                element.sections.forEach((section, index) => {
-                    if (section.id == section_id) {
-                        setsection(section)
-                        fetchPage(section.page_id)
-                    }
-
-                })
-            } else {
-                if (element.id == section_id) {
-                    setsection(element)
-                    fetchPage(element.page_id)
-                }
-
-            }
-        });
-    }
-
+        else if (book && !sections.length) {
+            setsections(getSections(book.content_table))
+        } else {
+            let index = sections.findIndex(section => section.id == section_id)
+            setsectionIndex(index)
+            fetchPage(sections[index].page_id)
+        }
+    }, [book, sections, section_id])
 
     return <div>
-        <PageRender page={page} />
-        <Link
-            to={{
-                pathname: Routes.bookBrowser(id, section_id),
-                state: { book: book }
-            }}
-        >
-            next
-        </Link>
-        <Link
-            to={{
-                pathname: Routes.bookBrowser(id, section_id),
-                state: { book: book }
-            }}
-        >
-            previus
-        </Link>
+        <PageContentRender pageContent={page?.page_content} />
+        {
+            sections[sectionIndex + 1] ? (
+                <Link
+                    to={{
+                        pathname: Routes.bookBrowser(id, sections[sectionIndex + 1]?.id),
+                        state: book
+                    }}
+                >
+                    next
+                </Link>
+            ) : null
+        }
+        {
+            sections[sectionIndex - 1] ? (
+                <Link
+                    to={{
+                        pathname: Routes.bookBrowser(id, sections[sectionIndex - 1]?.id),
+                        state: book
+                    }}
+                >
+                    previus
+                </Link>
+            ) : null
+        }
     </div >
 }

@@ -12,7 +12,7 @@ export default function BookShow(props) {
         ApiCallHandler(
             async () => await Api.fetchBook(id),
             setbook,
-            'BooksIndex',
+            'BookShow',
             true
         )
     }
