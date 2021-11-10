@@ -55,15 +55,3 @@ export async function get(url, params = null, callerIdentifier = null, setData =
     }
 }
 
-export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {
-    try {
-        const response = await ApiEndpoint()
-        if (setData)
-            setData(response.data)
-        if (Identifier && logData)
-            console.log(Identifier, response.data)
-    } catch (error) {
-        if (Identifier)
-            logError(error, Identifier)
-    }
-}

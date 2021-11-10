@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\DashboardAPI;
 
 use App\Filters\CategoryFilters;
 use App\Http\Controllers\Controller;
@@ -21,6 +21,16 @@ class CategoriesController extends Controller
         if (!$category)
             throw ValidationException::withMessages(['id' => 'there is no category with this id: ' . $id]);
         return $category;
+    }
+    public function destroy(Request $request, $id)
+    {
+        $category = Category::where('id', $id)->first();
+        if (!$category)
+            throw ValidationException::withMessages(['id' => 'there is no category with this id: ' . $id]);
+        else{
+            $category->delete();
+            return response()->json(['success' => 'category ' . $category->id . ' is deleted']);
+        }
     }
 
     public function create(Request $request)

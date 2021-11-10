@@ -1,5 +1,5 @@
 import React from 'react'
-import {Routes} from '../utility/Urls';
+import { Routes } from '../utility/Urls';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 
@@ -30,7 +30,9 @@ function TopMenue(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        
+                        <LinkContainer to={Routes.booksIndex()}>
+                            <Nav.Link>الكتب</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

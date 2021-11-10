@@ -35,6 +35,15 @@ export default function CategoriesIndex(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
+        
+    function deleteCategory(id) {
+        ApiCallHandler(async () => await Api.deleteCategory(id),
+            setup,
+            'CategorysIndex deleteCategory',
+            true
+        )
+    }
+
     return <Container>
         <Table striped bordered hover>
             <thead>
@@ -50,7 +59,7 @@ export default function CategoriesIndex(props) {
                         <tr key={index}>
                             <td> <Link to={Routes.categoryShow(category.id)}> {category.id}  </Link> </td>
                             <td>{category.name}</td>
-                            {/* <td onClick={() => deleteArticle(category.id)}>حدف</td> */}
+                            <td onClick={() => deleteCategory(category.id)}>حدف</td>
                         </tr>
                     ))
                 }

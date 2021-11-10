@@ -50,6 +50,8 @@ export const Api = {
     fetchCategories: async (params) => await axios.get('/dashboardAPI/categories/', { params: params }),
     fetchCategory: async (id) => await axios.get('/dashboardAPI/categories/' + id),
     editCategory: async (id, name) => await axios.put('/dashboardAPI/categories/' + id, { name: name }),
+    deleteCategory: async (id) => await axios.delete('/dashboardAPI/categories/' + id),
+
 }
 
 export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {

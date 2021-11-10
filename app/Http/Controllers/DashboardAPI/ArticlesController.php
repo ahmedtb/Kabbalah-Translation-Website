@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\DashboardAPI;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
@@ -21,6 +21,17 @@ class ArticlesController extends Controller
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         return $article;
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $article = Article::where('id', $id)->first();
+        if (!$article)
+            throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
+        else{
+            $article->delete();
+            return response()->json(['success' => 'article ' . $article->id . ' is deleted']);
+        }
     }
 
     public function create(Request $request)
