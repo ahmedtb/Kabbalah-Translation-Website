@@ -54,44 +54,7 @@ class PageFactory extends Factory
             'title' => $this->faker->sentence(),
             'description' => $this->faker->text(),
             'page_content' => $page_content,
-            'activated' => $this->faker->boolean(),
         ];
     }
 
-    public function activated(bool $bool = true)
-    {
-        return $this->state(function (array $attributes) use ($bool) {
-            return [
-                'activated' => $bool
-            ];
-        });
-    }
-
-    public function forBook(Book $book)
-    {
-        return $this->state(function (array $attributes) use ($book) {
-            return [
-                'pageable_id' => $book->id,
-                'pageable_type' => Book::class
-            ];
-        });
-    }
-    public function forChapter(BookChapter $chapter)
-    {
-        return $this->state(function (array $attributes) use ($chapter) {
-            return [
-                'pageable_id' => $chapter->id,
-                'pageable_type' => BookChapter::class
-            ];
-        });
-    }
-    public function forCategory(Category $category)
-    {
-        return $this->state(function (array $attributes) use ($category) {
-            return [
-                'pageable_id' => $category->id,
-                'pageable_type' => Category::class
-            ];
-        });
-    }
 }

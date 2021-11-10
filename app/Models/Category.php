@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Filters\CategoryFilters;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,5 +14,10 @@ class Category extends Model
     public function pages()
     {
         return $this->morphMany(Page::class, 'pageable');
+    }
+
+    public function scopeFilter($query, CategoryFilters $filters)
+    {
+        return $filters->apply($query);
     }
 }

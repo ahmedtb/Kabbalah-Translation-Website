@@ -36,6 +36,7 @@ function TopMenue(props) {
                         <LinkContainer to={Routes.pagesIndex()}>
                             <Nav.Link>الصفحات</Nav.Link>
                         </LinkContainer>
+
                         <NavDropdown title="الكتب" id="basic-nav-dropdown">
                             <LinkContainer to={Routes.bookCreator()}>
                                 <NavDropdown.Item >انشاء كتاب</NavDropdown.Item>
@@ -44,8 +45,28 @@ function TopMenue(props) {
                             <LinkContainer to={Routes.booksIndex()}>
                                 <NavDropdown.Item >قائمة الكتب</NavDropdown.Item>
                             </LinkContainer>
-
                         </NavDropdown>
+
+                        <NavDropdown title="المقالات" id="basic-nav-dropdown">
+                            <LinkContainer to={Routes.articleCreator()}>
+                                <NavDropdown.Item >انشاء مقالة</NavDropdown.Item>
+                            </LinkContainer>
+                            <NavDropdown.Divider />
+                            <LinkContainer to={Routes.articlesIndex()}>
+                                <NavDropdown.Item >قائمة المقالات</NavDropdown.Item>
+                            </LinkContainer>
+                        </NavDropdown>
+
+                        <NavDropdown title="تصنيفات" id="basic-nav-dropdown">
+                            <LinkContainer to={Routes.categoryCreator()}>
+                                <NavDropdown.Item >انشاء تصنيف</NavDropdown.Item>
+                            </LinkContainer>
+                            <NavDropdown.Divider />
+                            <LinkContainer to={Routes.categoriesIndex()}>
+                                <NavDropdown.Item >قائمة تصنيفات</NavDropdown.Item>
+                            </LinkContainer>
+                        </NavDropdown>
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>

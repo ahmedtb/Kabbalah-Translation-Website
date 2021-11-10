@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::view('{path}', 'website')->where('path', '([A-z\d\-\/_.]+)?');
-Route::view('', 'website');
 
 Route::view('dashboard/{path}', 'dashboard')->where('path', '([A-z\d\-\/_.]+)?');
 Route::view('dashboard', 'dashboard');
+Route::view('{path}', 'website')->where('path', '([A-z\d\-\/_.]+)?');
+Route::view('', 'website');

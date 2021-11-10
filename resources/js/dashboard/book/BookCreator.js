@@ -52,7 +52,7 @@ function SectionCreator(props) {
     const dispatch = props.dispatch
 
     const [title, setitle] = React.useState('')
-    const [page_id, sepage_id] = React.useState('')
+    const [page_id, setpage_id] = React.useState('')
 
     return <div className='d-flex flex-row justify-content-center '>
 
@@ -63,7 +63,7 @@ function SectionCreator(props) {
         <Form.Select
             aria-label="Default select example"
             onChange={e => {
-                sepage_id(e.target.value)
+                setpage_id(e.target.value)
                 dispatch(sectionObject(title, e.target.value))
             }}
         >

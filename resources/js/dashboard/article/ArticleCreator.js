@@ -1,8 +1,7 @@
 import React from "react"
 import { Redirect } from "react-router";
-import { Container, Button, } from "react-bootstrap";
-import { Api, Routes } from "../utility/URLs";
-import { ApiCallHandler } from "../utility/helpers";
+import { Container, Button, Form } from "react-bootstrap";
+import { Api, Routes, ApiCallHandler } from "../utility/URLs";
 
 export default function ArticleCreator(props) {
     const [pages, setpages] = React.useState([]);
@@ -25,6 +24,22 @@ export default function ArticleCreator(props) {
         )
 
     }
+
+    React.useEffect(() => {
+        ApiCallHandler(
+            async () => await Api.fetchPages(),
+            setpages,
+            'ArticleCreator fetchPages',
+            true
+        )
+        ApiCallHandler(
+            async () => await Api.fetchCategories(),
+            setcategories,
+            'ArticleCreator fetchCategories',
+            true
+        )
+    }, [])
+
     const [redirect, setredirect] = React.useState(null)
 
     if (redirect)
@@ -32,6 +47,38 @@ export default function ArticleCreator(props) {
 
     return <Container >
 
+        <Form.Select
+            aria-label="Default select example"
+            onChange={e => {
+                setpage_id(e.target.value)
+            }}
+        >
+            <option>اختر صفحة</option>
+            {
+                pages.map((page, index) => <option key={index} value={page.id}>{page.title}</option>)
+            }
+        </Form.Select>
+
+        <Form.Select
+            aria-label="Default select example"
+            onChange={e => {
+                setcategory_id(e.target.value)
+            }}
+        >
+            <option>اختر صفحة</option>
+            {
+                categories.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
+            }
+        </Form.Select>
+        <Form.Check
+            inline
+            label="activated"
+            type={'checkbox'}
+            checked={activated}
+            onChange={(e) => {
+                setactivated(e.target.checked)
+            }}
+        />
         <Button onClick={submit}>submit</Button>
 
     </Container >
