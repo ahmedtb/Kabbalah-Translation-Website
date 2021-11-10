@@ -19,14 +19,22 @@ class BooksController extends Controller
 
     public function index(Request $request, BookFilters $filters)
     {
-        return Book::filter($filters)->where('activated',true)->get();
+        return Book::filter($filters)->where('activated', true)->get();
     }
     public function show(Request $request, $id)
     {
         $book =  Book::where('id', $id)->with($request->with ?? [])->first();
-        $book->content_table = $book->contentTable();
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book ' . $id . ' exists']);
+        $book->content_table = $book->contentTable();
         return $book;
+    }
+
+    public function getSection(Request $request, $id)
+    {
+        $section =  BookSection::where('id', $id)->with('page')->first();
+        if (!$section)
+            throw ValidationException::withMessages(['id' => 'no such section ' . $id . ' exists']);
+        return $section;
     }
 }

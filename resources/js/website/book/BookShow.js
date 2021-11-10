@@ -1,22 +1,9 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Col, ListGroup} from 'react-bootstrap'
-import { Routes, Api } from '../utility/Urls'
+import { Col, ListGroup } from 'react-bootstrap'
+import { Routes, Api, ApiCallHandler } from '../utility/Urls'
 
-function SectionElements(props) {
-    const sections = props.sections
-
-    return <ListGroup as="ol" numbered>
-        {
-            sections.map((element, index) => <ListGroup.Item key={index} as="li">
-                <Link to={Routes.pageShow(element.page_id)}>
-                    {element.title}
-                </Link>
-            </ListGroup.Item>)
-        }
-    </ListGroup>
-}
 
 export default function BookShow(props) {
     const { id } = useParams()
@@ -45,13 +32,32 @@ export default function BookShow(props) {
                         if (element.sections)
                             return <ListGroup.Item key={index} as="li">
                                 {element.title}
-                                <SectionElements sections={element.sections} />
+                                <ListGroup as="ol" numbered>
+                                    {
+                                        element.sections.map((section, subIndex) => <ListGroup.Item key={subIndex} as="li">
+                                            <Link to={Routes.bookBrowser(id, section.id)}
+                                                to={{
+                                                    pathname: Routes.bookBrowser(id, section.id),
+                                                    state: book
+                                                }}
+                                            >
+                                                {section.title}
+                                            </Link>
+                                        </ListGroup.Item>)
+                                    }
+                                </ListGroup>
                             </ListGroup.Item>
-                        return <ListGroup.Item key={index} as="li">
-                            <Link to={Routes.bookBrowser(element.page_id)}>
-                                {element.title}
-                            </Link>
-                        </ListGroup.Item>
+                        else
+                            return <ListGroup.Item key={index} as="li">
+                                <Link to={Routes.bookBrowser(id, element.id)}
+                                    to={{
+                                        pathname: Routes.bookBrowser(id, element.id),
+                                        state: book
+                                    }}
+                                >
+                                    {element.title}
+                                </Link>
+                            </ListGroup.Item>
                     })
                 }
             </ListGroup>

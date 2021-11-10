@@ -18,7 +18,7 @@ class BookSectionFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
-            'index' => $this->faker->numberBetween(1,100),
+            'index' => $this->faker->numberBetween(1, 100),
             'sectionable_id' => BookChapter::inRandomOrder()->first() ?? BookChapter::factory()->create(),
             'sectionable_type' => BookChapter::class,
             'page_id' => Page::inRandomOrder()->first() ?? Page::factory()->create(),
@@ -37,13 +37,19 @@ class BookSectionFactory extends Factory
     }
 
 
-    public function forBook(Book $book)
+    public function forBook(?Book $book = null)
     {
         return $this->state(function (array $attributes) use ($book) {
-            return [
-                'sectionable_id' => $book->id,
-                'sectionable_type' => Book::class,
-            ];
+            if ($book)
+                return [
+                    'sectionable_id' => $book->id,
+                    'sectionable_type' => Book::class,
+                ];
+            else
+                return [
+                    'sectionable_id' => Book::inRandomOrder()->first() ?? Book::factory()->create(),
+                    'sectionable_type' => Book::class,
+                ];
         });
     }
 }

@@ -10,6 +10,8 @@ import { Routes } from './utility/Urls';
 import NotFound from './NotFound';
 import Home from './Home';
 import BooksIndex from './book/BooksIndex';
+import BookShow from './book/BookShow';
+import BookBrowser from './book/BookBrowser';
 
 export default function Website() {
 
@@ -24,6 +26,8 @@ export default function Website() {
           <Switch>
             <Route exact={true} title={'Home'} path={Routes.home()} component={Home} />
             <Route exact={true} title={'BooksIndex'} path={Routes.booksIndex()} component={BooksIndex} />
+            <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
+            <Route exact={true} title={'BookBrowser'} path={Routes.bookBrowser()} component={BookBrowser} />
 
             <Route component={NotFound} />
           </Switch>

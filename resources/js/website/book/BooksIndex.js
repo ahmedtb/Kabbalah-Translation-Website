@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { ApiCallHandler, Api, Routes } from '../utility/Urls'
+import { Link } from 'react-router-dom'
 
 export default function BooksIndex(props) {
     const [books, setbooks] = React.useState([])

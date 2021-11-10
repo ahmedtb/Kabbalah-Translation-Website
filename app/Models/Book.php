@@ -24,8 +24,8 @@ class Book extends Model
 
     public function contentTable()
     {
-        $merged = collect($this->bookChapters()->with('sections.page')->get());
-        $this->sections()->with('page')->get()->each(function ($section) use ($merged) {
+        $merged = collect($this->bookChapters()->with('sections')->get());
+        $this->sections()->get()->each(function ($section) use ($merged) {
             $merged->push($section);
         });
         

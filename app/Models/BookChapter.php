@@ -11,6 +11,10 @@ class BookChapter extends Model
     
     protected $guarded = [];
 
+    public function book(){
+        return $this->belongsTo(Book::class);
+    }
+
     public function sections()
     {
         return $this->morphMany(BookSection::class, 'sectionable');
