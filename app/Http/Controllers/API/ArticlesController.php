@@ -12,7 +12,7 @@ class ArticlesController extends Controller
 {
     public function index(Request $request, ArticlesFilters $filters)
     {
-        return Article::activated()->filter($filters)->with('page', 'category')->paginate($request->input('page_size') ?? 5);
+        return Article::activated()->filter($filters)->paginate($request->input('page_size') ?? 5);
     }
 
     public function show(Request $request, $id)

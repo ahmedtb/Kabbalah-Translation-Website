@@ -11,7 +11,9 @@ class ArticlesFilters extends Filters
      */
     protected $filters = [
         'search',
-        'category_id'
+        'category_id',
+        'with',
+        'latest'
     ];
 
     public function search($search)
@@ -23,5 +25,13 @@ class ArticlesFilters extends Filters
     public function category_id($category_id)
     {
         return $this->builder->where('category_id', $category_id);
+    }
+    public function with($withs)
+    {
+        return $this->builder->with($withs);
+    }
+    public function latest()
+    {
+        return $this->builder->latest();
     }
 }

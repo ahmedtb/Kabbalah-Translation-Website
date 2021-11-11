@@ -1,3 +1,24 @@
 u {
     color: blue;
 }
+.maxWidth100 {
+    max-width: 100%;
+}
+.maxHeight100 {
+    height: 50vh;
+}
+.natureBackground {
+    background-image: url('/assets/nature.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.homeBackCover{
+    font-size: large;
+    color: white;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
