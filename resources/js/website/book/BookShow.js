@@ -38,7 +38,7 @@ export default function BookShow(props) {
                                             <Link to={Routes.bookBrowser(id, section.id)}
                                                 to={{
                                                     pathname: Routes.bookBrowser(id, section.id),
-                                                    state: book
+                                                    state: { book: book }
                                                 }}
                                             >
                                                 {section.title}

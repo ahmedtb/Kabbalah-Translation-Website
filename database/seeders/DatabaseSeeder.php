@@ -17,11 +17,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Book::factory(5)->create();
         Page::factory(20)->create();
-        BookChapter::factory(10)->create();
-        BookSection::factory(20)->create();
-        BookSection::factory(10)->forBook()->create();
+        $books = Book::factory(5)->create();
+        foreach($books as $book){
+            BookSection::factory(2)->forBook($book)->create();
+            $chapters = BookChapter::factory(2)->forBook($book)->create();
+            foreach($chapters as $chapter){
+                BookSection::factory(2)->forChapter($chapter)->create();
+            }
+        }
 
     }
 }

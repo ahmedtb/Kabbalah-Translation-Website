@@ -33,6 +33,12 @@ function TopMenue(props) {
                         <LinkContainer to={Routes.booksIndex()}>
                             <Nav.Link>الكتب</Nav.Link>
                         </LinkContainer>
+                        <LinkContainer to={Routes.articlesIndex()}>
+                            <Nav.Link>المقالات</Nav.Link>
+                        </LinkContainer>
+                        <LinkContainer to={Routes.categoriesIndex()}>
+                            <Nav.Link>التصنيفات</Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

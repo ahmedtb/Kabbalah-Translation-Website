@@ -26,13 +26,19 @@ class BookSectionFactory extends Factory
     }
 
 
-    public function forChapter(BookChapter $chapter)
+    public function forChapter(?BookChapter $chapter = null)
     {
         return $this->state(function (array $attributes) use ($chapter) {
-            return [
-                'sectionable_id' => $chapter->id,
-                'sectionable_type' => BookChapter::class,
-            ];
+            if ($chapter)
+                return [
+                    'sectionable_id' => $chapter->id,
+                    'sectionable_type' => BookChapter::class,
+                ];
+            else
+                return [
+                    'sectionable_id' => BookChapter::inRandomOrder()->first() ?? BookChapter::factory()->create(),
+                    'sectionable_type' => BookChapter::class,
+                ];
         });
     }
 

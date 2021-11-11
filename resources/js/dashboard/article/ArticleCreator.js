@@ -12,7 +12,6 @@ export default function ArticleCreator(props) {
     const [activated, setactivated] = React.useState(null);
 
     function submit() {
-
         ApiCallHandler(
             async () => await Api.createArticle(page_id, category_id, activated),
             (data) => {
@@ -74,7 +73,7 @@ export default function ArticleCreator(props) {
             inline
             label="activated"
             type={'checkbox'}
-            checked={activated}
+            defaultChecked={activated}
             onChange={(e) => {
                 setactivated(e.target.checked)
             }}

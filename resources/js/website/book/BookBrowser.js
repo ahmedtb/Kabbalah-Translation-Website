@@ -20,8 +20,8 @@ function getSections(content_table) {
 
 export default function BookBrowser(props) {
     const { id, section_id } = useParams()
-    const [book, setbook] = React.useState(useLocation().state ?? undefined)
-    const [sections, setsections] = React.useState([])
+    const [book, setbook] = React.useState(useLocation().state?.book ?? undefined)
+    const [sections, setsections] = React.useState(useLocation().state?.sections ?? [])
     const [sectionIndex, setsectionIndex] = React.useState()
 
     const [page, setpage] = React.useState()
@@ -56,30 +56,32 @@ export default function BookBrowser(props) {
     }, [book, sections, section_id])
 
     return <div>
-        <PageContentRender pageContent={page?.page_content} />
-        {
-            sections[sectionIndex + 1] ? (
-                <Link
-                    to={{
-                        pathname: Routes.bookBrowser(id, sections[sectionIndex + 1]?.id),
-                        state: book
-                    }}
-                >
-                    next
-                </Link>
-            ) : null
-        }
-        {
-            sections[sectionIndex - 1] ? (
-                <Link
-                    to={{
-                        pathname: Routes.bookBrowser(id, sections[sectionIndex - 1]?.id),
-                        state: book
-                    }}
-                >
-                    previus
-                </Link>
-            ) : null
-        }
+        <PageContentRender page={page} />
+        <div className='d-flex flex-row justify-content-around'>
+            {
+                sections[sectionIndex + 1] ? (
+                    <Link
+                        to={{
+                            pathname: Routes.bookBrowser(id, sections[sectionIndex + 1]?.id),
+                            state: { book: book, sections: sections }
+                        }}
+                    >
+                        next
+                    </Link>
+                ) : null
+            }
+            {
+                sections[sectionIndex - 1] ? (
+                    <Link
+                        to={{
+                            pathname: Routes.bookBrowser(id, sections[sectionIndex - 1]?.id),
+                            state: { book: book, sections: sections }
+                        }}
+                    >
+                        previus
+                    </Link>
+                ) : null
+            }
+        </div>
     </div >
 }

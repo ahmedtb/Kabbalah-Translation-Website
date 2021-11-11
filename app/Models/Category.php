@@ -11,9 +11,9 @@ class Category extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function pages()
+    public function articles()
     {
-        return $this->morphMany(Page::class, 'pageable');
+        return $this->hasMany(Article::class);
     }
 
     public function scopeFilter($query, CategoryFilters $filters)

@@ -40,7 +40,7 @@ class PageFactory extends Factory
             } else if ($type == 4) {
                 array_push($pageComponents, new HeaderComponent($this->faker->sentence()));
             } else if ($type == 5) {
-                // array_push($pageComponents, new ImageComponent(getBase64DefaultImage()));
+                array_push($pageComponents, new ImageComponent(getBase64DefaultImage()));
             }
         }
         return $pageComponents;

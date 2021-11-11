@@ -13,6 +13,11 @@ import BooksIndex from './book/BooksIndex';
 import BookShow from './book/BookShow';
 import BookBrowser from './book/BookBrowser';
 
+import ArticlesIndex from './article/ArticlesIndex';
+import ArticleShow from './article/ArticleShow';
+import CategoriesIndex from './category/CategoriesIndex';
+import CategoryShow from './category/CategoryShow';
+
 export default function Website() {
 
   return (
@@ -28,6 +33,12 @@ export default function Website() {
             <Route exact={true} title={'BooksIndex'} path={Routes.booksIndex()} component={BooksIndex} />
             <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
             <Route exact={true} title={'BookBrowser'} path={Routes.bookBrowser()} component={BookBrowser} />
+
+            <Route exact={true} title={'ArticlesIndex'} path={Routes.articlesIndex()} component={ArticlesIndex} />
+            <Route exact={true} title={'ArticleShow'} path={Routes.articleShow()} component={ArticleShow} />
+            
+            <Route exact={true} title={'CategoriesIndex'} path={Routes.categoriesIndex()} component={CategoriesIndex} />
+            <Route exact={true} title={'CategoryShow'} path={Routes.categoryShow()} component={CategoryShow} />
 
             <Route component={NotFound} />
           </Switch>

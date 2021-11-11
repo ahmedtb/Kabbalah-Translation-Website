@@ -3,9 +3,16 @@ import { logError } from './helpers'
 
 export const Routes = {
     home: () => '/',
+    
     bookShow: (id) => id ? '/books/' + id : '/books/:id',
     booksIndex: () => '/books',
-    bookBrowser: (id, section_id) => (section_id) ? `/books/${id}/section/${section_id}` : '/books/:id/section/:section_id'
+    bookBrowser: (id, section_id) => (section_id) ? `/books/${id}/section/${section_id}` : '/books/:id/section/:section_id',
+
+    articleShow: (id) => id ? '/articles/' + id : '/articles/:id',
+    articlesIndex: () => '/articles',
+    
+    categoryShow: (id) => id ? '/categories/' + id : '/categories/:id',
+    categoriesIndex: () => '/categories',
 }
 
 export const Api = {
@@ -14,6 +21,11 @@ export const Api = {
     fetchSection: async (id, params) => await axios.get(`/api/books/section/${id}`, { params: params }),
     fetchPage: async (id, params) => await axios.get(`/api/pages/${id}`, { params: params }),
 
+    fetchArticles: async (params) => await axios.get('/api/articles/', { params: params }),
+    fetchArticle: async (id) => await axios.get('/api/articles/' + id),
+
+    fetchCategories: async (params) => await axios.get('/api/categories/', { params: params }),
+    fetchCategory: async (id) => await axios.get('/api/categories/' + id),
 }
 
 export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {
