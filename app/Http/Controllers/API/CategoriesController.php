@@ -12,7 +12,7 @@ class CategoriesController extends Controller
 {
     public function index(Request $request, CategoryFilters $filters)
     {
-        return Category::filter($filters)->with('articles')->get();
+        return Category::filter($filters)->get();
     }
 
     public function show(Request $request, $id)

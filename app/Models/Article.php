@@ -26,4 +26,9 @@ class Article extends Model
     {
         return $filters->apply($query);
     }
+
+    public function scopeActivated($query)
+    {
+        return $query->where('activated', true);
+    }
 }

@@ -9,7 +9,7 @@ export const Routes = {
     bookBrowser: (id, section_id) => (section_id) ? `/books/${id}/section/${section_id}` : '/books/:id/section/:section_id',
 
     articleShow: (id) => id ? '/articles/' + id : '/articles/:id',
-    articlesIndex: () => '/articles',
+    articlesIndex: (params) => !params ? '/articles' : '/articles?' + Object.keys(params).map(key => key + '=' + params[key]).join('&'),
     
     categoryShow: (id) => id ? '/categories/' + id : '/categories/:id',
     categoriesIndex: () => '/categories',

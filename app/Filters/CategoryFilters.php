@@ -10,6 +10,12 @@ class CategoryFilters extends Filters
      * @var array
      */
     protected $filters = [
+        'with'
     ];
+
+    public function with($withs)
+    {
+        return $this->builder->with($withs);
+    }
 
 }

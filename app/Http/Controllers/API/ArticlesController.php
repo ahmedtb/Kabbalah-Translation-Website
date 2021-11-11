@@ -12,12 +12,12 @@ class ArticlesController extends Controller
 {
     public function index(Request $request, ArticlesFilters $filters)
     {
-        return Article::filter($filters)->with('page','category')->get();
+        return Article::activated()->filter($filters)->with('page', 'category')->paginate($request->input('page_size') ?? 5);
     }
 
     public function show(Request $request, $id)
     {
-        $article = Article::where('id', $id)->with('page','category')->first();
+        $article = Article::where('id', $id)->with('page', 'category')->first();
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         else {
@@ -25,6 +25,4 @@ class ArticlesController extends Controller
             return $article;
         }
     }
-
-  
 }

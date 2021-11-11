@@ -7,6 +7,6 @@ export default function ImageComponentRender(props) {
     const component = props.component
 
     return <Col xs={10} className='mx-auto'>
-        <img src={component.original} width='100%' />
+        <img src={component.original} style={{maxWidth:'100%'}} />
     </Col >
 }

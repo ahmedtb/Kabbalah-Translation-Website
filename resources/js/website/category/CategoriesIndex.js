@@ -1,14 +1,14 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { Api, Routes, ApiCallHandler } from '../utility/Urls'
-import { Container,  Table } from 'react-bootstrap'
+import { Container, Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 export default function CategoriesIndex(props) {
     const [categories, setcategories] = React.useState(null)
 
     async function setup() {
-        ApiCallHandler(async () => await Api.fetchCategories(),
+        ApiCallHandler(async () => await Api.fetchCategories({with:['articles']}),
             setcategories,
             'CategoriesIndex setup',
             true
@@ -31,7 +31,7 @@ export default function CategoriesIndex(props) {
                 {
                     categories?.map((category, index) => (
                         <tr key={index}>
-                            <td> <Link to={Routes.categoryShow(category.id)}> {category.id}  </Link> </td>
+                            <td> <Link to={Routes.articlesIndex({ category_id: category.id })}> {category.id}  </Link> </td>
                             <td>{category.name}</td>
                             <td>{category.articles.length}</td>
                         </tr>

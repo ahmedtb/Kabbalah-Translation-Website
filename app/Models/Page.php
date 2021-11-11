@@ -17,14 +17,14 @@ class Page extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['page_content'];
+    // protected $hidden = ['page_content'];
 
     public function scopeFilter($query, PageFilters $filters)
     {
         return $filters->apply($query);
     }
 
-    protected $columns = ['id', 'title', 'description', 'page_content', 'activated', 'created_at', 'updated_at'];
+    protected $columns = ['id', 'title', 'description', 'page_content', 'created_at', 'updated_at'];
 
     public function scopeExclude($query, $value = [])
     {

@@ -13,7 +13,7 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class)->activated();
     }
 
     public function scopeFilter($query, CategoryFilters $filters)
