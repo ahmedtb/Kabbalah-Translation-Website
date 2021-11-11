@@ -18,6 +18,7 @@ class BookSectionFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(),
+            'description' => $this->faker->text(),
             'index' => $this->faker->numberBetween(1, 100),
             'sectionable_id' => BookChapter::inRandomOrder()->first() ?? BookChapter::factory()->create(),
             'sectionable_type' => BookChapter::class,

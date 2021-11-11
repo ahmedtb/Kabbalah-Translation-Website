@@ -17,6 +17,7 @@ class CreateBookSectionsTable extends Migration
             $table->id();
             $table->unsignedInteger('index');
             $table->string('title');
+            $table->text('description')->nullable();
             $table->morphs('sectionable');
             $table->foreignId('page_id');
             $table->timestamps();
