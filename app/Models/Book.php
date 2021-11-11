@@ -31,6 +31,10 @@ class Book extends Model
         
         return $merged;
     }
+    public function scopeActivated($query, $bool = true)
+    {
+        return $query->where('activated',$bool);
+    }
     public function scopeFilter($query, BookFilters $filters)
     {
         return $filters->apply($query);

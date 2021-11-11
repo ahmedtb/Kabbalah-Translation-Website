@@ -24,7 +24,7 @@ function TopMenue(props) {
             <Container>
                 <LinkContainer to={Routes.home()}>
                     <Navbar.Brand >
-                        Kabbalah Library
+                        {process.env.MIX_APP_NAME}
                     </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -36,9 +36,9 @@ function TopMenue(props) {
                         <LinkContainer to={Routes.articlesIndex()}>
                             <Nav.Link>المقالات</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to={Routes.categoriesIndex()}>
+                        {/* <LinkContainer to={Routes.categoriesIndex()}>
                             <Nav.Link>التصنيفات</Nav.Link>
-                        </LinkContainer>
+                        </LinkContainer> */}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

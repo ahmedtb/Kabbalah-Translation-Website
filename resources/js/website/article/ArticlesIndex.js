@@ -35,7 +35,7 @@ export default function ArticleShow(props) {
             articles?.map((article, index) => (
                 <div key={index}>
                     <h2> <Link to={Routes.articleShow(article.id)}> {article.page?.title}</Link></h2>
-                    <div><Link to={Routes.categoryShow(article.category_id)}> {article.category?.name}</Link></div>
+                    <div><Link to={Routes.articlesIndex({category_id: article.category_id})}> {article.category?.name}</Link></div>
                     <PageContentRender page={article.page} />
                 </div>
             ))

@@ -22,6 +22,7 @@ export default function Home(props) {
                 <h1>translation</h1>
             </Col>
             <Col xs={3}>
+                <h4>تصنيفات</h4>
                 {
                     categories?.map((category, index) => (
                         <div key={index}>
