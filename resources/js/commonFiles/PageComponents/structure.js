@@ -59,15 +59,18 @@ export function linkObject(originalLink, originalLabel = null, translatedLink = 
     }
 }
 
-export function youtubeEmbedObject(original, translated){
+export function youtubeEmbedObject(original, translated) {
 
-    
-
-    return {
-        class: YoutubeEmbedComponentClass,
-        original: original,
-        translated: translated
-    }
+    if (original != null && original.length != 11) {
+        alert('original text should be 11 length')
+    } else if (translated != null && translated.length != 11) {
+        alert('translated text should be 11 length')
+    } else
+        return {
+            class: YoutubeEmbedComponentClass,
+            original: original,
+            translated: translated
+        }
 }
 
 export function pageContentObject(pageComponents, originalDir, translatedDir) {

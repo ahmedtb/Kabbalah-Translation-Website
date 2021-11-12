@@ -15,6 +15,10 @@ export function convertFileToBase64(file) {
     });
 }
 
+export function truncate(str, length = 200) {
+    return str.length > length ? str.substring(0, length) + "....." : str;
+}
+
 
 export function logError(error, sourceName = null) {
     if (sourceName)

@@ -13,31 +13,12 @@ export function YoutubeEmbedComponentRender(props) {
 
     const style = component.style
 
-    const popover = (
-        <YoutubeEmbed embedId={component.translated} />
-
-    );
-
-    return <div >
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
-            {(() => {
-                switch (render) {
-                    case 'original':
-                        return <YoutubeEmbed embedId={component.original} />
-
-                    case 'translated':
-                        return <YoutubeEmbed embedId={component.translated} />
-
-                    case 'both':
-                        return <div style={style}>
-                            <YoutubeEmbed embedId={component.original} />
-                            <YoutubeEmbed embedId={component.translated} />
-                        </div>
-                }
-            })()}
-
-
-        </OverlayTrigger>
+    return <div className='border rounded flex-grow-1' >
+        <h4>youtube embed</h4>
+        <div className='d-flex flex-row justify-content-around'>
+            <div className='border rounded'>{component.translated}</div>
+            <div className='border rounded'>{component.original}</div>
+        </div>
     </div >
 }
 

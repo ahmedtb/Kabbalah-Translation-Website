@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import PageContentRender from "../components/PageContentRender";
 import { Col, Container, Button } from "react-bootstrap";
-import { logError } from "../utility/helpers";
+import { logError } from "../../commonFiles/helpers";
 export default function PageShow(props) {
 
     let { id } = useParams();

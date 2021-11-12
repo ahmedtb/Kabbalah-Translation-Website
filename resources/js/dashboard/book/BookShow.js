@@ -3,7 +3,7 @@ import { Col, Container, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import {Api} from "../utility/URLs";
-import { ApiCallHandler } from "../utility/helpers";
+import { ApiCallHandler } from "../../commonFiles/helpers";
 import {Routes} from '../utility/URLs'
 
 function SectionElements(props) {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { logError } from './helpers'
+import { logError } from '../../commonFiles/helpers'
 export const Routes = {
     dashboard: () => '/dashboard/',
     pageCreator: () => '/dashboard/createPage',

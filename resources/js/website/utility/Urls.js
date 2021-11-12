@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { logError } from './helpers'
+import { logError } from '../../commonFiles/helpers'
 
 export const Routes = {
     home: () => '/',
@@ -11,7 +11,7 @@ export const Routes = {
     articleShow: (id) => id ? '/articles/' + id : '/articles/:id',
     articlesIndex: (params) => !params ? '/articles' : '/articles?' + Object.keys(params).map(key => key + '=' + params[key]).join('&'),
     
-    categoryShow: (id) => id ? '/categories/' + id : '/categories/:id',
+    // categoryShow: (id) => id ? '/categories/' + id : '/categories/:id',
     categoriesIndex: () => '/categories',
 }
 

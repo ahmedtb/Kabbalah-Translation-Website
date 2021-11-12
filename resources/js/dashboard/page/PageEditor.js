@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { Redirect } from "react-router";
 import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
-import { logError, ApiCallHandler } from "../utility/helpers";
+import { logError, ApiCallHandler } from "../../commonFiles/helpers";
 import PageContentRender from "../components/PageContentRender";
 import {Routes} from "../utility/URLs";
 

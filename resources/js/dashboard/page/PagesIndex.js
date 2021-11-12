@@ -1,7 +1,7 @@
 import React from 'react'
 import PagesTable from '../components/PagesTable'
 import {Api} from '../utility/URLs'
-import { ApiCallHandler } from '../utility/helpers'
+import { ApiCallHandler } from '../../commonFiles/helpers'
 
 export default function PagesIndex(props) {
     const [pages, setpages] = React.useState([])

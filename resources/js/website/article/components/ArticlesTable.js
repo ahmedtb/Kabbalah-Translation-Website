@@ -1,7 +1,7 @@
 import { Table } from "react-bootstrap"
-export default function ArticlesTable(){
+export default function ArticlesTable() {
     const articles = props.articles
-    
+
     return <Table striped bordered hover>
         <thead>
             <tr>
@@ -16,10 +16,10 @@ export default function ArticlesTable(){
                     <tr key={index}>
                         <td>  {article.id}   </td>
                         <td> <Link to={Routes.articleShow(article.id)}> {article.page?.title}</Link></td>
-                        <td><Link to={Routes.categoryShow(article.category_id)}> {article.category?.name}</Link></td>
+                        <td><Link to={Routes.articlesIndex({ category_id: article.category_id })}> {article.category?.name}</Link></td>
                     </tr>
                 ))
             }
         </tbody>
-    </Table> 
+    </Table >
 }

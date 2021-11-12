@@ -4,7 +4,7 @@ import PageComponentsCreator from "../components/PageComponentsCreator"
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
 import {Api} from "../utility/URLs";
 import {Routes} from "../utility/URLs";
-import { ApiCallHandler } from "../utility/helpers";
+import { ApiCallHandler } from "../../commonFiles/helpers";
 import { ParagraphComponentEditor, ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
 import { LinkComponentEditor, LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'

@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router";
 import { Redirect } from "react-router";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
-import { ApiCallHandler } from "../utility/helpers";
+import { ApiCallHandler } from "../../commonFiles/helpers";
 import { Routes, Api } from "../utility/URLs";
 
 export default function ArticleEditor(props) {

@@ -146,7 +146,5 @@ export function LinkComponentWebsiteRender(props) {
     const translatedLink = component.translatedLink
     const translatedLabel = component.translatedLabel
 
-    return <div >
-            <div dir={originalDir} ><u>{originalLabel}</u></div>
-    </div >
+    return <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
 }

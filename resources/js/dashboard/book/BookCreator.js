@@ -1,6 +1,6 @@
 import React from 'react'
 import ChapterCreator from './components/ChapterCreator'
-import { ApiCallHandler } from '../utility/helpers'
+import { ApiCallHandler } from '../../commonFiles/helpers'
 import {Api} from '../utility/URLs'
 import axios from 'axios'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'

@@ -3,7 +3,7 @@ import {Api, Routes} from "../utility/URLs";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Col, Container, Button } from "react-bootstrap";
-import { ApiCallHandler } from "../utility/helpers";
+import { ApiCallHandler } from "../../commonFiles/helpers";
 
 export default function CategoryShow(props){
     

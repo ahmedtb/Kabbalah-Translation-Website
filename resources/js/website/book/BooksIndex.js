@@ -2,7 +2,7 @@ import React from 'react'
 import { Col, Row, Table } from 'react-bootstrap'
 import { ApiCallHandler, Api, Routes } from '../utility/Urls'
 import { Link } from 'react-router-dom'
-import { truncate } from '../utility/helpers'
+import { truncate } from '../../commonFiles/helpers'
 
 export default function BooksIndex(props) {
     const [books, setbooks] = React.useState([])

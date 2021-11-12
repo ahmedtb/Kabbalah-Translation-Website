@@ -19,7 +19,7 @@ export default function ArticlesCardsRender(props) {
                         <h4>
                             {article.title}
                         </h4>
-                        <Link to={Routes.categoryShow(article.category_id)}>{article.category?.name}</Link>
+                        <Link to={Routes.articlesIndex({ category_id: article.category_id })}>{article.category?.name}</Link>
                         <div>
                             {article.description}
                         </div>
