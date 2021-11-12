@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { ParagraphComponentEditor, ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
-import { TitleComponentEditor, TitleComponentRender } from '../PageComponents/TitleComponent'
-import { LinkComponentEditor, LinkComponentRender } from '../PageComponents/LinkComponent'
-import { ImageComponentEditor, ImageComponentRender } from '../PageComponents/ImageComponent'
-import { HeaderComponentEditor, HeaderComponentRender } from '../PageComponents/HeaderComponent'
+import { ParagraphComponentEditor, ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
+import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
+import { LinkComponentEditor, LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
+import { ImageComponentEditor, ImageComponentRender } from '../../commonFiles/PageComponents/ImageComponent'
+import { HeaderComponentEditor, HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import PageComponentsCreator from './PageComponentsCreator'
 import { Col, FormCheck } from 'react-bootstrap'
 import {
@@ -14,7 +14,7 @@ import {
     LinkComponentClass,
     ImageComponentClass,
     pageContentObject
-} from '../PageComponents/structure'
+} from '../../commonFiles/PageComponents/structure'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
 
 

@@ -3,7 +3,7 @@ import { Api, Routes, ApiCallHandler } from '../utility/Urls'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import axios from "axios";
-import Pagination from "../components/Pagination";
+import Pagination from "../../commonFiles/Pagination";
 import PageContentRender from '../components/PageContentRender'
 
 export default function ArticleShow(props) {

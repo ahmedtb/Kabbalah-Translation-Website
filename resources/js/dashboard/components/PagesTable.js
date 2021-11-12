@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { HeaderComponentClass, ImageComponentClass, LinkComponentClass, ParagraphComponentClass, TitleComponentClass } from '../PageComponents/structure'
+import { HeaderComponentClass, ImageComponentClass, LinkComponentClass, ParagraphComponentClass, TitleComponentClass } from '../../commonFiles/PageComponents/structure'
 import {Routes} from '../utility/URLs'
 
 function ContentPageStatistics(props) {

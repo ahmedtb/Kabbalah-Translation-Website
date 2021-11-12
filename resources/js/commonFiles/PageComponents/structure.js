@@ -6,6 +6,7 @@ export const HeaderComponentClass = 'App\\PageComponents\\HeaderComponent'
 export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
 export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
+export const YoutubeEmbedComponentClass = 'App\\PageComponents\\YoutubeEmbedComponent'
 
 
 export function paragraphObject(original, translated = '', style = {}) {
@@ -55,6 +56,17 @@ export function linkObject(originalLink, originalLabel = null, translatedLink = 
         originalLabel: originalLabel,
         translatedLink: translatedLink,
         translatedLabel: translatedLabel
+    }
+}
+
+export function youtubeEmbedObject(original, translated){
+
+    
+
+    return {
+        class: YoutubeEmbedComponentClass,
+        original: original,
+        translated: translated
     }
 }
 

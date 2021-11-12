@@ -1,9 +1,9 @@
 import React from 'react'
-import { ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
-import { HeaderComponentRender } from '../PageComponents/HeaderComponent'
-import { TitleComponentRender } from '../PageComponents/TitleComponent'
-import { ImageComponentRender, } from '../PageComponents/ImageComponent'
-import { LinkComponentRender } from '../PageComponents/LinkComponent'
+import { ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
+import { HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
+import { TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
+import { ImageComponentRender, } from '../../commonFiles/PageComponents/ImageComponent'
+import { LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
 
 import { 
     ParagraphComponentClass, 
@@ -11,7 +11,7 @@ import {
     TitleComponentClass, 
     ImageComponentClass, 
     LinkComponentClass 
-} from '../PageComponents/structure'
+} from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
 

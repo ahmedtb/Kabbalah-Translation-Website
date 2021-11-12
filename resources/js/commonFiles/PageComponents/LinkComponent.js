@@ -135,3 +135,18 @@ export function LinkComponentEditor(props) {
     </div >
 
 }
+
+export function LinkComponentWebsiteRender(props) {
+    const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+
+    const originalLink = component.originalLink
+    const originalLabel = component.originalLabel
+    const translatedLink = component.translatedLink
+    const translatedLabel = component.translatedLabel
+
+    return <div >
+            <div dir={originalDir} ><u>{originalLabel}</u></div>
+    </div >
+}

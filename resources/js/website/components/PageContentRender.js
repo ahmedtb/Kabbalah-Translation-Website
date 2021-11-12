@@ -1,9 +1,9 @@
 import React from 'react'
-import ParagraphComponentRender from './PageComponents/ParagraphComponent'
-import HeaderComponentRender from './PageComponents/HeaderComponent'
-import TitleComponentRender from './PageComponents/TitleComponent'
-import ImageComponentRender from './PageComponents/ImageComponent'
-import LinkComponentRender from './PageComponents/LinkComponent'
+import { ParagraphComponentWebsiteRender} from '../../commonFiles/PageComponents/ParagraphComponent'
+import {HeaderComponentWebsiteRender} from '../../commonFiles/PageComponents/HeaderComponent'
+import { TitleComponentWebsiteRender} from '../../commonFiles/PageComponents/TitleComponent'
+import { ImageComponentWebsiteRender} from '../../commonFiles/PageComponents/ImageComponent'
+import { LinkComponentWebsiteRender} from '../../commonFiles/PageComponents/LinkComponent'
 
 import { 
     ParagraphComponentClass, 
@@ -11,7 +11,7 @@ import {
     TitleComponentClass, 
     ImageComponentClass, 
     LinkComponentClass 
-} from './PageComponents/structure'
+} from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
 
@@ -29,35 +29,35 @@ export default function PageContentRender(props) {
             {
                 page_content?.pageComponents.map((pageComponent, index) => {
                     if (pageComponent.class == ParagraphComponentClass) {
-                        return <ParagraphComponentRender
+                        return <ParagraphComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             originalDir={translatedDir}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == HeaderComponentClass) {
-                        return <HeaderComponentRender
+                        return <HeaderComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == TitleComponentClass) {
-                        return <TitleComponentRender
+                        return <TitleComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == ImageComponentClass) {
-                        return <ImageComponentRender
+                        return <ImageComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}
                             component={pageComponent}
                         />
                     } else if (pageComponent.class == LinkComponentClass) {
-                        return <LinkComponentRender
+                        return <LinkComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}

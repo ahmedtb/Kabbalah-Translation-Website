@@ -1,10 +1,10 @@
 import React from 'react'
 import { Dropdown, Button, Col } from 'react-bootstrap'
-import { HeaderComponentCreator } from '../PageComponents/HeaderComponent'
-import { ParagraphComponentCreator } from '../PageComponents/ParagraphComponent'
-import { TitleComponentCreator } from '../PageComponents/TitleComponent'
-import { ImageComponentCreator } from '../PageComponents/ImageComponent'
-import { LinkComponentCreator } from '../PageComponents/LinkComponent'
+import { HeaderComponentCreator } from '../../commonFiles/PageComponents/HeaderComponent'
+import { ParagraphComponentCreator } from '../../commonFiles/PageComponents/ParagraphComponent'
+import { TitleComponentCreator } from '../../commonFiles/PageComponents/TitleComponent'
+import { ImageComponentCreator } from '../../commonFiles/PageComponents/ImageComponent'
+import { LinkComponentCreator } from '../../commonFiles/PageComponents/LinkComponent'
 
 import {
     ParagraphComponentClass,
@@ -12,7 +12,7 @@ import {
     LinkComponentClass,
     ImageComponentClass,
     HeaderComponentClass
-} from '../PageComponents/structure'
+} from '../../commonFiles/PageComponents/structure'
 
 
 const componentsTypes = {

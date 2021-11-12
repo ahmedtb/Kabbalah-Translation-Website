@@ -2,7 +2,8 @@ import React from "react"
 import { Api, ApiCallHandler, Routes } from "./utility/Urls"
 import { Col, Row, Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import PageContentRender from "./components/PageContentRender"
+import YoutubeEmbed from "../commonFiles/YoutubeEmbed"
+import ArticlesCardsRender from "./components/ArticlesCardsRender"
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -14,7 +15,7 @@ export default function Home(props) {
             'CategoriesIndex fetchCategories',
             true
         )
-        ApiCallHandler(async () => await Api.fetchArticles({ latest: true, with: ['page', 'category'] }),
+        ApiCallHandler(async () => await Api.fetchArticles({ latest: true, with: ['category'] }),
             (data) => setarticles(data.data),
             'CategoriesIndex fetchArticles',
             true
@@ -24,7 +25,7 @@ export default function Home(props) {
         setup()
     }, [])
     return (
-        <div>
+        <div className='py-3'>
             <Row>
                 <Col xs={10}>
                     {/* <div className='natureBackground maxWidth100 maxHeight100 '>
@@ -34,7 +35,7 @@ export default function Home(props) {
                             </p>
                         </div>
                     </div> */}
-                    <Carousel >
+                    <Carousel interval={3000}>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
@@ -71,16 +72,9 @@ export default function Home(props) {
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
-                    {
-
-                        articles?.map((article, index) => (
-                            <div key={index}>
-                                <h2> <Link to={Routes.articleShow(article.id)}> {article.page?.title}</Link></h2>
-                                <div><Link to={Routes.articlesIndex({ category_id: article.category_id })}> {article.category?.name}</Link></div>
-                                <PageContentRender page={article.page} />
-                            </div>
-                        ))
-                    }
+                    <h1>Youtube Embed</h1>
+                    <YoutubeEmbed embedId="rokGy0huYEA" />
+                    <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col xs={2}>
                     <h4>تصنيفات</h4>

@@ -5,11 +5,11 @@ import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
 import {Api} from "../utility/URLs";
 import {Routes} from "../utility/URLs";
 import { ApiCallHandler } from "../utility/helpers";
-import { ParagraphComponentEditor, ParagraphComponentRender } from '../PageComponents/ParagraphComponent'
-import { TitleComponentEditor, TitleComponentRender } from '../PageComponents/TitleComponent'
-import { LinkComponentEditor, LinkComponentRender } from '../PageComponents/LinkComponent'
-import { ImageComponentEditor, ImageComponentRender } from '../PageComponents/ImageComponent'
-import { HeaderComponentEditor, HeaderComponentRender } from '../PageComponents/HeaderComponent'
+import { ParagraphComponentEditor, ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
+import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
+import { LinkComponentEditor, LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
+import { ImageComponentEditor, ImageComponentRender } from '../../commonFiles/PageComponents/ImageComponent'
+import { HeaderComponentEditor, HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import {
     ParagraphComponentClass,
     HeaderComponentClass,
@@ -18,7 +18,7 @@ import {
     ImageComponentClass,
     pageContentObject,
     pageContentReducer
-} from '../PageComponents/structure'
+} from '../../commonFiles/PageComponents/structure'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
 
 export default function PageCreator(props) {

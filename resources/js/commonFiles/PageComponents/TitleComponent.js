@@ -127,3 +127,16 @@ export function TitleComponentEditor(props) {
         </div>
     )
 }
+
+export function TitleComponentWebsiteRender(props) {
+    const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+    const render = props.render
+
+    const style = component.style
+
+    return <div >
+        <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
+    </div >
+}
