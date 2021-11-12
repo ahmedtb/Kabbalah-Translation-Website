@@ -32,7 +32,7 @@ class YoutubeEmbedComponent extends PageComponent
     }
     public function setoriginal($value)
     {
-        if ($value != null && sizeof($value) != 11)
+        if ($value != null && strlen($value) != 11)
             throw new PageComponentsException('youtube embed is 11 length');
         $this->original = $value;
     }
@@ -42,7 +42,7 @@ class YoutubeEmbedComponent extends PageComponent
     }
     public function setTranslated($value)
     {
-        if ($value != null && sizeof($value) != 11)
+        if ($value != null && strlen($value) != 11)
             throw new PageComponentsException('youtube embed is 11 length');
         $this->translated = $value;
     }

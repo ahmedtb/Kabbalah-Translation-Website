@@ -5,7 +5,7 @@ import {
 } from 'react-bootstrap'
 import { youtubeEmbedObject } from './structure'
 
-export function YoutubeComponentRender(props) {
+export function YoutubeEmbedComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
@@ -42,7 +42,7 @@ export function YoutubeComponentRender(props) {
 }
 
 
-export function YoutubeComponentCreator(props) {
+export function YoutubeEmbedComponentCreator(props) {
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState('')
@@ -76,7 +76,7 @@ export function YoutubeComponentCreator(props) {
     </div>
 }
 
-export function YoutubeComponentEditor(props) {
+export function YoutubeEmbedComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState(component.original)
@@ -120,7 +120,7 @@ export function YoutubeComponentEditor(props) {
     )
 }
 
-export default function YoutubeEmbedComponentWebsiteRender(props) {
+export function YoutubeEmbedComponentWebsiteRender(props) {
     const component = props.component
 
     return <YoutubeEmbed embedId={component.translated} />

@@ -5,6 +5,8 @@ import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/Pa
 import { LinkComponentEditor, LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
 import { ImageComponentEditor, ImageComponentRender } from '../../commonFiles/PageComponents/ImageComponent'
 import { HeaderComponentEditor, HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
+import { YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
+
 import PageComponentsCreator from './PageComponentsCreator'
 import { Col, FormCheck } from 'react-bootstrap'
 import {
@@ -13,6 +15,7 @@ import {
     TitleComponentClass,
     LinkComponentClass,
     ImageComponentClass,
+    YoutubeEmbedComponentClass,
     pageContentObject
 } from '../../commonFiles/PageComponents/structure'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
@@ -67,19 +70,19 @@ export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
     const pageContent = props.pageContent
     const [page_content, dispatch] = React.useReducer(reducer, null)
-    
+
     React.useEffect(() => {
         dispatch({ actionType: 'set page_content', page_content: pageContent })
     }, [pageContent])
-    
+
     React.useEffect(() => {
         setEditedPageContent(page_content)
     }, [page_content])
-    
+
     function addNewComponent(componentConfig) {
         dispatch({ actionType: 'add component', newComponent: componentConfig })
     }
-    
+
     const [editComponent, seteditComponent] = React.useState(null)
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
@@ -230,6 +233,30 @@ export default function PageContentEditor(props) {
                                             dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
 
                                         /> : <ImageComponentRender
+                                            component={component}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
+                                            render='original'
+                                        />
+                                    }
+                                </div>
+                            } else if (component.class == YoutubeEmbedComponentClass) {
+                                return <div key={index} className='d-flex flex-row'>
+                                    <div>
+                                        <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                                        <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                                        <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+
+                                    </div>
+                                    {
+                                        editComponent == index ? <YoutubeEmbedComponentEditor
+                                            key={index}
+                                            component={component}
+                                            originalDir={originalDir}
+                                            translatedDir={translatedDir}
+                                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+
+                                        /> : <YoutubeEmbedComponentRender
                                             component={component}
                                             originalDir={originalDir}
                                             translatedDir={translatedDir}

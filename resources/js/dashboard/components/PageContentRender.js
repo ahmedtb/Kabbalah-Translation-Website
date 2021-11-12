@@ -4,13 +4,15 @@ import { HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderCo
 import { TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
 import { ImageComponentRender, } from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
+import { YoutubeEmbedComponentRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 
 import { 
     ParagraphComponentClass, 
     HeaderComponentClass, 
     TitleComponentClass, 
     ImageComponentClass, 
-    LinkComponentClass 
+    LinkComponentClass,
+    YoutubeEmbedComponentClass,
 } from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
@@ -61,6 +63,14 @@ export default function PageContentRender(props) {
                         />
                     } else if (pageComponent.class == LinkComponentClass) {
                         return <LinkComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            render={render}
+                            component={pageComponent}
+                        />
+                    } else if (pageComponent.class == YoutubeEmbedComponentClass) {
+                        return <YoutubeEmbedComponentRender
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}

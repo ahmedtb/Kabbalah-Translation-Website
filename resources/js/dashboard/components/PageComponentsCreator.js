@@ -5,13 +5,15 @@ import { ParagraphComponentCreator } from '../../commonFiles/PageComponents/Para
 import { TitleComponentCreator } from '../../commonFiles/PageComponents/TitleComponent'
 import { ImageComponentCreator } from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentCreator } from '../../commonFiles/PageComponents/LinkComponent'
+import { YoutubeEmbedComponentCreator } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 
 import {
     ParagraphComponentClass,
     TitleComponentClass,
     LinkComponentClass,
     ImageComponentClass,
-    HeaderComponentClass
+    HeaderComponentClass,
+    YoutubeEmbedComponentClass
 } from '../../commonFiles/PageComponents/structure'
 
 
@@ -21,6 +23,7 @@ const componentsTypes = {
     [TitleComponentClass]: 'عنوان صفحة',
     [ImageComponentClass]: 'صورة',
     [LinkComponentClass]: 'رابط',
+    [YoutubeEmbedComponentClass]: 'رابط فيديو',
 
 }
 
@@ -78,6 +81,10 @@ export default function PageComponentsCreator(props) {
                     } else if (selectedType == LinkComponentClass) {
                         return (
                             <LinkComponentCreator dispatch={(component) => setcomponent(component)} />
+                        )
+                    } else if (selectedType == YoutubeEmbedComponentClass) {
+                        return (
+                            <YoutubeEmbedComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     }
                 })()

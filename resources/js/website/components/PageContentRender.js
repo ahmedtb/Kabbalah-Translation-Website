@@ -10,10 +10,12 @@ import {
     HeaderComponentClass, 
     TitleComponentClass, 
     ImageComponentClass, 
-    LinkComponentClass 
+    LinkComponentClass, 
+    YoutubeEmbedComponentClass
 } from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
+import { YoutubeEmbedComponentWebsiteRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 
 export default function PageContentRender(props) {
     const page = props.page
@@ -58,6 +60,13 @@ export default function PageContentRender(props) {
                         />
                     } else if (pageComponent.class == LinkComponentClass) {
                         return <LinkComponentWebsiteRender
+                            key={index}
+                            originalDir={originalDir}
+                            translatedDir={translatedDir}
+                            component={pageComponent}
+                        />
+                    } else if (pageComponent.class == YoutubeEmbedComponentClass) {
+                        return <YoutubeEmbedComponentWebsiteRender
                             key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}
