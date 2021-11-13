@@ -1,7 +1,7 @@
 import React from 'react'
-import { Dropdown, Button, Col } from 'react-bootstrap'
+import { Dropdown, Button, Col, Form } from 'react-bootstrap'
 import { HeaderComponentCreator } from '../../commonFiles/PageComponents/HeaderComponent'
-import { ParagraphComponentCreator } from '../../commonFiles/PageComponents/ParagraphComponent'
+import { ParagraphComponentCreator, ParagraphsComponentCreator } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { TitleComponentCreator } from '../../commonFiles/PageComponents/TitleComponent'
 import { ImageComponentCreator } from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentCreator } from '../../commonFiles/PageComponents/LinkComponent'
@@ -16,15 +16,16 @@ import {
     YoutubeEmbedComponentClass
 } from '../../commonFiles/PageComponents/structure'
 
+const paragraphsComponent = 'فقرات متتالية'
 
 const componentsTypes = {
     [ParagraphComponentClass]: 'نص عادي',
+    [paragraphsComponent]: 'فقرات متتالية',
     [HeaderComponentClass]: 'عنوان فرعي',
     [TitleComponentClass]: 'عنوان صفحة',
     [ImageComponentClass]: 'صورة',
     [LinkComponentClass]: 'رابط',
     [YoutubeEmbedComponentClass]: 'رابط فيديو',
-    ['paragraphsComponent']: 'فقرات متتالية'
 }
 
 export default function PageComponentsCreator(props) {
@@ -32,18 +33,16 @@ export default function PageComponentsCreator(props) {
     const addComponent = props.addComponent
     const [selectedType, setSelectedType] = React.useState();
     const [component, setcomponent] = React.useState(null);
-    const [components, setcomponents] = React.useState(null);
+    const [paragraphs, setparagraphs] = React.useState(null);
 
-    React.useEffect(() => {
-        console.log('PageComponentsCreator', selectedType)
-    }, [selectedType])
+    // React.useEffect(() => {
+    //     console.log('paragraphs', paragraphs)
+    // }, [paragraphs])
 
     return (
         <div>
-
-
             <Col xs={2} className='mx-auto'>
-                <Dropdown onSelect={(e) => { setSelectedType(e); setcomponent(null); setcomponents(null);  }}>
+                <Dropdown onSelect={(e) => { setSelectedType(e); setcomponent(null); setparagraphs(null); }}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         اختر نوع العنصر
                     </Dropdown.Toggle>
@@ -87,9 +86,9 @@ export default function PageComponentsCreator(props) {
                         return (
                             <YoutubeEmbedComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
-                    } else if (selectedType == 'فقرات متتالية') {
+                    } else if (selectedType == paragraphsComponent) {
                         return (
-                            <ParagraphsComponentCreator dispatch={(components) => setcomponents(components)} />
+                            <ParagraphsComponentCreator dispatch={(paragraphs) => setparagraphs(paragraphs)} />
                         )
                     }
                 })()
@@ -104,70 +103,21 @@ export default function PageComponentsCreator(props) {
                             setSelectedType(null)
                         }} variant="primary">اضف</Button>
                     : null}
-                {components ?
+                {paragraphs ?
                     <Button
                         className='my-2'
                         onClick={() => {
-                            components.forEach(component => {
+                            paragraphs.forEach(component => {
                                 addComponent(component)
                             });
-                            setcomponents(null)
+                            // console.log('paragraphs button', paragraphs)
+                            setparagraphs(null)
                             setSelectedType(null)
-                        }} variant="primary">اضف</Button>
+                        }} variant="primary">اضافة فقرات</Button>
                     : null}
             </Col>
 
         </div>
     )
 
-}
-import { paragraphObject } from '../../commonFiles/PageComponents/structure'
-
-function ParagraphsComponentCreator(props) {
-    const dispatch = props.dispatch
-    const [paragraphs, setparagraphs] = React.useState([])
-    const [style, setstyle] = React.useState({})
-
-    return 'aaaaa'
-    // return <div className='my-3'>
-    //     <div className="mb-1">
-    //         <div>styling</div>
-    //         <Form.Check
-    //             inline
-    //             label="bold"
-    //             name="bold"
-    //             type={'checkbox'}
-    //             checked={style.fontWeight == 'bold'}
-
-    //             onChange={(e) => {
-    //                 let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
-    //                 setstyle(newstyle)
-    //             }}
-    //         />
-    //         <Form.Check
-    //             inline
-    //             label="italic"
-    //             name="italic"
-    //             onChange={(e) => {
-    //                 let newstyle = { ...style, fontStyle: e.target.checked ? 'italic' : undefined }
-    //                 setstyle(newstyle)
-    //             }}
-    //             checked={style.fontStyle == 'italic'}
-    //             type={'checkbox'}
-    //         />
-    //     </div>
-    //     <div className="mb-3">
-    //         <Form.Control
-    //             as="textarea"
-    //             style={style}
-    //             onChange={(e) => {
-    //                 let parapraphs = (e.target.value.split('\n').map((str, index) => paragraphObject(str, '', style)))
-    //                 console.log(parapraphs)
-    //                 // setparagraphs(parapraphs)
-    //                 // dispatch(paragraphs)
-
-    //             }}
-    //         />
-    //     </div>
-    // </div >
 }

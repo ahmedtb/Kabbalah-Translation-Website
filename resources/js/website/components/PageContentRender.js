@@ -4,6 +4,7 @@ import {HeaderComponentWebsiteRender} from '../../commonFiles/PageComponents/Hea
 import { TitleComponentWebsiteRender} from '../../commonFiles/PageComponents/TitleComponent'
 import { ImageComponentWebsiteRender} from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentWebsiteRender} from '../../commonFiles/PageComponents/LinkComponent'
+import { YoutubeEmbedComponentWebsiteRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 
 import { 
     ParagraphComponentClass, 
@@ -15,7 +16,6 @@ import {
 } from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
-import { YoutubeEmbedComponentWebsiteRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 
 export default function PageContentRender(props) {
     const page = props.page

@@ -37,6 +37,7 @@ export function YoutubeEmbedComponentCreator(props) {
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
+                    console.log(e.target.value.length)
                     dispatch(youtubeEmbedObject(e.target.value, translated))
                 }}
             />

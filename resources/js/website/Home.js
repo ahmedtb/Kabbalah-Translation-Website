@@ -2,7 +2,6 @@ import React from "react"
 import { Api, ApiCallHandler, Routes } from "./utility/Urls"
 import { Col, Row, Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
-import YoutubeEmbed from "../commonFiles/YoutubeEmbed"
 import ArticlesCardsRender from "./components/ArticlesCardsRender"
 
 export default function Home(props) {
@@ -72,8 +71,8 @@ export default function Home(props) {
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
-                    <h1>Youtube Embed</h1>
-                    <YoutubeEmbed embedId="rokGy0huYEA" />
+                    {/* <h1>Youtube Embed</h1> */}
+                    {/* <YoutubeEmbed embedId="rokGy0huYEA" /> */}
                     <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col xs={2}>

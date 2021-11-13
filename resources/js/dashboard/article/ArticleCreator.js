@@ -1,6 +1,6 @@
 import React from "react"
 import { Redirect } from "react-router";
-import { Container, Button, Form } from "react-bootstrap";
+import { Container, Button, Form, FormCheck } from "react-bootstrap";
 import { Api, Routes, ApiCallHandler } from "../utility/URLs";
 
 export default function ArticleCreator(props) {
@@ -9,11 +9,15 @@ export default function ArticleCreator(props) {
 
     const [page_id, setpage_id] = React.useState(null);
     const [category_id, setcategory_id] = React.useState(null);
+
+    const [title, settitle] = React.useState();
+    const [description, setdescription] = React.useState();
+
     const [activated, setactivated] = React.useState(null);
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle(page_id, category_id, activated),
+            async () => await Api.createArticle(page_id, title, description, category_id, activated),
             (data) => {
                 alert(data)
                 setredirect(Routes.dashboard)
@@ -45,7 +49,14 @@ export default function ArticleCreator(props) {
         return <Redirect to={redirect} />
 
     return <Container >
-
+        <FormCheck>
+            <FormCheck.Label>عنوان المقالة</FormCheck.Label>
+            <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
+        </FormCheck>
+        <FormCheck>
+            <FormCheck.Label>وصف المقالة</FormCheck.Label>
+            <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
+        </FormCheck>
         <Form.Select
             aria-label="Default select example"
             onChange={e => {

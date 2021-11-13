@@ -13,14 +13,14 @@ export function ImageComponentRender(props) {
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                <img src={component.translated} width='100%' />
+                <img src={component.translated} className='maxWidth100' />
 
             </Popover.Body>
         </Popover>
     );
     return <Col xs={10} className='mx-auto'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <img src={component.original} width='100%' />
+            <img src={component.original} className='maxWidth100' />
         </OverlayTrigger>
 
     </Col >
@@ -103,7 +103,7 @@ export function ImageComponentEditor(props) {
 export function ImageComponentWebsiteRender(props) {
     const component = props.component
 
-    return <Col xs={10} className='mx-auto'>
+    return <Col xs={10} className='mx-auto maxWidth100'>
         <img src={component.original} style={{maxWidth:'100%'}} />
     </Col >
 }

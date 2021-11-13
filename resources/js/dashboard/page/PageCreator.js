@@ -97,13 +97,13 @@ export default function PageCreator(props) {
 
         </div>
         <FormCheck>
-            <FormCheck.Label>عنوان المقالة</FormCheck.Label>
+            <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
             <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
         </FormCheck>
-        <FormCheck>
-            <FormCheck.Label>وصف المقالة</FormCheck.Label>
+        {/* <FormCheck>
+            <FormCheck.Label>وصف الصفحة</FormCheck.Label>
             <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
-        </FormCheck>
+        </FormCheck> */}
         <Col xs={12}>
             {
                 page_content?.pageComponents?.map((component, index) => {

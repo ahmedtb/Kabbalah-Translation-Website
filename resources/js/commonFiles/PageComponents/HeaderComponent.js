@@ -27,18 +27,18 @@ export function HeaderComponentRender(props) {
 
     return <Col xs={12} className='mx-2'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <div dir={originalDir} className='text-center'>
+            <div dir={originalDir}>
                 {(() => {
                     switch (size) {
-                        case 1:
+                        case '1':
                             return <h1>{original}</h1>
-                        case 2:
+                        case '2':
                             return <h2>{original}</h2>
-                        case 3:
+                        case '3':
                             return <h3>{original}</h3>
-                        case 4:
+                        case '4':
                             return <h4>{original}</h4>
-                        case 5:
+                        case '5':
                             return <h5>{original}</h5>
                         default:
                             return <h1>{original}</h1>
@@ -156,20 +156,21 @@ export function HeaderComponentWebsiteRender(props) {
     const translated = component.translated
     const size = component.size
 
+    console.log('HeaderComponentWebsiteRender size', size == 5)
 
     return <Col xs={12} className='mx-2'>
-        <div dir={translatedDir} className='text-center'>
+        <div dir={translatedDir} >
             {(() => {
                 switch (size) {
-                    case 1:
+                    case '1':
                         return <h1>{translated}</h1>
-                    case 2:
+                    case '2':
                         return <h2>{translated}</h2>
-                    case 3:
+                    case '3':
                         return <h3>{translated}</h3>
-                    case 4:
+                    case '4':
                         return <h4>{translated}</h4>
-                    case 5:
+                    case '5':
                         return <h5>{translated}</h5>
                     default:
                         return <h1>{translated}</h1>

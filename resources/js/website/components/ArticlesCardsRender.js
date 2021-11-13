@@ -8,7 +8,7 @@ import { Routes } from '../utility/Urls'
 export default function ArticlesCardsRender(props) {
     const articles = props.articles
 
-    return <Col xs={12} className='bg-white my-3'>
+    return <Col xs={12} className='my-3'>
         <Col xs={10} className='mx-auto'>
             {
                 articles?.map((article, index) => <Row key={index} className='my-2'>

@@ -100,38 +100,47 @@ export function LinkComponentEditor(props) {
     const [originalLabel, setoriginalLabel] = React.useState(component.originalLabel)
     const [translatedLink, settranslatedLink] = React.useState(component.translatedLink)
     const [translatedLabel, settranslatedLabel] = React.useState(component.translatedLabel)
-    const popover = (
-        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
-            <Popover.Header as="h3">ترجمة</Popover.Header>
-            <Popover.Body>
 
-            </Popover.Body>
-        </Popover>
-    );
 
-    return <div >
-        {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
+    return <div>
         <div>
-            <div>{originalLink}</div>
+            <div>الرابط الاصلي</div>
             <Form.Control
                 as="input"
-                value={originalLabel}
+                defaultValue={originalLink}
+                onChange={(e) => {
+                    setoriginalLink(e.target.value)
+                    dispatch(linkObject(e.target.value, originalLabel, translatedLink, translatedLabel))
+                }}
+            />
+            <div>النص الاصلي</div>
+            <Form.Control
+                as="input"
+                defaultValue={originalLabel}
                 onChange={(e) => {
                     setoriginalLabel(e.target.value)
                     dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
                 }}
             />
-            {translatedLink}
+            <div>الرابط المترجم</div>
             <Form.Control
                 as="input"
-                value={translatedLabel}
+                defaultValue={translatedLink}
+                onChange={(e) => {
+                    settranslatedLink(e.target.value)
+                    dispatch(linkObject(originalLink, originalLabel, e.target.value, translatedLabel))
+                }}
+            />
+            <div>النص المترجم</div>
+            <Form.Control
+                as="input"
+                defaultValue={translatedLabel}
                 onChange={(e) => {
                     settranslatedLabel(e.target.value)
                     dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))
                 }}
             />
         </div>
-        {/* </OverlayTrigger> */}
     </div >
 
 }

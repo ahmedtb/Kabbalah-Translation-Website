@@ -61,16 +61,12 @@ export function linkObject(originalLink, originalLabel = null, translatedLink = 
 
 export function youtubeEmbedObject(original, translated) {
 
-    if (original != null && original.length != 11) {
-        alert('original text should be 11 length')
-    } else if (translated != null && translated.length != 11) {
-        alert('translated text should be 11 length')
-    } else
-        return {
-            class: YoutubeEmbedComponentClass,
-            original: original,
-            translated: translated
-        }
+
+    return {
+        class: YoutubeEmbedComponentClass,
+        original: original,
+        translated: translated
+    }
 }
 
 export function pageContentObject(pageComponents, originalDir, translatedDir) {
@@ -102,7 +98,7 @@ export function pageContentReducer(page_content, action) {
             )
         case 'add component':
             return pageContentObject([...page_content.pageComponents, action.component], page_content.originalDir, page_content.translatedDir)
-            
+
         case 'add components':
             console.log('add components', (action.components))
             return pageContentObject(page_content.pageComponents.concat(action.components), page_content.originalDir, page_content.translatedDir)

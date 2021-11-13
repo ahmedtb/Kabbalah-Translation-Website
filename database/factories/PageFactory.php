@@ -56,7 +56,7 @@ class PageFactory extends Factory
         $page_content = new PageContent($this->generateRandomPageComponents(), 'ltr', 'rtl');
         $page_content->generateMockedValues();
         return [
-            'title' => $this->faker->sentence(),
+            'title' => $this->faker->unique()->sentence(),
             'page_content' => $page_content,
         ];
     }

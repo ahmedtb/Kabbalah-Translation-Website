@@ -102,6 +102,54 @@ export function ParagraphComponentCreator(props) {
     </div>
 }
 
+export function ParagraphsComponentCreator(props) {
+    const dispatch = props.dispatch
+    // const [paragraphs, setparagraphs] = React.useState([])
+    const [style, setstyle] = React.useState({})
+
+    return <div className='my-3'>
+        <div className="mb-1">
+            <div>styling</div>
+            <Form.Check
+                inline
+                label="bold"
+                name="bold"
+                type={'checkbox'}
+                checked={style.fontWeight == 'bold'}
+
+                onChange={(e) => {
+                    let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
+                    setstyle(newstyle)
+                }}
+            />
+            <Form.Check
+                inline
+                label="italic"
+                name="italic"
+                onChange={(e) => {
+                    let newstyle = { ...style, fontStyle: e.target.checked ? 'italic' : undefined }
+                    setstyle(newstyle)
+                }}
+                checked={style.fontStyle == 'italic'}
+                type={'checkbox'}
+            />
+        </div>
+        <div className="mb-3">
+            <Form.Control
+                as="textarea"
+                style={style}
+                onChange={(e) => {
+                    let paragraphs = (e.target.value.split('\n').map((str, index) => paragraphObject(str, '', style)))
+                    // console.log('paragraphs', paragraphs)
+                    // setparagraphs(paragraphs)
+                    dispatch(paragraphs)
+
+                }}
+            />
+        </div>
+    </div >
+}
+
 
 export function ParagraphComponentEditor(props) {
     const component = props.component

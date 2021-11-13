@@ -6,6 +6,7 @@ use App\Models\Page;
 use App\Filters\PageFilters;
 use Illuminate\Http\Request;
 use App\Rules\PageContentRule;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 
@@ -14,10 +15,8 @@ class PagesController extends Controller
 
     public function create(Request $request)
     {
-        // return $request->all();
         $data = $request->validate([
-            'title' => ['required', 'string'],
-            'description' => 'nullable|string',
+            'title' => ['required', 'string', 'unique:pages,title'],
             'page_content' => ['required', new PageContentRule()],
         ]);
         // return $data;
@@ -41,10 +40,8 @@ class PagesController extends Controller
         if (!$page)
             throw  ValidationException::withMessages(['id' => 'there is no such page with id = ' . $id]);
         $data = $request->validate([
-            'title' => ['required', 'string'],
-            'description' => 'nullable|string',
+            'title' => ['required', 'string', Rule::unique('pages')->ignore($page->id)],
             'page_content' => ['required', new PageContentRule()],
-            'activated' => ['required', 'boolean']
         ]);
         $page->update($data);
         return response()->json(['success' => 'page with id = ' . $id . ' is updated']);

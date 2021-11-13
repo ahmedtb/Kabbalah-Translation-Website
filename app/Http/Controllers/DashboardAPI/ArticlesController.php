@@ -37,6 +37,8 @@ class ArticlesController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
             'page_id' => 'required|exists:pages,id',
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean'

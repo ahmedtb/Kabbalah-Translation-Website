@@ -23,7 +23,9 @@ export default function ArticleShow(props) {
     return <div>
         <Col xs={12}>
             <div>تصنيف المقالة {article?.category.name}</div>
-            <div>عنوان المقالة {article?.page.title}</div>
+            <div>عنوان المقالة {article?.title}</div>
+            <div>وصف المقالة {article?.description}</div>
+
             <PageContentRender page={article?.page} />
         </Col>
     </div>
