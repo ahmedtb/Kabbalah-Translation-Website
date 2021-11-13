@@ -85,20 +85,27 @@ export function pageContentObject(pageComponents, originalDir, translatedDir) {
 export function pageContentReducer(page_content, action) {
     switch (action.actionType) {
         case 'change component':
-            let pageComponents1 = page_content.pageComponents.map((component, index) => {
-                if (index == action.index)
-                    return action.component;
-                return component;
-            })
-            return pageContentObject(pageComponents1, page_content.originalDir, page_content.translatedDir)
+            return pageContentObject(
+                page_content.pageComponents.map((component, index) => {
+                    if (index == action.index)
+                        return action.component;
+                    return component;
+                }),
+                page_content.originalDir, page_content.translatedDir
+            )
 
         case 'remove component':
-            let filtered = page_content.pageComponents.filter((value, index) => {
-                return index != action.index;
-            });
-            return pageContentObject(filtered)
+            return pageContentObject(
+                page_content.pageComponents.filter((value, index) => {
+                    return index != action.index;
+                }), page_content.originalDir, page_content.translatedDir
+            )
         case 'add component':
             return pageContentObject([...page_content.pageComponents, action.component], page_content.originalDir, page_content.translatedDir)
+            
+        case 'add components':
+            console.log('add components', (action.components))
+            return pageContentObject(page_content.pageComponents.concat(action.components), page_content.originalDir, page_content.translatedDir)
 
         case 'set original dir':
             return pageContentObject(page_content.pageComponents, action.originalDir, page_content.translatedDir)

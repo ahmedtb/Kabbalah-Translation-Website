@@ -2,8 +2,8 @@ import React from "react"
 import { Redirect } from "react-router";
 import PageComponentsCreator from "../components/PageComponentsCreator"
 import { Container, Button, Col, FormCheck, Form } from "react-bootstrap";
-import {Api} from "../utility/URLs";
-import {Routes} from "../utility/URLs";
+import { Api } from "../utility/URLs";
+import { Routes } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
 import { ParagraphComponentEditor, ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
@@ -223,7 +223,7 @@ export default function PageCreator(props) {
                                 />
                             }
                         </div>
-                    }else if (component.class == YoutubeEmbedComponentClass) {
+                    } else if (component.class == YoutubeEmbedComponentClass) {
                         return <div key={index} className='d-flex flex-row'>
                             <div>
                                 <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
@@ -252,6 +252,8 @@ export default function PageCreator(props) {
             }
 
             <PageComponentsCreator addComponent={addComponent} />
+
+
             <Button onClick={submit}>submit</Button>
         </Col>
 

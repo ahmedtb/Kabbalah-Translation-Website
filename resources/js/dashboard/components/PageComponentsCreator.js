@@ -24,7 +24,7 @@ const componentsTypes = {
     [ImageComponentClass]: 'صورة',
     [LinkComponentClass]: 'رابط',
     [YoutubeEmbedComponentClass]: 'رابط فيديو',
-
+    ['paragraphsComponent']: 'فقرات متتالية'
 }
 
 export default function PageComponentsCreator(props) {
@@ -32,17 +32,18 @@ export default function PageComponentsCreator(props) {
     const addComponent = props.addComponent
     const [selectedType, setSelectedType] = React.useState();
     const [component, setcomponent] = React.useState(null);
+    const [components, setcomponents] = React.useState(null);
 
     React.useEffect(() => {
-        // console.log('PageComponentsCreator', component)
-    }, [component])
+        console.log('PageComponentsCreator', selectedType)
+    }, [selectedType])
 
     return (
         <div>
 
 
             <Col xs={2} className='mx-auto'>
-                <Dropdown onSelect={(e) => setSelectedType(e)}>
+                <Dropdown onSelect={(e) => { setSelectedType(e); setcomponent(null); setcomponents(null);  }}>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                         اختر نوع العنصر
                     </Dropdown.Toggle>
@@ -86,6 +87,10 @@ export default function PageComponentsCreator(props) {
                         return (
                             <YoutubeEmbedComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
+                    } else if (selectedType == 'فقرات متتالية') {
+                        return (
+                            <ParagraphsComponentCreator dispatch={(components) => setcomponents(components)} />
+                        )
                     }
                 })()
             }
@@ -99,9 +104,70 @@ export default function PageComponentsCreator(props) {
                             setSelectedType(null)
                         }} variant="primary">اضف</Button>
                     : null}
+                {components ?
+                    <Button
+                        className='my-2'
+                        onClick={() => {
+                            components.forEach(component => {
+                                addComponent(component)
+                            });
+                            setcomponents(null)
+                            setSelectedType(null)
+                        }} variant="primary">اضف</Button>
+                    : null}
             </Col>
 
         </div>
     )
 
+}
+import { paragraphObject } from '../../commonFiles/PageComponents/structure'
+
+function ParagraphsComponentCreator(props) {
+    const dispatch = props.dispatch
+    const [paragraphs, setparagraphs] = React.useState([])
+    const [style, setstyle] = React.useState({})
+
+    return 'aaaaa'
+    // return <div className='my-3'>
+    //     <div className="mb-1">
+    //         <div>styling</div>
+    //         <Form.Check
+    //             inline
+    //             label="bold"
+    //             name="bold"
+    //             type={'checkbox'}
+    //             checked={style.fontWeight == 'bold'}
+
+    //             onChange={(e) => {
+    //                 let newstyle = { ...style, fontWeight: e.target.checked ? 'bold' : undefined }
+    //                 setstyle(newstyle)
+    //             }}
+    //         />
+    //         <Form.Check
+    //             inline
+    //             label="italic"
+    //             name="italic"
+    //             onChange={(e) => {
+    //                 let newstyle = { ...style, fontStyle: e.target.checked ? 'italic' : undefined }
+    //                 setstyle(newstyle)
+    //             }}
+    //             checked={style.fontStyle == 'italic'}
+    //             type={'checkbox'}
+    //         />
+    //     </div>
+    //     <div className="mb-3">
+    //         <Form.Control
+    //             as="textarea"
+    //             style={style}
+    //             onChange={(e) => {
+    //                 let parapraphs = (e.target.value.split('\n').map((str, index) => paragraphObject(str, '', style)))
+    //                 console.log(parapraphs)
+    //                 // setparagraphs(parapraphs)
+    //                 // dispatch(paragraphs)
+
+    //             }}
+    //         />
+    //     </div>
+    // </div >
 }
