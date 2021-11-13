@@ -31,11 +31,36 @@ export function LinkComponentRender(props) {
         </Popover>
     );
 
-    return <div >
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <div href='#' dir={'ltr'} ><u>{originalLabel}</u></div>
-        </OverlayTrigger>
-    </div >
+    if (originalLabel)
+        return <div >
+            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                <div href='#' dir={originalDir} ><u>{originalLabel}</u></div>
+            </OverlayTrigger>
+        </div >
+    else if (translatedLabel)
+        return <div >
+            <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+                <div href='#' dir={translatedDir} ><u>{translatedLabel}</u></div>
+            </OverlayTrigger>
+        </div >
+    else return null
+}
+export function LinkComponentWebsiteRender(props) {
+    const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+
+    const originalLink = component.originalLink
+    const originalLabel = component.originalLabel
+    const translatedLink = component.translatedLink
+    const translatedLabel = component.translatedLabel
+
+    if (translatedLabel)
+        return <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
+    else if (originalLabel)
+        return <a href={originalLink} dir={originalDir}>{originalLabel}</a>
+        else return null
+
 }
 
 export function LinkComponentCreator(props) {
@@ -145,15 +170,4 @@ export function LinkComponentEditor(props) {
 
 }
 
-export function LinkComponentWebsiteRender(props) {
-    const component = props.component
-    const originalDir = props.originalDir
-    const translatedDir = props.translatedDir
 
-    const originalLink = component.originalLink
-    const originalLabel = component.originalLabel
-    const translatedLink = component.translatedLink
-    const translatedLabel = component.translatedLabel
-
-    return <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
-}

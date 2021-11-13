@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import axios from "axios";
 import Pagination from "../../commonFiles/Pagination";
 import PageContentRender from '../components/PageContentRender'
+import ArticlesCardsRender from '../components/ArticlesCardsRender'
 
 export default function ArticleShow(props) {
     const [articles, setarticles] = React.useState([])
@@ -32,7 +33,9 @@ export default function ArticleShow(props) {
     return <div>
         search <input onChange={e => setsearch(e.target.value)} />
         <input type='submit' onClick={() => fetchArticles(null, { search: search })} />
-        {
+        <ArticlesCardsRender articles={articles} />
+        
+        {/* {
 
             articles?.map((article, index) => (
                 <div key={index}>
@@ -41,7 +44,7 @@ export default function ArticleShow(props) {
                     <PageContentRender page={article.page} />
                 </div>
             ))
-        }
+        } */}
 
         <Pagination fetchPage={fetchArticles} links={links} />
     </div>

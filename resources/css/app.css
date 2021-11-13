@@ -8,7 +8,7 @@ u {
     height: 50vh;
 }
 .natureBackground {
-    background-image: url('/assets/navbar-background.jpg');
+    background-image: url('/images/navbar-background.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;

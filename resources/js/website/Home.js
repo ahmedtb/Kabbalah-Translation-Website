@@ -3,6 +3,7 @@ import { Api, ApiCallHandler, Routes } from "./utility/Urls"
 import { Col, Row, Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import ArticlesCardsRender from "./components/ArticlesCardsRender"
+import { LinkContainer } from "react-router-bootstrap"
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -27,47 +28,30 @@ export default function Home(props) {
         <div className='py-3'>
             <Row>
                 <Col xs={10}>
-                    {/* <div className='natureBackground maxWidth100 maxHeight100 '>
-                        <div className='homeBackCover px-4'>
-                            <p >
-                                حكمة الكابالا هي أداة علمية لدراسة العالم الروحي. لاستكشاف عالمنا ، نستخدم العلوم الطبيعية مثل الفيزياء والكيمياء والبيولوجيا. العلوم الطبيعية تدرس فقط العالم المادي الذي ندركه بحواسنا الخمس. لفهم العالم الذي نعيش فيه تمامًا ، نحتاج إلى أداة بحث يمكنها استكشاف العالم الخفي الذي لا تستطيع حواسنا إدراكه. هذه الأداة هي حكمة الكابالا.
-                            </p>
-                        </div>
-                    </div> */}
-                    <Carousel interval={3000}>
+                    <Carousel interval={3000} fade>
                         <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="/assets/nature.jpg"
-                                alt="First slide"
-                            />
-                            <Carousel.Caption>
-                                <h3>First slide label</h3>
-                                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </Carousel.Caption>
+                            <Link to={Routes.articleShow(32)}>
+                                <img
+                                    className="d-block w-100"
+                                    src="/images/sketch.jpg"
+                                    alt="First slide"
+                                />
+                                <Carousel.Caption>
+                                    <h3>تعرف على اساسيات علم الكابالا</h3>
+                                    <p>  حكمة الكابالا هي أداة علمية لدراسة العالم الروحي. لاستكشاف عالمنا ، نستخدم العلوم الطبيعية مثل الفيزياء والكيمياء والبيولوجيا. العلوم الطبيعية تدرس فقط العالم المادي الذي ندركه بحواسنا الخمس. لفهم العالم الذي نعيش فيه تمامًا ، نحتاج إلى أداة بحث يمكنها استكشاف العالم الخفي الذي لا تستطيع حواسنا إدراكه. هذه الأداة هي حكمة الكابالا.</p>
+                                </Carousel.Caption>
+                            </Link>
                         </Carousel.Item>
                         <Carousel.Item>
                             <img
                                 className="d-block w-100"
-                                src="/assets/nature.jpg"
+                                src="/images/nature.jpg"
                                 alt="Second slide"
                             />
 
                             <Carousel.Caption>
                                 <h3>Second slide label</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="/assets/nature.jpg"
-                                alt="Third slide"
-                            />
-
-                            <Carousel.Caption>
-                                <h3>Third slide label</h3>
-                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>

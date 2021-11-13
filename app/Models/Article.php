@@ -17,6 +17,11 @@ class Article extends Model
         return $this->belongsTo(Page::class);
     }
 
+    public function pageWithoutContent()
+    {
+        return $this->belongsTo(Page::class, 'page_id')->excludeContent();
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);

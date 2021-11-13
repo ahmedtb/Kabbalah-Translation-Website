@@ -43,6 +43,19 @@ export function ParagraphComponentRender(props) {
     </Col >
 }
 
+
+export function ParagraphComponentWebsiteRender(props) {
+    const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
+
+    return <Col xs={12} className='mx-auto my-2'>
+        <div dir={translatedDir} style={component.style}>
+            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+        </div>
+    </Col >
+}
+
 export function ParagraphComponentCreator(props) {
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
@@ -229,14 +242,3 @@ export function ParagraphComponentEditor(props) {
     )
 }
 
-export function ParagraphComponentWebsiteRender(props) {
-    const component = props.component
-    const originalDir = props.originalDir
-    const translatedDir = props.translatedDir
-
-    return <Col xs={12} className='mx-auto my-2'>
-        <div dir={translatedDir} style={component.style}>
-            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-        </div>
-    </Col >
-}

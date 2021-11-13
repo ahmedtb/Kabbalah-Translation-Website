@@ -103,47 +103,49 @@ export function HeaderComponentEditor(props) {
     const [size, setsize] = React.useState(component.size)
 
 
-    const popover = (
-        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
-            <Popover.Header as="h3">النص المترجم</Popover.Header>
-            <Popover.Body>
-                <FloatingLabel label="النص المترجم">
-
-                </FloatingLabel>
-            </Popover.Body>
-        </Popover>
-    );
-
     return (
-        <div className='my-3'>
-            {/* <OverlayTrigger trigger="click" placement="bottom" overlay={popover}> */}
+        <Col xs={12} className='mx-2 my-3'>
 
-            <input
-                style={{
-                    backgroundColor: 'white',
-                    borderWidth: 0,
-                    fontSize: 50 / size,
-                    width: '100%',
-                }}
-                onChange={(e) => {
-                    setoriginal(e.target.value)
-                    dispatch(titleObject(e.target.value, translated))
-                }}
-                value={original}
+            <FloatingLabel label="النص الاصلي">
+                <Form.Control
+                    as="textarea"
+                    className='my-2'
+                    onChange={(e) => {
+                        setoriginal(e.target.value)
+                        dispatch(headerObject(e.target.value, translated, size))
+                    }}
+                    defaultValue={original}
 
-            />
-            <Form.Control
-                as="textarea"
-                onChange={(e) => {
-                    settranslated(e.target.value)
-                    dispatch(titleObject(original, e.target.value))
-                }}
-                value={translated}
+                />
+            </FloatingLabel>
+            <FloatingLabel label="النص المترجم">
+                <Form.Control
+                    as="textarea"
+                    className='my-2'
+                    onChange={(e) => {
+                        settranslated(e.target.value)
+                        dispatch(headerObject(original, e.target.value, size))
+                    }}
+                    defaultValue={translated}
 
-            />
-            {/* </OverlayTrigger> */}
+                />
+            </FloatingLabel>
+            <FloatingLabel label="حجم">
+                <Form.Control
+                    as="input"
+                    type='number'
+                    min={1}
+                    max={5}
+                    value={size}
+                    className='my-2'
+                    onChange={(e) => {
+                        setsize(e.target.value)
+                        dispatch(headerObject(original, translated, e.target.value))
+                    }}
+                />
+            </FloatingLabel>
 
-        </div>
+        </Col>
     )
 }
 

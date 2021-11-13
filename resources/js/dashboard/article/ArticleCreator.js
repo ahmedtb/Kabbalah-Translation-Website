@@ -2,6 +2,7 @@ import React from "react"
 import { Redirect } from "react-router";
 import { Container, Button, Form, FormCheck } from "react-bootstrap";
 import { Api, Routes, ApiCallHandler } from "../utility/URLs";
+import ImagePicker from '../components/ImagePicker'
 
 export default function ArticleCreator(props) {
     const [pages, setpages] = React.useState([]);
@@ -12,12 +13,13 @@ export default function ArticleCreator(props) {
 
     const [title, settitle] = React.useState();
     const [description, setdescription] = React.useState();
+    const [thumbnail, setthumbnail] = React.useState();
 
     const [activated, setactivated] = React.useState(null);
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle(page_id, title, description, category_id, activated),
+            async () => await Api.createArticle(page_id, category_id, title, description, thumbnail, activated),
             (data) => {
                 alert(data)
                 setredirect(Routes.dashboard)
@@ -58,7 +60,6 @@ export default function ArticleCreator(props) {
             <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
         </FormCheck>
         <Form.Select
-            aria-label="Default select example"
             onChange={e => {
                 setpage_id(e.target.value)
             }}
@@ -70,7 +71,6 @@ export default function ArticleCreator(props) {
         </Form.Select>
 
         <Form.Select
-            aria-label="Default select example"
             onChange={e => {
                 setcategory_id(e.target.value)
             }}
@@ -89,6 +89,7 @@ export default function ArticleCreator(props) {
                 setactivated(e.target.checked)
             }}
         />
+        <ImagePicker setImage={(base64) => setthumbnail(base64)} />
         <Button onClick={submit}>submit</Button>
 
     </Container >

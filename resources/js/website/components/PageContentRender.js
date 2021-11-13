@@ -26,7 +26,7 @@ export default function PageContentRender(props) {
     // React.useEffect(() => {
     //     console.log('PageContentRender', page)
     // }, [])
-    return <Col xs={12} className='bg-white'>
+    return <Col xs={12}>
         <Col xs={10} className='mx-auto'>
             {
                 page_content?.pageComponents.map((pageComponent, index) => {

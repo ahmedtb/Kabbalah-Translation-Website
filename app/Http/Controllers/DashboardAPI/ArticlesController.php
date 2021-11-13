@@ -6,6 +6,7 @@ use App\Models\Article;
 use Illuminate\Http\Request;
 use App\Filters\ArticlesFilters;
 use App\Http\Controllers\Controller;
+use App\Rules\Base64Rule;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController extends Controller
@@ -28,7 +29,7 @@ class ArticlesController extends Controller
         $article = Article::where('id', $id)->first();
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
-        else{
+        else {
             $article->delete();
             return response()->json(['success' => 'article ' . $article->id . ' is deleted']);
         }
@@ -39,6 +40,7 @@ class ArticlesController extends Controller
         $data = $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'thumbnail' => ['required', new Base64Rule(200000)],
             'page_id' => 'required|exists:pages,id',
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean'
@@ -60,7 +62,7 @@ class ArticlesController extends Controller
         $article = Article::where('id', $request->id)->first();
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
-        else{
+        else {
             $article->update($data);
             return response()->json(['success' => 'article ' . $article->id . ' is created']);
         }

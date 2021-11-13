@@ -24,9 +24,9 @@ export default function CategoryShow(props){
 
     return (
         <Container >
-            {/* <Link to={Routes.categoryEdit(category?.id)}>
+            <Link to={Routes.categoryEdit(category?.id)}>
                 edit
-            </Link> */}
+            </Link>
             <Col xs={12}>
                 <div>{category?.name}</div>
                 <div>{category?.id}</div>

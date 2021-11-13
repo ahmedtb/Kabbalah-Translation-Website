@@ -1,6 +1,4 @@
 import React from 'react'
-
-
 import { Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Routes } from '../utility/Urls'
@@ -11,7 +9,7 @@ export default function ArticlesCardsRender(props) {
     return <Col xs={12} className='my-3'>
         <Col xs={10} className='mx-auto'>
             {
-                articles?.map((article, index) => <Row key={index} className='my-2'>
+                articles?.map((article, index) => <Row key={index} className='my-4 p-2 border rounded'>
                     <Col xs={2}>
                         <img src={article.thumbnail} className='maxWidth100' />
                     </Col>

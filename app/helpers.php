@@ -47,17 +47,18 @@ function getBase64DefaultImage()
 {
 
     $paths = [
-        public_path('assets\Anti-pest.png'),
-        public_path('assets\Aykidma.png'),
-        public_path('assets\background.jpg'),
-        public_path('assets\carpet-cleaning-service.png'),
-        public_path('assets\carWashing.png'),
-        public_path('assets\cleanGlasses.webp'),
-        public_path('assets\cleanHouse.jpg'),
-        public_path('assets\cleanPool.webp'),
-        public_path('assets\MapIcon.png'),
-        public_path('assets\profile.png'),
-        public_path('assets\worker.jpg'),
+        
+        base_path('assets\Anti-pest.png'),
+        base_path('assets\Aykidma.png'),
+        base_path('assets\background.jpg'),
+        base_path('assets\carpet-cleaning-service.png'),
+        base_path('assets\carWashing.png'),
+        base_path('assets\cleanGlasses.webp'),
+        base_path('assets\cleanHouse.jpg'),
+        base_path('assets\cleanPool.webp'),
+        base_path('assets\MapIcon.png'),
+        base_path('assets\profile.png'),
+        base_path('assets\worker.jpg'),
     ];
     $randomPath = $paths[array_rand($paths)];
     $fileExtention = fileExtension($randomPath);

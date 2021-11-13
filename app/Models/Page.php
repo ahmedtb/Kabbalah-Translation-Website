@@ -24,10 +24,9 @@ class Page extends Model
         return $filters->apply($query);
     }
 
-    protected $columns = ['id', 'title', 'description', 'page_content', 'created_at', 'updated_at'];
 
-    public function scopeExclude($query, $value = [])
+    public function scopeExcludeContent($query)
     {
-        return $query->select(array_diff($this->columns, (array) $value));
+        return $query->select(['id', 'title', 'created_at', 'updated_at']);
     }
 }
