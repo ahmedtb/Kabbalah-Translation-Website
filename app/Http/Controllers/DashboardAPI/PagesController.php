@@ -27,9 +27,12 @@ class PagesController extends Controller
 
     public function index(Request $request, PageFilters $filters)
     {
-        return Page::filter($filters)
-            ->paginate($request->input('page_size') ?? 5)
-            ->appends(request()->except('page'));
+        if ($request->withoutPagination)
+            return Page::filter($filters)->get();
+        else
+            return Page::filter($filters)
+                ->paginate($request->input('page_size') ?? 5)
+                ->appends(request()->except('page'));
     }
 
     public function show($id)

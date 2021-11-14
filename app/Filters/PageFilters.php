@@ -2,6 +2,8 @@
 
 namespace App\Filters;
 
+use App\Models\Book;
+
 class PageFilters extends Filters
 {
     /**
@@ -12,7 +14,8 @@ class PageFilters extends Filters
     protected $filters = [
         'withoutContent',
         'title',
-        'with'
+        'with',
+        'book_title'
     ];
     protected function withoutContent()
     {
@@ -25,5 +28,18 @@ class PageFilters extends Filters
     protected function with($with)
     {
         return $this->builder->with($with);
+    }
+    protected function book_title($title)
+    {
+        return $this->builder->whereHas('bookSections', function ($query) use ($title) {
+            return $query->whereHas('sectionable', function ($query) use ($title) {
+                return $query->where('title', 'LIKE', "%{$title}%");
+            });
+        });
+        // return $this->builder->whereHas('bookSections', function ($query) use ($id) {
+        //     return $query->where('sectionable_type', Book::class, function ($query) use ($id) {
+        //         $query->where('sectionable_id', $id);
+        //     });
+        // });
     }
 }

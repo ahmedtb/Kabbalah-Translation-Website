@@ -6,33 +6,38 @@ import axios from 'axios'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import ImagePicker from '../components/ImagePicker'
-function reducer(table, action) {
+import { useParams } from "react-router";
+
+
+function reducer(contentTable, action) {
 
     switch (action.type) {
+        case 'set state':
+            return action.state
         case 'add':
-            return [...table, action.element]
+            return [...contentTable, action.element]
         case 'edit':
-            return table.map((element, index) => {
+            return contentTable.map((element, index) => {
                 if (index == action.index)
                     return action.element
                 return element
             })
         case 'remove':
-            return table.filter((element, index) => {
+            return contentTable.filter((element, index) => {
                 return index != action.index
             })
         case 'left up element':
-            let leftup = [...table]
+            let leftup = [...contentTable]
             if (action.index >= 1)
                 [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
             return leftup
         case 'left down component':
-            let leftdown = [...table]
+            let leftdown = [...contentTable]
             if (action.index < leftdown.length - 1)
                 [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
             return leftdown
 
-        default: return table
+        default: return contentTable
     }
 }
 
@@ -76,8 +81,12 @@ function SectionCreator(props) {
     </div>
 }
 
-export default function BookCreator(props) {
-    const [table, dispatch] = React.useReducer(reducer, [])
+export default function BookEditor(props) {
+    const { id } = useParams()
+    const [book, setbook] = React.useState(null)
+
+
+    const [contentTable, dispatch] = React.useReducer(reducer, [])
     const [avaliablepages, setavaliablepages] = React.useState([])
     const [bookTitle, setbookTitle] = React.useState('')
     const [bookDescription, setbookDescription] = React.useState('')
@@ -85,25 +94,33 @@ export default function BookCreator(props) {
     const [thumbnail, setthumbnail] = React.useState('')
 
     function setup() {
-
         ApiCallHandler(
-            async () => await Api.fetchPages({ withoutContent: true, withoutPagination: true }),
+            async () => await Api.fetchBook(id),
+            (data) => {
+                setbookTitle(data.title)
+                setbookDescription(data.description)
+                setauthor(data.author)
+                setthumbnail(data.thumbnail)
+                dispatch({ type: 'set state', state: data.content_table })
+            },
+            'BooksIndex fetchBook',
+            true
+        )
+        ApiCallHandler(
+            async () => await Api.fetchPages({ withoutContent: true }),
             setavaliablepages,
-            'BookCreator setup',
+            'BookEditor fetchPages',
             true
         )
     }
     function submit() {
         ApiCallHandler(
-            async () => await Api.createBook(bookTitle, bookDescription, thumbnail, author, table),
+            async () => await Api.createBook(bookTitle, bookDescription, thumbnail, author, contentTable),
             null,
-            'BookCreator submit',
+            'BookEditor submit',
             true
         )
     }
-    React.useEffect(() => {
-        console.log('BookCreator table', table)
-    }, [table])
 
     React.useEffect(() => {
         setup()
@@ -113,15 +130,26 @@ export default function BookCreator(props) {
             <Col xs={12}>
                 <Col xs={12} >
                     <Row>
-                        <Form.Control as='input' type='text' placeholder='عنوان الكتاب' onChange={e => setbookTitle(e.target.value)} />
+                        <Form.Control
+                            as='input'
+                            type='text'
+                            placeholder='عنوان الكتاب'
+                            onChange={e => setbookTitle(e.target.value)}
+                            value={bookTitle}
+                        />
                     </Row>
                     <Row>
-                        <Form.Control as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setbookDescription(e.target.value)} />
+                        <Form.Control as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setbookDescription(e.target.value)}
+                            value={bookDescription}
+                        />
                     </Row>
                     <Row>
-                        <Form.Control as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
+                        <Form.Control as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)}
+                            value={author}
+                        />
                     </Row>
                     <h5>صورة الغلاف</h5>
+                    <img src={thumbnail} className='maxWidth100' />
                     <ImagePicker setImage={base64 => setthumbnail(base64)} />
 
                 </Col>
@@ -129,8 +157,8 @@ export default function BookCreator(props) {
                     <h3 className='text-center'>جدول المحتوى</h3>
 
                     {
-                        table.map((element, index) => {
-                            if (element.type == 'chapter')
+                        contentTable.map((element, index) => {
+                            if (element.sections)
                                 return <div className='border rounded' key={index}>
                                     <div className='d-flex flex-row justify-content-end h-100 '>
                                         <AiOutlineCloseCircle

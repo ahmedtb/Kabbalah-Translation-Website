@@ -25,6 +25,7 @@ import CategoryCreator from './category/CategoryCreator';
 import CategoriesIndex from './category/CategoriesIndex';
 import CategoryShow from './category/CategoryShow';
 import CategoryEditor from './category/CategoryEditor';
+import BookEdit from './book/BookEdit';
 
 export default function Dashboard() {
 
@@ -46,6 +47,9 @@ export default function Dashboard() {
             <Route exact={true} title={'BookCreator'} path={Routes.bookCreator()} component={BookCreator} />
             <Route exact={true} title={'BooksIndex'} path={Routes.booksIndex()} component={BooksIndex} />
             <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
+            <Route exact={true} path={Routes.bookEdit()} component={BookEdit} />
+
+            
 
             <Route exact={true} title={'ArticleCreator'} path={Routes.articleCreator()} component={ArticleCreator} />
             <Route exact={true} title={'ArticlesIndex'} path={Routes.articlesIndex()} component={ArticlesIndex} />

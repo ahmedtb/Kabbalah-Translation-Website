@@ -2,9 +2,9 @@ import React from "react";
 import { Col, Container, ListGroup } from "react-bootstrap";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import {Api} from "../utility/URLs";
+import { Api } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
-import {Routes} from '../utility/URLs'
+import { Routes } from '../utility/URLs'
 
 function SectionElements(props) {
     const sections = props.sections
@@ -35,31 +35,33 @@ export default function BookShow(props) {
     React.useEffect(() => {
         setup()
     }, [])
-    return  <Col xs={12}>
+    return <Col xs={12}>
+        <Link to={Routes.bookEdit(book?.id)}>
+            edit
+        </Link>
+        <h1 className='text-center'>{book?.title}</h1>
+        <div>{book?.description}</div>
+        <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div>
+        <h3 className='text-center'>جدول المحتوى</h3>
 
-            <h1 className='text-center'>{book?.title}</h1>
-            <div>{book?.description}</div>
-            <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div>
-            <h3 className='text-center'>جدول المحتوى</h3>
+        <Col xs={8} className='mx-auto'>
 
-            <Col xs={8} className='mx-auto'>
-
-                <ListGroup as="ol" numbered>
-                    {
-                        book?.content_table.map((element, index) => {
-                            if (element.sections)
-                                return <ListGroup.Item key={index} as="li">
-                                    {element.title}
-                                    <SectionElements sections={element.sections} />
-                                </ListGroup.Item>
+            <ListGroup as="ol" numbered>
+                {
+                    book?.content_table.map((element, index) => {
+                        if (element.sections)
                             return <ListGroup.Item key={index} as="li">
-                                <Link to={Routes.pageShow(element.page_id)}>
-                                    {element.title}
-                                </Link>
+                                {element.title}
+                                <SectionElements sections={element.sections} />
                             </ListGroup.Item>
-                        })
-                    }
-                </ListGroup>
-            </Col>
+                        return <ListGroup.Item key={index} as="li">
+                            <Link to={Routes.pageShow(element.page_id)}>
+                                {element.title}
+                            </Link>
+                        </ListGroup.Item>
+                    })
+                }
+            </ListGroup>
         </Col>
+    </Col>
 }

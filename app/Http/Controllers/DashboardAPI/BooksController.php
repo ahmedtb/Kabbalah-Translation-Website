@@ -56,8 +56,8 @@ class BooksController extends Controller
             'description' => 'required|string',
             'thumbnail' => ['required', new Base64Rule(200000)],
             'author' => 'required|string',
-
-            'contentTable' => ['required', new ContentTableRule]
+            'table' => ['required', new ContentTableRule],
+            // 'contentTable' => ['required', new ContentTableRule]
         ]);
 
         DB::transaction(function () use ($request) {
@@ -66,8 +66,9 @@ class BooksController extends Controller
                 'description' => $request->description,
                 'thumbnail' => $request->thumbnail,
                 'author' => $request->author,
+                'table' => $request->table,
             ]);
-            $this->createContentTable($request->contentTable, $book->id);
+            // $this->createContentTable($request->contentTable, $book->id);
         });
 
         return ['success' => 'book is successfully created'];

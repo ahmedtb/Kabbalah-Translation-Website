@@ -23,9 +23,14 @@ class Page extends Model
         return $this->hasMany(Article::class);
     }
 
-    public function bookSections()
+    // public function bookSections()
+    // {
+    //     return $this->hasMany(BookSection::class);
+    // }
+
+    public function books()
     {
-        return $this->hasMany(BookSection::class);
+        return Book::whereJsonContains('table', ['page_id' => $this->id])->orWhereJsonContains('table', ['sections' => ['page_id' => $this->id]])->get();
     }
 
     public function scopeFilter($query, PageFilters $filters)

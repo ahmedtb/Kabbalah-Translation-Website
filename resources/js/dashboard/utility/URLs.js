@@ -10,6 +10,7 @@ export const Routes = {
     bookCreator: () => '/dashboard/books/create',
     booksIndex: () => '/dashboard/books',
     bookShow: (id) => id ? '/dashboard/books/' + id : '/dashboard/books/:id',
+    bookEdit: (id) => id ? `/dashboard/books/${id}/edit` : '/dashboard/books/:id/edit',
 
     articleCreator: () => '/dashboard/articles/create',
     articlesIndex: () => '/dashboard/articles',

@@ -16,15 +16,19 @@ export default function PagesTable(props) {
         return pages[0]?.book_sections ? Obj : Or
     }
 
-    function renderSection(section) {
-        if (section.sectionable_type == 'App//Model/Book') {
-            return <Link to={Routes.bookShow(section.sectionable_id)}>
-                {section.title}
-            </Link>
-        } else {
-            return <Link to={Routes.bookShow(section.sectionable.book_id)}>
-                {section.title}
-            </Link>
+    function renderSection(section, index) {
+        if (section.sectionable_type == 'App\\Models\\Book') {
+            return <div key={index}>
+                <Link to={Routes.bookShow(section.sectionable_id)}>
+                    {section.sectionable.title}
+                </Link>
+            </div>
+        } else if (section.sectionable_type == 'App\\Models\\BookChapter') {
+            return <div key={index}>
+                <Link to={Routes.bookShow(section.sectionable.book_id)}>
+                    {section.sectionable.title} : {section.title}
+                </Link>
+            </div>
         }
 
     }
@@ -36,7 +40,7 @@ export default function PagesTable(props) {
                     <th>#</th>
                     <th>العنوان</th>
                     {hasArticles(<th>مقالات</th>)}
-                    {hasBookSections(<th>عناوين كتب</th>)}
+                    {hasBookSections(<th>عنوان كتاب او فصل</th>)}
 
                     <th>مفعل؟</th>
                     <th></th>
@@ -57,7 +61,7 @@ export default function PagesTable(props) {
                                 {page.articles?.map((article, index) => article.title)}
                             </td>)}
                             {hasBookSections(<td>
-                                {page.book_sections?.map((section, index) => renderSection(section))}
+                                {page.book_sections?.map((section, index) => renderSection(section, index))}
                             </td>)}
 
                             <td>{page.activated == 1 ? 'نعم' : 'لا'}</td>

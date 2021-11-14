@@ -2,15 +2,17 @@
 
 namespace Tests\Feature\Structure;
 
-use App\Models\Page;
 use Tests\TestCase;
+use App\Models\Book;
+use App\Models\Page;
 use App\Models\User;
-use App\PageComponents\HeaderComponent;
-use App\PageComponents\ImageComponent;
-use App\PageComponents\LinkComponent;
+use App\Models\BookSection;
 use App\PageComponents\PageContent;
-use App\PageComponents\ParagraphComponent;
+use App\PageComponents\LinkComponent;
+use App\PageComponents\ImageComponent;
 use App\PageComponents\TitleComponent;
+use App\PageComponents\HeaderComponent;
+use App\PageComponents\ParagraphComponent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PageTest extends TestCase
@@ -38,5 +40,16 @@ class PageTest extends TestCase
         $this->assertTrue($page->activated);
         $page = Page::factory()->activated(false)->create();
         $this->assertFalse($page->activated);
+    }
+
+    public function test_page_can_have_many_book_through_book_sections()
+    {
+        $book = Book::factory()->create();
+        // dd($book->table);
+        $page = Page::all()[1];
+        // dd($page);
+
+        dd($page->books());
+
     }
 }

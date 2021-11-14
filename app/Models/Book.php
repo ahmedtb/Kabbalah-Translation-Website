@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
 use App\Filters\BookFilters;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,10 @@ class Book extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    protected $casts =[
+        'table' => Json::class
+    ];
 
     public function sections()
     {

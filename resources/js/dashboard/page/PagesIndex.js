@@ -40,6 +40,12 @@ export default function PagesIndex(props) {
                 property={'title'}
                 label={'عنوان الصفحة'}
             />
+            <TextFilter
+                params={params}
+                fetchPage={(newparams) => fetchPages(null, newparams)}
+                property={'book_title'}
+                label={'عنوان كتاب او فصل'}
+            />
             <PagesTable pages={pages} deletePage={deletePage} />
             <Pagination fetchPage={fetchPages} links={links} />
         </div>
