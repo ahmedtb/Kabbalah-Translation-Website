@@ -30,11 +30,13 @@ function reducer(sections, action) {
 export default function ChapterCreator(props) {
     const dispatch = props.dispatch
     const pages = props.pages
-    const [title, settitle] = React.useState('')
-    const [sections, sectionsDispatch] = React.useReducer(reducer, [])
+    const defaultValue = props.defaultValue
+
+    const [title, settitle] = React.useState(defaultValue.title)
+    const [sections, sectionsDispatch] = React.useReducer(reducer, defaultValue.sections)
 
     React.useEffect(() => {
-        dispatch(chapterObject(title, sections))
+        // dispatch(chapterObject(title, sections))
     }, [sections, title])
 
     return (
@@ -46,7 +48,7 @@ export default function ChapterCreator(props) {
             />
 
             {
-                sections.map((section, index) => <div key={index}>
+                sections?.map((section, index) => <div key={index}>
                     <div className='d-flex flex-row justify-content-end h-100 '>
                         <AiOutlineCloseCircle
                             className='my-2'
@@ -62,10 +64,12 @@ export default function ChapterCreator(props) {
                             type='text'
                             placeholder='عنوان'
                             style={{flexGrow:1}}
+                            defaultValue={section.title}
                             onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(e.target.value, section.page_id) })}
                         />
                         <Form.Select
                             aria-label="Default select example"
+                            defaultValue={section.page_id}
                             onChange={e => sectionsDispatch({ type: 'edit', index: index, section: sectionObject(section.title, e.target.value) })}
                         >
                             <option>اختر صفحة</option>

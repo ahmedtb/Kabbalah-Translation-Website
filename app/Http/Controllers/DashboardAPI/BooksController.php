@@ -18,37 +18,6 @@ class BooksController extends Controller
 {
 
 
-    public function createContentTable($contentTable, $book_id)
-    {
-        foreach ($contentTable as $index => $element) {
-            // dd($index);
-            if ($element['type'] == 'section') {
-                BookSection::create([
-                    'title' => $element['title'],
-                    'index' => $index,
-                    'sectionable_type' => Book::class,
-                    'sectionable_id' => $book_id,
-                    'page_id' => $element['page_id'],
-                ]);
-            } else if ($element['type'] == 'chapter') {
-                $bookChapter = BookChapter::create([
-                    'index' => $index,
-                    'title' => $element['title'],
-                    'book_id' => $book_id,
-                ]);
-                foreach ($element['sections'] as $sectionIndex => $section) {
-                    BookSection::create([
-                        'title' => $section['title'],
-                        'index' => $sectionIndex,
-                        'sectionable_type' => BookChapter::class,
-                        'sectionable_id' => $bookChapter->id,
-                        'page_id' => $section['page_id'],
-                    ]);
-                }
-            }
-        }
-    }
-
     public function create(Request $request)
     {
         $request->validate([
@@ -60,18 +29,36 @@ class BooksController extends Controller
             // 'contentTable' => ['required', new ContentTableRule]
         ]);
 
-        DB::transaction(function () use ($request) {
-            $book = Book::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'thumbnail' => $request->thumbnail,
-                'author' => $request->author,
-                'table' => $request->table,
-            ]);
-            // $this->createContentTable($request->contentTable, $book->id);
-        });
+        $book = Book::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'thumbnail' => $request->thumbnail,
+            'author' => $request->author,
+            'table' => $request->table,
+        ]);
+        // $this->createContentTable($request->contentTable, $book->id);
 
         return ['success' => 'book is successfully created'];
+    }
+
+    public function update(Request $request, $id)
+    {
+        // return $request->all();
+        $data = $request->validate([
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'thumbnail' => ['sometimes', new Base64Rule(200000)],
+            'author' => 'sometimes|string',
+            'table' => ['sometimes', new ContentTableRule],
+        ]);
+        $book =  Book::where('id', $id)->first();
+        if (!$book)
+            throw ValidationException::withMessages(['id' => 'no such book id exists']);
+
+        $book->update($data);
+        // $this->createContentTable($request->contentTable, $book->id);
+
+        return ['success' => "book {$id} is successfully updated"];
     }
 
     public function index(Request $request, BookFilters $filters)
@@ -80,10 +67,9 @@ class BooksController extends Controller
             ->paginate($request->input('page_size') ?? 5)
             ->appends(request()->except('page'));
     }
-    public function show(Request $request, $id)
+    public function show(BookFilters $filters, $id)
     {
-        $book =  Book::where('id', $id)->with($request->with ?? [])->first();
-        $book->content_table = $book->contentTable();
+        $book =  Book::where('id', $id)->filter($filters)->first();
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book id exists']);
         return $book;

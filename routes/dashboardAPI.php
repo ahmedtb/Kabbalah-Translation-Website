@@ -13,6 +13,7 @@ Route::put('/pages/{id}', [PagesController::class, 'update']);
 Route::delete('/pages/{id}', [PagesController::class, 'delete']);
 
 Route::post('/books/create', [BooksController::class, 'create']);
+Route::put('/books/{id}', [BooksController::class, 'update']);
 Route::get('/books/', [BooksController::class, 'index']);
 Route::get('/books/{id}', [BooksController::class, 'show']);
 

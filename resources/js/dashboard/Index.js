@@ -26,6 +26,7 @@ import CategoriesIndex from './category/CategoriesIndex';
 import CategoryShow from './category/CategoryShow';
 import CategoryEditor from './category/CategoryEditor';
 import BookEdit from './book/BookEdit';
+import BookCreator2 from './book/BookCreator';
 
 export default function Dashboard() {
 
@@ -37,29 +38,30 @@ export default function Dashboard() {
         <TopMenue />
         <Container >
           <Switch>
-            <Route exact={true} title={'Home'} path={Routes.dashboard()} component={Home} />
+            <Route exact={true} path={Routes.dashboard()} component={Home} />
 
-            <Route exact={true} title={'PageCreator'} path={Routes.pageCreator()} component={PageCreator} />
-            <Route exact={true} title={'PagesIndex'} path={Routes.pagesIndex()} component={PagesIndex} />
-            <Route exact={true} title={'PageShow'} path={Routes.pageShow()} component={PageShow} />
-            <Route exact={true} title={'PageEditor'} path={Routes.pageEdit()} component={PageEditor} />
+            <Route exact={true} path={Routes.pageCreator()} component={PageCreator} />
+            <Route exact={true} path={Routes.pagesIndex()} component={PagesIndex} />
+            <Route exact={true} path={Routes.pageShow()} component={PageShow} />
+            <Route exact={true} path={Routes.pageEdit()} component={PageEditor} />
 
-            <Route exact={true} title={'BookCreator'} path={Routes.bookCreator()} component={BookCreator} />
-            <Route exact={true} title={'BooksIndex'} path={Routes.booksIndex()} component={BooksIndex} />
-            <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
+            <Route exact={true} path={Routes.bookCreator()} component={BookCreator} />
+            <Route exact={true} path={Routes.booksIndex()} component={BooksIndex} />
+            <Route exact={true} path={Routes.bookShow()} component={BookShow} />
             <Route exact={true} path={Routes.bookEdit()} component={BookEdit} />
 
-            
 
-            <Route exact={true} title={'ArticleCreator'} path={Routes.articleCreator()} component={ArticleCreator} />
-            <Route exact={true} title={'ArticlesIndex'} path={Routes.articlesIndex()} component={ArticlesIndex} />
-            <Route exact={true} title={'ArticleShow'} path={Routes.articleShow()} component={ArticleShow} />
-            <Route exact={true} title={'ArticleEditor'} path={Routes.articleEdit()} component={ArticleEditor} />
 
-            <Route exact={true} title={'CategoryCreator'} path={Routes.categoryCreator()} component={CategoryCreator} />
-            <Route exact={true} title={'CategoriesIndex'} path={Routes.categoriesIndex()} component={CategoriesIndex} />
-            <Route exact={true} title={'CategoryShow'} path={Routes.categoryShow()} component={CategoryShow} />
-            <Route exact={true} title={'CategoryEditor'} path={Routes.categoryEdit()} component={CategoryEditor} />
+
+            <Route exact={true} path={Routes.articleCreator()} component={ArticleCreator} />
+            <Route exact={true} path={Routes.articlesIndex()} component={ArticlesIndex} />
+            <Route exact={true} path={Routes.articleShow()} component={ArticleShow} />
+            <Route exact={true} path={Routes.articleEdit()} component={ArticleEditor} />
+
+            <Route exact={true} path={Routes.categoryCreator()} component={CategoryCreator} />
+            <Route exact={true} path={Routes.categoriesIndex()} component={CategoriesIndex} />
+            <Route exact={true} path={Routes.categoryShow()} component={CategoryShow} />
+            <Route exact={true} path={Routes.categoryEdit()} component={CategoryEditor} />
 
             <Route component={NotFound} />
 

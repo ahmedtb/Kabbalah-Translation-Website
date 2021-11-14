@@ -35,8 +35,11 @@ export const Api = {
     fetchPage: async (id) => await axios.get('/dashboardAPI/pages/' + id),
     deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id),
 
-    createBook: async (title, description, thumbnail, author, contentTable) => await axios.post('/dashboardAPI/books/create', {
-        title: title, description: description, thumbnail: thumbnail, author:author, contentTable: contentTable
+    createBook: async (title, description, thumbnail, author, table) => await axios.post('/dashboardAPI/books/create', {
+        title: title, description: description, thumbnail: thumbnail, author:author, table: table
+    }),
+    editBook: async (id, title, description, thumbnail, author, table) => await axios.put(`/dashboardAPI/books/${id}`, {
+        title: title, description: description, thumbnail: thumbnail, author:author, table: table
     }),
     fetchBooks: async (params) => await axios.get('/dashboardAPI/books/', { params: params }),
     fetchBook: async (id, params) => await axios.get('/dashboardAPI/books/' + id, { params: params }),

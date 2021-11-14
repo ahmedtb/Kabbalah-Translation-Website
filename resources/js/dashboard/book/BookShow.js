@@ -27,7 +27,7 @@ export default function BookShow(props) {
         ApiCallHandler(
             async () => await Api.fetchBook(id, {}),
             setbook,
-            'BooksIndex setup',
+            'BookShow setup',
             true
         )
     }
@@ -48,8 +48,8 @@ export default function BookShow(props) {
 
             <ListGroup as="ol" numbered>
                 {
-                    book?.content_table.map((element, index) => {
-                        if (element.sections)
+                    book?.table.map((element, index) => {
+                        if (element.type == 'chapter')
                             return <ListGroup.Item key={index} as="li">
                                 {element.title}
                                 <SectionElements sections={element.sections} />

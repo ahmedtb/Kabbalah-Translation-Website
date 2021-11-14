@@ -17,25 +17,7 @@ class Book extends Model
         'table' => Json::class
     ];
 
-    public function sections()
-    {
-        return $this->morphMany(BookSection::class, 'sectionable');
-    }
 
-    public function bookChapters()
-    {
-        return $this->hasMany(BookChapter::class);
-    }
-
-    public function contentTable()
-    {
-        $merged = collect($this->bookChapters()->with('sections')->get());
-        $this->sections()->get()->each(function ($section) use ($merged) {
-            $merged->push($section);
-        });
-        
-        return $merged;
-    }
     public function scopeActivated($query, $bool = true)
     {
         return $query->where('activated',$bool);

@@ -10,11 +10,15 @@ class BookFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'title'
+        'title',
+        'with'
     ];
     protected function title($title)
     {
         return $this->builder->where('title', 'LIKE', "%{$title}%");
     }
-
+    protected function with($with)
+    {
+        return $this->builder->with($with);
+    }
 }
