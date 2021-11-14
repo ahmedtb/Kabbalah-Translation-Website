@@ -17,7 +17,16 @@ class Page extends Model
 
     protected $guarded = [];
 
-    // protected $hidden = ['page_content'];
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    public function bookSections()
+    {
+        return $this->hasMany(BookSection::class);
+    }
 
     public function scopeFilter($query, PageFilters $filters)
     {

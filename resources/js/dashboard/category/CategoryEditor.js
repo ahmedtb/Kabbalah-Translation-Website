@@ -40,7 +40,7 @@ export default function CategoryEditor(props) {
                 edit
             </Link>
             <Col xs={12}>
-                <div>{category?.name}</div>
+                <div>تسمية التصنيف {category?.name}</div>
                 <input onChange={e => setname(e.target.value)} />
                 <Button onClick={submit}>submit</Button>
 

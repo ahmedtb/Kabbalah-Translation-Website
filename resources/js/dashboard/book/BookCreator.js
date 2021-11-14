@@ -1,10 +1,11 @@
 import React from 'react'
 import ChapterCreator from './components/ChapterCreator'
 import { ApiCallHandler } from '../../commonFiles/helpers'
-import {Api} from '../utility/URLs'
+import { Api } from '../utility/URLs'
 import axios from 'axios'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import ImagePicker from '../components/ImagePicker'
 function reducer(contentTable, action) {
 
     switch (action.type) {
@@ -80,11 +81,13 @@ export default function BookCreator(props) {
     const [avaliablepages, setavaliablepages] = React.useState([])
     const [bookTitle, setbookTitle] = React.useState('')
     const [bookDescription, setbookDescription] = React.useState('')
+    const [author, setauthor] = React.useState('')
+    const [thumbnail, setthumbnail] = React.useState('')
 
     function setup() {
 
         ApiCallHandler(
-            async () => await Api.fetchPages({ exclude: ['page_content'] }),
+            async () => await Api.fetchPages({ withoutContent: true }),
             setavaliablepages,
             'BookCreator setup',
             true
@@ -92,7 +95,7 @@ export default function BookCreator(props) {
     }
     function submit() {
         ApiCallHandler(
-            async () => await Api.createBook(bookTitle, bookDescription, contentTable),
+            async () => await Api.createBook(bookTitle, bookDescription, thumbnail, author, contentTable),
             null,
             'BookCreator submit',
             true
@@ -115,6 +118,11 @@ export default function BookCreator(props) {
                     <Row>
                         <Form.Control as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setbookDescription(e.target.value)} />
                     </Row>
+                    <Row>
+                        <Form.Control as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
+                    </Row>
+                    <h5>صورة الغلاف</h5>
+                    <ImagePicker setImage={base64 => setthumbnail(base64)} />
 
                 </Col>
                 <Col xs={10} className='mx-auto'>

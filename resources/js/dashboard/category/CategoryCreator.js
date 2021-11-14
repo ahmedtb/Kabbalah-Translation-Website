@@ -25,8 +25,8 @@ export default function CategoryCreator(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <Container>
+    return <div>
         <input type='text' onChange={e => setname(e.target.value)} />
         <Button onClick={submit}>submit</Button>
-    </Container>
+    </div>
 }

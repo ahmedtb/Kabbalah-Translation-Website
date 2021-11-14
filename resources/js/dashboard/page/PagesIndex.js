@@ -1,31 +1,47 @@
 import React from 'react'
 import PagesTable from '../components/PagesTable'
-import {Api} from '../utility/URLs'
+import { Api } from '../utility/URLs'
 import { ApiCallHandler } from '../../commonFiles/helpers'
+import { TextFilter } from '../components/Filters'
+import Pagination from '../../commonFiles/Pagination'
 
 export default function PagesIndex(props) {
     const [pages, setpages] = React.useState([])
-    async function setup() {
-        ApiCallHandler(async () => await Api.fetchPages(),
-            setpages,
-            'PagesIndex setup',
+    const [links, setlinks] = React.useState([])
+    const [params, setparams] = React.useState([])
+
+    function fetchPages(link = null, params = null) {
+        ApiCallHandler(
+            async () => (link ?
+                await axios.get(link, { params: { ...params, withoutContent: true, with: ['articles', 'bookSections.sectionable'] } }) :
+                await Api.fetchPages({ ...params, withoutContent: true, with: ['articles', 'bookSections.sectionable'] })
+            ),
+            (data) => { setpages(data.data); setlinks(data.links ?? []); setparams(params) },
+            'PagesIndex fetchPages',
             true
         )
     }
     React.useEffect(() => {
-        setup()
+        fetchPages()
     }, [])
 
     function deletePage(id) {
         ApiCallHandler(async () => await Api.deletePage(id),
-            setup,
+            (data) => fetchPages(),
             'PagesIndex deletePage',
             true
         )
     }
     return (
         <div>
+            <TextFilter
+                params={params}
+                fetchPage={(newparams) => fetchPages(null, newparams)}
+                property={'title'}
+                label={'عنوان الصفحة'}
+            />
             <PagesTable pages={pages} deletePage={deletePage} />
+            <Pagination fetchPage={fetchPages} links={links} />
         </div>
     )
 }

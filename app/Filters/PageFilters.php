@@ -10,10 +10,20 @@ class PageFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'exclude'
+        'withoutContent',
+        'title',
+        'with'
     ];
-    protected function exclude($exclude)
+    protected function withoutContent()
     {
-        return $this->builder->exclude( $exclude);
+        return $this->builder->excludeContent();
+    }
+    protected function title($title)
+    {
+        return $this->builder->where('title', 'LIKE', "%{$title}%");
+    }
+    protected function with($with)
+    {
+        return $this->builder->with($with);
     }
 }

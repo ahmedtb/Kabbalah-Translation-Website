@@ -35,8 +35,7 @@ export default function BookShow(props) {
     React.useEffect(() => {
         setup()
     }, [])
-    return <Container>
-        <Col xs={12}>
+    return  <Col xs={12}>
 
             <h1 className='text-center'>{book?.title}</h1>
             <div>{book?.description}</div>
@@ -63,5 +62,4 @@ export default function BookShow(props) {
                 </ListGroup>
             </Col>
         </Col>
-    </Container>
 }

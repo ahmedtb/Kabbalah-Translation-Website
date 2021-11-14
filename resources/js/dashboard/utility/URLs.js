@@ -23,8 +23,8 @@ export const Routes = {
 }
 
 export const Api = {
-    createPage: async (title, description, page_content, activated) => {
-        return await axios.post('/dashboardAPI/pages', { title: title, description: description, page_content: page_content, activated: activated })
+    createPage: async (title, meta_description, page_content, activated) => {
+        return await axios.post('/dashboardAPI/pages', { title: title, meta_description: meta_description, page_content: page_content, activated: activated })
     },
     editPage: async (id, title, description, page_content, activated) => {
         return await axios.put('/dashboardAPI/pages/' + id, { title: title, description: description, page_content: page_content, activated: activated })
@@ -34,21 +34,21 @@ export const Api = {
     fetchPage: async (id) => await axios.get('/dashboardAPI/pages/' + id),
     deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id),
 
-    createBook: async (title, description, contentTable) => await axios.post('/dashboardAPI/books/create', {
-        title: title, description: description, contentTable: contentTable
+    createBook: async (title, description, thumbnail, author, contentTable) => await axios.post('/dashboardAPI/books/create', {
+        title: title, description: description, thumbnail: thumbnail, author:author, contentTable: contentTable
     }),
     fetchBooks: async (params) => await axios.get('/dashboardAPI/books/', { params: params }),
     fetchBook: async (id, params) => await axios.get('/dashboardAPI/books/' + id, { params: params }),
 
-    createArticle: async (page_id, category_id, title, description, thumbnail, activated) => 
-    await axios.post('/dashboardAPI/articles', { 
-        page_id: page_id, 
-        title: title,
-        description: description,
-        thumbnail: thumbnail,
-        category_id: category_id, 
-        activated: activated 
-    }),
+    createArticle: async (page_id, category_id, title, description, thumbnail, activated) =>
+        await axios.post('/dashboardAPI/articles', {
+            page_id: page_id,
+            title: title,
+            description: description,
+            thumbnail: thumbnail,
+            category_id: category_id,
+            activated: activated
+        }),
     fetchArticles: async (params) => await axios.get('/dashboardAPI/articles/', { params: params }),
     fetchArticle: async (id) => await axios.get('/dashboardAPI/articles/' + id),
     deleteArticle: async (id) => await axios.delete('/dashboardAPI/articles/' + id),
@@ -56,7 +56,7 @@ export const Api = {
 
     createCategory: async (name) => await axios.post('/dashboardAPI/categories', { name: name }),
     fetchCategories: async (params) => await axios.get('/dashboardAPI/categories/', { params: params }),
-    fetchCategory: async (id) => await axios.get('/dashboardAPI/categories/' + id),
+    fetchCategory: async (id, params) => await axios.get('/dashboardAPI/categories/' + id, { params: params }),
     editCategory: async (id, name) => await axios.put('/dashboardAPI/categories/' + id, { name: name }),
     deleteCategory: async (id) => await axios.delete('/dashboardAPI/categories/' + id),
 

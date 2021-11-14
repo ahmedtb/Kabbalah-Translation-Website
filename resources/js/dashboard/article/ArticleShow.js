@@ -23,7 +23,7 @@ export default function ArticleShow(props) {
     }, [])
 
     return (
-        <Container >
+        <div >
             <Link to={Routes.articleEdit(article?.id)}>
                 edit
             </Link>
@@ -33,6 +33,6 @@ export default function ArticleShow(props) {
                 <div>{article?.id}</div>
 
             </Col>
-        </Container>
+        </div>
     )
 }

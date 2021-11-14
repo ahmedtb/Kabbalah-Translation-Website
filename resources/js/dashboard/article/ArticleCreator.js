@@ -50,7 +50,7 @@ export default function ArticleCreator(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <Container >
+    return <div >
         <FormCheck>
             <FormCheck.Label>عنوان المقالة</FormCheck.Label>
             <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
@@ -92,5 +92,5 @@ export default function ArticleCreator(props) {
         <ImagePicker setImage={(base64) => setthumbnail(base64)} />
         <Button onClick={submit}>submit</Button>
 
-    </Container >
+    </div >
 }

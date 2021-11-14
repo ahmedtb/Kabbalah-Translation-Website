@@ -22,13 +22,13 @@ import {
     pageContentObject,
     pageContentReducer
 } from '../../commonFiles/PageComponents/structure'
-import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
+import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete } from 'react-icons/ai'
 
 export default function PageCreator(props) {
 
     const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([], 'ltr', 'rtl'));
     const [title, settitle] = React.useState('');
-    const [description, setdescription] = React.useState('');
+    const [meta_description, setmeta_description] = React.useState('');
 
     function addComponent(component) {
         dispatch({ actionType: 'add component', component: component })
@@ -41,7 +41,7 @@ export default function PageCreator(props) {
     function submit() {
 
         ApiCallHandler(
-            async () => await Api.createPage(title, description, page_content, true),
+            async () => await Api.createPage(title, meta_description, page_content, true),
             (data) => {
                 alert(data)
                 setredirect(Routes.dashboard)
@@ -66,7 +66,7 @@ export default function PageCreator(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <Container >
+    return <div >
         <div className='d-flex flex-row justify-content-between'>
             <div>
                 original direction
@@ -98,12 +98,12 @@ export default function PageCreator(props) {
         </div>
         <FormCheck>
             <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
-            <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
+            <Form.Control as='input' onChange={(e) => settitle(e.target.value)} />
         </FormCheck>
-        {/* <FormCheck>
-            <FormCheck.Label>وصف الصفحة</FormCheck.Label>
-            <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
-        </FormCheck> */}
+        <FormCheck>
+            <FormCheck.Label>وصف تفاصيل</FormCheck.Label>
+            <Form.Control as='textarea' onChange={(e) => setmeta_description(e.target.value)} rows={3} />
+        </FormCheck>
         <Col xs={12}>
             {
                 page_content?.pageComponents?.map((component, index) => {
@@ -113,6 +113,10 @@ export default function PageCreator(props) {
                                 <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                 <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                 <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                <AiFillDelete size={20} onClick={() => {
+                                    if (confirm('are you sure?'))
+                                        dispatch({ actionType: 'remove component', index: index })
+                                }} />
                             </div>
                             {
                                 editComponent == index ? <ParagraphComponentEditor
@@ -135,6 +139,11 @@ export default function PageCreator(props) {
                                 <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                 <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                 <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                <AiFillDelete size={20} onClick={() => {
+                                    if (confirm('are you sure?'))
+                                        dispatch({ actionType: 'remove component', index: index })
+                                }} />
+
                             </div>
                             {
                                 editComponent == index ? <TitleComponentEditor
@@ -158,6 +167,11 @@ export default function PageCreator(props) {
                                 <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                 <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                 <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                <AiFillDelete size={20} onClick={() => {
+                                    if (confirm('are you sure?'))
+                                        dispatch({ actionType: 'remove component', index: index })
+                                }} />
+
                             </div>
                             {
                                 editComponent == index ? <LinkComponentEditor
@@ -257,5 +271,5 @@ export default function PageCreator(props) {
             <Button onClick={submit}>submit</Button>
         </Col>
 
-    </Container >
+    </div >
 }

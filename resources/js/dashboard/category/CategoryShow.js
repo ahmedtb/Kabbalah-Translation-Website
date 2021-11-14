@@ -1,18 +1,18 @@
 import React from "react";
-import {Api, Routes} from "../utility/URLs";
+import { Api, Routes, ApiCallHandler } from "../utility/URLs";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Col, Container, Button } from "react-bootstrap";
-import { ApiCallHandler } from "../../commonFiles/helpers";
+import ArticlesTable from '../components/ArticlesTable'
 
-export default function CategoryShow(props){
-    
+export default function CategoryShow(props) {
+
     let { id } = useParams();
     const [category, setcategory] = React.useState(null)
 
     async function setup() {
         ApiCallHandler(
-            async () => await Api.fetchCategory(id),
+            async () => await Api.fetchCategory(id, { with: ['articles'] }),
             setcategory,
             'CategoryShow',
             true
@@ -23,15 +23,15 @@ export default function CategoryShow(props){
     }, [])
 
     return (
-        <Container >
+        <div >
             <Link to={Routes.categoryEdit(category?.id)}>
                 edit
             </Link>
             <Col xs={12}>
-                <div>{category?.name}</div>
-                <div>{category?.id}</div>
-
+                <div>تسمية التصنيف {category?.name}</div>
+                <div>Id {category?.id}</div>
+                <ArticlesTable articles={category?.articles} />
             </Col>
-        </Container>
+        </div>
     )
 }

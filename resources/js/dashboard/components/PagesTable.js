@@ -2,65 +2,42 @@ import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { HeaderComponentClass, ImageComponentClass, LinkComponentClass, ParagraphComponentClass, TitleComponentClass } from '../../commonFiles/PageComponents/structure'
-import {Routes} from '../utility/URLs'
+import { Routes } from '../utility/URLs'
 
-function ContentPageStatistics(props) {
-    const page_content = props.page_content
-    const [paragraphsCount, setparagraphsCount] = React.useState(null)
-    const [linksCount, setlinksCount] = React.useState(null)
-    const [headersCount, setheadersCount] = React.useState(null)
-    const [titlesCount, settitlesCount] = React.useState(null)
-    const [imagesCount, setimagesCount] = React.useState(null)
-
-    React.useEffect(() => {
-        let paragraphsCount = 0
-        let linksCount = 0
-        let headersCount = 0
-        let titlesCount = 0
-        let imagesCount = 0
-
-        page_content.pageComponents.forEach(element => {
-            if (element.class == ParagraphComponentClass)
-                paragraphsCount++
-            else if (element.class == TitleComponentClass)
-                titlesCount++
-            else if (element.class == LinkComponentClass)
-                linksCount++
-            else if (element.class == HeaderComponentClass)
-                headersCount++
-            else if (element.class == ImageComponentClass)
-                imagesCount++
-        });
-        setparagraphsCount(paragraphsCount)
-        setlinksCount(linksCount)
-        setheadersCount(headersCount)
-        settitlesCount(titlesCount)
-        setimagesCount(imagesCount)
-
-    }, [])
-
-    return (
-        <div>
-            <div>عدد الفقرات: {paragraphsCount}</div>
-            <div>عدد الروابط: {linksCount}</div>
-            <div>عدد العناوين: {headersCount}</div>
-            <div>عدد العناوين الصفحات: {titlesCount}</div>
-            <div>عدد الصورة: {imagesCount}</div>
-
-        </div>
-    )
-}
 
 export default function PagesTable(props) {
     const pages = props.pages
     const deletePage = props.deletePage
+
+    function hasArticles(Obj, Or = null) {
+        return pages[0]?.articles ? Obj : Or
+    }
+    function hasBookSections(Obj, Or = null) {
+        return pages[0]?.book_sections ? Obj : Or
+    }
+
+    function renderSection(section) {
+        if (section.sectionable_type == 'App//Model/Book') {
+            return <Link to={Routes.bookShow(section.sectionable_id)}>
+                {section.title}
+            </Link>
+        } else {
+            return <Link to={Routes.bookShow(section.sectionable.book_id)}>
+                {section.title}
+            </Link>
+        }
+
+    }
+
     return (
         <Table striped bordered hover>
             <thead>
                 <tr>
                     <th>#</th>
                     <th>العنوان</th>
-                    {/* <th>محتوى الصفحة</th> */}
+                    {hasArticles(<th>مقالات</th>)}
+                    {hasBookSections(<th>عناوين كتب</th>)}
+
                     <th>مفعل؟</th>
                     <th></th>
 
@@ -76,9 +53,15 @@ export default function PagesTable(props) {
                                 </Link>
                             </td>
                             <td>{page.title}</td>
-                            {/* <td><ContentPageStatistics page_content={page.page_content} /></td> */}
+                            {hasArticles(<td>
+                                {page.articles?.map((article, index) => article.title)}
+                            </td>)}
+                            {hasBookSections(<td>
+                                {page.book_sections?.map((section, index) => renderSection(section))}
+                            </td>)}
+
                             <td>{page.activated == 1 ? 'نعم' : 'لا'}</td>
-                            <td onClick={() => deletePage(page.id)}>حدف</td>
+                            <td onClick={() => confirm('are you sure?') ? deletePage(page.id) : null}>حدف</td>
                         </tr>
                     ))
                 }

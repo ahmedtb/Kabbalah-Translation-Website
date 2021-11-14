@@ -3,24 +3,32 @@ import { Api, Routes, ApiCallHandler } from '../utility/URLs'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ArticlesTable from '../components/ArticlesTable'
-
+import { TextFilter } from '../components/Filters'
+import Pagination from '../../commonFiles/Pagination'
 export default function ArticlesIndex(props) {
     const [articles, setarticles] = React.useState([])
+    const [links, setlinks] = React.useState([])
+    const [params, setparams] = React.useState([])
 
-    async function setup() {
-        ApiCallHandler(async () => await Api.fetchArticles({ with: ['category', 'pageWithoutContent'] }),
-            setarticles,
-            'ArticlesIndex setup',
+    function fetchArticles(link = null, params = null) {
+        ApiCallHandler(
+            async () => (link ?
+                await axios.get(link, { params: { ...params, with: ['category', 'pageWithoutContent'] } }) :
+                await Api.fetchArticles({ ...params, with: ['category', 'pageWithoutContent'] })
+            ),
+            (data) => { setarticles(data.data); setlinks(data.links ?? []); setparams(params) },
+            'ArticlesIndex fetchArticles',
             true
         )
     }
+
     React.useEffect(() => {
-        setup()
+        fetchArticles()
     }, [])
     function deleteArticle(id) {
         if (confirm("هل تود فعلا حدف التصنيف " + id)) {
             ApiCallHandler(async () => await Api.deleteArticle(id),
-                setup,
+                fetchArticles,
                 'ArticlesIndex deleteArticle',
                 true
             )
@@ -28,6 +36,16 @@ export default function ArticlesIndex(props) {
     }
 
     return (
-        <ArticlesTable articles={articles} deleteArticle={deleteArticle} />
+        <div>
+            <TextFilter
+                params={params}
+                fetchPage={(newparams) => fetchArticles(null, newparams)}
+                property={'title'}
+                label={'عنوان المقال'}
+            />
+            <ArticlesTable articles={articles} deleteArticle={deleteArticle} />
+            <Pagination fetchPage={fetchArticles} links={links} />
+
+        </div>
     )
 }

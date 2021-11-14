@@ -12,12 +12,14 @@ class CategoriesController extends Controller
 {
     public function index(Request $request, CategoryFilters $filters)
     {
-        return Category::filter($filters)->get();
+        return Category::filter($filters)
+            ->paginate($request->input('page_size') ?? 5)
+            ->appends(request()->except('page'));
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $id, CategoryFilters $filters)
     {
-        $category = Category::where('id', $id)->first();
+        $category = Category::where('id', $id)->filter($filters)->first();
         if (!$category)
             throw ValidationException::withMessages(['id' => 'there is no category with this id: ' . $id]);
         return $category;
@@ -27,7 +29,7 @@ class CategoriesController extends Controller
         $category = Category::where('id', $id)->first();
         if (!$category)
             throw ValidationException::withMessages(['id' => 'there is no category with this id: ' . $id]);
-        else{
+        else {
             $category->delete();
             return response()->json(['success' => 'category ' . $category->id . ' is deleted']);
         }

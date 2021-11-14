@@ -17,6 +17,7 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'string', 'unique:pages,title'],
+            'meta_description' => 'required|string',
             'page_content' => ['required', new PageContentRule()],
         ]);
         // return $data;
@@ -26,7 +27,9 @@ class PagesController extends Controller
 
     public function index(Request $request, PageFilters $filters)
     {
-        return Page::filter($filters)->get();
+        return Page::filter($filters)
+            ->paginate($request->input('page_size') ?? 5)
+            ->appends(request()->except('page'));
     }
 
     public function show($id)

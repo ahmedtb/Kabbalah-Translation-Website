@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\BookChapter;
 use App\Models\BookSection;
+use App\Rules\Base64Rule;
 use Illuminate\Validation\ValidationException;
 
 class BooksController extends Controller
@@ -53,6 +54,9 @@ class BooksController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'thumbnail' => ['required', new Base64Rule(200000)],
+            'author' => 'required|string',
+
             'contentTable' => ['required', new ContentTableRule]
         ]);
 
@@ -60,6 +64,8 @@ class BooksController extends Controller
             $book = Book::create([
                 'title' => $request->title,
                 'description' => $request->description,
+                'thumbnail' => $request->thumbnail,
+                'author' => $request->author,
             ]);
             $this->createContentTable($request->contentTable, $book->id);
         });
@@ -69,7 +75,9 @@ class BooksController extends Controller
 
     public function index(Request $request, BookFilters $filters)
     {
-        return Book::filter($filters)->get();
+        return Book::filter($filters)
+            ->paginate($request->input('page_size') ?? 5)
+            ->appends(request()->except('page'));
     }
     public function show(Request $request, $id)
     {

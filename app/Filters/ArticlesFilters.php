@@ -13,7 +13,8 @@ class ArticlesFilters extends Filters
         'search',
         'category_id',
         'with',
-        'latest'
+        'latest',
+        'title'
     ];
 
     public function search($search)
@@ -33,5 +34,9 @@ class ArticlesFilters extends Filters
     public function latest()
     {
         return $this->builder->latest();
+    }
+    protected function title($title)
+    {
+        return $this->builder->where('title', 'LIKE', "%{$title}%");
     }
 }

@@ -4,6 +4,7 @@ import { Col, Row, Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import ArticlesCardsRender from "./components/ArticlesCardsRender"
 import { LinkContainer } from "react-router-bootstrap"
+import { AiFillFacebook } from "react-icons/ai"
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -42,24 +43,16 @@ export default function Home(props) {
                                 </Carousel.Caption>
                             </Link>
                         </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src="/images/nature.jpg"
-                                alt="Second slide"
-                            />
-
-                            <Carousel.Caption>
-                                <h3>Second slide label</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
                     </Carousel>
                     {/* <h1>Youtube Embed</h1> */}
                     {/* <YoutubeEmbed embedId="rokGy0huYEA" /> */}
                     <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col xs={2}>
+                    <a href='https://www.facebook.com/WisdomKabbalah/'>
+                        <AiFillFacebook size={50}/>
+                        حكمة الكابالا
+                    </a>
                     <h4>تصنيفات</h4>
                     {
                         categories?.map((category, index) => (

@@ -1,41 +1,39 @@
 import React from 'react'
 import { Redirect } from 'react-router'
 import { Api, Routes, ApiCallHandler } from '../utility/URLs'
-import { Container,  Table } from 'react-bootstrap'
+import { Container, Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import Pagination from '../../commonFiles/Pagination'
+import { TextFilter } from '../components/Filters'
 export default function CategoriesIndex(props) {
     const [categories, setcategories] = React.useState(null)
+    const [links, setlinks] = React.useState([])
+    const [params, setparams] = React.useState([])
 
-    function submit() {
+    // async function setup() {
+    //     ApiCallHandler(async () => await Api.fetchCategories(),
+    //         setcategories,
+    //         'CategoriesIndex setup',
+    //         true
+    //     )
+    // }
 
+    function fetchCategories(link = null, params = null) {
         ApiCallHandler(
-            async () => await Api.createCategory(name),
-            (data) => {
-                alert(data)
-                setredirect(Routes.categoriesIndex)
-            },
-            'CategoryCreator submit',
-            true
-        )
-
-    }
-    async function setup() {
-        ApiCallHandler(async () => await Api.fetchCategories(),
-            setcategories,
-            'CategoriesIndex setup',
+            async () => (link ?
+                await axios.get(link, { params:params }) :
+                await Api.fetchCategories(params)
+            ),
+            (data) => { setcategories(data.data); setlinks(data.links ?? []); setparams(params) },
+            'CategoriesIndex fetchCategories',
             true
         )
     }
     React.useEffect(() => {
-        setup()
+        fetchCategories()
     }, [])
-    const [redirect, setredirect] = React.useState(null)
 
-    if (redirect)
-        return <Redirect to={redirect} />
 
-        
     function deleteCategory(id) {
         ApiCallHandler(async () => await Api.deleteCategory(id),
             setup,
@@ -44,7 +42,13 @@ export default function CategoriesIndex(props) {
         )
     }
 
-    return <Container>
+    return <div>
+        <TextFilter
+            params={params}
+            fetchPage={(newparams) => fetchCategories(null, newparams)}
+            property={'name'}
+            label={'اسم التصنيف'}
+        />
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -59,11 +63,16 @@ export default function CategoriesIndex(props) {
                         <tr key={index}>
                             <td> <Link to={Routes.categoryShow(category.id)}> {category.id}  </Link> </td>
                             <td>{category.name}</td>
-                            <td onClick={() => deleteCategory(category.id)}>حدف</td>
+                            <td onClick={() => {
+                                if (confirm('هل انت متاكد من الحدف؟'))
+                                    deleteCategory(category.id)
+                            }}>حدف</td>
                         </tr>
                     ))
                 }
             </tbody>
         </Table>
-    </Container>
+        <Pagination fetchPage={fetchCategories} links={links} />
+
+    </div>
 }

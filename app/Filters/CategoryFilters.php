@@ -10,12 +10,16 @@ class CategoryFilters extends Filters
      * @var array
      */
     protected $filters = [
-        'with'
+        'with',
+        'name'
     ];
 
     public function with($withs)
     {
         return $this->builder->with($withs);
     }
-
+    public function name($name)
+    {
+        return $this->builder->where('name', 'LIKE', "%{$name}%");
+    }
 }
