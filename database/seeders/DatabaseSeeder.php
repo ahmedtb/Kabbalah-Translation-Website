@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Page::factory(20)->create();
-        // $books = Book::factory(10)->create();
+        $books = Book::factory(10)->create();
         
         $articles = Article::factory(30)->create();
 

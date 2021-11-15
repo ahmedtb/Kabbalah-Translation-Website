@@ -23,11 +23,6 @@ class Page extends Model
         return $this->hasMany(Article::class);
     }
 
-    // public function bookSections()
-    // {
-    //     return $this->hasMany(BookSection::class);
-    // }
-
     public function books()
     {
         return Book::whereJsonContains('table', ['page_id' => $this->id])->orWhereJsonContains('table', ['sections' => ['page_id' => $this->id]])->get();

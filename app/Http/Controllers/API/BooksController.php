@@ -26,15 +26,14 @@ class BooksController extends Controller
         $book =  Book::where('id', $id)->with($request->with ?? [])->first();
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book ' . $id . ' exists']);
-        $book->content_table = $book->contentTable();
         return $book;
     }
 
-    public function getSection(Request $request, $id)
-    {
-        $section =  BookSection::where('id', $id)->with('page')->first();
-        if (!$section)
-            throw ValidationException::withMessages(['id' => 'no such section ' . $id . ' exists']);
-        return $section;
-    }
+    // public function getSection(Request $request, $id)
+    // {
+    //     $section =  BookSection::where('id', $id)->with('page')->first();
+    //     if (!$section)
+    //         throw ValidationException::withMessages(['id' => 'no such section ' . $id . ' exists']);
+    //     return $section;
+    // }
 }

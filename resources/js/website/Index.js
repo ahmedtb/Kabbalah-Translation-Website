@@ -16,6 +16,7 @@ import BookBrowser from './book/BookBrowser';
 import ArticlesIndex from './article/ArticlesIndex';
 import ArticleShow from './article/ArticleShow';
 import CategoriesIndex from './category/CategoriesIndex';
+import BookChapter from './book/BookChapter';
 // import CategoryShow from './category/CategoryShow';
 
 export default function Website() {
@@ -32,7 +33,11 @@ export default function Website() {
             <Route exact={true} title={'Home'} path={Routes.home()} component={Home} />
             <Route exact={true} title={'BooksIndex'} path={Routes.booksIndex()} component={BooksIndex} />
             <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
-            <Route exact={true} title={'BookBrowser'} path={Routes.bookBrowser()} component={BookBrowser} />
+            <Route exact={true} path={Routes.bookBrowser()} component={BookBrowser} />
+            <Route exact={true} path={Routes.bookChapterShow()} component={BookChapter} />
+            
+            {/* <Route exact={true} path={Routes.bookBrowser2()} component={BookBrowser} /> */}
+            {/* <Route exact={true} path={Routes.bookBrowser1()} component={BookBrowser} /> */}
 
             <Route exact={true} title={'ArticlesIndex'} path={Routes.articlesIndex()} component={ArticlesIndex} />
             <Route exact={true} title={'ArticleShow'} path={Routes.articleShow()} component={ArticleShow} />

@@ -3,14 +3,15 @@ import { logError } from '../../commonFiles/helpers'
 
 export const Routes = {
     home: () => '/',
-    
+
     bookShow: (id) => id ? '/books/' + id : '/books/:id',
     booksIndex: () => '/books',
-    bookBrowser: (id, section_id) => (section_id) ? `/books/${id}/section/${section_id}` : '/books/:id/section/:section_id',
+    bookBrowser: (id, sectionIndex) => (id && sectionIndex >= 0) ? `/books/${id}/section/${sectionIndex}` : '/books/:id/section/:sectionIndex',
+    bookChapterShow: (id, chapterIndex) => (id && chapterIndex >= 0) ? `/books/${id}/chapter/${chapterIndex}` : '/books/:id/chapter/:chapterIndex',
 
     articleShow: (id) => id ? '/articles/' + id : '/articles/:id',
     articlesIndex: (params) => !params ? '/articles' : '/articles?' + Object.keys(params).map(key => key + '=' + params[key]).join('&'),
-    
+
     // categoryShow: (id) => id ? '/categories/' + id : '/categories/:id',
     categoriesIndex: () => '/categories',
 }

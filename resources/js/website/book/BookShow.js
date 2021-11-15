@@ -3,7 +3,10 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import { Col, ListGroup } from 'react-bootstrap'
 import { Routes, Api, ApiCallHandler } from '../utility/Urls'
-
+import {
+    getsectionsarray,
+    getsectionIndex
+} from './Table'
 
 export default function BookShow(props) {
     const { id } = useParams()
@@ -13,7 +16,7 @@ export default function BookShow(props) {
             async () => await Api.fetchBook(id),
             setbook,
             'BookShow',
-            true
+            false
         )
     }
     React.useEffect(() => { setup() }, [])
@@ -28,36 +31,27 @@ export default function BookShow(props) {
 
             <ListGroup as="ol" numbered>
                 {
-                    book?.content_table.map((element, index) => {
-                        if (element.sections)
+                    book?.table.map((element, index) => {
+                        if (element.type == 'chapter')
                             return <ListGroup.Item key={index} as="li">
-                                {element.title}
+                                <Link to={Routes.bookChapterShow(id, index)}>
+                                    {element.title}
+                                </Link>
                                 <ListGroup as="ol" numbered>
                                     {
-                                        element.sections.map((section, subIndex) => <ListGroup.Item key={subIndex} as="li">
-                                            <Link to={Routes.bookBrowser(id, section.id)}
-                                                to={{
-                                                    pathname: Routes.bookBrowser(id, section.id),
-                                                    state: { book: book }
-                                                }}
-                                            >
-                                                {section.title}
+                                        element.sections.map((element, sectionIndex) => <ListGroup.Item key={sectionIndex} as="li">
+                                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.table, index, sectionIndex))}>
+                                                {element.title}
                                             </Link>
                                         </ListGroup.Item>)
                                     }
                                 </ListGroup>
                             </ListGroup.Item>
-                        else
-                            return <ListGroup.Item key={index} as="li">
-                                <Link to={Routes.bookBrowser(id, element.id)}
-                                    to={{
-                                        pathname: Routes.bookBrowser(id, element.id),
-                                        state: book
-                                    }}
-                                >
-                                    {element.title}
-                                </Link>
-                            </ListGroup.Item>
+                        return <ListGroup.Item key={index} as="li">
+                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.table, index))}>
+                                {element.title}
+                            </Link>
+                        </ListGroup.Item>
                     })
                 }
             </ListGroup>

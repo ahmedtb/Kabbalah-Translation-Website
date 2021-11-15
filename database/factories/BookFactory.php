@@ -13,25 +13,30 @@ class BookFactory extends Factory
         $table = [
             [
                 'type' => 'section',
-                'title' => 'aaaaa',
-                'page_id' => Page::factory()->create()->id
+                'title' => $this->faker->sentence(),
+                'page_id' => Page::inRandomOrder()->first()->id ?? Page::factory()->create()->id
             ],
             [
                 'type' => 'chapter',
-                'title' => 'bbbbb',
+                'title' => $this->faker->sentence(),
                 'sections' => [
                     [
                         'type' => 'section',
-                        'title' => 'cccc',
-                        'page_id' => Page::factory()->create()->id
+                        'title' => $this->faker->sentence(),
+                        'page_id' => Page::inRandomOrder()->first()->id ?? Page::factory()->create()->id
                     ],
                     [
                         'type' => 'section',
-                        'title' => 'eeee',
-                        'page_id' => Page::factory()->create()->id
+                        'title' => $this->faker->sentence(),
+                        'page_id' => Page::inRandomOrder()->first()->id ?? Page::factory()->create()->id
                     ]
                 ]
-            ]
+            ],
+            [
+                'type' => 'section',
+                'title' => $this->faker->sentence(),
+                'page_id' => Page::inRandomOrder()->first()->id ?? Page::factory()->create()->id
+            ],
         ];
         return [
             'title' => $this->faker->sentence(7),
