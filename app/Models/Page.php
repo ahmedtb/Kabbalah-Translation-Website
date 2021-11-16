@@ -36,6 +36,6 @@ class Page extends Model
 
     public function scopeExcludeContent($query)
     {
-        return $query->select(['id', 'title', 'created_at', 'updated_at']);
+        return $query->select(['id', 'title', 'meta_description','source_url', 'created_at', 'updated_at']);
     }
 }

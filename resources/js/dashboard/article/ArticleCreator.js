@@ -21,8 +21,8 @@ export default function ArticleCreator(props) {
         ApiCallHandler(
             async () => await Api.createArticle(page_id, category_id, title, description, thumbnail, activated),
             (data) => {
-                alert(data)
-                setredirect(Routes.dashboard)
+                alert(data.success)
+                setredirect(Routes.pagesIndex())
             },
             'ArticleCreator submit',
             true
@@ -32,13 +32,13 @@ export default function ArticleCreator(props) {
 
     React.useEffect(() => {
         ApiCallHandler(
-            async () => await Api.fetchPages(),
+            async () => await Api.fetchPages({ withoutContent: true, withoutPagination: true }),
             setpages,
             'ArticleCreator fetchPages',
             true
         )
         ApiCallHandler(
-            async () => await Api.fetchCategories(),
+            async () => await Api.fetchCategories({ withoutPagination: true }),
             setcategories,
             'ArticleCreator fetchCategories',
             true

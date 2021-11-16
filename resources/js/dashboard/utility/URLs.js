@@ -24,22 +24,26 @@ export const Routes = {
 }
 
 export const Api = {
-    createPage: async (title, meta_description, page_content, activated) => {
-        return await axios.post('/dashboardAPI/pages', { title: title, meta_description: meta_description, page_content: page_content, activated: activated })
+    createPage: async (title, meta_description, source_url, page_content) => {
+        return await axios.post('/dashboardAPI/pages',
+            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content }
+        )
     },
-    editPage: async (id, title, description, page_content, activated) => {
-        return await axios.put('/dashboardAPI/pages/' + id, { title: title, description: description, page_content: page_content, activated: activated })
+    editPage: async (id, title, meta_description, source_url, page_content) => {
+        return await axios.put('/dashboardAPI/pages/' + id,
+            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content }
+        )
 
     },
     fetchPages: async (params) => await axios.get('/dashboardAPI/pages/', { params: params }),
     fetchPage: async (id) => await axios.get('/dashboardAPI/pages/' + id),
     deletePage: async (id) => await axios.delete('/dashboardAPI/pages/' + id),
 
-    createBook: async (title, description, thumbnail, author, table) => await axios.post('/dashboardAPI/books/create', {
-        title: title, description: description, thumbnail: thumbnail, author:author, table: table
+    createBook: async (title, description, thumbnail, author, activated, table) => await axios.post('/dashboardAPI/books/create', {
+        title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, table: table
     }),
-    editBook: async (id, title, description, thumbnail, author, table) => await axios.put(`/dashboardAPI/books/${id}`, {
-        title: title, description: description, thumbnail: thumbnail, author:author, table: table
+    editBook: async (id, title, description, thumbnail, author, activated, table) => await axios.put(`/dashboardAPI/books/${id}`, {
+        title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, table: table
     }),
     fetchBooks: async (params) => await axios.get('/dashboardAPI/books/', { params: params }),
     fetchBook: async (id, params) => await axios.get('/dashboardAPI/books/' + id, { params: params }),

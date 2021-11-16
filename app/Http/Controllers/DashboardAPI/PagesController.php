@@ -17,7 +17,8 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'string', 'unique:pages,title'],
-            'meta_description' => 'required|string',
+            'meta_description' => 'nullable|string',
+            'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
         ]);
         // return $data;
@@ -47,6 +48,8 @@ class PagesController extends Controller
             throw  ValidationException::withMessages(['id' => 'there is no such page with id = ' . $id]);
         $data = $request->validate([
             'title' => ['required', 'string', Rule::unique('pages')->ignore($page->id)],
+            'meta_description' => 'nullable|string',
+            'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
         ]);
         $page->update($data);

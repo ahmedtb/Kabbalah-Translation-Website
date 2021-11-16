@@ -1,11 +1,11 @@
 import React from "react";
-import {Api} from "../utility/URLs";
+import { Api } from "../utility/URLs";
 import { useParams } from "react-router";
 import { Redirect } from "react-router";
 import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
 import { logError, ApiCallHandler } from "../../commonFiles/helpers";
-import {Routes} from "../utility/URLs";
+import { Routes } from "../utility/URLs";
 
 export default function PageEditor(props) {
 
@@ -13,7 +13,8 @@ export default function PageEditor(props) {
     const [page, setpage] = React.useState(null)
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
     const [title, settitle] = React.useState('');
-    const [description, setdescription] = React.useState('');
+    const [meta_description, setmeta_description] = React.useState('');
+    const [source_url, setsource_url] = React.useState('');
 
     async function setup() {
         ApiCallHandler(
@@ -32,8 +33,8 @@ export default function PageEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await Api.editPage(id, title, description, EditedPageContent, true),
-            (data) => { alert('page is updated'); setredirect(Routes.pagesIndex); },
+            async () => await Api.editPage(id, title, meta_description, source_url, EditedPageContent),
+            (data) => { alert(data.success); setredirect(Routes.pagesIndex); },
             'PageEditor submit',
             true
         )
@@ -47,13 +48,18 @@ export default function PageEditor(props) {
         <Container >
 
             <FormCheck>
-                <FormCheck.Label>عنوان المقالة</FormCheck.Label>
+                <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
                 <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title} />
             </FormCheck>
 
             <FormCheck>
-                <FormCheck.Label>وصف المقالة</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
+                <FormCheck.Label>معلومات وصفية</FormCheck.Label>
+                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} />
+            </FormCheck>
+
+            <FormCheck>
+                <FormCheck.Label>رابط المصدر</FormCheck.Label>
+                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={page?.source_url} />
             </FormCheck>
             <Col xs={12}>
                 <PageContentEditor pageContent={page?.page_content} setEditedPageContent={setEditedPageContent} />

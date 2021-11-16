@@ -25,6 +25,7 @@ class BooksController extends Controller
             'description' => 'required|string',
             'thumbnail' => ['required', new Base64Rule(200000)],
             'author' => 'required|string',
+            'activated' => 'required|boolean',
             'table' => ['required', new ContentTableRule],
             // 'contentTable' => ['required', new ContentTableRule]
         ]);
@@ -49,6 +50,7 @@ class BooksController extends Controller
             'description' => 'sometimes|string',
             'thumbnail' => ['sometimes', new Base64Rule(200000)],
             'author' => 'sometimes|string',
+            'activated' => 'sometimes|boolean',
             'table' => ['sometimes', new ContentTableRule],
         ]);
         $book =  Book::where('id', $id)->first();

@@ -12,9 +12,12 @@ class CategoriesController extends Controller
 {
     public function index(Request $request, CategoryFilters $filters)
     {
-        return Category::filter($filters)
-            ->paginate($request->input('page_size') ?? 5)
-            ->appends(request()->except('page'));
+        if ($request->withoutPagination)
+            return Category::filter($filters)->get();
+        else
+            return Category::filter($filters)
+                ->paginate($request->input('page_size') ?? 5)
+                ->appends(request()->except('page'));
     }
 
     public function show(Request $request, $id, CategoryFilters $filters)

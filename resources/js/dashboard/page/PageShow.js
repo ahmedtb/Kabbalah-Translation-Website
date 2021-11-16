@@ -37,10 +37,10 @@ export default function PageShow(props) {
             <Button onClick={() => setrender('translated')}>
                 عرض الترجمة
             </Button>
+            <h5>عنوان الصفحة{page?.title}</h5>
             <Button onClick={() => setrender('both')}>
                 both
             </Button>
-            <h1>{page?.title}</h1>
             <Col xs={12}>
                 <PageContentRender pageContent={page?.page_content} render={render} />
             </Col>

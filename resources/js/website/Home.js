@@ -31,7 +31,7 @@ export default function Home(props) {
                 <Col xs={10}>
                     <Carousel interval={3000} fade>
                         <Carousel.Item>
-                            <Link to={Routes.articleShow(32)}>
+                            <Link to={Routes.articleShow(1)}>
                                 <img
                                     className="d-block w-100"
                                     src="/images/sketch.jpg"

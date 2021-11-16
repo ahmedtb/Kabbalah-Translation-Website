@@ -1,10 +1,11 @@
 
 import React from 'react'
 import { ApiCallHandler } from '../../commonFiles/helpers'
-import { Api } from '../utility/URLs'
+import { Api, Routes } from '../utility/URLs'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import ImagePicker from '../components/ImagePicker'
+import { Redirect } from 'react-router'
 
 
 function chapterObject(title, sections) {
@@ -78,8 +79,12 @@ export default function BookCreator(props) {
     const [title, settitle] = React.useState('')
     const [description, setdescription] = React.useState('')
     const [author, setauthor] = React.useState('')
+    const [activated, setactivated] = React.useState(false)
+
     const [thumbnail, setthumbnail] = React.useState('')
     const [table, dispatch] = React.useReducer(reducer, [])
+
+    const [redirect, setredirect] = React.useState()
 
     function setup() {
 
@@ -92,8 +97,8 @@ export default function BookCreator(props) {
     }
     function submit() {
         ApiCallHandler(
-            async () => await Api.createBook(title, description, thumbnail, author, table),
-            null,
+            async () => await Api.createBook(title, description, thumbnail, author, activated, table),
+            (data) => { alert(data['success']); setredirect(Routes.booksIndex()) },
             'BookCreator2 submit',
             true
         )
@@ -107,6 +112,9 @@ export default function BookCreator(props) {
         console.log('BookCreator2 table', table)
     }, [table])
 
+    if (redirect)
+        <Redirect to={redirect} />
+
     return <div>
         <Col xs={12} >
             <Row>
@@ -118,6 +126,8 @@ export default function BookCreator(props) {
             <Row>
                 <Form.Control as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
             </Row>
+            <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.value == 'on')} />
+
             <h5>صورة الغلاف</h5>
             <ImagePicker setImage={base64 => setthumbnail(base64)} />
 
@@ -198,10 +208,10 @@ export default function BookCreator(props) {
                             section
                             <div className='d-flex flex-row justify-content-center '>
 
-                                <input type='text' placeholder='section title' 
-                                onChange={e => {
-                                    dispatch({ type: 'change element', index: index, element: sectionObject(e.target.value, element.page_id) })
-                                }} />
+                                <input type='text' placeholder='section title'
+                                    onChange={e => {
+                                        dispatch({ type: 'change element', index: index, element: sectionObject(e.target.value, element.page_id) })
+                                    }} />
                                 <Form.Select
                                     aria-label="Default select example"
                                     onChange={e => {

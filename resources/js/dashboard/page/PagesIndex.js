@@ -4,7 +4,7 @@ import { Api } from '../utility/URLs'
 import { ApiCallHandler } from '../../commonFiles/helpers'
 import { TextFilter } from '../components/Filters'
 import Pagination from '../../commonFiles/Pagination'
-
+import { Col } from 'react-bootstrap'
 export default function PagesIndex(props) {
     const [pages, setpages] = React.useState([])
     const [links, setlinks] = React.useState([])
@@ -13,8 +13,8 @@ export default function PagesIndex(props) {
     function fetchPages(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?
-                await axios.get(link, { params: { ...params, withoutContent: true, with: ['articles'] } }) :
-                await Api.fetchPages({ ...params, withoutContent: true, with: ['articles'] })
+                await axios.get(link, { params: { ...params, withoutContent: true, with: ['articles'], page_size: 10 } }) :
+                await Api.fetchPages({ ...params, withoutContent: true, with: ['articles'], page_size: 10 })
             ),
             (data) => { setpages(data.data); setlinks(data.links ?? []); setparams(params) },
             'PagesIndex fetchPages',
@@ -40,13 +40,9 @@ export default function PagesIndex(props) {
                 property={'title'}
                 label={'عنوان الصفحة'}
             />
-            <TextFilter
-                params={params}
-                fetchPage={(newparams) => fetchPages(null, newparams)}
-                property={'book_title'}
-                label={'عنوان كتاب او فصل'}
-            />
-            <PagesTable pages={pages} deletePage={deletePage} />
+            <Col xs={12}>
+                <PagesTable pages={pages} deletePage={deletePage} />
+            </Col>
             <Pagination fetchPage={fetchPages} links={links} />
         </div>
     )

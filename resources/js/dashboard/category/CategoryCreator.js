@@ -11,7 +11,7 @@ export default function CategoryCreator(props) {
         ApiCallHandler(
             async () => await Api.createCategory(name),
             (data) => {
-                alert(data)
+                alert(data.success)
                 setredirect(Routes.categoriesIndex)
             },
             'CategoryCreator submit',

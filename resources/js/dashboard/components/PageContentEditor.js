@@ -95,12 +95,12 @@ export default function PageContentEditor(props) {
                     original direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' checked={originalDir == 'rtl'} onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='originalDir' onClick={() => dispatch({ actionType: 'set original dir', dir: 'ltr' })} />
+                        <FormCheck.Input type='radio' checked={originalDir == 'ltr'} onClick={() => dispatch({ actionType: 'set original dir', dir: 'ltr' })} />
                         <FormCheck.Label>ltr</FormCheck.Label>
                     </FormCheck>
                 </div>
@@ -108,15 +108,16 @@ export default function PageContentEditor(props) {
                     translated direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='translatedDir' onClick={() => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' checked={translatedDir == 'rtl'} onClick={() => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' name='translatedDir' onClick={() => dispatch({ actionType: 'set translated dir', dir: 'ltr' })} />
+                        <FormCheck.Input type='radio' checked={translatedDir == 'ltr'} onClick={() => dispatch({ actionType: 'set translated dir', dir: 'ltr' })} />
                         <FormCheck.Label>ltr</FormCheck.Label>
                     </FormCheck>
                 </div>
+                
 
             </div>
             <Col xs={12} className='bg-white'>

@@ -22,7 +22,7 @@ export default function ArticleShow(props) {
     }, [])
     return <div>
         <Col xs={12}>
-            <h1 className='text-center'>{article?.title}</h1>
+            {/* <h1 className='text-center'>{article?.title}</h1> */}
             <Link to={Routes.articlesIndex({ category_id: article?.category_id })}>{article?.category.name}</Link>
             {/* <div>وصف المقالة {article?.description}</div> */}
 

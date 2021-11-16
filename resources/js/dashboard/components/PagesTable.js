@@ -12,37 +12,19 @@ export default function PagesTable(props) {
     function hasArticles(Obj, Or = null) {
         return pages[0]?.articles ? Obj : Or
     }
-    function hasBookSections(Obj, Or = null) {
-        return pages[0]?.book_sections ? Obj : Or
-    }
 
-    function renderSection(section, index) {
-        if (section.sectionable_type == 'App\\Models\\Book') {
-            return <div key={index}>
-                <Link to={Routes.bookShow(section.sectionable_id)}>
-                    {section.sectionable.title}
-                </Link>
-            </div>
-        } else if (section.sectionable_type == 'App\\Models\\BookChapter') {
-            return <div key={index}>
-                <Link to={Routes.bookShow(section.sectionable.book_id)}>
-                    {section.sectionable.title} : {section.title}
-                </Link>
-            </div>
-        }
-
-    }
 
     return (
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive >
             <thead>
                 <tr>
                     <th>#</th>
                     <th>العنوان</th>
                     {hasArticles(<th>مقالات</th>)}
-                    {hasBookSections(<th>عنوان كتاب او فصل</th>)}
 
-                    <th>مفعل؟</th>
+                    <th>معلومات عن الصفحة</th>
+                    <th>رابط المصدر</th>
+
                     <th></th>
 
                 </tr>
@@ -60,11 +42,10 @@ export default function PagesTable(props) {
                             {hasArticles(<td>
                                 {page.articles?.map((article, index) => article.title)}
                             </td>)}
-                            {hasBookSections(<td>
-                                {page.book_sections?.map((section, index) => renderSection(section, index))}
-                            </td>)}
 
-                            <td>{page.activated == 1 ? 'نعم' : 'لا'}</td>
+                            <td>{page.meta_description}</td>
+                            <td>{page.source_url}</td>
+
                             <td onClick={() => confirm('are you sure?') ? deletePage(page.id) : null}>حدف</td>
                         </tr>
                     ))

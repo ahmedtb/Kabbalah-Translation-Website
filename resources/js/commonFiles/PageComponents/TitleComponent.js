@@ -52,7 +52,7 @@ export function TitleComponentCreator(props) {
     return <div className='my-3'>
         <FloatingLabel label="النص الاصلي">
             <Form.Control
-                as="textarea"
+                as="input"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
@@ -62,7 +62,7 @@ export function TitleComponentCreator(props) {
         </FloatingLabel>
         <FloatingLabel label="النص المترجم">
             <Form.Control
-                as="textarea"
+                as="input"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)

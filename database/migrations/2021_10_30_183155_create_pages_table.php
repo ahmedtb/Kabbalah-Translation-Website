@@ -18,6 +18,7 @@ class CreatePagesTable extends Migration
             $table->string('title')->unique();
             $table->string('meta_description')->nullable();
             $table->json('page_content');
+            $table->string('soruce_url')->nullable();
             $table->timestamps();
         });
     }

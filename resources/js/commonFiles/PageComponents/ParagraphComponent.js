@@ -152,7 +152,12 @@ export function ParagraphsComponentCreator(props) {
                 as="textarea"
                 style={style}
                 onChange={(e) => {
-                    let paragraphs = (e.target.value.split('\n').map((str, index) => paragraphObject(str, '', style)))
+                    let paragraphs = []
+                    e.target.value.split('\n').forEach((str, index) => {
+                        if (str.length)
+                            paragraphs.push(paragraphObject(str, '', style))
+
+                    })
                     // console.log('paragraphs', paragraphs)
                     // setparagraphs(paragraphs)
                     dispatch(paragraphs)

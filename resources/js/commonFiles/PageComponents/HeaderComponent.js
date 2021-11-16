@@ -9,6 +9,7 @@ export function HeaderComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
+    const render = props.render
 
     const original = component.original
     const translated = component.translated
@@ -29,19 +30,26 @@ export function HeaderComponentRender(props) {
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
             <div dir={originalDir}>
                 {(() => {
+                    let text = ''
+                    if (render == 'original') {
+                        text = original
+                    } else if (render == 'translated')
+                        text = translated
+                    else
+                        text = <><p>{original}</p> <p>{translated}</p></>
                     switch (size) {
                         case '1':
-                            return <h1>{original}</h1>
+                            return <h1>{text}</h1>
                         case '2':
-                            return <h2>{original}</h2>
+                            return <h2>{text}</h2>
                         case '3':
-                            return <h3>{original}</h3>
+                            return <h3>{text}</h3>
                         case '4':
-                            return <h4>{original}</h4>
+                            return <h4>{text}</h4>
                         case '5':
-                            return <h5>{original}</h5>
+                            return <h5>{text}</h5>
                         default:
-                            return <h1>{original}</h1>
+                            return <h1>{text}</h1>
                     }
                 })()}
             </div>

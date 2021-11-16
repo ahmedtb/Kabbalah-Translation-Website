@@ -29,6 +29,7 @@ export default function PageCreator(props) {
     const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([], 'ltr', 'rtl'));
     const [title, settitle] = React.useState('');
     const [meta_description, setmeta_description] = React.useState('');
+    const [source_url, setsource_url] = React.useState('');
 
     function addComponent(component) {
         dispatch({ actionType: 'add component', component: component })
@@ -41,10 +42,10 @@ export default function PageCreator(props) {
     function submit() {
 
         ApiCallHandler(
-            async () => await Api.createPage(title, meta_description, page_content, true),
+            async () => await Api.createPage(title, meta_description, source_url, page_content, true),
             (data) => {
                 alert(data)
-                setredirect(Routes.dashboard)
+                setredirect(Routes.pagesIndex())
             },
             'PageCreator submit',
             true
@@ -72,12 +73,12 @@ export default function PageCreator(props) {
                 original direction
 
                 <FormCheck>
-                    <FormCheck.Input type='radio' name='originalDir' onClick={() => setOriginalDir('rtl')} />
+                    <FormCheck.Input type='radio' checked={originalDir == 'rtl'} onClick={() => setOriginalDir('rtl')} />
                     <FormCheck.Label>rtl</FormCheck.Label>
                 </FormCheck>
 
                 <FormCheck>
-                    <FormCheck.Input type='radio' name='originalDir' onClick={() => setOriginalDir('ltr')} />
+                    <FormCheck.Input type='radio' checked={originalDir == 'ltr'} onClick={() => setOriginalDir('ltr')} />
                     <FormCheck.Label>ltr</FormCheck.Label>
                 </FormCheck>
             </div>
@@ -85,12 +86,12 @@ export default function PageCreator(props) {
                 translated direction
 
                 <FormCheck>
-                    <FormCheck.Input type='radio' name='translatedDir' onClick={() => setTranslatedDir('rtl')} />
+                    <FormCheck.Input type='radio' checked={translatedDir=='rtl'} onClick={() => setTranslatedDir('rtl')} />
                     <FormCheck.Label>rtl</FormCheck.Label>
                 </FormCheck>
 
                 <FormCheck>
-                    <FormCheck.Input type='radio' name='translatedDir' onClick={() => setTranslatedDir('ltr')} />
+                    <FormCheck.Input type='radio' checked={translatedDir=='ltr'} onClick={() => setTranslatedDir('ltr')} />
                     <FormCheck.Label>ltr</FormCheck.Label>
                 </FormCheck>
             </div>
@@ -101,8 +102,12 @@ export default function PageCreator(props) {
             <Form.Control as='input' onChange={(e) => settitle(e.target.value)} />
         </FormCheck>
         <FormCheck>
-            <FormCheck.Label>وصف تفاصيل</FormCheck.Label>
+            <FormCheck.Label>وصف المحتوى</FormCheck.Label>
             <Form.Control as='textarea' onChange={(e) => setmeta_description(e.target.value)} rows={3} />
+        </FormCheck>
+        <FormCheck>
+            <FormCheck.Label>رابط المصدر</FormCheck.Label>
+            <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} />
         </FormCheck>
         <Col xs={12}>
             {

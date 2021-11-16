@@ -1,12 +1,12 @@
 
 import React from 'react'
 import { ApiCallHandler } from '../../commonFiles/helpers'
-import { Api } from '../utility/URLs'
+import { Api, Routes } from '../utility/URLs'
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import ImagePicker from '../components/ImagePicker'
 import { useParams } from "react-router";
-
+import { Redirect } from 'react-router-dom'
 
 function chapterObject(title, sections) {
     return { type: 'chapter', title: title, sections: sections }
@@ -81,6 +81,8 @@ export default function BookEdit(props) {
     const [title, settitle] = React.useState('')
     const [description, setdescription] = React.useState('')
     const [author, setauthor] = React.useState('')
+    const [activated, setactivated] = React.useState()
+
     const [thumbnail, setthumbnail] = React.useState('')
     const [table, dispatch] = React.useReducer(reducer, [])
 
@@ -91,6 +93,7 @@ export default function BookEdit(props) {
                 settitle(data.title)
                 setdescription(data.description)
                 setauthor(data.author)
+                setactivated(data.activated)
                 setthumbnail(data.thumbnail)
                 dispatch({ type: 'set state', state: data.table })
             },
@@ -104,15 +107,18 @@ export default function BookEdit(props) {
             false
         )
     }
+    const [redirect, setredirect] = React.useState()
+
     function submit() {
         ApiCallHandler(
-            async () => await Api.editBook(id, title, description, thumbnail, author, table),
-            null,
+            async () => await Api.editBook(id, title, description, thumbnail, author, activated, table),
+            (data) => { alert(data.success); setredirect(Routes.booksIndex) },
             'BookEdit submit',
             true
         )
     }
-
+    if (redirect)
+        return <Redirect to={redirect} />
     React.useEffect(() => {
         setup()
     }, [])
@@ -132,6 +138,7 @@ export default function BookEdit(props) {
             <Row>
                 <Form.Control defaultValue={author} as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
             </Row>
+                <Form.Check defaultChecked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.value == 'on')} />
             <h5>صورة الغلاف</h5>
             <img src={thumbnail} className='maxWidth100' />
             <ImagePicker setImage={base64 => setthumbnail(base64)} />
