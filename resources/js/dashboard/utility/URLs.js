@@ -48,14 +48,15 @@ export const Api = {
     fetchBooks: async (params) => await axios.get('/dashboardAPI/books/', { params: params }),
     fetchBook: async (id, params) => await axios.get('/dashboardAPI/books/' + id, { params: params }),
 
-    createArticle: async (page_id, category_id, title, description, thumbnail, activated) =>
+    createArticle: async (page_id, category_id, title, description, thumbnail, activated, page_content) =>
         await axios.post('/dashboardAPI/articles', {
             page_id: page_id,
             title: title,
             description: description,
             thumbnail: thumbnail,
             category_id: category_id,
-            activated: activated
+            activated: activated,
+            page_content: page_content
         }),
     fetchArticles: async (params) => await axios.get('/dashboardAPI/articles/', { params: params }),
     fetchArticle: async (id) => await axios.get('/dashboardAPI/articles/' + id),

@@ -28,7 +28,7 @@ export default function PageEditor(props) {
         setup()
     }, [])
     React.useEffect(() => {
-        // console.log('PageEditor', EditedPageContent)
+        console.log('PageEditor', EditedPageContent)
     }, [EditedPageContent])
 
     async function submit() {
@@ -45,7 +45,7 @@ export default function PageEditor(props) {
         return <Redirect to={redirect} />
 
     return (
-        <Container >
+        <div className='mb-5'>
 
             <FormCheck>
                 <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
@@ -63,10 +63,9 @@ export default function PageEditor(props) {
             </FormCheck>
             <Col xs={12}>
                 <PageContentEditor pageContent={page?.page_content} setEditedPageContent={setEditedPageContent} />
-                {/* <PageContentRender pageContent={page?.page_content} /> */}
 
                 <Button onClick={submit}>submit</Button>
             </Col>
-        </Container>
+        </div>
     )
 }

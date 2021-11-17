@@ -8,21 +8,13 @@ import PageContentEditor from "../components/PageContentEditor";
 
 export default function PageCreator(props) {
     const [page_content, setpage_content] = React.useState(null)
-
-    // const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([], 'ltr', 'rtl'));
     const [title, settitle] = React.useState('');
     const [meta_description, setmeta_description] = React.useState('');
     const [source_url, setsource_url] = React.useState('');
 
-    // function addComponent(component) {
-    //     dispatch({ actionType: 'add component', component: component })
-    // }
     React.useEffect(() => {
         console.log('PageCreator page_content', page_content)
     }, [page_content])
-    // React.useEffect(() => {
-    //     console.log('PageCreator', page_content)
-    // }, [page_content])
 
     function submit() {
 
@@ -44,7 +36,7 @@ export default function PageCreator(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <div >
+    return <div className='mb-6'>
       
         <FormCheck>
             <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
@@ -59,9 +51,10 @@ export default function PageCreator(props) {
             <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} />
         </FormCheck>
         <Col xs={12}>
-            <PageContentEditor setpage_content={setpage_content} />
+            <PageContentEditor setEditedPageContent ={setpage_content} />
         
             <Button onClick={submit}>submit</Button>
+            
         </Col>
 
     </div >

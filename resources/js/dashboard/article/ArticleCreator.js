@@ -3,12 +3,13 @@ import { Redirect } from "react-router";
 import { Container, Button, Form, FormCheck } from "react-bootstrap";
 import { Api, Routes, ApiCallHandler } from "../utility/URLs";
 import ImagePicker from '../components/ImagePicker'
+import PageContentEditor from "../components/PageContentEditor";
 
 export default function ArticleCreator(props) {
     const [pages, setpages] = React.useState([]);
     const [categories, setcategories] = React.useState([]);
 
-    const [page_id, setpage_id] = React.useState(null);
+    // const [page_id, setpage_id] = React.useState(null);
     const [category_id, setcategory_id] = React.useState(null);
 
     const [title, settitle] = React.useState();
@@ -16,10 +17,11 @@ export default function ArticleCreator(props) {
     const [thumbnail, setthumbnail] = React.useState();
 
     const [activated, setactivated] = React.useState(null);
+    const [page_content, setpage_content] = React.useState(null)
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle(page_id, category_id, title, description, thumbnail, activated),
+            async () => await Api.createArticle( category_id, title, description, thumbnail, activated,page_content),
             (data) => {
                 alert(data.success)
                 setredirect(Routes.pagesIndex())
@@ -59,16 +61,6 @@ export default function ArticleCreator(props) {
             <FormCheck.Label>وصف المقالة</FormCheck.Label>
             <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
         </FormCheck>
-        <Form.Select
-            onChange={e => {
-                setpage_id(e.target.value)
-            }}
-        >
-            <option>اختر صفحة</option>
-            {
-                pages.map((page, index) => <option key={index} value={page.id}>{page.title}</option>)
-            }
-        </Form.Select>
 
         <Form.Select
             onChange={e => {
@@ -90,6 +82,8 @@ export default function ArticleCreator(props) {
             }}
         />
         <ImagePicker setImage={(base64) => setthumbnail(base64)} />
+        <PageContentEditor setEditedPageContent ={setpage_content} />
+
         <Button onClick={submit}>submit</Button>
 
     </div >

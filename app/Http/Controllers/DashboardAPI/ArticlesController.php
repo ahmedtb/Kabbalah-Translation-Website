@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\DashboardAPI;
 
 use App\Models\Article;
+use App\Rules\Base64Rule;
 use Illuminate\Http\Request;
+use App\Rules\PageContentRule;
 use App\Filters\ArticlesFilters;
 use App\Http\Controllers\Controller;
-use App\Rules\Base64Rule;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController extends Controller
@@ -43,9 +44,11 @@ class ArticlesController extends Controller
             'title' => 'required|string',
             'description' => 'sometimes|string',
             'thumbnail' => ['sometimes', new Base64Rule(200000)],
-            'page_id' => 'required|exists:pages,id',
+            // 'page_id' => 'required|exists:pages,id',
             'category_id' => 'required|exists:categories,id',
-            'activated' => 'required|boolean'
+            'activated' => 'required|boolean',
+            'page_content' => ['required', new PageContentRule()],
+
         ]);
 
         $article = Article::create($data);
@@ -56,9 +59,11 @@ class ArticlesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'page_id' => 'sometimes|exists:pages,id',
+            // 'page_id' => 'sometimes|exists:pages,id',
             'category_id' => 'sometimes|exists:categories,id',
-            'activated' => 'sometimes|boolean'
+            'activated' => 'sometimes|boolean',
+            'page_content' => ['required', new PageContentRule()],
+
         ]);
 
         $article = Article::where('id', $request->id)->first();

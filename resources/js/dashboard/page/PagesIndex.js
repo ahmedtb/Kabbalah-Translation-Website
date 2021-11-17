@@ -13,8 +13,8 @@ export default function PagesIndex(props) {
     function fetchPages(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?
-                await axios.get(link, { params: { ...params, withoutContent: true, with: ['articles'], page_size: 10 } }) :
-                await Api.fetchPages({ ...params, withoutContent: true, with: ['articles'], page_size: 10 })
+                await axios.get(link, { params: { ...params, withoutContent: true, with: [], page_size: 10 } }) :
+                await Api.fetchPages({ ...params, withoutContent: true, with: [], page_size: 10 })
             ),
             (data) => { setpages(data.data); setlinks(data.links ?? []); setparams(params) },
             'PagesIndex fetchPages',

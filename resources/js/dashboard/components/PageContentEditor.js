@@ -78,7 +78,7 @@ export default function PageContentEditor(props) {
 
 
             </div>
-            <Col xs={12} className='bg-white'>
+            <Col xs={12} className=''>
                 <Col xs={10} className='mx-auto'>
 
                     {
@@ -96,7 +96,7 @@ export default function PageContentEditor(props) {
                                         }} />
                                     </div>
                                     {
-                                        true ? <ParagraphComponentEditor
+                                        editComponent == index ? <ParagraphComponentEditor
                                             component={component}
                                             originalDir={originalDir}
                                             translatedDir={translatedDir}
@@ -122,7 +122,7 @@ export default function PageContentEditor(props) {
                                         }} />
                                     </div>
                                     {
-                                        true ? <TitleComponentEditor
+                                        editComponent == index ? <TitleComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -149,7 +149,7 @@ export default function PageContentEditor(props) {
                                         }} />
                                     </div>
                                     {
-                                        true ? <LinkComponentEditor
+                                        editComponent == index ? <LinkComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -178,7 +178,7 @@ export default function PageContentEditor(props) {
 
                                     </div>
                                     {
-                                        true ? <HeaderComponentEditor
+                                        editComponent == index ? <HeaderComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -205,7 +205,7 @@ export default function PageContentEditor(props) {
 
                                     </div>
                                     {
-                                        true ? <ImageComponentEditor
+                                        editComponent == index ? <ImageComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -233,7 +233,7 @@ export default function PageContentEditor(props) {
 
                                     </div>
                                     {
-                                        true ? <YoutubeEmbedComponentEditor
+                                        editComponent == index ? <YoutubeEmbedComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -254,7 +254,6 @@ export default function PageContentEditor(props) {
 
                 </Col>
                 <PageComponentsCreator addComponent={addNewComponent} />
-
             </Col>
         </div>
 
