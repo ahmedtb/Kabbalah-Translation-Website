@@ -101,6 +101,14 @@ export function pageContentReducer(page_content, action) {
         case 'add component':
             return pageContentObject([...page_content.pageComponents, action.component], page_content.originalDir, page_content.translatedDir)
 
+        case 'insert component':
+            
+            return pageContentObject(
+                page_content.pageComponents.slice(0, action.index).concat(action.component, this.slice(action.index)),
+                page_content.originalDir,
+                page_content.translatedDir
+            )
+
         case 'add components':
             console.log('add components', (action.components))
             return pageContentObject(page_content.pageComponents.concat(action.components), page_content.originalDir, page_content.translatedDir)

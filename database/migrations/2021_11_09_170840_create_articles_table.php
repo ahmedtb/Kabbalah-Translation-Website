@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->foreignId('category_id');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('soruce_url')->nullable();
+            $table->string('source_url',500)->nullable();
             $table->mediumText('thumbnail')->nullable();
             $table->json('page_content');
             $table->timestamps();

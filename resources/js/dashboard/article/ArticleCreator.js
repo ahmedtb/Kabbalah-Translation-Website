@@ -15,15 +15,17 @@ export default function ArticleCreator(props) {
     const [description, setdescription] = React.useState();
     const [thumbnail, setthumbnail] = React.useState();
 
-    const [activated, setactivated] = React.useState(null);
+    const [activated, setactivated] = React.useState(false);
     const [page_content, setpage_content] = React.useState(null)
+
+    const [source_url, setsource_url] = React.useState('')
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle(category_id, title, description, thumbnail, activated, page_content),
+            async () => await Api.createArticle(category_id, title, description, thumbnail, activated, page_content, source_url),
             (data) => {
                 alert(data.success)
-                setredirect(Routes.pagesIndex())
+                setredirect(Routes.articlesIndex())
             },
             'ArticleCreator submit',
             true
@@ -75,6 +77,12 @@ export default function ArticleCreator(props) {
             }}
         />
         <ImagePicker setImage={(base64) => setthumbnail(base64)} />
+
+        <FormCheck>
+            <FormCheck.Label>رابط المصدر</FormCheck.Label>
+            <Form.Control type='text' value={source_url} onChange={(e) => setsource_url(e.target.value)} />
+        </FormCheck>
+
         <PageContentEditor setEditedPageContent={setpage_content} />
 
         <Button onClick={submit}>submit</Button>

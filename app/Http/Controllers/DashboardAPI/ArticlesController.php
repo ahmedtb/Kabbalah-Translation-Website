@@ -24,6 +24,7 @@ class ArticlesController extends Controller
         $article = Article::where('id', $id)->first();
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
+        $article->makeVisible('page_content');
         return $article;
     }
 
@@ -42,12 +43,12 @@ class ArticlesController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string',
-            'description' => 'sometimes|string',
-            'thumbnail' => ['sometimes', new Base64Rule(200000)],
+            'description' => 'sometimes|nullable|string',
+            'thumbnail' => ['sometimes','nullable', new Base64Rule(200000)],
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean',
             'page_content' => ['required', new PageContentRule()],
-
+            'source_url' => 'sometimes|nullable|string'
         ]);
 
         $article = Article::create($data);
@@ -64,6 +65,7 @@ class ArticlesController extends Controller
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',
             'page_content' => ['sometimes', new PageContentRule()],
+            'source_url' => 'sometimes|nullable|string'
 
         ]);
 

@@ -1,7 +1,5 @@
 import React from 'react'
 import { Api, Routes, ApiCallHandler } from '../utility/URLs'
-import { Table } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import ArticlesTable from '../components/ArticlesTable'
 import { TextFilter } from '../components/Filters'
 import Pagination from '../../commonFiles/Pagination'
@@ -13,8 +11,8 @@ export default function ArticlesIndex(props) {
     function fetchArticles(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?
-                await axios.get(link, { params: { ...params, with: ['category'] } }) :
-                await Api.fetchArticles({ ...params, with: ['category'] })
+                await axios.get(link, { params: { ...params, with: ['category'], page_size: 20 } }) :
+                await Api.fetchArticles({ ...params, with: ['category'], page_size: 20 })
             ),
             (data) => { setarticles(data.data); setlinks(data.links ?? []); setparams(params) },
             'ArticlesIndex fetchArticles',

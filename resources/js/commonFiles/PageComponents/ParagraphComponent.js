@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    FloatingLabel, Form, Popover, OverlayTrigger, Col
+    FloatingLabel, Form, Popover, OverlayTrigger,
 } from 'react-bootstrap'
 import { paragraphObject } from './structure'
 
@@ -20,27 +20,25 @@ export function ParagraphComponentRender(props) {
         </Popover>
     );
 
-    return <Col xs={12} className='mx-auto my-2'>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
-            {(() => {
-                switch (render) {
-                    case 'original':
-                        return <div dir={originalDir} style={component.style}>
-                            {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                        </div>
-                    case 'translated':
-                        return <div dir={translatedDir} style={component.style}>
-                            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                        </div>
-                    case 'both':
-                        return <div style={component.style}>
-                            <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                            <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                        </div>
-                }
-            })()}
-        </OverlayTrigger>
-    </Col >
+    return <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
+        {(() => {
+            switch (render) {
+                case 'original':
+                    return <div dir={originalDir} style={component.style}>
+                        {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                    </div>
+                case 'translated':
+                    return <div dir={translatedDir} style={component.style}>
+                        {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                    </div>
+                case 'both':
+                    return <div style={component.style}>
+                        <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                        <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                    </div>
+            }
+        })()}
+    </OverlayTrigger>
 }
 
 
@@ -49,7 +47,7 @@ export function ParagraphComponentWebsiteRender(props) {
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
 
-    return <Col xs={12} className='mx-auto my-2'>
+    return <div className='mx-auto my-2'>
         {
             component.translated ?
                 <div dir={translatedDir} style={component.style}>
@@ -63,7 +61,7 @@ export function ParagraphComponentWebsiteRender(props) {
                     <div className='opacity-25'>غير مترجم</div>
                 </div>
         }
-    </Col >
+    </div >
 }
 
 export function ParagraphComponentCreator(props) {
@@ -194,7 +192,7 @@ export function ParagraphComponentEditor(props) {
 
     return (
 
-        <Col xs={12} className='mx-auto my-2'>
+        <div className='my-2'>
             <div className="mb-1">
                 <div>styling</div>
                 <Form.Check
@@ -226,7 +224,7 @@ export function ParagraphComponentEditor(props) {
             <textarea
                 style={{
                     ...style,
-                    backgroundColor: 'white',
+                    backgrounddivor: 'white',
                     borderWidth: 0,
                     width: '100%',
                     height: originalScrollHeight
@@ -252,7 +250,7 @@ export function ParagraphComponentEditor(props) {
                 }}
                 defaultValue={translated ?? ''}
             />
-        </Col >
+        </div >
 
     )
 }

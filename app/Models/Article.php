@@ -13,6 +13,8 @@ class Article extends Model
 
     protected $guarded = [];
 
+    protected $hidden = ['page_content'];
+
     protected $casts = [
         'page_content' => Json::class
     ];
