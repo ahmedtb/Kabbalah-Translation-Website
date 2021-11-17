@@ -1,6 +1,7 @@
 <?php
 
 namespace App\PageComponents;
+
 use Exception;
 use Faker\Generator;
 use Illuminate\Support\Str;
@@ -12,32 +13,38 @@ class TableComponent extends PageComponent
 {
 
     public array $originalColumnsTitles;
-    private Collection $originalRows; // collection of arrays
+    public Collection $originalRows; // collection of arrays
 
-    public array $translatedColumnsTitles;
-    private Collection $translatedRows; // collection of arrays
+    public ?array $translatedColumnsTitles;
+    public ?Collection $translatedRows; // collection of arrays
 
     public static function fromArray(array $arrayForm)
     {
-        $instance = new self( $arrayForm['originalColumnsTitles'], count($arrayForm['value']));
-        $instance->setValue($arrayForm['value']);
-        return $instance;
+        return new self(
+            $arrayForm['originalColumnsTitles'],
+            $arrayForm['originalRows'],
+            $arrayForm['translatedColumnsTitles'],
+            $arrayForm['translatedRows']
+        );
     }
 
-    public function __construct( array $originalColumnsTitles, int $numberOfRows)
+    public function __construct(array $originalColumnsTitles, array $originalRows, ?array $translatedColumnsTitles = null, ?array $translatedRows = null)
     {
-        
-        $this->setTitles($originalColumnsTitles);
 
-        if ($numberOfRows <= 0)
-            throw new Exception('invalid number of originalRows');
-        $this->numberOfRows = $numberOfRows;
+        $this->setOriginalTitles($originalColumnsTitles);
 
         $numberOfCols = count($originalColumnsTitles);
 
-        $this->initiateEmptyRows($numberOfCols, $numberOfRows);
+        $this->originalRows = collect($originalRows);
+        
+        $this->translatedColumnsTitles = $translatedColumnsTitles;
+        $this->translatedRows = collect($translatedRows);
+
+
+        // $this->initiateEmptyRows($numberOfCols, $numberOfRows);
+        // $this->setOriginalRows($originalRows);
     }
-    
+
     public function jsonSerialize()
     {
         return array(
@@ -46,20 +53,8 @@ class TableComponent extends PageComponent
             'originalRows' => $this->originalRows->all(),
             'translatedColumnsTitles' => $this->translatedColumnsTitles,
             'translatedRows' => $this->translatedRows->all(),
-            'numberOfRows' =>  $this->numberOfRows,
         );
     }
-
-    public function setTitles(array $titles)
-    {
-        foreach ($titles as $title) {
-            if (gettype($title) != 'string') {
-                throw new Exception('titles should be string type');
-            }
-        }
-        $this->originalColumnsTitles = $titles;
-    }
-
     public function initiateEmptyRows(int $numberOfCols, int $numberOfRows)
     {
         $emptyRow = [];
@@ -73,18 +68,38 @@ class TableComponent extends PageComponent
             $this->originalRows->push($emptyRow);
     }
 
-    public function setElement(string $value, int $col, int $row)
+    public function setOriginalTitles(array $titles)
     {
-        if ($col >= count($this->originalColumnsTitles) || $row >= $this->numberOfRows) {
-            throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
+        $this->originalColumnsTitles = $titles;
+    }
+
+    public function getOriginal()
+    {
+        return [
+            'titles' => $this->originalColumnsTitles,
+            'rows' => $this->getOriginalRows()
+        ];
+    }
+
+    public function getTranslated()
+    {
+        return [
+            'titles' => $this->translatedColumnsTitles,
+            'rows' => $this->getTranslatedRows()
+        ];
+    }
+    public function setOriginalElement(string $value, int $col, int $row)
+    {
+        if ($col >= count($this->originalColumnsTitles) || $row >= count($this->originalRows->all())) {
+            throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . count($this->originalRows->all()) );
         }
         $rowValue = $this->originalRows->get($row);
         $rowValue[$col] = $value;
         // dd($this->originalRows);
-        $this->setRow($rowValue, $row);
+        $this->setOriginalRow($rowValue, $row);
     }
 
-    public function getElement(int $col, int $row)
+    public function getOriginalElement(int $col, int $row)
     {
         if ($col >= count($this->originalColumnsTitles) || $row >= $this->numberOfRows) {
             throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
@@ -93,23 +108,23 @@ class TableComponent extends PageComponent
         return $rowValue[$col];
     }
 
-    public function getRow($index)
+    public function getOriginalRow($index)
     {
         return $this->originalRows->get($index);
     }
 
-    public function setRow(array $value, $index)
+    public function setOriginalRow(array $value, $index)
     {
-        if ($index >= $this->numberOfRows || $index < 0) {
-            throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
+        if ($index >= count($this->originalRows->all()) || $index < 0) {
+            throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . count($this->originalRows->all()));
         }
         if (count($value) != count($this->originalColumnsTitles))
-            throw new Exception(count($value) . ' is incorrect row size...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
+            throw new Exception(count($value) . ' is incorrect row width...width = ' . count($this->originalColumnsTitles) . 'X' . count($this->originalRows->all()));
 
         $this->originalRows = $this->originalRows->replace([$index => $value]);
     }
 
-    public function setColumn(array $value, $colIndex)
+    public function setOriginalColumn(array $value, $colIndex)
     {
         if ($colIndex >= count($this->originalColumnsTitles) || $colIndex < 0) {
             throw new Exception('incorrect corrdinates...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
@@ -118,37 +133,51 @@ class TableComponent extends PageComponent
             throw new Exception('array size does not match titles size...size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
         }
         foreach ($this->originalRows as $rowIndex => $row) {
-            $this->setElement($value[$rowIndex], $colIndex, $rowIndex);
+            $this->setOriginalElement($value[$rowIndex], $colIndex, $rowIndex);
         }
     }
 
-    public function getColumn($colIndex)
+    public function getOriginalColumn($colIndex)
     {
         $column = [];
         foreach ($this->originalRows as $rowIndex => $row) {
-            $colElement = $this->getElement($colIndex, $rowIndex);
+            $colElement = $this->getOriginalElement($colIndex, $rowIndex);
             array_push($column, $colElement);
         }
         return $column;
     }
 
 
-    public function setValue($value)
+    public function setOriginalRows($value)
     {
         if (gettype($value) == 'array') {
             foreach ($value as $rowIndex => $row) {
-                $this->setRow($row, $rowIndex);
+                $this->setOriginalRow($row, $rowIndex);
             }
         } else {
-            throw new Exception('the value should be a 2 d array...with size = ' . count($this->originalColumnsTitles) . 'X' . $this->numberOfRows);
+            throw new Exception('the value should be a 2 d array...with number of titles = ' . count($this->originalColumnsTitles));
         }
     }
 
-    public function getValue()
+    public function getOriginalRows()
     {
         return $this->originalRows->all();
     }
 
+    public function getTranslatedRows()
+    {
+        return $this->translatedRows->all();
+    }
+
+    public function isEqualTo(PageComponent $component)
+    {
+        if (!$component instanceof TableComponent)
+            return false;
+        else if ($component->getOriginal() != $this->getOriginal())
+            return false;
+        else
+            return true;
+    }
 
     public function generateMockedValues()
     {
@@ -157,7 +186,6 @@ class TableComponent extends PageComponent
             array_push($testRowData, Str::random(5));
 
         for ($i = 0; $i < $this->numberOfRows; $i++)
-            $this->setRow($testRowData,$i);
+            $this->setOriginalRow($testRowData, $i);
     }
-
 }

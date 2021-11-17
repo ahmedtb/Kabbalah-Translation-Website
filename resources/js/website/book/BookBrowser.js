@@ -44,12 +44,31 @@ export default function BookBrowser(props) {
             // console.log('sections[sectionIndex]', sections[sectionIndex])
             // console.log('sections[sectionIndex + 1]', sections[+sectionIndex + 1])
             fetchPage(sections[sectionIndex].page_id)
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' })
+            }, 0)
         }
     }, [book, sections, sectionIndex])
-    
+
 
     return <div>
-        <PageContentRender page={page} />
+        <div className='d-flex'>
+            <Link to={Routes.bookShow(id)}>
+                {book?.title}
+            </Link>
+            -
+            {
+                sections[sectionIndex]?.subIndex ?
+                    <div><Link to={Routes.bookChapterShow(book?.id, sections[sectionIndex].index)}>{book?.table[sections[sectionIndex].index].title}</Link> - {sections[sectionIndex]?.title}</div>
+                    : <div >{sections[sectionIndex]?.title}</div>
+            }
+
+
+        </div>
+        <div className='bg-white rounded'>
+            <PageContentRender page={page} />
+
+        </div>
         <div className='d-flex flex-row justify-content-around'>
             {
                 sections[+sectionIndex + 1] ? (

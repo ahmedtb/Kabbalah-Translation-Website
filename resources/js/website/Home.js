@@ -51,7 +51,7 @@ export default function Home(props) {
                 <Col xs={2}>
                     <a href='https://www.facebook.com/WisdomKabbalah/'>
                         <AiFillFacebook size={50}/>
-                        حكمة الكابالا
+                        فيسبوك
                     </a>
                     <h4>تصنيفات</h4>
                     {

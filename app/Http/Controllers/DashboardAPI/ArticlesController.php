@@ -41,8 +41,8 @@ class ArticlesController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string',
-            'description' => 'required|string',
-            'thumbnail' => ['required', new Base64Rule(200000)],
+            'description' => 'sometimes|string',
+            'thumbnail' => ['sometimes', new Base64Rule(200000)],
             'page_id' => 'required|exists:pages,id',
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean'

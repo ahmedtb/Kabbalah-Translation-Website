@@ -50,9 +50,19 @@ export function ParagraphComponentWebsiteRender(props) {
     const translatedDir = props.translatedDir
 
     return <Col xs={12} className='mx-auto my-2'>
-        <div dir={translatedDir} style={component.style}>
-            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-        </div>
+        {
+            component.translated ?
+                <div dir={translatedDir} style={component.style}>
+                    {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                </div>
+                :
+                <div className='d-flex justify-content-between'>
+                    <div dir={originalDir} style={component.style}>
+                        {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                    </div>
+                    <div className='opacity-25'>غير مترجم</div>
+                </div>
+        }
     </Col >
 }
 

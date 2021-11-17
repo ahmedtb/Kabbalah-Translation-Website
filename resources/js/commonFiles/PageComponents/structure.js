@@ -80,6 +80,8 @@ export function pageContentObject(pageComponents, originalDir, translatedDir) {
 
 export function pageContentReducer(page_content, action) {
     switch (action.actionType) {
+        case 'set page_content':
+            return action.page_content
         case 'change component':
             return pageContentObject(
                 page_content.pageComponents.map((component, index) => {
@@ -104,9 +106,9 @@ export function pageContentReducer(page_content, action) {
             return pageContentObject(page_content.pageComponents.concat(action.components), page_content.originalDir, page_content.translatedDir)
 
         case 'set original dir':
-            return pageContentObject(page_content.pageComponents, action.originalDir, page_content.translatedDir)
+            return pageContentObject(page_content.pageComponents, action.dir, page_content.translatedDir)
         case 'set translated dir':
-            return pageContentObject(page_content.pageComponents, page_content.originalDir, action.translatedDir)
+            return pageContentObject(page_content.pageComponents, page_content.originalDir, action.dir)
 
 
         case 'left up component':

@@ -15,7 +15,10 @@ class Category extends Model
     {
         return $this->hasMany(Article::class)->activated();
     }
-
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id');
+    }
     public function scopeFilter($query, CategoryFilters $filters)
     {
         return $filters->apply($query);

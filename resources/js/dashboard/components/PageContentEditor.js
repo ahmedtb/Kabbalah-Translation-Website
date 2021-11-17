@@ -16,63 +16,20 @@ import {
     LinkComponentClass,
     ImageComponentClass,
     YoutubeEmbedComponentClass,
-    pageContentObject
+    pageContentObject,
+    pageContentReducer
 } from '../../commonFiles/PageComponents/structure'
-import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit } from 'react-icons/ai'
-
-
-const reducer = (page_content, action) => {
-
-    switch (action.actionType) {
-        case 'set page_content':
-            return action.page_content
-
-        case 'change component':
-            let pageComponents1 = page_content.pageComponents.map((component, index) => {
-                if (index == action.index)
-                    return action.component;
-                return component;
-            })
-            return pageContentObject(pageComponents1, page_content.originalDir, page_content.translatedDir)
-
-        case 'remove component':
-            let filtered = page_content.pageComponents.filter((value, index) => {
-                return index != action.index;
-            });
-            return pageContentObject(filtered, page_content.originalDir, page_content.translatedDir)
-        case 'add component':
-            let increased = [...page_content.pageComponents, action.newComponent]
-            return pageContentObject(increased, page_content.originalDir, page_content.translatedDir)
-
-        case 'left up component':
-            let leftup = [...page_content.pageComponents];
-            if (action.index >= 1)
-                [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
-            return pageContentObject(leftup, page_content.originalDir, page_content.translatedDir)
-        case 'left down component':
-            let leftdown = [...page_content.pageComponents];
-            if (action.index < leftdown.length - 1)
-                [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
-            return pageContentObject(leftdown, page_content.originalDir, page_content.translatedDir)
-
-        case 'set original dir':
-            return pageContentObject(page_content.pageComponents, action.dir, page_content.translatedDir)
-        case 'set translated dir':
-            return pageContentObject(page_content.pageComponents, page_content.originalDir, action.dir)
-    }
-    return page_content;
-}
-
-
+import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete } from 'react-icons/ai'
 
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
     const pageContent = props.pageContent
-    const [page_content, dispatch] = React.useReducer(reducer, null)
+    const [page_content, dispatch] = React.useReducer(pageContentReducer, pageContentObject([], 'ltr', 'rtl'))
 
     React.useEffect(() => {
-        dispatch({ actionType: 'set page_content', page_content: pageContent })
+        if (pageContent)
+            dispatch({ actionType: 'set page_content', page_content: pageContent })
     }, [pageContent])
 
     React.useEffect(() => {
@@ -80,7 +37,8 @@ export default function PageContentEditor(props) {
     }, [page_content])
 
     function addNewComponent(componentConfig) {
-        dispatch({ actionType: 'add component', newComponent: componentConfig })
+        // console.log('PageContentEditor componentConfig',componentConfig)
+        dispatch({ actionType: 'add component', component: componentConfig })
     }
 
     const [editComponent, seteditComponent] = React.useState(null)
@@ -95,12 +53,12 @@ export default function PageContentEditor(props) {
                     original direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' checked={originalDir == 'rtl'} onClick={() => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' checked={originalDir == 'rtl'} onChange={(e) => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' checked={originalDir == 'ltr'} onClick={() => dispatch({ actionType: 'set original dir', dir: 'ltr' })} />
+                        <FormCheck.Input type='radio' checked={originalDir == 'ltr'} onChange={(e) => dispatch({ actionType: 'set original dir', dir: 'ltr' })} />
                         <FormCheck.Label>ltr</FormCheck.Label>
                     </FormCheck>
                 </div>
@@ -108,16 +66,16 @@ export default function PageContentEditor(props) {
                     translated direction
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' checked={translatedDir == 'rtl'} onClick={() => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />
+                        <FormCheck.Input type='radio' checked={translatedDir == 'rtl'} onChange={(e) => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />
                         <FormCheck.Label>rtl</FormCheck.Label>
                     </FormCheck>
 
                     <FormCheck>
-                        <FormCheck.Input type='radio' checked={translatedDir == 'ltr'} onClick={() => dispatch({ actionType: 'set translated dir', dir: 'ltr' })} />
+                        <FormCheck.Input type='radio' checked={translatedDir == 'ltr'} onChange={(e) => dispatch({ actionType: 'set translated dir', dir: 'ltr' })} />
                         <FormCheck.Label>ltr</FormCheck.Label>
                     </FormCheck>
                 </div>
-                
+
 
             </div>
             <Col xs={12} className='bg-white'>
@@ -125,15 +83,20 @@ export default function PageContentEditor(props) {
 
                     {
                         page_content?.pageComponents?.map((component, index) => {
+                            // console.log('PageContentEditor component', component)
                             if (component.class == ParagraphComponentClass) {
                                 return <div key={index} className='d-flex flex-row'>
                                     <div>
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
                                     </div>
                                     {
-                                        editComponent == index ? <ParagraphComponentEditor
+                                        true ? <ParagraphComponentEditor
                                             component={component}
                                             originalDir={originalDir}
                                             translatedDir={translatedDir}
@@ -153,9 +116,13 @@ export default function PageContentEditor(props) {
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
                                     </div>
                                     {
-                                        editComponent == index ? <TitleComponentEditor
+                                        true ? <TitleComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -176,9 +143,13 @@ export default function PageContentEditor(props) {
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
                                     </div>
                                     {
-                                        editComponent == index ? <LinkComponentEditor
+                                        true ? <LinkComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -200,10 +171,14 @@ export default function PageContentEditor(props) {
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
 
                                     </div>
                                     {
-                                        editComponent == index ? <HeaderComponentEditor
+                                        true ? <HeaderComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -223,10 +198,14 @@ export default function PageContentEditor(props) {
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
 
                                     </div>
                                     {
-                                        editComponent == index ? <ImageComponentEditor
+                                        true ? <ImageComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
@@ -247,10 +226,14 @@ export default function PageContentEditor(props) {
                                         <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
                                         <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                                         <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                                        <AiFillDelete size={20} onClick={() => {
+                                            if (confirm('are you sure?'))
+                                                dispatch({ actionType: 'remove component', index: index })
+                                        }} />
 
                                     </div>
                                     {
-                                        editComponent == index ? <YoutubeEmbedComponentEditor
+                                        true ? <YoutubeEmbedComponentEditor
                                             key={index}
                                             component={component}
                                             originalDir={originalDir}
