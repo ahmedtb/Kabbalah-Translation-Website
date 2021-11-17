@@ -13,8 +13,8 @@ export default function ArticlesIndex(props) {
     function fetchArticles(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?
-                await axios.get(link, { params: { ...params, with: ['category', 'pageWithoutContent'] } }) :
-                await Api.fetchArticles({ ...params, with: ['category', 'pageWithoutContent'] })
+                await axios.get(link, { params: { ...params, with: ['category'] } }) :
+                await Api.fetchArticles({ ...params, with: ['category'] })
             ),
             (data) => { setarticles(data.data); setlinks(data.links ?? []); setparams(params) },
             'ArticlesIndex fetchArticles',
@@ -28,7 +28,7 @@ export default function ArticlesIndex(props) {
     function deleteArticle(id) {
         if (confirm("هل تود فعلا حدف التصنيف " + id)) {
             ApiCallHandler(async () => await Api.deleteArticle(id),
-                fetchArticles,
+                data => fetchArticles(),
                 'ArticlesIndex deleteArticle',
                 true
             )

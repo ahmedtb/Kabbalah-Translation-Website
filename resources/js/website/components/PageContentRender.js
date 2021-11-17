@@ -18,8 +18,7 @@ import {
 import { Col } from 'react-bootstrap'
 
 export default function PageContentRender(props) {
-    const page = props.page
-    const page_content = page?.page_content
+    const page_content = props.page_content
     const translatedDir = page_content?.translatedDir
     const originalDir = page_content?.originalDir
 

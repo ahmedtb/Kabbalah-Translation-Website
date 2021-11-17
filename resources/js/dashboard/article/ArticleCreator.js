@@ -6,7 +6,6 @@ import ImagePicker from '../components/ImagePicker'
 import PageContentEditor from "../components/PageContentEditor";
 
 export default function ArticleCreator(props) {
-    const [pages, setpages] = React.useState([]);
     const [categories, setcategories] = React.useState([]);
 
     // const [page_id, setpage_id] = React.useState(null);
@@ -21,7 +20,7 @@ export default function ArticleCreator(props) {
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle( category_id, title, description, thumbnail, activated,page_content),
+            async () => await Api.createArticle(category_id, title, description, thumbnail, activated, page_content),
             (data) => {
                 alert(data.success)
                 setredirect(Routes.pagesIndex())
@@ -33,12 +32,6 @@ export default function ArticleCreator(props) {
     }
 
     React.useEffect(() => {
-        ApiCallHandler(
-            async () => await Api.fetchPages({ withoutContent: true, withoutPagination: true }),
-            setpages,
-            'ArticleCreator fetchPages',
-            true
-        )
         ApiCallHandler(
             async () => await Api.fetchCategories({ withoutPagination: true }),
             setcategories,
@@ -82,7 +75,7 @@ export default function ArticleCreator(props) {
             }}
         />
         <ImagePicker setImage={(base64) => setthumbnail(base64)} />
-        <PageContentEditor setEditedPageContent ={setpage_content} />
+        <PageContentEditor setEditedPageContent={setpage_content} />
 
         <Button onClick={submit}>submit</Button>
 

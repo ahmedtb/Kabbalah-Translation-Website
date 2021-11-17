@@ -9,11 +9,6 @@ export default function ArticlesTable(props) {
     const deleteArticle = props.deleteArticle
 
 
-    function hasPage(Obj, Or) {
-        if (articles[0]?.page_without_content)
-            return Obj
-        else return Or
-    }
 
     function hasCategory(Obj, Or) {
         if (articles[0]?.category)
@@ -27,7 +22,6 @@ export default function ArticlesTable(props) {
                 <tr>
                     <th>#</th>
                     <th>عنوان المقالة</th>
-                    <th>الصفحة</th>
                     <th>التصنيف</th>
                     <th>مفعلة؟</th>
                     <th>الوصف</th>
@@ -42,11 +36,6 @@ export default function ArticlesTable(props) {
                             <td> <Link to={Routes.articleShow(article.id)}> {article.id}  </Link> </td>
                             <td>{article.title}</td>
 
-                            <td>
-                                <Link to={Routes.pageShow(article.page_id)}>
-                                    {hasPage(article.page_without_content?.title, article.page_id)}
-                                </Link>
-                            </td>
 
                             <td>
                                 <Link to={Routes.categoryShow(article.category_id)}>

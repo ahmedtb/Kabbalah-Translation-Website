@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Casts\Json;
 use App\Filters\ArticlesFilters;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Article extends Model
 {
@@ -12,15 +13,9 @@ class Article extends Model
 
     protected $guarded = [];
 
-    public function page()
-    {
-        return $this->belongsTo(Page::class);
-    }
-
-    public function pageWithoutContent()
-    {
-        return $this->belongsTo(Page::class, 'page_id')->excludeContent();
-    }
+    protected $casts = [
+        'page_content' => Json::class
+    ];
 
     public function category()
     {

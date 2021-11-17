@@ -166,7 +166,7 @@ export function HeaderComponentWebsiteRender(props) {
     const translated = component.translated
     const size = component.size
 
-    console.log('HeaderComponentWebsiteRender size', size == 5)
+    // console.log('HeaderComponentWebsiteRender size', size == 5)
 
     return <Col xs={12} className='mx-2'>
         <div dir={translatedDir} >

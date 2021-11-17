@@ -20,11 +20,10 @@ class ArticlesController extends Controller
 
     public function show(Request $request, $id)
     {
-        $article = Article::where('id', $id)->with('page', 'category')->first();
+        $article = Article::where('id', $id)->with( 'category')->first();
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         else {
-            $article->page->makeVisible('page_content');
             return $article;
         }
     }

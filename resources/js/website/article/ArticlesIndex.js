@@ -15,8 +15,8 @@ export default function ArticleShow(props) {
     function fetchArticles(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?
-                await axios.get(link, { params: { ...params, with: ['page', 'category'] } }) :
-                await Api.fetchArticles({ ...params, with: ['page', 'category'] })
+                await axios.get(link, { params: { ...params, with: [ 'category'] } }) :
+                await Api.fetchArticles({ ...params, with: [ 'category'] })
             ),
             (data) => { setarticles(data.data); setlinks(data.links ?? []); setparams(params) },
             'ArticlesIndex fetchArticles',

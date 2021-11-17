@@ -26,7 +26,7 @@ export default function ArticleShow(props) {
             <Link to={Routes.articlesIndex({ category_id: article?.category_id })}>{article?.category.name}</Link>
             {/* <div>وصف المقالة {article?.description}</div> */}
 
-            <PageContentRender page={article?.page} />
+            <PageContentRender page_content={article?.page_content} />
         </Col>
     </div>
 }

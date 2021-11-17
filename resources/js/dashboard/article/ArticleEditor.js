@@ -5,37 +5,37 @@ import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
 import { ApiCallHandler } from "../../commonFiles/helpers";
 import { Routes, Api } from "../utility/URLs";
 import PageContentEditor from "../components/PageContentEditor";
-
+import ImagePicker from '../components/ImagePicker'
 export default function ArticleEditor(props) {
 
     let { id } = useParams();
-    const [article, setarticle] = React.useState(null)
 
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
 
     const [categories, setcategories] = React.useState([]);
-    const [category_id, setcategory_id] = React.useState(null);
-    const [title, settitle] = React.useState();
-    const [description, setdescription] = React.useState();
-    const [thumbnail, setthumbnail] = React.useState();
+    const [category_id, setcategory_id] = React.useState('');
+    const [title, settitle] = React.useState('');
+    const [description, setdescription] = React.useState('');
+    const [thumbnail, setthumbnail] = React.useState('');
 
-    const [activated, setactivated] = React.useState(null);
+    const [activated, setactivated] = React.useState(false);
 
     async function setup() {
         ApiCallHandler(
             async () => await Api.fetchArticle(id),
-            (data) => { setarticle(data) },
+            (data) => { 
+                setEditedPageContent(data.page_content)
+                setcategory_id(data.category_id)
+                settitle(data.title)
+                setdescription(data.description)
+                setthumbnail(data.thumbnail)
+                setactivated(data.activated)
+            },
             'ArticleEditor fetchArticle',
             true
         )
         ApiCallHandler(
-            async () => await Api.fetchPages(),
-            setpages,
-            'ArticleEditor fetchPages',
-            true
-        )
-        ApiCallHandler(
-            async () => await Api.fetchCategories(),
+            async () => await Api.fetchCategories({ withoutPagination: true }),
             setcategories,
             'ArticleEditor fetchCategories',
             true
@@ -47,8 +47,8 @@ export default function ArticleEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await Api.editArticle(id, category_id, activated, EditedPageContent),
-            (data) => { alert('article is updated'); setredirect(Routes.articlesIndex); },
+            async () => await Api.editArticle(id, category_id, title, description, thumbnail, activated, EditedPageContent??arti),
+            (data) => { alert(data.success); setredirect(Routes.articlesIndex); },
             'ArticleEditor submit',
             true
         )
@@ -63,36 +63,36 @@ export default function ArticleEditor(props) {
 
             <FormCheck>
                 <FormCheck.Label>عنوان المقالة</FormCheck.Label>
-                <Form.Control defaultValue={article?.title} type='text' onChange={(e) => settitle(e.target.value)} />
+                <Form.Control defaultValue={title??''} type='text' onChange={(e) => settitle(e.target.value)} />
             </FormCheck>
             <FormCheck>
                 <FormCheck.Label>وصف المقالة</FormCheck.Label>
-                <Form.Control defaultValue={article?.description} type='textarea' onChange={(e) => setdescription(e.target.value)} />
+                <Form.Control defaultValue={description??''} type='textarea' onChange={(e) => setdescription(e.target.value)} />
             </FormCheck>
 
             <Form.Select
-                defaultValue={article?.category_id}
+                value={category_id}
                 onChange={e => {
                     setcategory_id(e.target.value)
                 }}
             >
                 <option>اختر صفحة</option>
                 {
-                    categories.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
+                    categories?.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
                 }
             </Form.Select>
             <Form.Check
                 inline
                 label="activated"
                 type={'checkbox'}
-                defaultChecked={article.activated}
+                checked={activated??false}
                 onChange={(e) => {
                     setactivated(e.target.checked)
                 }}
             />
-            <img src={article.thumbnail} className='maxWidth100' />
+            <img src={thumbnail} className='maxWidth100' />
             <ImagePicker setImage={(base64) => setthumbnail(base64)} />
-            <PageContentEditor pageContent={article?.page_content} setEditedPageContent={setEditedPageContent} />
+            <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />
 
 
             <Button onClick={submit}>submit</Button>

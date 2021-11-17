@@ -44,7 +44,6 @@ class ArticlesController extends Controller
             'title' => 'required|string',
             'description' => 'sometimes|string',
             'thumbnail' => ['sometimes', new Base64Rule(200000)],
-            // 'page_id' => 'required|exists:pages,id',
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean',
             'page_content' => ['required', new PageContentRule()],
@@ -59,10 +58,12 @@ class ArticlesController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            // 'page_id' => 'sometimes|exists:pages,id',
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|nullable|string',
+            'thumbnail' => ['sometimes','nullable', new Base64Rule(200000)],
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',
-            'page_content' => ['required', new PageContentRule()],
+            'page_content' => ['sometimes', new PageContentRule()],
 
         ]);
 
@@ -71,7 +72,7 @@ class ArticlesController extends Controller
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         else {
             $article->update($data);
-            return response()->json(['success' => 'article ' . $article->id . ' is created']);
+            return response()->json(['success' => 'article ' . $article->id . ' is updated']);
         }
     }
 }
