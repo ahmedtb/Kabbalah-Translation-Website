@@ -26,7 +26,7 @@ class BooksController extends Controller
             'thumbnail' => ['required', new Base64Rule(200000)],
             'author' => 'required|string',
             'activated' => 'required|boolean',
-            'table' => ['required', new ContentTableRule],
+            'content_table' => ['required', new ContentTableRule],
             // 'contentTable' => ['required', new ContentTableRule]
         ]);
 
@@ -35,7 +35,7 @@ class BooksController extends Controller
             'description' => $request->description,
             'thumbnail' => $request->thumbnail,
             'author' => $request->author,
-            'table' => $request->table,
+            'content_table' => $request->content_table,
         ]);
         // $this->createContentTable($request->contentTable, $book->id);
 
@@ -51,7 +51,7 @@ class BooksController extends Controller
             'thumbnail' => ['sometimes', new Base64Rule(200000)],
             'author' => 'sometimes|string',
             'activated' => 'sometimes|boolean',
-            'table' => ['sometimes', new ContentTableRule],
+            'content_table' => ['sometimes', new ContentTableRule],
         ]);
         $book =  Book::where('id', $id)->first();
         if (!$book)

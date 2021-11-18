@@ -19,7 +19,13 @@ export default function PageEditor(props) {
     async function setup() {
         ApiCallHandler(
             async () => await Api.fetchPage(id),
-            (data) => { setpage(data); settitle(data.title) },
+            (data) => { 
+                setpage(data); 
+                settitle(data.title) 
+                setmeta_description(data.meta_description)
+                setsource_url(data.source_url)
+                setEditedPageContent(data.page_content)
+            },
             'PageEditor fetchPage',
             true
         )
@@ -54,15 +60,15 @@ export default function PageEditor(props) {
 
             <FormCheck>
                 <FormCheck.Label>معلومات وصفية</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} />
+                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description} />
             </FormCheck>
 
             <FormCheck>
                 <FormCheck.Label>رابط المصدر</FormCheck.Label>
-                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={page?.source_url} />
+                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url} />
             </FormCheck>
             <Col xs={12}>
-                <PageContentEditor pageContent={page?.page_content} setEditedPageContent={setEditedPageContent} />
+                <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />
 
                 <Button onClick={submit}>submit</Button>
             </Col>

@@ -10,7 +10,7 @@ class BookFactory extends Factory
 
     public function definition()
     {
-        $table = [
+        $content_table = [
             [
                 'type' => 'section',
                 'title' => $this->faker->sentence(),
@@ -44,7 +44,7 @@ class BookFactory extends Factory
             'activated' => $this->faker->boolean(),
             'thumbnail' => getBase64DefaultImage(),
             'author' => $this->faker->sentence(3),
-            'table' => $table
+            'content_table' => $content_table
         ];
     }
 }

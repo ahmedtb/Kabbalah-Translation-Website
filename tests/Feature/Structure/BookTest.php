@@ -82,4 +82,13 @@ class BookTest extends TestCase
         ];
         $this->assertTrue($validator->passes('', $contentTable));
     }
+
+    public function test_book_can_return_it_is_pages()
+    {
+        Page::factory(4)->create();
+        $book = Book::factory()->create();
+        // dd($book->content_table);
+        
+        dd($book->pages());
+    }
 }

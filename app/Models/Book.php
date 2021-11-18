@@ -13,14 +13,28 @@ class Book extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $casts =[
-        'table' => Json::class
+    protected $casts = [
+        'content_table' => Json::class
     ];
 
+    public function pages()
+    {
+        // return $this->content_table;
+        $pages_ids = [];
+        foreach ($this->content_table as $element) {
+            if ($element['type'] == 'section')
+                array_push($pages_ids, $element['page_id']);
+            else if ($element['type'] == 'chapter')
+                foreach ($element['sections'] as $section)
+                    array_push($pages_ids, $section['page_id']);
+        }
+        return Page::whereIn('id',$pages_ids)->excludeContent();
+        // return $pages_ids;
+    }
 
     public function scopeActivated($query, $bool = true)
     {
-        return $query->where('activated',$bool);
+        return $query->where('activated', $bool);
     }
     public function scopeFilter($query, BookFilters $filters)
     {

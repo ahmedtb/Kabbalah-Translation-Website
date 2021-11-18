@@ -37,8 +37,8 @@ export default function BookBrowser(props) {
         if (!book)
             setup()
         else if (!sections.length) {
-            setsections(getsectionsarray(book.table))
-            // console.log('getsectionsarray', getsectionsarray(book.table))
+            setsections(getsectionsarray(book.content_table))
+            // console.log('getsectionsarray', getsectionsarray(book.content_table))
         } else {
             // console.log('sectionIndex', sectionIndex)
             // console.log('sections[sectionIndex]', sections[sectionIndex])
@@ -59,7 +59,7 @@ export default function BookBrowser(props) {
             -
             {
                 sections[sectionIndex]?.subIndex ?
-                    <div><Link to={Routes.bookChapterShow(book?.id, sections[sectionIndex].index)}>{book?.table[sections[sectionIndex].index].title}</Link> - {sections[sectionIndex]?.title}</div>
+                    <div><Link to={Routes.bookChapterShow(book?.id, sections[sectionIndex].index)}>{book?.content_table[sections[sectionIndex].index].title}</Link> - {sections[sectionIndex]?.title}</div>
                     : <div >{sections[sectionIndex]?.title}</div>
             }
 

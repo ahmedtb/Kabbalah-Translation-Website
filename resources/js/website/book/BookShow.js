@@ -31,7 +31,7 @@ export default function BookShow(props) {
 
             <ListGroup as="ol" numbered>
                 {
-                    book?.table.map((element, index) => {
+                    book?.content_table.map((element, index) => {
                         if (element.type == 'chapter')
                             return <ListGroup.Item key={index} as="li">
                                 <Link to={Routes.bookChapterShow(id, index)}>
@@ -40,7 +40,7 @@ export default function BookShow(props) {
                                 <ListGroup as="ol" numbered>
                                     {
                                         element.sections.map((element, sectionIndex) => <ListGroup.Item key={sectionIndex} as="li">
-                                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.table, index, sectionIndex))}>
+                                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.content_table, index, sectionIndex))}>
                                                 {element.title}
                                             </Link>
                                         </ListGroup.Item>)
@@ -48,7 +48,7 @@ export default function BookShow(props) {
                                 </ListGroup>
                             </ListGroup.Item>
                         return <ListGroup.Item key={index} as="li">
-                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.table, index))}>
+                            <Link to={Routes.bookBrowser(id, getsectionIndex(book.content_table, index))}>
                                 {element.title}
                             </Link>
                         </ListGroup.Item>

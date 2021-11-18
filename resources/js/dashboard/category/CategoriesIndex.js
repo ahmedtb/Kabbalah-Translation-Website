@@ -10,14 +10,6 @@ export default function CategoriesIndex(props) {
     const [links, setlinks] = React.useState([])
     const [params, setparams] = React.useState([])
 
-    // async function setup() {
-    //     ApiCallHandler(async () => await Api.fetchCategories(),
-    //         setcategories,
-    //         'CategoriesIndex setup',
-    //         true
-    //     )
-    // }
-
     function fetchCategories(link = null, params = null) {
         ApiCallHandler(
             async () => (link ?

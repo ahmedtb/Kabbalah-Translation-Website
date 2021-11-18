@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { truncate } from '../../commonFiles/helpers'
 import { HeaderComponentClass, ImageComponentClass, LinkComponentClass, ParagraphComponentClass, TitleComponentClass } from '../../commonFiles/PageComponents/structure'
 import { Routes } from '../utility/URLs'
 
@@ -13,6 +14,7 @@ export default function PagesTable(props) {
         return pages[0]?.articles ? Obj : Or
     }
 
+    function hasBooks(Obj, Or = null) { return pages[0]?.books ? Obj : Or }
 
     return (
         <Table striped bordered hover responsive >
@@ -24,7 +26,7 @@ export default function PagesTable(props) {
 
                     <th>معلومات عن الصفحة</th>
                     <th>رابط المصدر</th>
-
+                    {hasBooks(<th>كتب تستعمل الصفحة</th>)}
                     <th></th>
 
                 </tr>
@@ -43,8 +45,13 @@ export default function PagesTable(props) {
                                 {page.articles?.map((article, index) => article.title)}
                             </td>)}
 
-                            <td>{page.meta_description}</td>
-                            <td>{page.source_url}</td>
+                            <td>{truncate(page.meta_description, 30)}</td>
+                            <td>{truncate(page.source_url, 30)}</td>
+                            {hasBooks(<td>
+                                {page.books?.map((book, index) => (
+                                    <Link key={index} to={Routes.bookShow(book.id)}>{book.title}</Link>
+                                ))}
+                            </td>)}
 
                             <td onClick={() => confirm('are you sure?') ? deletePage(page.id) : null}>حدف</td>
                         </tr>

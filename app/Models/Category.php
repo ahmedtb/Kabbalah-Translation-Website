@@ -13,7 +13,10 @@ class Category extends Model
 
     public function articles()
     {
-        return $this->hasMany(Article::class)->activated();
+        return $this->hasMany(Article::class);
+    }
+    public function activatedArticles(){
+        return $this->articles()->activated();
     }
     public function parent()
     {

@@ -37,6 +37,9 @@ export function TitleComponentRender(props) {
                             <h1 dir={originalDir} className='text-center' >{component.original}</h1>
                             <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
                         </div>
+                    default:
+                        return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
+
                 }
             })()}
         </OverlayTrigger>

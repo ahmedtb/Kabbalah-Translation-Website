@@ -21,15 +21,15 @@ export default function BookChapter(props) {
         if (!book)
             setup()
         else {
-            // console.log('chapter sections', book.table[chapterIndex].sections)
+            // console.log('chapter sections', book.content_table[chapterIndex].sections)
         }
     }, [book, chapterIndex])
 
     return <div>
-        <h1 className='text-center'>{book?.table[chapterIndex].title}</h1>
+        <h1 className='text-center'>{book?.content_table[chapterIndex].title}</h1>
         {
-            book?.table[chapterIndex].sections.map((element, sectionIndex) => <ListGroup.Item key={sectionIndex} as="li">
-                <Link to={Routes.bookBrowser(id, getsectionIndex(book.table, chapterIndex, sectionIndex))}>
+            book?.content_table[chapterIndex].sections.map((element, sectionIndex) => <ListGroup.Item key={sectionIndex} as="li">
+                <Link to={Routes.bookBrowser(id, getsectionIndex(book.content_table, chapterIndex, sectionIndex))}>
                     {element.title}
                 </Link>
             </ListGroup.Item>)

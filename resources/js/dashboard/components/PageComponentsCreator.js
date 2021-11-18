@@ -43,7 +43,7 @@ export default function PageComponentsCreator(props) {
         <div>
             <Col xs={2} className='mx-auto'>
                 <Dropdown onSelect={(e) => { setSelectedType(e); setcomponent(null); setparagraphs(null); }}>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <Dropdown.Toggle variant="success">
                         اختر نوع العنصر
                     </Dropdown.Toggle>
                     <Dropdown.Menu>

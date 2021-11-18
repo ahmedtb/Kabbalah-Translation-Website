@@ -44,12 +44,40 @@ class PageTest extends TestCase
 
     public function test_page_can_have_many_book_through_book_sections()
     {
-        $book = Book::factory()->create();
-        // dd($book->table);
-        $page = Page::all()[1];
-        // dd($page);
 
-        dd($page->books());
+        $page = Page::factory()->create();
+        $book = Book::factory()->create(
+            [
+                'content_table' => [
+                    [
+                        'type' => 'chapter',
+                        'sections' => [
+                            [
+                                'page_id' => $page->id
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        );
+
+        $this->assertEquals($page->books()->count(), 1);
+
+        $page = Page::factory()->create();
+        $book = Book::factory()->create(
+            [
+                'content_table' => [
+                    [
+                        'type' => 'section',
+
+                        'page_id' => $page->id
+
+                    ]
+                ]
+            ]
+        );
+        dd($book);
+        $this->assertEquals($page->books->count(), 1);
 
     }
 }

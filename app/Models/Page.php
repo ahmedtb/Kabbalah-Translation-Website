@@ -17,15 +17,21 @@ class Page extends Model
 
     protected $guarded = [];
 
+    protected $appends  = ['books'];
 
     public function articles()
     {
         return $this->hasMany(Article::class);
     }
 
+    public function getBooksAttribute(){
+        return $this->books()->select(['id','title'])->get();
+    }
+
     public function books()
     {
-        return Book::whereJsonContains('table', ['page_id' => $this->id])->orWhereJsonContains('table', ['sections' => ['page_id' => $this->id]])->get();
+        return Book::whereJsonContains('content_table', ['page_id' => (string)$this->id])
+        ->orWhereJsonContains('content_table', ['sections' => ['page_id' => (string)$this->id]]);
     }
 
     public function scopeFilter($query, PageFilters $filters)
@@ -36,6 +42,6 @@ class Page extends Model
 
     public function scopeExcludeContent($query)
     {
-        return $query->select(['id', 'title', 'meta_description','source_url', 'created_at', 'updated_at']);
+        return $query->select(['id', 'title', 'meta_description', 'source_url', 'created_at', 'updated_at']);
     }
 }

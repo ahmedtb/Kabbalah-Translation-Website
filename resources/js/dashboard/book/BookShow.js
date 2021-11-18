@@ -48,7 +48,7 @@ export default function BookShow(props) {
 
             <ListGroup as="ol" numbered>
                 {
-                    book?.table.map((element, index) => {
+                    book?.content_table.map((element, index) => {
                         if (element.type == 'chapter')
                             return <ListGroup.Item key={index} as="li">
                                 {element.title}

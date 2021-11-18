@@ -15,56 +15,56 @@ function sectionObject(title, page_id) {
     return { type: 'section', title: title, page_id: page_id }
 }
 
-function reducer(table, action) {
+function reducer(content_table, action) {
 
     switch (action.type) {
         case 'set state':
             return action.state
         case 'add element':
-            return [...table, action.element]
+            return [...content_table, action.element]
         case 'change element':
-            return table.map((element, index) => {
+            return content_table.map((element, index) => {
                 if (index == action.index)
                     return action.element
 
                 return element
             })
         case 'remove element':
-            return table.filter((element, index) => {
+            return content_table.filter((element, index) => {
                 return index != action.index
             })
         case 'left up element':
-            let leftup = [...table]
+            let leftup = [...content_table]
             if (action.index >= 1)
                 [leftup[action.index - 1], leftup[action.index]] = [leftup[action.index], leftup[action.index - 1]]
             return leftup
         case 'left down element':
-            let leftdown = [...table]
+            let leftdown = [...content_table]
             if (action.index < leftdown.length - 1)
                 [leftdown[action.index + 1], leftdown[action.index]] = [leftdown[action.index], leftdown[action.index + 1]]
             return leftdown
         case 'add chapter section':
-            let newsections1 = [...table[action.index].sections, action.section]
-            let newtable1 = [...table]
+            let newsections1 = [...content_table[action.index].sections, action.section]
+            let newtable1 = [...content_table]
             newtable1[action.index].sections = newsections1
             return newtable1
         case 'change chapter section':
-            let newsections2 = [...table[action.index].sections]
+            let newsections2 = [...content_table[action.index].sections]
             newsections2[action.sectionIndex] = action.section
-            let newtable2 = [...table]
+            let newtable2 = [...content_table]
             newtable2[action.index].sections = newsections2
             return newtable2
         case 'remove chapter section':
-            let newsections3 = [...table[action.index].sections]
+            let newsections3 = [...content_table[action.index].sections]
                 .filter((section, index) => {
                     return index != action.sectionIndex
                 })
-            let newtable3 = [...table]
+            let newtable3 = [...content_table]
             newtable3[action.index].sections = newsections3
             return newtable3
         // console.log('remove chapter section', newsections3)
 
-        default: return table
+        default: return content_table
     }
 }
 
@@ -84,7 +84,7 @@ export default function BookEdit(props) {
     const [activated, setactivated] = React.useState()
 
     const [thumbnail, setthumbnail] = React.useState('')
-    const [table, dispatch] = React.useReducer(reducer, [])
+    const [content_table, dispatch] = React.useReducer(reducer, [])
 
     function setup() {
         ApiCallHandler(
@@ -95,7 +95,7 @@ export default function BookEdit(props) {
                 setauthor(data.author)
                 setactivated(data.activated)
                 setthumbnail(data.thumbnail)
-                dispatch({ type: 'set state', state: data.table })
+                dispatch({ type: 'set state', state: data.content_table })
             },
             'BookEdit fetchBook',
             true
@@ -111,7 +111,7 @@ export default function BookEdit(props) {
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.editBook(id, title, description, thumbnail, author, activated, table),
+            async () => await Api.editBook(id, title, description, thumbnail, author, activated, content_table),
             (data) => { alert(data.success); setredirect(Routes.booksIndex) },
             'BookEdit submit',
             true
@@ -124,8 +124,8 @@ export default function BookEdit(props) {
     }, [])
 
     React.useEffect(() => {
-        console.log('BookEdit table', table)
-    }, [table])
+        console.log('BookEdit content_table', content_table)
+    }, [content_table])
 
     return <div>
         <Col xs={12} >
@@ -148,7 +148,7 @@ export default function BookEdit(props) {
             <h3 className='text-center'>جدول المحتوى</h3>
 
             {
-                table.map((element, index) => {
+                content_table.map((element, index) => {
                     if (element.type == 'chapter')
                         return <div className='border rounded' key={index}>
                             <div className='d-flex flex-row justify-content-end h-100 '>

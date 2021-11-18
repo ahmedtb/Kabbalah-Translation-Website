@@ -7,10 +7,10 @@ export default function ImagePicker(props) {
     const maxSize = props.maxSize
     const [base64, setbase64] = React.useState(null)
 
-    return (<div>
+    return (
         <input
             type='file'
-            accept=".jpg,.jpeg,.png,.webp"
+            accept=".jpg,.jpeg,.png,.webp,.gif"
             onChange={(e) => {
                 const file = e.target.files[0]
 
@@ -22,5 +22,5 @@ export default function ImagePicker(props) {
                 })
             }}
         />
-    </div>)
+    )
 }
