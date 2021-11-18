@@ -16,7 +16,7 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('description');
+            $table->text('description',500);
             $table->boolean('activated')->default(false);
             $table->mediumText('thumbnail');
             $table->string('author');

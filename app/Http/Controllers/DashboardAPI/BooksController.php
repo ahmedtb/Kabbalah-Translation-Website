@@ -26,8 +26,7 @@ class BooksController extends Controller
             'thumbnail' => ['required', new Base64Rule(200000)],
             'author' => 'required|string',
             'activated' => 'required|boolean',
-            'content_table' => ['required', new ContentTableRule],
-            // 'contentTable' => ['required', new ContentTableRule]
+            'content_table' => ['nullable', new ContentTableRule],
         ]);
 
         $book = Book::create([
@@ -37,14 +36,12 @@ class BooksController extends Controller
             'author' => $request->author,
             'content_table' => $request->content_table,
         ]);
-        // $this->createContentTable($request->contentTable, $book->id);
 
         return ['success' => 'book is successfully created'];
     }
 
     public function update(Request $request, $id)
     {
-        // return $request->all();
         $data = $request->validate([
             'title' => 'sometimes|string',
             'description' => 'sometimes|string',
@@ -58,7 +55,6 @@ class BooksController extends Controller
             throw ValidationException::withMessages(['id' => 'no such book id exists']);
 
         $book->update($data);
-        // $this->createContentTable($request->contentTable, $book->id);
 
         return ['success' => "book {$id} is successfully updated"];
     }

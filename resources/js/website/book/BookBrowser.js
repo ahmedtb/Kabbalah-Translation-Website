@@ -38,7 +38,7 @@ export default function BookBrowser(props) {
             setup()
         else if (!sections.length) {
             setsections(getsectionsarray(book.content_table))
-            // console.log('getsectionsarray', getsectionsarray(book.content_table))
+            console.log('getsectionsarray', getsectionsarray(book.content_table))
         } else {
             // console.log('sectionIndex', sectionIndex)
             // console.log('sections[sectionIndex]', sections[sectionIndex])
@@ -66,7 +66,7 @@ export default function BookBrowser(props) {
 
         </div>
         <div className='bg-white rounded'>
-            <PageContentRender page={page} />
+            <PageContentRender page_content={page?.page_content} />
 
         </div>
         <div className='d-flex flex-row justify-content-around'>

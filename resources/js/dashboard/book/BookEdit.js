@@ -81,7 +81,7 @@ export default function BookEdit(props) {
     const [title, settitle] = React.useState('')
     const [description, setdescription] = React.useState('')
     const [author, setauthor] = React.useState('')
-    const [activated, setactivated] = React.useState()
+    const [activated, setactivated] = React.useState(false)
 
     const [thumbnail, setthumbnail] = React.useState('')
     const [content_table, dispatch] = React.useReducer(reducer, [])
@@ -112,20 +112,22 @@ export default function BookEdit(props) {
     function submit() {
         ApiCallHandler(
             async () => await Api.editBook(id, title, description, thumbnail, author, activated, content_table),
-            (data) => { alert(data.success); setredirect(Routes.booksIndex) },
+            (data) => { alert(data.success);  setredirect(Routes.booksIndex())},
             'BookEdit submit',
             true
         )
     }
-    if (redirect)
-        return <Redirect to={redirect} />
+    
     React.useEffect(() => {
         setup()
     }, [])
-
+    
     React.useEffect(() => {
         console.log('BookEdit content_table', content_table)
     }, [content_table])
+    
+    if (redirect)
+        return <Redirect to={redirect} />
 
     return <div>
         <Col xs={12} >
@@ -138,7 +140,7 @@ export default function BookEdit(props) {
             <Row>
                 <Form.Control defaultValue={author} as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
             </Row>
-                <Form.Check defaultChecked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.value == 'on')} />
+                <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.checked)} />
             <h5>صورة الغلاف</h5>
             <img src={thumbnail} className='maxWidth100' />
             <ImagePicker setImage={base64 => setthumbnail(base64)} />

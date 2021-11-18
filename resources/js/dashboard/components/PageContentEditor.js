@@ -46,6 +46,8 @@ export default function PageContentEditor(props) {
     }
 
     const [editComponent, seteditComponent] = React.useState(null)
+    const [render, setrender] = React.useState('original')
+
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
 
@@ -68,7 +70,7 @@ export default function PageContentEditor(props) {
 
         return <div className='flex-grow-1'>
             {
-                editComponent == index ? <Editor
+                editComponent == index || editComponent == -1 ? <Editor
                     component={component}
                     originalDir={originalDir}
                     translatedDir={translatedDir}
@@ -77,7 +79,7 @@ export default function PageContentEditor(props) {
                     component={component}
                     originalDir={originalDir}
                     translatedDir={translatedDir}
-                    render='original'
+                    render={render}
                 />
             }
         </div>
@@ -113,6 +115,25 @@ export default function PageContentEditor(props) {
                     </FormCheck>
                 </div>
 
+                <div>
+                    <FormCheck>
+                        <FormCheck.Input type='checkbox' checked={editComponent == -1} onChange={(e) => seteditComponent(old => old == null ? -1 : null)} />
+                        <FormCheck.Label>عرض التعديل</FormCheck.Label>
+                    </FormCheck>
+                    <FormCheck>
+                        <FormCheck.Input type='radio' checked={render == 'original'} onChange={(e) => setrender('original')} />
+                        <FormCheck.Label>عرض الاصلي</FormCheck.Label>
+                    </FormCheck>
+
+                    <FormCheck>
+                        <FormCheck.Input type='radio' checked={render == 'translated'} onChange={(e) => setrender('translated')} />
+                        <FormCheck.Label>عرض الترجمة</FormCheck.Label>
+                    </FormCheck>
+                    <FormCheck>
+                        <FormCheck.Input type='radio' checked={render == 'both'} onChange={(e) => setrender('both')} />
+                        <FormCheck.Label>عرض الاصلي والترجمة</FormCheck.Label>
+                    </FormCheck>
+                </div>
 
             </div>
             <Col xs={12} className=''>
