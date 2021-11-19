@@ -27,15 +27,15 @@ export function HeaderComponentRender(props) {
 
 
     return <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-        <div dir={originalDir}>
+        <div >
             {(() => {
                 let text = ''
                 if (render == 'original') {
-                    text = original
+                    text = <div dir={originalDir}>{original}</div>
                 } else if (render == 'translated')
-                    text = translated
+                    text = <div dir={translatedDir}>{translated}</div>
                 else
-                    text = <><p>{original}</p> <p>{translated}</p></>
+                    text = <><div dir={originalDir}>{original}</div> <div dir={translatedDir}>{translated}</div></>
                 switch (size) {
                     case '1':
                         return <h1>{text}</h1>

@@ -104,7 +104,7 @@ export function pageContentReducer(page_content, action) {
         case 'insert component':
             
             return pageContentObject(
-                page_content.pageComponents.slice(0, action.index).concat(action.component, this.slice(action.index)),
+                page_content.pageComponents.slice(0, action.index).concat(action.component, page_content.pageComponents.slice(action.index)),
                 page_content.originalDir,
                 page_content.translatedDir
             )

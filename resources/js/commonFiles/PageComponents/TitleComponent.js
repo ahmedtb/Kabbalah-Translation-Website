@@ -22,8 +22,7 @@ export function TitleComponentRender(props) {
         </Popover>
     );
 
-    return <div >
-        <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
+    return  <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
             {(() => {
                 switch (render) {
                     case 'original':
@@ -43,7 +42,6 @@ export function TitleComponentRender(props) {
                 }
             })()}
         </OverlayTrigger>
-    </div >
 }
 
 

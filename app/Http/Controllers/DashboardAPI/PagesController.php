@@ -22,8 +22,8 @@ class PagesController extends Controller
             'page_content' => ['required', new PageContentRule()],
         ]);
         // return $data;
-        Page::create($data);
-        return response()->json(['success' => 'page content successfully created'], 201);
+        $page = Page::create($data);
+        return response()->json(['success' => `page successfully created with id: {$page->id}`], 201);
     }
 
     public function index(Request $request, PageFilters $filters)

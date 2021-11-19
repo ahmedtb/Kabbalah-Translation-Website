@@ -2,8 +2,8 @@
 import axios from "axios";
 import { random } from "lodash";
 
-export function mapRandomKey(){
-    return random(0,10000000)
+export function mapRandomKey() {
+    return random(0, 10000000)
 }
 
 export function convertFileToBase64(file) {
@@ -17,6 +17,10 @@ export function convertFileToBase64(file) {
 
 export function truncate(str, length = 200) {
     return str?.length > length ? str?.substring(0, length) + "....." : str;
+}
+
+export function textNewLines(str) {
+    return str?.split('\n').map((str, index) => <p key={index}>{str}</p>)
 }
 
 

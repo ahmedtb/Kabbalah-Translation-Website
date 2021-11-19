@@ -10,7 +10,7 @@ import { Routes } from "../utility/URLs";
 export default function PageEditor(props) {
 
     let { id } = useParams();
-    const [page, setpage] = React.useState(null)
+    // const [page, setpage] = React.useState(null)
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
     const [title, settitle] = React.useState('');
     const [meta_description, setmeta_description] = React.useState('');
@@ -20,7 +20,7 @@ export default function PageEditor(props) {
         ApiCallHandler(
             async () => await Api.fetchPage(id),
             (data) => { 
-                setpage(data); 
+                // setpage(data); 
                 settitle(data.title) 
                 setmeta_description(data.meta_description)
                 setsource_url(data.source_url)
@@ -55,17 +55,17 @@ export default function PageEditor(props) {
 
             <FormCheck>
                 <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
-                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title} />
+                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title??''} />
             </FormCheck>
 
             <FormCheck>
                 <FormCheck.Label>معلومات وصفية</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description} />
+                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description??''} />
             </FormCheck>
 
             <FormCheck>
                 <FormCheck.Label>رابط المصدر</FormCheck.Label>
-                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url} />
+                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url??''} />
             </FormCheck>
             <Col xs={12}>
                 <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />

@@ -20,7 +20,7 @@ import {
     pageContentReducer
 } from '../../commonFiles/PageComponents/structure'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
-
+import { textNewLines } from '../../commonFiles/helpers'
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
@@ -50,38 +50,64 @@ export default function PageContentEditor(props) {
 
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
+    const pageComponents = page_content?.pageComponents
 
-    function SideBar(props) {
+    function EditorAndRender(props) {
+        const [showCreator, setShowCreate] = React.useState(false)
+        const Editor = props.Editor
+        const Render = props.Render
         const index = props.index
+        const component = props.component
+        const originalDir = props.originalDir
+        const translatedDir = props.translatedDir
 
-        return <div className='d-flex flex-column'>
-            <AiOutlinePlusCircle size={20} />
-            <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
-            <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
-            <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
-            <AiFillDelete size={20} onClick={() => {
-                if (confirm('are you sure?'))
-                    dispatch({ actionType: 'remove component', index: index })
-            }} />
-        </div>
-    }
+        return <Editor
+            component={component}
+            originalDir={originalDir}
+            translatedDir={translatedDir}
+            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+        />
 
-    function ComponentEditorAndRender(Editor, Render, index, component, originalDir, translatedDir) {
+        return <div>
+            <div className='text-center'>
+                {
+                    showCreator ?
+                        <PageComponentsCreator addComponent={(component) => { addComponentAt(component, index); setShowCreate(false) }} />
+                        : null
 
-        return <div className='flex-grow-1'>
-            {
-                editComponent == index || editComponent == -1 ? <Editor
-                    component={component}
-                    originalDir={originalDir}
-                    translatedDir={translatedDir}
-                    dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
-                /> : <Render
-                    component={component}
-                    originalDir={originalDir}
-                    translatedDir={translatedDir}
-                    render={render}
-                />
-            }
+                }
+
+            </div>
+            <div className='d-flex flex-grow-1 flex-row border rounded'>
+
+                <div className='d-flex flex-column'>
+                    <AiOutlinePlusCircle color={showCreator ? 'yellow' : 'black'} size={20} onClick={() => setShowCreate(pre => pre ? false : true)} />
+                    <AiOutlineArrowUp size={20} onClick={() => dispatch({ actionType: 'left up component', index: index })} />
+                    <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
+                    <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
+                    <AiFillDelete size={20} onClick={() => {
+                        if (confirm('are you sure?'))
+                            dispatch({ actionType: 'remove component', index: index })
+                    }} />
+                </div>
+                <div className='flex-grow-1'>
+
+                    {
+                        editComponent == index || editComponent == -1 ? <Editor
+                            component={component}
+                            originalDir={originalDir}
+                            translatedDir={translatedDir}
+                            dispatch={(component) => dispatch({ actionType: 'change component', index: index, component: component })}
+                        /> : <Render
+                            component={component}
+                            originalDir={originalDir}
+                            translatedDir={translatedDir}
+                            render={render}
+                        />
+                    }
+                </div>
+
+            </div>
         </div>
     }
 
@@ -140,55 +166,83 @@ export default function PageContentEditor(props) {
                 <Col xs={10} className='mx-auto bg-white'>
 
                     {
-                        page_content?.pageComponents?.map((component, index) => {
-                            // console.log('PageContentEditor component', component)
+                        pageComponents?.map((component, index) => {
+
                             if (component.class == ParagraphComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(ParagraphComponentEditor, ParagraphComponentRender, index, component, originalDir, translatedDir)}
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={ParagraphComponentEditor}
+                                    Render={ParagraphComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
-                                </div>
                             } else if (component.class == TitleComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(TitleComponentEditor, TitleComponentRender, index, component, originalDir, translatedDir)}
-
-                                </div>
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={TitleComponentEditor}
+                                    Render={TitleComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
                             } else if (component.class == LinkComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(LinkComponentEditor, LinkComponentRender, index, component, originalDir, translatedDir)}
-
-                                </div>
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={LinkComponentEditor}
+                                    Render={LinkComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
                             } else if (component.class == HeaderComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(HeaderComponentEditor, HeaderComponentRender, index, component, originalDir, translatedDir)}
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={HeaderComponentEditor}
+                                    Render={HeaderComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
-                                </div>
                             } else if (component.class == ImageComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(ImageComponentEditor, ImageComponentRender, index, component, originalDir, translatedDir)}
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={ImageComponentEditor}
+                                    Render={ImageComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
-                                </div>
                             } else if (component.class == YoutubeEmbedComponentClass) {
-                                return <div key={index} className='d-flex flex-row border rounded'>
-                                    <SideBar index={index} />
-                                    {ComponentEditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
+                                return <EditorAndRender
+                                    key={index}
+                                    Editor={YoutubeEmbedComponentEditor}
+                                    Render={YoutubeEmbedComponentRender}
+                                    index={index}
+                                    component={component}
+                                    originalDir={originalDir}
+                                    translatedDir={translatedDir}
+                                />
 
-                                </div>
                             }
                         })
                     }
 
-                </Col>
+                </Col >
                 <PageComponentsCreator addComponent={addNewComponent} />
-            </Col>
+            </Col >
 
-        </div>
+        </div >
 
     )
 }
