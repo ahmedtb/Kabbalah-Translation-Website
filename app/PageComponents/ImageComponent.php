@@ -9,7 +9,10 @@ class ImageComponent extends PageComponent
 {
 
     private string $original;
+    private ?string $originalLabel = null;
+
     private ?string $translated = null;
+    private ?string $translatedLabel = null;
 
     public static function fromArray(array $array)
     {

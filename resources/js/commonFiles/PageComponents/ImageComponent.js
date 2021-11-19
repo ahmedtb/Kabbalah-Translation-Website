@@ -35,7 +35,7 @@ export function ImageComponentCreator(props) {
         <img src={original} width={100} />
         <FloatingLabel label="الصورة الاصلي">
             <ImagePicker
-                maxSize={100000}
+                maxSize={200000}
                 setImage={(base64) => {
                     setoriginal(base64)
                     dispatch(imageObject(base64, translated))
@@ -79,7 +79,7 @@ export function ImageComponentEditor(props) {
             <div>
                 <img src={original} width='100%' />
                 <ImagePicker
-                    maxSize={100000}
+                    maxSize={200000}
                     setImage={(base64) => {
                         setoriginal(base64)
                         dispatch(imageObject(base64, translated))
@@ -87,7 +87,7 @@ export function ImageComponentEditor(props) {
                 />
                 <img src={translated} width='100%' />
                 <ImagePicker
-                    maxSize={100000}
+                    maxSize={200000}
                     setImage={(base64) => {
                         settranslated(base64)
                         dispatch(imageObject(original, base64))

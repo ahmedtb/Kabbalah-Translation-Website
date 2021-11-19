@@ -30,24 +30,20 @@ function TopMenue(props) {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        
-                        <NavDropdown title="الصفحات" id="basic-nav-dropdown">
-                            <LinkContainer to={Routes.pageCreator()}>
-                                <NavDropdown.Item >انشاء صفحة</NavDropdown.Item>
-                            </LinkContainer>
-                            <NavDropdown.Divider />
-                            <LinkContainer to={Routes.pagesIndex()}>
-                                <NavDropdown.Item >قائمة الصفحات</NavDropdown.Item>
-                            </LinkContainer>
-                        </NavDropdown>
 
                         <NavDropdown title="الكتب" id="basic-nav-dropdown">
                             <LinkContainer to={Routes.bookCreator()}>
                                 <NavDropdown.Item >انشاء كتاب</NavDropdown.Item>
                             </LinkContainer>
+                            <LinkContainer to={Routes.pageCreator()}>
+                                <NavDropdown.Item >انشاء صفحة</NavDropdown.Item>
+                            </LinkContainer>
                             <NavDropdown.Divider />
                             <LinkContainer to={Routes.booksIndex()}>
                                 <NavDropdown.Item >قائمة الكتب</NavDropdown.Item>
+                            </LinkContainer>
+                            <LinkContainer to={Routes.pagesIndex()}>
+                                <NavDropdown.Item >قائمة الصفحات</NavDropdown.Item>
                             </LinkContainer>
                         </NavDropdown>
 
