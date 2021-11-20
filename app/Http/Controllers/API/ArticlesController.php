@@ -24,6 +24,7 @@ class ArticlesController extends Controller
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         else {
+            $article->makeVisible('page_content');
             return $article;
         }
     }

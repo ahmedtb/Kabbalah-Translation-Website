@@ -18,4 +18,6 @@ abstract class PageComponent  implements JsonSerializable
     abstract public function getTranslated();
     abstract public function generateMockedValues();
     abstract public function isEqualTo(PageComponent $component);
+    abstract public function isTranslated();
+
 }

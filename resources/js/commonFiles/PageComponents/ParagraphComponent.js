@@ -235,7 +235,7 @@ export function ParagraphComponentEditor(props) {
                     setoriginalScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(e.target.value, translated, style))
                 }}
-                defaultValue={original ?? ''}
+                value={original ?? ''}
             />
             <textarea
                 style={{
@@ -248,7 +248,7 @@ export function ParagraphComponentEditor(props) {
                     settranslatedScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(original, e.target.value, style))
                 }}
-                defaultValue={translated ?? ''}
+                value={translated ?? ''}
             />
         </div >
 

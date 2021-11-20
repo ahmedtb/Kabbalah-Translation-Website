@@ -73,7 +73,7 @@ export default function PageContentEditor(props) {
                     <AiOutlineArrowDown size={20} onClick={() => dispatch({ actionType: 'left down component', index: index })} />
                     <AiFillEdit color={editComponent == index ? 'yellow' : 'black'} size={20} onClick={() => seteditComponent(editIndex => editIndex == index ? null : index)} />
                     <AiFillDelete size={20} onClick={() => {
-                        if (confirm('are you sure?'))
+                        if (confirm(`do you want to delete ${index} ?`))
                             dispatch({ actionType: 'remove component', index: index })
                     }} />
                 </div>
@@ -157,86 +157,38 @@ export default function PageContentEditor(props) {
 
                             if (component.class == ParagraphComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(ParagraphComponentEditor,ParagraphComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={ParagraphComponentEditor}
-                                        Render={ParagraphComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(ParagraphComponentEditor, ParagraphComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             } else if (component.class == TitleComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(TitleComponentEditor,TitleComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={TitleComponentEditor}
-                                        Render={TitleComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(TitleComponentEditor, TitleComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             } else if (component.class == LinkComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(LinkComponentEditor,LinkComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={LinkComponentEditor}
-                                        Render={LinkComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(LinkComponentEditor, LinkComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             } else if (component.class == HeaderComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(HeaderComponentEditor,HeaderComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={HeaderComponentEditor}
-                                        Render={HeaderComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(HeaderComponentEditor, HeaderComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             } else if (component.class == ImageComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(ImageComponentEditor,ImageComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={ImageComponentEditor}
-                                        Render={ImageComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(ImageComponentEditor, ImageComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             } else if (component.class == YoutubeEmbedComponentClass) {
                                 return <div key={index}>
-                                    {EditorAndRender(YoutubeEmbedComponentEditor,YoutubeEmbedComponentRender,index,component,originalDir,translatedDir)}
-                                    {/* <EditorAndRender
-                                        key={index}
-                                        Editor={YoutubeEmbedComponentEditor}
-                                        Render={YoutubeEmbedComponentRender}
-                                        index={index}
-                                        component={component}
-                                        originalDir={originalDir}
-                                        translatedDir={translatedDir}
-                                    /> */}
+                                    {EditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
+                                    
                                 </div>
 
                             }

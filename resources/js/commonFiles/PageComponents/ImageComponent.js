@@ -104,6 +104,13 @@ export function ImageComponentWebsiteRender(props) {
     const component = props.component
 
     return <Col xs={10} className='mx-auto maxWidth100'>
-        <img src={component.original} style={{maxWidth:'100%'}} />
+        {
+            component.translated ?
+                <img src={component.translated} style={{ maxWidth: '100%' }} />
+
+                :
+                <img src={component.original} style={{ maxWidth: '100%' }} />
+
+        }
     </Col >
 }

@@ -78,6 +78,23 @@ class PageTest extends TestCase
         );
         dd($book);
         $this->assertEquals($page->books->count(), 1);
+    }
 
+    public function test_page_can_tell_it_its_fully_translated_or_not()
+    {
+        $pageContent = new PageContent([
+            new ParagraphComponent('aaaaaaa'),
+            new HeaderComponent('bbbbbb'),
+            new LinkComponent('http://www.google.com'),
+            new TitleComponent('eeeeee'),
+            new ImageComponent(getBase64DefaultImage()),
+        ], 'ltr', 'rtl');
+
+        $page = Page::factory()->create(['page_content' => $pageContent]);
+        $this->assertFalse($page->isTranslated());
+        // dd($page->page_content);
+        $pageContent->generateMockedValues();
+        $page = Page::factory()->create(['page_content' => $pageContent]);
+        $this->assertTrue($page->isTranslated());
     }
 }

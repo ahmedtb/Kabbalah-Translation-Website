@@ -15,6 +15,7 @@ export default function PagesTable(props) {
     }
 
     function hasBooks(Obj, Or = null) { return pages[0]?.books ? Obj : Or }
+    function hasIsTrasnalted(Obj, Or = null) { return pages[0]?.isTranslated != undefined ? Obj : Or }
 
     return (
         <Table striped bordered hover responsive >
@@ -27,6 +28,8 @@ export default function PagesTable(props) {
                     <th>معلومات عن الصفحة</th>
                     <th>رابط المصدر</th>
                     {hasBooks(<th>كتب تستعمل الصفحة</th>)}
+                    {hasIsTrasnalted(<th>مترحمة؟</th>)}
+
                     <th></th>
 
                 </tr>
@@ -52,7 +55,9 @@ export default function PagesTable(props) {
                                     <Link key={index} to={Routes.bookShow(book.id)}>{book.title}</Link>
                                 ))}
                             </td>)}
-
+                            {hasIsTrasnalted(<td>
+                                {page.isTranslated ? 'مترجمة' : 'غير مترجمة'}
+                            </td>)}
                             <td onClick={() => confirm('are you sure?') ? deletePage(page.id) : null}>حدف</td>
                         </tr>
                     ))

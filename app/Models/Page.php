@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Casts\Json;
 use App\Filters\PageFilters;
+use App\Casts\CastJsonToPageContent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,12 +12,12 @@ class Page extends Model
     use HasFactory;
 
     protected $casts = [
-        'page_content' => Json::class
+        'page_content' => CastJsonToPageContent::class
     ];
 
     protected $guarded = [];
 
-    protected $appends  = ['books'];
+    protected $appends  = ['books','isTranslated'];
 
     public function articles()
     {
@@ -43,5 +43,14 @@ class Page extends Model
     public function scopeExcludeContent($query)
     {
         return $query->select(['id', 'title', 'meta_description', 'source_url', 'created_at', 'updated_at']);
+    }
+
+    public function getIsTranslatedAttribute()
+    {
+        return $this->isTranslated();
+    }
+
+    public function isTranslated(){
+        return $this->page_content->isFullyTranslated();
     }
 }

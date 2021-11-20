@@ -82,4 +82,10 @@ class LinkComponent extends PageComponent
             return false;
         }
     }
+
+    
+    public function isTranslated()
+    {
+        return $this->translatedLabel != null || strlen($this->translatedLabel);
+    }
 }

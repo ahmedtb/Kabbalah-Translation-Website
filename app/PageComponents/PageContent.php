@@ -1,4 +1,5 @@
 <?php
+
 namespace App\PageComponents;
 
 use Countable;
@@ -22,7 +23,6 @@ class PageContent  implements JsonSerializable, Countable
             $this->setPageComponents($pageComponents);
         $this->setOriginalDir($originalDir);
         $this->setTranslatedDir($translatedDir);
-
     }
     public function jsonSerialize()
     {
@@ -105,7 +105,16 @@ class PageContent  implements JsonSerializable, Countable
     public function isEqual(PageContent $PageContent)
     {
         foreach ($this->getPageComponents() as $index => $pageComponent) {
-            if (! $pageComponent->isEqualTo($PageContent->getPageComponent($index)) )  
+            if (!$pageComponent->isEqualTo($PageContent->getPageComponent($index)))
+                return false;
+        }
+        return true;
+    }
+
+    public function isFullyTranslated()
+    {
+        foreach ($this->getPageComponents() as $index => $pageComponent) {
+            if (!$pageComponent->isTranslated())
                 return false;
         }
         return true;

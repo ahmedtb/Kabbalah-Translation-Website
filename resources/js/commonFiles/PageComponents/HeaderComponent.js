@@ -66,7 +66,7 @@ export function HeaderComponentCreator(props) {
     return <div className='my-3'>
         <FloatingLabel label="النص الاصلي">
             <Form.Control
-                as="textarea"
+                as="input"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     setoriginal(e.target.value)
@@ -76,7 +76,7 @@ export function HeaderComponentCreator(props) {
         </FloatingLabel>
         <FloatingLabel label="النص المترجم">
             <Form.Control
-                as="textarea"
+                as="input"
                 style={{ height: '100px' }}
                 onChange={(e) => {
                     settranslated(e.target.value)
@@ -120,7 +120,7 @@ export function HeaderComponentEditor(props) {
                         setoriginal(e.target.value)
                         dispatch(headerObject(e.target.value, translated, size))
                     }}
-                    defaultValue={original}
+                    value={original??''}
 
                 />
             </FloatingLabel>
@@ -132,7 +132,7 @@ export function HeaderComponentEditor(props) {
                         settranslated(e.target.value)
                         dispatch(headerObject(original, e.target.value, size))
                     }}
-                    defaultValue={translated}
+                    value={translated??''}
 
                 />
             </FloatingLabel>

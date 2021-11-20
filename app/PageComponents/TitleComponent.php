@@ -66,4 +66,8 @@ class TitleComponent extends PageComponent
         }
     }
 
+    public function isTranslated()
+    {
+        return $this->translated != null || strlen($this->translated);
+    }
 }

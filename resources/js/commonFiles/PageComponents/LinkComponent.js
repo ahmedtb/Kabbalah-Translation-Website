@@ -59,7 +59,7 @@ export function LinkComponentWebsiteRender(props) {
         return <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
     else if (originalLabel)
         return <a href={originalLink} dir={originalDir}>{originalLabel}</a>
-        else return null
+    else return null
 
 }
 
@@ -132,7 +132,7 @@ export function LinkComponentEditor(props) {
             <div>الرابط الاصلي</div>
             <Form.Control
                 as="input"
-                defaultValue={originalLink}
+                value={originalLink ?? ''}
                 onChange={(e) => {
                     setoriginalLink(e.target.value)
                     dispatch(linkObject(e.target.value, originalLabel, translatedLink, translatedLabel))
@@ -141,7 +141,7 @@ export function LinkComponentEditor(props) {
             <div>النص الاصلي</div>
             <Form.Control
                 as="input"
-                defaultValue={originalLabel}
+                value={originalLabel ?? ''}
                 onChange={(e) => {
                     setoriginalLabel(e.target.value)
                     dispatch(linkObject(originalLink, e.target.value, translatedLink, translatedLabel))
@@ -150,7 +150,7 @@ export function LinkComponentEditor(props) {
             <div>الرابط المترجم</div>
             <Form.Control
                 as="input"
-                defaultValue={translatedLink}
+                value={translatedLink ?? ''}
                 onChange={(e) => {
                     settranslatedLink(e.target.value)
                     dispatch(linkObject(originalLink, originalLabel, e.target.value, translatedLabel))
@@ -159,7 +159,7 @@ export function LinkComponentEditor(props) {
             <div>النص المترجم</div>
             <Form.Control
                 as="input"
-                defaultValue={translatedLabel}
+                value={translatedLabel ?? ''}
                 onChange={(e) => {
                     settranslatedLabel(e.target.value)
                     dispatch(linkObject(originalLink, originalLabel, translatedLink, e.target.value))

@@ -15,12 +15,12 @@ class HeaderComponent extends PageComponent
 
     public static function fromArray(array $array)
     {
-        if($array['class'] != HeaderComponent::class)
+        if ($array['class'] != HeaderComponent::class)
             throw new PageComponentsException('the array class is not HeaderComponent class, it is: ' . $array['class']);
         $style = array_key_exists('style', $array) ? ($array['style']) : [];
         $size = array_key_exists('size', $array) ? $array['size'] : 1;
 
-        return new self($array['original'], $array['translated'], $size, $style );
+        return new self($array['original'], $array['translated'], $size, $style);
     }
     public function __construct(string $original, ?string $translated = null, int $size = 1, array $style = [])
     {
@@ -28,9 +28,8 @@ class HeaderComponent extends PageComponent
         $this->setTranslated($translated);
         $this->size = $size;
         $this->style = $style;
-
     }
-    
+
     public function jsonSerialize()
     {
         return [
@@ -64,7 +63,6 @@ class HeaderComponent extends PageComponent
         $faker = Container::getInstance()->make(Generator::class);
         $this->setoriginal($faker->sentence());
         $this->setTranslated($faker->sentence());
-
     }
     public function isEqualTo(PageComponent $component)
     {
@@ -79,4 +77,8 @@ class HeaderComponent extends PageComponent
         }
     }
 
+    public function isTranslated()
+    {
+        return $this->translated != null || strlen($this->translated);
+    }
 }

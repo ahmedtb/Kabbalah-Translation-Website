@@ -23,7 +23,7 @@ class PagesController extends Controller
         ]);
         // return $data;
         $page = Page::create($data);
-        return response()->json(['success' => `page successfully created with id: {$page->id}`], 201);
+        return response()->json(['success' => "page successfully created with id: {$page->id}"], 201);
     }
 
     public function index(Request $request, PageFilters $filters)

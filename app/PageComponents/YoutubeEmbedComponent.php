@@ -68,4 +68,10 @@ class YoutubeEmbedComponent extends PageComponent
             return false;
         }
     }
+
+    
+    public function isTranslated()
+    {
+        return $this->translated || strlen($this->translated);
+    }
 }

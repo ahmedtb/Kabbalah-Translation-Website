@@ -83,4 +83,9 @@ class ParagraphComponent extends PageComponent
             return false;
         }
     }
+    
+    public function isTranslated()
+    {
+        return $this->translated != null || strlen($this->translated);
+    }
 }
