@@ -5,6 +5,9 @@ use App\Http\Controllers\DashboardAPI\BooksController;
 use App\Http\Controllers\DashboardAPI\PagesController;
 use App\Http\Controllers\DashboardAPI\CategoriesController;
 use App\Http\Controllers\DashboardAPI\ArticlesController;
+use App\Http\Controllers\DashboardAPI\HomeController;
+
+Route::get('/home', [HomeController::class, 'home']);
 
 Route::post('/pages', [PagesController::class, 'create']);
 Route::get('/pages', [PagesController::class, 'index']);

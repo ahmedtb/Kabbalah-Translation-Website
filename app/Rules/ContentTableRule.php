@@ -34,7 +34,9 @@ class ContentTableRule implements Rule
             return false;
         }
         foreach ($element['sections'] as $section) {
-            if (!$this->validateSection($section))
+            if ($section['type'] == 'section' && !$this->validateSection($section))
+                return false;
+            else if ($section['type'] == 'chapter' && !$this->validateChapter($section))
                 return false;
         }
         return true;

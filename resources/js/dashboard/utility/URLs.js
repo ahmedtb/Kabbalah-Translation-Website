@@ -24,6 +24,8 @@ export const Routes = {
 }
 
 export const Api = {
+    home: async () => await axios.get('/dashboardAPI/home'),
+
     createPage: async (title, meta_description, source_url, page_content) => {
         return await axios.post('/dashboardAPI/pages',
             { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content }

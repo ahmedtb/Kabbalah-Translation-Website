@@ -158,10 +158,19 @@ export default function PageContentEditor(props) {
                 <Col xs={10} className='mx-auto bg-white'>
 
                     {
-                        render == 'json' ? <div dir='ltr'>{JSON.stringify(pageComponents)}</div>
-                            :
-                            pageComponents?.map((component, index) => {
+                        (render == 'json') ? <textarea
+                            dir='ltr'
+                            style={{ width: '100%', height: 1000 }}
+                            defaultValue={JSON.stringify(pageComponents, null, '\t')}
+                            onChange={e => {
+                                // console.log(JSON.parse(e.target.value));
+                                dispatch({ actionType: 'set page_content', page_content: pageContentObject(JSON.parse(e.target.value), 'ltr', 'rtl') });
+                            }}
+                        />
+                            : pageComponents?.map((component, index) => {
 
+                                // if (render == 'json')
+                                //     return <div key={index} dir='ltr' className='border rounded'>{textNewLines(JSON.stringify(component, null, 4))}</div>
 
                                 if (component.class == ParagraphComponentClass) {
                                     return <div key={index}>

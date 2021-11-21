@@ -6,18 +6,30 @@ import { Api } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
 import { Routes } from '../utility/URLs'
 
-function SectionElements(props) {
-    const sections = props.sections
+function Chapter(props) {
+    const chapter = props.chapter
 
     return <ListGroup as="ol" numbered>
+        <div>{chapter?.title}</div>
         {
-            sections.map((element, index) => <ListGroup.Item key={index} as="li">
-                <Link to={Routes.pageShow(element.page_id)}>
-                    {element.title}
-                </Link>
-            </ListGroup.Item>)
+            chapter?.sections?.map((element, index) => {
+                if (element.type == 'section')
+                    return <Section key={index} section={element} />
+
+                else if (element.type == 'chapter')
+                    return <Chapter key={index} chapter={element} />
+            })
         }
     </ListGroup>
+}
+function Section(props) {
+    const section = props.section
+
+    return <ListGroup.Item as="li">
+        <Link to={Routes.pageShow(section.page_id)}>
+            {section.title}
+        </Link>
+    </ListGroup.Item>
 }
 
 export default function BookShow(props) {
@@ -50,15 +62,10 @@ export default function BookShow(props) {
                 {
                     book?.content_table.map((element, index) => {
                         if (element.type == 'chapter')
-                            return <ListGroup.Item key={index} as="li">
-                                {element.title}
-                                <SectionElements sections={element.sections} />
-                            </ListGroup.Item>
-                        return <ListGroup.Item key={index} as="li">
-                            <Link to={Routes.pageShow(element.page_id)}>
-                                {element.title}
-                            </Link>
-                        </ListGroup.Item>
+                            return <Chapter chapter={element} key={index} />
+                        else
+                            return <Section section={element} key={index} />
+
                     })
                 }
             </ListGroup>
