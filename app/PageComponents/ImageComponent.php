@@ -78,6 +78,6 @@ class ImageComponent extends PageComponent
 
     public function isTranslated()
     {
-        return $this->translated != null || strlen($this->translated);
+        return $this->original != null || strlen($this->original);
     }
 }

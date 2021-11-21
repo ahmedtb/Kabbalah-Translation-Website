@@ -101,7 +101,10 @@ export default function BookEdit(props) {
             true
         )
         ApiCallHandler(
-            async () => await Api.fetchPages({ withoutContent: true, withoutPagination: true }),
+            async () => await Api.fetchPages({
+                // withoutContent: true, 
+                withoutPagination: true
+            }),
             setpages,
             'BookEdit fetchPages',
             false
@@ -112,20 +115,20 @@ export default function BookEdit(props) {
     function submit() {
         ApiCallHandler(
             async () => await Api.editBook(id, title, description, thumbnail, author, activated, content_table),
-            (data) => { alert(data.success);  setredirect(Routes.booksIndex())},
+            (data) => { alert(data.success); setredirect(Routes.booksIndex()) },
             'BookEdit submit',
             true
         )
     }
-    
+
     React.useEffect(() => {
         setup()
     }, [])
-    
+
     React.useEffect(() => {
         console.log('BookEdit content_table', content_table)
     }, [content_table])
-    
+
     if (redirect)
         return <Redirect to={redirect} />
 
@@ -140,7 +143,7 @@ export default function BookEdit(props) {
             <Row>
                 <Form.Control defaultValue={author} as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
             </Row>
-                <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.checked)} />
+            <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.checked)} />
             <h5>صورة الغلاف</h5>
             <img src={thumbnail} className='maxWidth100' />
             <ImagePicker setImage={base64 => setthumbnail(base64)} />

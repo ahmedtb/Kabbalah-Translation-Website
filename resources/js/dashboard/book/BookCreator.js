@@ -6,6 +6,8 @@ import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import ImagePicker from '../components/ImagePicker'
 import { Redirect } from 'react-router'
+import { MdSubtitles } from 'react-icons/md'
+import { AiFillBook } from 'react-icons/ai'
 
 
 function chapterObject(title, sections) {
@@ -69,8 +71,14 @@ function reducer(content_table, action) {
 }
 
 const elementTypes = {
-    chapter: 'فصل',
-    section: 'عنوان'
+    chapter: <div>
+        <AiFillBook />
+        فصل
+    </div>,
+    section: <div>
+        <MdSubtitles />
+        عنوان
+    </div>
 }
 
 
@@ -89,7 +97,10 @@ export default function BookCreator(props) {
     function setup() {
 
         ApiCallHandler(
-            async () => await Api.fetchPages({ withoutContent: true, withoutPagination: true }),
+            async () => await Api.fetchPages({
+                // withoutContent: true, 
+                withoutPagination: true
+            }),
             setpages,
             'BookCreator2 setup',
             false

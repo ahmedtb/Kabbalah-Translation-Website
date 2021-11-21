@@ -26,6 +26,28 @@ const componentsTypes = {
     [ImageComponentClass]: 'صورة',
     [LinkComponentClass]: 'رابط',
     [YoutubeEmbedComponentClass]: 'رابط فيديو',
+    JsonFormat: 'Json'
+}
+
+function JsonFormatField(props) {
+    const dispatch = props.dispatch
+    const [json, setjson] = React.useState()
+    const [scrollHeight, setscrollHeight] = React.useState(300)
+
+    return <textarea
+        style={{
+            borderWidth: 1,
+            width: '100%',
+            height: scrollHeight
+        }}
+        dir={'ltr'}
+        onChange={(e) => {
+            setjson(e.target.value)
+            setscrollHeight(e.target.scrollHeight)
+            dispatch(JSON.parse(`[${e.target.value}]`))
+        }}
+        value={json ?? ''}
+    />
 }
 
 export default function PageComponentsCreator(props) {
@@ -89,6 +111,10 @@ export default function PageComponentsCreator(props) {
                     } else if (selectedType == paragraphsComponent) {
                         return (
                             <ParagraphsComponentCreator dispatch={(paragraphs) => setparagraphs(paragraphs)} />
+                        )
+                    } else if (selectedType == 'JsonFormat') {
+                        return (
+                            <JsonFormatField dispatch={(json) => setparagraphs(json)} />
                         )
                     }
                 })()

@@ -146,6 +146,11 @@ export default function PageContentEditor(props) {
                         <FormCheck.Input type='radio' checked={render == 'both'} onChange={(e) => setrender('both')} />
                         <FormCheck.Label>عرض الاصلي والترجمة</FormCheck.Label>
                     </FormCheck>
+
+                    <FormCheck>
+                        <FormCheck.Input type='radio' checked={render == 'json'} onChange={(e) => setrender('json')} />
+                        <FormCheck.Label>عرض json</FormCheck.Label>
+                    </FormCheck>
                 </div>
 
             </div>
@@ -153,46 +158,49 @@ export default function PageContentEditor(props) {
                 <Col xs={10} className='mx-auto bg-white'>
 
                     {
-                        pageComponents?.map((component, index) => {
+                        render == 'json' ? <div dir='ltr'>{JSON.stringify(pageComponents)}</div>
+                            :
+                            pageComponents?.map((component, index) => {
 
-                            if (component.class == ParagraphComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(ParagraphComponentEditor, ParagraphComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
 
-                            } else if (component.class == TitleComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(TitleComponentEditor, TitleComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
+                                if (component.class == ParagraphComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(ParagraphComponentEditor, ParagraphComponentRender, index, component, originalDir, translatedDir)}
 
-                            } else if (component.class == LinkComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(LinkComponentEditor, LinkComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
+                                    </div>
 
-                            } else if (component.class == HeaderComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(HeaderComponentEditor, HeaderComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
+                                } else if (component.class == TitleComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(TitleComponentEditor, TitleComponentRender, index, component, originalDir, translatedDir)}
 
-                            } else if (component.class == ImageComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(ImageComponentEditor, ImageComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
+                                    </div>
 
-                            } else if (component.class == YoutubeEmbedComponentClass) {
-                                return <div key={index}>
-                                    {EditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
-                                    
-                                </div>
+                                } else if (component.class == LinkComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(LinkComponentEditor, LinkComponentRender, index, component, originalDir, translatedDir)}
 
-                            }
-                        })
+                                    </div>
+
+                                } else if (component.class == HeaderComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(HeaderComponentEditor, HeaderComponentRender, index, component, originalDir, translatedDir)}
+
+                                    </div>
+
+                                } else if (component.class == ImageComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(ImageComponentEditor, ImageComponentRender, index, component, originalDir, translatedDir)}
+
+                                    </div>
+
+                                } else if (component.class == YoutubeEmbedComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
+
+                                    </div>
+
+                                }
+                            })
                     }
 
                 </Col >
