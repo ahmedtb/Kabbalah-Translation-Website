@@ -6,8 +6,8 @@ export const Routes = {
 
     bookShow: (id) => id ? '/books/' + id : '/books/:id',
     booksIndex: () => '/books',
-    bookBrowser: (id, sectionIndex) => (id && sectionIndex >= 0) ? `/books/${id}/section/${sectionIndex}` : '/books/:id/section/:sectionIndex',
-    bookChapterShow: (id, chapterIndex) => (id && chapterIndex >= 0) ? `/books/${id}/chapter/${chapterIndex}` : '/books/:id/chapter/:chapterIndex',
+    bookBrowser: (id, sectionPath) => (id && sectionPath != undefined) ? `/books/${id}/section/${sectionPath}` : '/books/:id/section/:sectionPath',
+    bookChapterShow: (id, chapterPath) => (id && chapterPath != undefined) ? `/books/${id}/chapter/${chapterPath}` : '/books/:id/chapter/:chapterPath',
 
     articleShow: (id) => id ? '/articles/' + id : '/articles/:id',
     articlesIndex: (params) => !params ? '/articles' : '/articles?' + Object.keys(params).map(key => key + '=' + params[key]).join('&'),

@@ -5,14 +5,15 @@ import PageContentRender from '../components/PageContentRender'
 import { Routes, Api, ApiCallHandler } from "../utility/Urls"
 import {
     getsectionsarray,
-    getsectionIndex
+    getelement,
+    getnextsection,
+    getpresection
 } from "./Table"
 
 
 export default function BookBrowser(props) {
-    const { id, sectionIndex } = useParams()
+    const { id, sectionPath } = useParams()
     const [book, setbook] = React.useState(useLocation().state?.book ?? undefined)
-    const [sections, setsections] = React.useState([])
 
     const [page, setpage] = React.useState()
 
@@ -36,23 +37,20 @@ export default function BookBrowser(props) {
     React.useEffect(() => {
         if (!book)
             setup()
-        else if (!sections.length) {
-            setsections(getsectionsarray(book.content_table))
+        else {
             console.log('getsectionsarray', getsectionsarray(book.content_table))
-        } else {
-            // console.log('sectionIndex', sectionIndex)
-            // console.log('sections[sectionIndex]', sections[sectionIndex])
-            // console.log('sections[sectionIndex + 1]', sections[+sectionIndex + 1])
-            fetchPage(sections[sectionIndex].page_id)
-            setTimeout(() => {
-                window.scrollTo({ top: 0, behavior: 'instant' })
-            }, 0)
+
+            console.log('getelement', getelement(book.content_table, sectionPath))
+            console.log('getnextsection', getnextsection(book.content_table, sectionPath))
+            console.log('getpresection', getpresection(book.content_table, sectionPath))
+
+            fetchPage(getelement(book.content_table, sectionPath).page_id)
         }
-    }, [book, sections, sectionIndex])
+    }, [book, sectionPath])
 
 
     return <div>
-        <div className='d-flex'>
+        {/* <div className='d-flex'>
             <Link to={Routes.bookShow(id)}>
                 {book?.title}
             </Link>
@@ -62,31 +60,17 @@ export default function BookBrowser(props) {
                     <div><Link to={Routes.bookChapterShow(book?.id, sections[sectionIndex].index)}>{book?.content_table[sections[sectionIndex].index].title}</Link> - {sections[sectionIndex]?.title}</div>
                     : <div >{sections[sectionIndex]?.title}</div>
             }
-
-
-        </div>
+        </div> */}
         <div className='bg-white rounded'>
             <PageContentRender page_content={page?.page_content} />
 
         </div>
         <div className='d-flex flex-row justify-content-around'>
-            {
-                sections[+sectionIndex + 1] ? (
+        {
+                getpresection(book?.content_table, sectionPath) ? (
                     <Link
                         to={{
-                            pathname: Routes.bookBrowser(id, +sectionIndex + 1),
-                            state: { book: book }
-                        }}
-                    >
-                        التالي
-                    </Link>
-                ) : null
-            }
-            {
-                sections[+sectionIndex - 1] ? (
-                    <Link
-                        to={{
-                            pathname: Routes.bookBrowser(id, +sectionIndex - 1),
+                            pathname: Routes.bookBrowser(id, getpresection(book?.content_table, sectionPath)?.path),
                             state: { book: book }
                         }}
                     >
@@ -94,6 +78,20 @@ export default function BookBrowser(props) {
                     </Link>
                 ) : null
             }
+
+            {
+                getnextsection(book?.content_table, sectionPath) ? (
+                    <Link
+                        to={{
+                            pathname: Routes.bookBrowser(id, getnextsection(book?.content_table, sectionPath)?.path),
+                            state: { book: book }
+                        }}
+                    >
+                        التالي
+                    </Link>
+                ) : null
+            }
+            
         </div>
     </div >
 }
