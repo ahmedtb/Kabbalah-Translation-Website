@@ -1,6 +1,6 @@
 import React from "react"
 import { Redirect } from "react-router";
-import {  Button, Col, FormCheck, Form } from "react-bootstrap";
+import { Button, Col, FormCheck, Form } from "react-bootstrap";
 import { Api } from "../utility/URLs";
 import { Routes } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
@@ -11,6 +11,7 @@ export default function PageCreator(props) {
     const [title, settitle] = React.useState('');
     const [meta_description, setmeta_description] = React.useState('');
     const [source_url, setsource_url] = React.useState('');
+    const [book_id, setbook_id] = React.useState('');
 
     React.useEffect(() => {
         console.log('PageCreator page_content', page_content)
@@ -19,7 +20,7 @@ export default function PageCreator(props) {
     function submit() {
 
         ApiCallHandler(
-            async () => await Api.createPage(title, meta_description, source_url, page_content, true),
+            async () => await Api.createPage(title, meta_description, source_url, page_content, book_id),
             (data) => {
                 alert(data.success)
                 setredirect(Routes.pagesIndex())
@@ -29,7 +30,21 @@ export default function PageCreator(props) {
         )
 
     }
-    
+    const [books, setbooks] = React.useState([]);
+
+    function setup() {
+
+        ApiCallHandler(
+            async () => await Api.fetchBooks({ withoutPagination: true }),
+            setbooks,
+            'PageCreator fetchBooks',
+            true
+        )
+    }
+    React.useEffect(() => {
+        setup()
+    }, [])
+
 
     const [redirect, setredirect] = React.useState(null)
 
@@ -37,11 +52,23 @@ export default function PageCreator(props) {
         return <Redirect to={redirect} />
 
     return <div className='mb-6'>
-      
+
         <FormCheck>
             <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
             <Form.Control as='input' onChange={(e) => settitle(e.target.value)} />
         </FormCheck>
+        <Form.Select
+            aria-label="Default select example"
+            onChange={e => {
+                setbook_id(e.target.value)
+            }}
+            value={book_id}
+        >
+            <option>اختر كتاب</option>
+            {
+                books.map((book, bookIndex) => <option key={bookIndex} value={book.id}>{book.title}</option>)
+            }
+        </Form.Select>
         <FormCheck>
             <FormCheck.Label>وصف المحتوى</FormCheck.Label>
             <Form.Control as='textarea' onChange={(e) => setmeta_description(e.target.value)} rows={3} />
@@ -50,11 +77,12 @@ export default function PageCreator(props) {
             <FormCheck.Label>رابط المصدر</FormCheck.Label>
             <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} />
         </FormCheck>
-        <Col xs={12}>
-            <PageContentEditor setEditedPageContent ={setpage_content} />
         
+        <Col xs={12}>
+            <PageContentEditor setEditedPageContent={setpage_content} />
+
             <Button onClick={submit}>submit</Button>
-            
+
         </Col>
 
     </div >

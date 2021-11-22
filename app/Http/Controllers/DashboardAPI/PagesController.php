@@ -20,6 +20,7 @@ class PagesController extends Controller
             'meta_description' => 'nullable|string',
             'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
+            'book_id' => 'sometimes|nullable|exists:books,id'
         ]);
         // return $data;
         $page = Page::create($data);
@@ -51,6 +52,8 @@ class PagesController extends Controller
             'meta_description' => 'nullable|string',
             'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
+            'book_id' => 'sometimes|nullable|exists:books,id'
+
         ]);
         $page->update($data);
         return response()->json(['success' => 'page with id = ' . $id . ' is updated']);

@@ -26,33 +26,33 @@ export function HeaderComponentRender(props) {
 
 
 
-    return <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-        <div >
-            {(() => {
-                let text = ''
-                if (render == 'original') {
-                    text = <div dir={originalDir}>{original}</div>
-                } else if (render == 'translated')
-                    text = <div dir={translatedDir}>{translated}</div>
-                else
-                    text = <><div dir={originalDir}>{original}</div> <div dir={translatedDir}>{translated}</div></>
-                switch (size) {
-                    case 1:
-                        return <h1>{text}</h1>
-                    case 2:
-                        return <h2>{text}</h2>
-                    case 3:
-                        return <h3>{text}</h3>
-                    case 4:
-                        return <h4>{text}</h4>
-                    case 5:
-                        return <h5>{text}</h5>
-                    default:
-                        return <h1>{text}</h1>
-                }
-            })()}
-        </div>
-    </OverlayTrigger>
+    // return <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
+    //     <div >
+    //         {(() => {
+    let text = ''
+    if (render == 'original') {
+        text = <div dir={originalDir}>{original}</div>
+    } else if (render == 'translated')
+        text = <div dir={translatedDir}>{translated}</div>
+    else
+        text = <><div dir={originalDir}>{original}</div> <div dir={translatedDir}>{translated}</div></>
+    switch (size) {
+        case 1:
+            return <h1>{text}</h1>
+        case 2:
+            return <h2>{text}</h2>
+        case 3:
+            return <h3>{text}</h3>
+        case 4:
+            return <h4>{text}</h4>
+        case 5:
+            return <h5>{text}</h5>
+        default:
+            return <h1>{text}</h1>
+    }
+    //         })()}
+    //     </div>
+    // </OverlayTrigger>
 }
 
 export function HeaderComponentCreator(props) {
@@ -120,7 +120,7 @@ export function HeaderComponentEditor(props) {
                         setoriginal(e.target.value)
                         dispatch(headerObject(e.target.value, translated, size))
                     }}
-                    value={original??''}
+                    value={original ?? ''}
 
                 />
             </FloatingLabel>
@@ -132,7 +132,7 @@ export function HeaderComponentEditor(props) {
                         settranslated(e.target.value)
                         dispatch(headerObject(original, e.target.value, size))
                     }}
-                    value={translated??''}
+                    value={translated ?? ''}
 
                 />
             </FloatingLabel>

@@ -17,13 +17,13 @@ export default function PagesIndex(props) {
                     params: {
                         ...params,
                         // withoutContent: true,
-                        with: [], page_size: 10
+                        with: ['book'], page_size: 10
                     }
                 }) :
                 await Api.fetchPages({
                     ...params,
                     // withoutContent: true,
-                    with: [], page_size: 10
+                    with: ['book'], page_size: 10
                 })
             ),
             (data) => { setpages(data.data); setlinks(data.links ?? []); setparams(params) },
@@ -49,6 +49,12 @@ export default function PagesIndex(props) {
                 fetchPage={(newparams) => fetchPages(null, newparams)}
                 property={'title'}
                 label={'عنوان الصفحة'}
+            />
+            <TextFilter
+                params={params}
+                fetchPage={(newparams) => fetchPages(null, newparams)}
+                property={'book_title'}
+                label={'عنوان الكتاب'}
             />
             <Col xs={12}>
                 <PagesTable pages={pages} deletePage={deletePage} />

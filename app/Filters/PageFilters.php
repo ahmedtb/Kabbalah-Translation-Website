@@ -15,7 +15,8 @@ class PageFilters extends Filters
         'withoutContent',
         'title',
         'with',
-        'book_title'
+        'book_title',
+        'book_id'
     ];
     protected function withoutContent()
     {
@@ -31,15 +32,12 @@ class PageFilters extends Filters
     }
     protected function book_title($title)
     {
-        return $this->builder->whereHas('bookSections', function ($query) use ($title) {
-            return $query->whereHas('sectionable', function ($query) use ($title) {
-                return $query->where('title', 'LIKE', "%{$title}%");
-            });
+        return $this->builder->whereHas('book', function ($query) use ($title) {
+            return $query->where('title', 'LIKE', "%{$title}%");
         });
-        // return $this->builder->whereHas('bookSections', function ($query) use ($id) {
-        //     return $query->where('sectionable_type', Book::class, function ($query) use ($id) {
-        //         $query->where('sectionable_id', $id);
-        //     });
-        // });
+    }
+    protected function book_id($book_id)
+    {
+        return $this->builder->where('book_id', $book_id);
     }
 }

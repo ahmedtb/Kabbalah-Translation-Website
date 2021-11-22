@@ -37,21 +37,12 @@ export default function BookChapter(props) {
                     {chapter?.title}
                 </Link>
             </div>
-            {/* {
-                chapter?.sections?.map((element, index) => {
-                    if (element.type == 'section')
-                        return <Section path={`${path}-${index}`} key={index} section={element} />
-
-                    else if (element.type == 'chapter')
-                        return <Chapter path={`${path}-${index}`} key={index} chapter={element} />
-                })
-            } */}
         </ListGroup>
     }
     function Section(props) {
         const section = props.section
         const path = props.path
-        console.log('section path', path)
+
         return <ListGroup.Item as="li">
             <Link to={Routes.bookBrowser(id, path)}>
                 {section.title}

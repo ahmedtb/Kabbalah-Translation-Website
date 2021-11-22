@@ -26,14 +26,14 @@ export const Routes = {
 export const Api = {
     home: async () => await axios.get('/dashboardAPI/home'),
 
-    createPage: async (title, meta_description, source_url, page_content) => {
+    createPage: async (title, meta_description, source_url, page_content, book_id) => {
         return await axios.post('/dashboardAPI/pages',
-            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content }
+            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
         )
     },
-    editPage: async (id, title, meta_description, source_url, page_content) => {
+    editPage: async (id, title, meta_description, source_url, page_content, book_id) => {
         return await axios.put('/dashboardAPI/pages/' + id,
-            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content }
+            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
         )
 
     },

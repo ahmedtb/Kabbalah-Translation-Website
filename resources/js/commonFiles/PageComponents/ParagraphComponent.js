@@ -20,25 +20,27 @@ export function ParagraphComponentRender(props) {
         </Popover>
     );
 
-    return <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
-        {(() => {
-            switch (render) {
-                case 'original':
-                    return <div dir={originalDir} style={component.style}>
-                        {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                    </div>
-                case 'translated':
-                    return <div dir={translatedDir} style={component.style}>
-                        {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                    </div>
-                case 'both':
-                    return <div style={component.style}>
-                        <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                        <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                    </div>
-            }
-        })()}
-    </OverlayTrigger>
+    // return (
+    // // <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
+    //     {(() => {
+    switch (render) {
+        case 'original':
+            return <div dir={originalDir} style={component.style}>
+                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+            </div>
+        case 'translated':
+            return <div dir={translatedDir} style={component.style}>
+                {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+            </div>
+        case 'both':
+            return <div style={component.style}>
+                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+            </div>
+    }
+    //     })()}
+    // // </OverlayTrigger>
+    // )
 }
 
 

@@ -61,6 +61,9 @@ class BooksController extends Controller
 
     public function index(Request $request, BookFilters $filters)
     {
+        if ($request->withoutPagination)
+            return Book::filter($filters)->get();
+        else
         return Book::filter($filters)
             ->paginate($request->input('page_size') ?? 5)
             ->appends(request()->except('page'));

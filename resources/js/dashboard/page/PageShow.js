@@ -29,15 +29,23 @@ export default function PageShow(props) {
             <Link to={Routes.pageEdit(page?.id)}>
                 edit
             </Link>
-            <div>original Dir {page?.page_content.originalDir}</div>
-            <div>translated Dir {page?.page_content.translatedDir}</div>
+            <h5 className='text-center'>عنوان الصفحة {page?.title}</h5>
+            <div className='text-center'>رابط المصدر {page?.source_url}</div>
+            
+            <div className='text-center'>ينتمي للكتاب {page?.book_id}</div>
+            <div className='text-center'>وصف المحتوى {page?.meta_description}</div>
+
+            <div className='text-center'> هل مترجمة {page?.isTranslated ? 'نعم' : 'لا'}</div>
+
+
+            <div className='text-center'>اتجاه النص الاصلي {page?.page_content.originalDir}</div>
+            <div className='text-center'>اتجاه النص المترجم {page?.page_content.translatedDir}</div>
             <Button onClick={() => setrender('original')}>
                 عرض النص الاصلي
             </Button>
             <Button onClick={() => setrender('translated')}>
                 عرض الترجمة
             </Button>
-            <h5>عنوان الصفحة{page?.title}</h5>
             <Button onClick={() => setrender('both')}>
                 both
             </Button>

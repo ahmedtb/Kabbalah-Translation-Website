@@ -58,7 +58,7 @@ export default function BookShow(props) {
 
         <Col xs={8} className='mx-auto'>
 
-            <ListGroup as="ol" numbered>
+            <ListGroup as="ol">
                 {
                     book?.content_table.map((element, index) => {
                         if (element.type == 'chapter')

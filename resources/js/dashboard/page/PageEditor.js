@@ -15,18 +15,27 @@ export default function PageEditor(props) {
     const [title, settitle] = React.useState('');
     const [meta_description, setmeta_description] = React.useState('');
     const [source_url, setsource_url] = React.useState('');
+    const [book_id, setbook_id] = React.useState('');
+    const [books, setbooks] = React.useState([]);
 
     async function setup() {
         ApiCallHandler(
             async () => await Api.fetchPage(id),
-            (data) => { 
+            (data) => {
                 // setpage(data); 
-                settitle(data.title) 
+                settitle(data.title)
                 setmeta_description(data.meta_description)
                 setsource_url(data.source_url)
                 setEditedPageContent(data.page_content)
+                setbook_id(data.book_id)
             },
             'PageEditor fetchPage',
+            true
+        )
+        ApiCallHandler(
+            async () => await Api.fetchBooks({ withoutPagination: true }),
+            setbooks,
+            'PageCreator fetchBooks',
             true
         )
     }
@@ -39,8 +48,8 @@ export default function PageEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await Api.editPage(id, title, meta_description, source_url, EditedPageContent),
-            (data) => { alert(data.success); setredirect(Routes.pagesIndex); },
+            async () => await Api.editPage(id, title, meta_description, source_url, EditedPageContent, book_id),
+            (data) => { alert(data.success); setredirect(Routes.pageShow(id)); },
             'PageEditor submit',
             true
         )
@@ -55,17 +64,29 @@ export default function PageEditor(props) {
 
             <FormCheck>
                 <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
-                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title??''} />
+                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title ?? ''} />
             </FormCheck>
+            <Form.Select
+                aria-label="Default select example"
+                onChange={e => {
+                    setbook_id(e.target.value)
+                }}
+                value={book_id}
+            >
+                <option>اختر كتاب</option>
+                {
+                    books.map((book, bookIndex) => <option key={bookIndex} value={book.id}>{book.title}</option>)
+                }
+            </Form.Select>
 
             <FormCheck>
                 <FormCheck.Label>معلومات وصفية</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description??''} />
+                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description ?? ''} />
             </FormCheck>
 
             <FormCheck>
                 <FormCheck.Label>رابط المصدر</FormCheck.Label>
-                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url??''} />
+                <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url ?? ''} />
             </FormCheck>
             <Col xs={12}>
                 <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />
