@@ -5,6 +5,7 @@ import { Api } from "../utility/URLs";
 import { Routes } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
 import PageContentEditor from "../components/PageContentEditor";
+import ChangePageTitle from "../../commonFiles/ChangePageTitle";
 
 export default function PageCreator(props) {
     const [page_content, setpage_content] = React.useState(null)
@@ -52,6 +53,7 @@ export default function PageCreator(props) {
         return <Redirect to={redirect} />
 
     return <div className='mb-6'>
+        <ChangePageTitle pageTitle={'انشاء صفحة'} />
 
         <FormCheck>
             <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
@@ -77,7 +79,7 @@ export default function PageCreator(props) {
             <FormCheck.Label>رابط المصدر</FormCheck.Label>
             <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} />
         </FormCheck>
-        
+
         <Col xs={12}>
             <PageContentEditor setEditedPageContent={setpage_content} />
 

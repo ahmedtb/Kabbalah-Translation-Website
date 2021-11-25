@@ -21,6 +21,12 @@ export const Routes = {
     categoriesIndex: () => '/dashboard/categories',
     categoryShow: (id) => id ? '/dashboard/categories/' + id : '/dashboard/categories/:id',
     categoryEdit: (id) => id ? '/dashboard/categories/' + id + '/edit' : '/dashboard/categories/:id/edit',
+
+    glossaryTermCreator: () => '/dashboard/glossaryTermsIndex/create',
+    glossaryTermsIndex: () => '/dashboard/glossaryTermsIndex',
+    glossaryTermShow: (id) => id ? '/dashboard/glossaryTermsIndex/' + id : '/dashboard/glossaryTermsIndex/:id',
+    glossaryTermEdit: (id) => id ? '/dashboard/glossaryTermsIndex/' + id + '/edit' : '/dashboard/glossaryTermsIndex/:id/edit',
+
 }
 
 export const Api = {
@@ -74,6 +80,11 @@ export const Api = {
     editCategory: async (id, name) => await axios.put('/dashboardAPI/categories/' + id, { name: name }),
     deleteCategory: async (id) => await axios.delete('/dashboardAPI/categories/' + id),
 
+    createGlossaryTerm: async (name) => await axios.post('/dashboardAPI/glossaryTerms', { name: name }),
+    fetchGlossaryTerms: async (params) => await axios.get('/dashboardAPI/glossaryTerms/', { params: params }),
+    fetchGlossaryTerm: async (id, params) => await axios.get('/dashboardAPI/glossaryTerms/' + id, { params: params }),
+    editGlossaryTerm: async (id, name) => await axios.put('/dashboardAPI/glossaryTerms/' + id, { name: name }),
+    deleteGlossaryTerm: async (id) => await axios.delete('/dashboardAPI/glossaryTerms/' + id),
 }
 
 export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {

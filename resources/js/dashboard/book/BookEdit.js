@@ -33,11 +33,11 @@ export default function BookEdit(props) {
                 setcontent_table( data.content_table )
             },
             'BookEdit fetchBook',
-            true
+            false
         )
         ApiCallHandler(
             async () => await Api.fetchPages({
-                // withoutContent: true, 
+                book_id: id,
                 withoutPagination: true
             }),
             setpages,

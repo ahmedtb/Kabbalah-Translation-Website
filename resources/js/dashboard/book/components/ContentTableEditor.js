@@ -5,7 +5,7 @@ import { AiFillBook, AiOutlineCloseCircle } from 'react-icons/ai'
 
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
 
-function chapterObject(title, sections) {
+function chapterObject(title, sections = []) {
     return { type: 'chapter', title: title, sections: sections }
 }
 function sectionObject(title, page_id) {
@@ -16,12 +16,12 @@ function reducer(content_table, action) {
 
     switch (action.type) {
         case 'set state':
-            // console.log('set state', action.state)
+            console.log('set state', action.state)
             return action.state
         case 'add element':
             return [...content_table, action.element]
         case 'change element':
-            return content_table.map((element, index) => {
+            return content_table?.map((element, index) => {
                 if (index == action.index)
                     return action.element
 
@@ -63,23 +63,26 @@ export default function ContentTableEditor(props) {
 
     const editContentTable = props.editContentTable
     const [elements, dispatch] = React.useReducer(reducer, [])
+    const [stateisset, setstateisset] = React.useState(false)
 
     React.useEffect(() => {
-        if (props_content_table?.length && !elements?.length) {
+        if (props_content_table?.length && !stateisset) {
+
             dispatch({ type: 'set state', state: props_content_table })
-        } else
-            console.log('elements', props_content_table)
+            setstateisset(true)
+        }
+        // console.log('elements', props_content_table)
     }, [props_content_table])
 
     React.useEffect(() => {
         editContentTable(elements)
     }, [elements])
 
-    return <div>
+    return <div >
 
 
         {
-            elements.map((element, index) => {
+            elements?.map((element, index) => {
                 if (element.type == 'chapter') {
                     // console.log('element.sections', element.sections)
                     return <div className='border rounded' key={index}>
@@ -96,22 +99,23 @@ export default function ContentTableEditor(props) {
                                 }}
                                 value={element.title}
                             />
-                            <ContentTableEditor
-                                pages={pages}
-                                editContentTable={(elements) => {
-                                    dispatch({type: 'change element', index: index, element: chapterObject(element.title, elements)});
+                            <Col xs={10}>
+                                <ContentTableEditor
+                                    pages={pages}
+                                    editContentTable={(elements) => {
+                                        dispatch({ type: 'change element', index: index, element: chapterObject(element.title, elements) });
 
-                                }}
-                                content_table={element.sections ?? []}
-                            />
-
+                                    }}
+                                    content_table={element.sections ?? []}
+                                />
+                            </Col>
 
                         </div>
 
                     </div>
                 } else if (element.type == 'section') {
                     // console.log('section', element)
-                    return <div key={index}>
+                    return <div className='mr-2' key={index}>
                         <div className='d-flex flex-row justify-content-end h-100 '>
                             <AiOutlineCloseCircle
                                 onClick={() => { dispatch({ type: 'remove element', index: index }) }}
@@ -138,7 +142,7 @@ export default function ContentTableEditor(props) {
                             >
                                 <option>اختر صفحة</option>
                                 {
-                                    pages.map((page, pageIndex) => <option key={pageIndex} value={page.id}>{page.title}</option>)
+                                    pages?.map((page, pageIndex) => <option key={pageIndex} value={page.id}>{page.title}</option>)
                                 }
                             </Form.Select>
                         </div>
@@ -161,7 +165,7 @@ export default function ContentTableEditor(props) {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     {
-                        Object.keys(elementTypes).map(function (key, index) {
+                        Object.keys(elementTypes)?.map(function (key, index) {
                             return <Dropdown.Item
                                 key={index}
                                 eventKey={key} >

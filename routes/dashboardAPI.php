@@ -31,3 +31,9 @@ Route::get('/articles/', [ArticlesController::class, 'index']);
 Route::get('/articles/{id}', [ArticlesController::class, 'show']);
 Route::put('/articles/{id}', [ArticlesController::class, 'update']);
 Route::delete('/articles/{id}', [ArticlesController::class, 'destroy']);
+
+Route::post('/glossaryTerms', [GlossaryTermsController::class, 'create']);
+Route::get('/glossaryTerms/', [GlossaryTermsController::class, 'index']);
+Route::get('/glossaryTerms/{id}', [GlossaryTermsController::class, 'show']);
+Route::put('/glossaryTerms/{id}', [GlossaryTermsController::class, 'update']);
+Route::delete('/glossaryTerms/{id}', [GlossaryTermsController::class, 'destroy']);

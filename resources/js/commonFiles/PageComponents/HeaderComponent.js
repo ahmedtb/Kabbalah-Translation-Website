@@ -36,19 +36,19 @@ export function HeaderComponentRender(props) {
         text = <div dir={translatedDir}>{translated}</div>
     else
         text = <><div dir={originalDir}>{original}</div> <div dir={translatedDir}>{translated}</div></>
-    switch (size) {
+    switch (+size) {
         case 1:
-            return <h1>{text}</h1>
+            return <h1 id={1}>{text}</h1>
         case 2:
-            return <h2>{text}</h2>
+            return <h2 id={1}>{text}</h2>
         case 3:
-            return <h3>{text}</h3>
+            return <h3 id={1}>{text}</h3>
         case 4:
-            return <h4>{text}</h4>
+            return <h4 id={1}>{text}</h4>
         case 5:
-            return <h5>{text}</h5>
+            return <h5 id={1}>{text}</h5>
         default:
-            return <h1>{text}</h1>
+            return <h1 id={1}>{text}</h1>
     }
     //         })()}
     //     </div>
@@ -168,16 +168,16 @@ export function HeaderComponentWebsiteRender(props) {
 
     return <div dir={translatedDir} >
         {(() => {
-            switch (size) {
-                case '1':
+            switch (+size) {
+                case 1:
                     return <h1>{translated}</h1>
-                case '2':
+                case 2:
                     return <h2>{translated}</h2>
-                case '3':
+                case 3:
                     return <h3>{translated}</h3>
-                case '4':
+                case 4:
                     return <h4>{translated}</h4>
-                case '5':
+                case 5:
                     return <h5>{translated}</h5>
                 default:
                     return <h1>{translated}</h1>

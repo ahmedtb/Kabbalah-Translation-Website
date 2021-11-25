@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import PageContentRender from "../components/PageContentRender";
 import { Col, Container, Button } from "react-bootstrap";
 import { logError } from "../../commonFiles/helpers";
+import ChangePageTitle from "../../commonFiles/ChangePageTitle";
+
 export default function PageShow(props) {
 
     let { id } = useParams();
@@ -26,12 +28,13 @@ export default function PageShow(props) {
 
     return (
         <div >
+            <ChangePageTitle pageTitle={page?.title} />
             <Link to={Routes.pageEdit(page?.id)}>
                 edit
             </Link>
             <h5 className='text-center'>عنوان الصفحة {page?.title}</h5>
-            <div className='text-center'>رابط المصدر {page?.source_url}</div>
-            
+            <div className='text-center'>رابط المصدر <a href={page?.source_url}>{page?.source_url}</a></div>
+
             <div className='text-center'>ينتمي للكتاب {page?.book_id}</div>
             <div className='text-center'>وصف المحتوى {page?.meta_description}</div>
 

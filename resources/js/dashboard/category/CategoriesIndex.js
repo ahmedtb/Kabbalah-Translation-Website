@@ -11,10 +11,13 @@ export default function CategoriesIndex(props) {
     const [params, setparams] = React.useState([])
 
     function fetchCategories(link = null, params = null) {
+        let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
+
         ApiCallHandler(
-            async () => (link ?
-                await axios.get(link, { params:params }) :
-                await Api.fetchCategories(params)
+            async () => (
+                // link ?
+                // await axios.get(link, { params: params }) :
+                await Api.fetchCategories({ ...params, ...linkParams })
             ),
             (data) => { setcategories(data.data); setlinks(data.links ?? []); setparams(params) },
             'CategoriesIndex fetchCategories',

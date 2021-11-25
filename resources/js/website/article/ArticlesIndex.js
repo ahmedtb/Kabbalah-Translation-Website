@@ -13,10 +13,13 @@ export default function ArticleShow(props) {
     const [params, setparams] = React.useState([])
 
     function fetchArticles(link = null, params = null) {
+        let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
+
         ApiCallHandler(
-            async () => (link ?
-                await axios.get(link, { params: { ...params, with: [ 'category'] } }) :
-                await Api.fetchArticles({ ...params, with: [ 'category'] })
+            async () => (
+                // link ?
+                // await axios.get(link, { params: { ...params, with: [ 'category'] } }) :
+                await Api.fetchArticles({ with: ['category'], ...params, ...linkParams })
             ),
             (data) => { setarticles(data.data); setlinks(data.links ?? []); setparams(params) },
             'ArticlesIndex fetchArticles',
@@ -34,7 +37,7 @@ export default function ArticleShow(props) {
         search <input onChange={e => setsearch(e.target.value)} />
         <input type='submit' onClick={() => fetchArticles(null, { search: search })} />
         <ArticlesCardsRender articles={articles} />
-        
+
         {/* {
 
             articles?.map((article, index) => (

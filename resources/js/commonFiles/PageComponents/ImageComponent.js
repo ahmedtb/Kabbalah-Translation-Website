@@ -9,18 +9,20 @@ import { imageObject } from './structure.js'
 
 export function ImageComponentRender(props) {
     const component = props.component
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
     const popover = (
         <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
             <Popover.Header as="h3">ترجمة</Popover.Header>
             <Popover.Body>
-                <img src={component.translated} className='maxWidth100' />
+                <img dir={translatedDir} src={component.translated} className='maxWidth100' />
 
             </Popover.Body>
         </Popover>
     );
     return <Col xs={10} className='mx-auto'>
         <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <img src={component.original} className='maxWidth100' />
+            <img dir={originalDir} src={component.original} className='maxWidth100' />
         </OverlayTrigger>
 
     </Col >

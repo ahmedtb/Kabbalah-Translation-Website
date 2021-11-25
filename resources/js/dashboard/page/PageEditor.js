@@ -6,6 +6,7 @@ import PageContentEditor from "../components/PageContentEditor";
 import { Col, Container, Button, FormCheck, Form } from "react-bootstrap";
 import { logError, ApiCallHandler } from "../../commonFiles/helpers";
 import { Routes } from "../utility/URLs";
+import ChangePageTitle from "../../commonFiles/ChangePageTitle";
 
 export default function PageEditor(props) {
 
@@ -61,6 +62,7 @@ export default function PageEditor(props) {
 
     return (
         <div className='mb-5'>
+            <ChangePageTitle pageTitle={title} />
 
             <FormCheck>
                 <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
@@ -71,7 +73,7 @@ export default function PageEditor(props) {
                 onChange={e => {
                     setbook_id(e.target.value)
                 }}
-                value={book_id}
+                value={book_id ?? ''}
             >
                 <option>اختر كتاب</option>
                 {
