@@ -27,6 +27,7 @@ import CategoryShow from './category/CategoryShow';
 import CategoryEditor from './category/CategoryEditor';
 import BookEdit from './book/BookEdit';
 import BookCreator2 from './book/BookCreator';
+import UploadDatabaseSeedFile from './UploadDatabaseSeedFile';
 
 export default function Dashboard() {
 
@@ -39,6 +40,7 @@ export default function Dashboard() {
         <Container >
           <Switch>
             <Route exact={true} path={Routes.dashboard()} component={Home} />
+            <Route exact={true} path={'/dashboard/uploadDatabaseSeedFile'} component={UploadDatabaseSeedFile} />
 
             <Route exact={true} path={Routes.pageCreator()} component={PageCreator} />
             <Route exact={true} path={Routes.pagesIndex()} component={PagesIndex} />

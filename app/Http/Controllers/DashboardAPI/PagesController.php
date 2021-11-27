@@ -16,11 +16,13 @@ class PagesController extends Controller
     public function create(Request $request)
     {
         $data = $request->validate([
-            'title' => ['required', 'string'],
+            'book_id' => 'sometimes|nullable|exists:books,id',
+            'title' => ['required', 'string', Rule::unique('pages')->where(function ($query) use($request) {
+                return $query->where('book_id', $request->book_id);
+            })],
             'meta_description' => 'nullable|string',
             'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
-            'book_id' => 'sometimes|nullable|exists:books,id'
         ]);
         // return $data;
         $page = Page::create($data);

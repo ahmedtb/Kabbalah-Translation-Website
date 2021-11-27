@@ -19,43 +19,18 @@ export default function BooksIndex(props) {
     return <Col>
         {
             books?.map((book, index) => (
-                <Row key={index}>
+                <Row key={index} className='m-3 p-1 border rounded'>
                     <Col xs={2}>
                         <img src={book.thumbnail} style={{ maxWidth: '100%' }} />
                     </Col>
                     <Col xs={10}>
                         <Link to={Routes.bookShow(book.id)}>
-                            {book.title}
+                            <h5>{book.title}</h5>
                         </Link>
-                        <div>{truncate(book.description)}</div>
+                        <div>{truncate(book.description,400)}</div>
                     </Col>
                 </Row>
             ))
         }
-        {/* <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>العنوان</th>
-                    <th>وصف</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    books?.map((book, index) => (
-                        <tr key={index}>
-                            <td>
-                                <Link to={Routes.bookShow(book.id)}>
-                                    {book.id}
-                                </Link>
-                            </td>
-                            <td>{book.title}</td>
-                            <td>{book.description}</td>
-                        </tr>
-                    ))
-                }
-            </tbody>
-        </Table> */}
     </Col>
 }

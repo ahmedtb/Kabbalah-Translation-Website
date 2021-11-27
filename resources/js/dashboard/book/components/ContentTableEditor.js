@@ -4,6 +4,7 @@ import { MdSubtitles } from 'react-icons/md'
 import { AiFillBook, AiOutlineCloseCircle } from 'react-icons/ai'
 
 import { Dropdown, Form, Col, Button, Container, Row, FormControl } from 'react-bootstrap'
+import SelectSearch from "../../components/SelectSearch";
 
 function chapterObject(title, sections = []) {
     return { type: 'chapter', title: title, sections: sections }
@@ -131,7 +132,21 @@ export default function ContentTableEditor(props) {
                                 value={element.title}
 
                             />
-                            <Form.Select
+                            <SelectSearch
+                                options={pages}
+                                setSelectedValue={(option_value) => {
+
+                                    dispatch({ type: 'change element', index: index, element: sectionObject(element.title, option_value) })
+                                    // dispatch({ type: 'change element', index: index, element: sectionObject(e.target.value, element.page_id) })
+                                    // console.log('option', pages)
+                                }}
+                                label='اختر صفحة'
+                                valueKeyWord={'id'}
+                                nameKeyWord={'title'}
+                                defaultValue={element.page_id}
+
+                            />
+                            {/* <Form.Select
                                 aria-label="Default select example"
                                 onChange={e => {
                                     dispatch({ type: 'change element', index: index, element: sectionObject(element.title, e.target.value) })
@@ -144,7 +159,7 @@ export default function ContentTableEditor(props) {
                                 {
                                     pages?.map((page, pageIndex) => <option key={pageIndex} value={page.id}>{page.title}</option>)
                                 }
-                            </Form.Select>
+                            </Form.Select> */}
                         </div>
                     </div>
                 }

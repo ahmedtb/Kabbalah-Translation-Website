@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardAPI\ArticlesController;
 use App\Http\Controllers\DashboardAPI\HomeController;
 
 Route::get('/home', [HomeController::class, 'home']);
+Route::post('/uploadDatabaseSeedFile', [HomeController::class, 'uploadDatabaseSeedFile']);
 
 Route::post('/pages', [PagesController::class, 'create']);
 Route::get('/pages', [PagesController::class, 'index']);

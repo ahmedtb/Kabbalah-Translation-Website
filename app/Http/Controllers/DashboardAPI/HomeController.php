@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Article;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -21,5 +22,13 @@ class HomeController extends Controller
             'categoriesCount' => Category::count(),
 
         ];
+    }
+
+    public function uploadDatabaseSeedFile(Request $request)
+    {
+        return $request->file('sqlFile');
+        $path = $request->file('sqlFile')->store('sqlFile');
+
+        return $path;
     }
 }
