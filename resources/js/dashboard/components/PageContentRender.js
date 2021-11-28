@@ -5,6 +5,7 @@ import { TitleComponentRender } from '../../commonFiles/PageComponents/TitleComp
 import { ImageComponentRender, } from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
 import { YoutubeEmbedComponentRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
+import { SeperatorComponentRender } from '../../commonFiles/PageComponents/SeperatorComponent'
 
 import { 
     ParagraphComponentClass, 
@@ -13,6 +14,7 @@ import {
     ImageComponentClass, 
     LinkComponentClass,
     YoutubeEmbedComponentClass,
+    SeperatorComponentClass
 } from '../../commonFiles/PageComponents/structure'
 
 import { Col } from 'react-bootstrap'
@@ -71,6 +73,14 @@ export default function PageContentRender(props) {
                         />
                     } else if (pageComponent.class == YoutubeEmbedComponentClass) {
                         return <YoutubeEmbedComponentRender
+                            key={index}
+                            originalDir={pageContent.originalDir}
+                            translatedDir={pageContent.translatedDir}
+                            render={render}
+                            component={pageComponent}
+                        />
+                    } else if (pageComponent.class == SeperatorComponentClass) {
+                        return <SeperatorComponentRender
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}

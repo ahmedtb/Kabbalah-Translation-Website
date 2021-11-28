@@ -7,7 +7,7 @@ export const ImageComponentClass = 'App\\PageComponents\\ImageComponent'
 export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
 export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
 export const YoutubeEmbedComponentClass = 'App\\PageComponents\\YoutubeEmbedComponent'
-
+export const SeperatorComponentClass = 'App\\PageComponents\\SeperatorComponent'
 
 export function paragraphObject(original, translated = '', style = {}) {
 
@@ -66,6 +66,13 @@ export function youtubeEmbedObject(original, translated) {
         class: YoutubeEmbedComponentClass,
         original: original,
         translated: translated
+    }
+}
+
+export function seperatorObject(style){
+    return {
+        class: SeperatorComponentClass,
+        style: style,
     }
 }
 

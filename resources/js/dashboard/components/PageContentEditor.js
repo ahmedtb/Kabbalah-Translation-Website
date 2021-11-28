@@ -17,10 +17,12 @@ import {
     ImageComponentClass,
     YoutubeEmbedComponentClass,
     pageContentObject,
-    pageContentReducer
+    pageContentReducer,
+    SeperatorComponentClass
 } from '../../commonFiles/PageComponents/structure'
 import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
 import { textNewLines } from '../../commonFiles/helpers'
+import { SeperatorComponentEditor, SeperatorComponentRender } from '../../commonFiles/PageComponents/SeperatorComponent'
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
@@ -48,7 +50,7 @@ export default function PageContentEditor(props) {
     const [editComponent, seteditComponent] = React.useState(null)
     const [showCreator, setshowCreator] = React.useState(null)
 
-    const [render, setrender] = React.useState('original')
+    const [render, setrender] = React.useState('both')
 
     const originalDir = page_content?.originalDir
     const translatedDir = page_content?.translatedDir
@@ -205,6 +207,12 @@ export default function PageContentEditor(props) {
                                 } else if (component.class == YoutubeEmbedComponentClass) {
                                     return <div key={index}>
                                         {EditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
+
+                                    </div>
+
+                                } else if (component.class == SeperatorComponentClass) {
+                                    return <div key={index}>
+                                        {EditorAndRender(SeperatorComponentEditor, SeperatorComponentRender, index, component, originalDir, translatedDir)}
 
                                     </div>
 

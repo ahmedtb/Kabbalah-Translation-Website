@@ -6,6 +6,7 @@ import { TitleComponentCreator } from '../../commonFiles/PageComponents/TitleCom
 import { ImageComponentCreator } from '../../commonFiles/PageComponents/ImageComponent'
 import { LinkComponentCreator } from '../../commonFiles/PageComponents/LinkComponent'
 import { YoutubeEmbedComponentCreator } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
+import { SeperatorComponentCreator } from '../../commonFiles/PageComponents/SeperatorComponent'
 
 import {
     ParagraphComponentClass,
@@ -13,7 +14,8 @@ import {
     LinkComponentClass,
     ImageComponentClass,
     HeaderComponentClass,
-    YoutubeEmbedComponentClass
+    YoutubeEmbedComponentClass,
+    SeperatorComponentClass,
 } from '../../commonFiles/PageComponents/structure'
 
 const paragraphsComponent = 'فقرات متتالية'
@@ -26,6 +28,7 @@ const componentsTypes = {
     [ImageComponentClass]: 'صورة',
     [LinkComponentClass]: 'رابط',
     [YoutubeEmbedComponentClass]: 'رابط فيديو',
+    [SeperatorComponentClass]: 'فاصل',
     JsonFormat: 'Json'
 }
 
@@ -111,6 +114,10 @@ export default function PageComponentsCreator(props) {
                     } else if (selectedType == paragraphsComponent) {
                         return (
                             <ParagraphsComponentCreator dispatch={(paragraphs) => setparagraphs(paragraphs)} />
+                        )
+                    } else if (selectedType == SeperatorComponentClass) {
+                        return (
+                            <SeperatorComponentCreator dispatch={(component) => setcomponent(component)} />
                         )
                     } else if (selectedType == 'JsonFormat') {
                         return (
