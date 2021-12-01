@@ -35,7 +35,7 @@ export default function PageShow(props) {
             <h5 className='text-center'>عنوان الصفحة {page?.title}</h5>
             <div className='text-center'>رابط المصدر <a href={page?.source_url}>{page?.source_url}</a></div>
 
-            <div className='text-center'>ينتمي للكتاب {page?.book_id}</div>
+            <div className='text-center'>ينتمي للكتاب <Link to={Routes.bookShow(page?.book_id)}>{page?.book_id}</Link></div>
             <div className='text-center'>وصف المحتوى {page?.meta_description}</div>
 
             <div className='text-center'> هل مترجمة {page?.isTranslated ? 'نعم' : 'لا'}</div>

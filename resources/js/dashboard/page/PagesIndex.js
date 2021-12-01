@@ -2,7 +2,7 @@ import React from 'react'
 import PagesTable from '../components/PagesTable'
 import { Api } from '../utility/URLs'
 import { ApiCallHandler } from '../../commonFiles/helpers'
-import { TextFilter } from '../components/Filters'
+import { SelectFilter, TextFilter } from '../components/Filters'
 import Pagination from '../../commonFiles/Pagination'
 import { Col } from 'react-bootstrap'
 import { useHistory } from "react-router-dom"
@@ -15,37 +15,36 @@ export default function PagesIndex(props) {
 
     const [pages, setpages] = React.useState([])
     const [links, setlinks] = React.useState([])
-    const [params, setparams] = React.useState([])
 
     function fetchPages(link = null, params = null) {
         let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
-        // console.log('linkParams', linkParams)
-
+        let allParams = { with: 'book', page_size: 10, ...linkParams, ...params }
         ApiCallHandler(
-            async () => (
-                await Api.fetchPages({
-                    // withoutContent: true,
-                    with: ['book'], page_size: 10, ...params, ...linkParams
-                })
-            ),
-            (data) => {
-                setpages(data.data); setlinks(data.links ?? []);
-                setparams({
-                    with: ['book'], page_size: 10, ...params, ...linkParams
-                })
-            },
+            async () => await Api.fetchPages(allParams),
+            (data) => { setpages(data.data); setlinks(data.links ?? []); },
             'PagesIndex fetchPages',
             true
         )
+        console.log('all params', allParams)
         history.replace({
             pathname: window.location.pathname,
-            search: (new URLSearchParams({ with: ['book'], page_size: 10, ...params, ...linkParams })).toString()
+            search: (new URLSearchParams(allParams)).toString()
         })
+    }
+    const [books, setbooks] = React.useState([])
+
+    function fetchBooks() {
+        ApiCallHandler(
+            async () => await Api.fetchBooks({ withoutPagination: true }),
+            (data) => { setbooks(data); },
+            'PagesIndex fetchBooks',
+            true
+        )
     }
     React.useEffect(() => {
         var params = Object.fromEntries(new URLSearchParams(location.search));
-
         fetchPages(null, params)
+        fetchBooks()
     }, [])
 
     function deletePage(id) {
@@ -60,16 +59,23 @@ export default function PagesIndex(props) {
             <ChangePageTitle pageTitle={'قائمة الصفحات'} />
 
             <TextFilter
-                params={params}
                 fetchPage={(newparams) => fetchPages(null, newparams)}
                 property={'title'}
                 label={'عنوان الصفحة'}
             />
-            <TextFilter
-                params={params}
+            {/* <TextFilter
                 fetchPage={(newparams) => fetchPages(null, newparams)}
                 property={'book_title'}
                 label={'عنوان الكتاب'}
+            /> */}
+            <SelectFilter
+                options={books}
+                const fetchPage={(params) => fetchPages(null, params)}
+                const property={'book_id'}
+                const label={'احتر كتاب'}
+                const defaultValue={null}
+                const valueKeyWord={'id'}
+                const nameKeyWord={'title'}
             />
             <Col xs={12}>
                 <PagesTable pages={pages} deletePage={deletePage} />

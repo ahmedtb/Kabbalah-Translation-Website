@@ -2,6 +2,42 @@ import Button from '@restart/ui/esm/Button'
 import React from 'react'
 import { FormControl } from 'react-bootstrap'
 
+export function SelectFilter(props) {
+    const options = props.options
+    const [selectedOption, setSelectedOption] = React.useState()
+
+    const fetchPage = props.fetchPage
+    const property = props.property
+    const label = props.label
+    const defaultValue = props.defaultValue
+
+    const valueKeyWord = props.valueKeyWord
+    const nameKeyWord = props.nameKeyWord
+
+    return <div className='d-flex flex-row'>
+        <select
+            className="form-control"
+            onChange={(e) => { setSelectedOption(e.target.value); }}
+            defaultValue={defaultValue ?? ''}
+        >
+            <option value={null}>{label ?? ''}</option>
+            {
+                options?.map((option, index) => (
+                    <option key={index} value={option[valueKeyWord ?? 'value']}>{option[nameKeyWord ?? 'name']}</option>
+                ))
+            }
+        </select>
+        <button className="form-control btn btn-success ml-1" onClick={() => {
+            let params = Object.assign({},
+                selectedOption === null ? null : { [property]: selectedOption },
+            )
+            fetchPage(params)
+        }}>
+            فلترة
+        </button>
+    </div>
+}
+
 export function NumberFilter(props) {
     const params = props.params
     const fetchPage = props.fetchPage
@@ -79,7 +115,7 @@ export function DateFilter(props) {
 }
 
 export function TextFilter(props) {
-    const params = props.params
+    // const params = props.params
     const fetchPage = props.fetchPage
     const property = props.property
     const label = props.label
@@ -92,7 +128,7 @@ export function TextFilter(props) {
             <FormControl as='input' type="text" onChange={(e) => settext(e.target.value)} />
             <Button className="btn btn-success" onClick={() => {
                 let newparams = Object.assign({}, text === null ? null : { [property]: text })
-                fetchPage({ ...params, ...newparams })
+                fetchPage({ ...newparams })
             }}>
                 بحث
             </Button>

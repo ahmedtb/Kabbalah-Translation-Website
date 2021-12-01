@@ -100,6 +100,18 @@ export function ParagraphComponentCreator(props) {
                 checked={style.fontStyle == 'italic'}
                 type={'checkbox'}
             />
+            <Form.Check
+                inline
+                label="توسيط النص"
+                name="center"
+                onChange={(e) => {
+                    let newstyle = { ...style, textAlign: e.target.checked ? 'center' : undefined }
+                    setstyle(newstyle)
+                    dispatch(paragraphObject(original, translated, newstyle))
+                }}
+                checked={style.textAlign == 'center'}
+                type={'checkbox'}
+            />
         </div>
         <div className="mb-3">
             <Form.Control
@@ -221,6 +233,18 @@ export function ParagraphComponentEditor(props) {
                         dispatch(paragraphObject(original, translated, newstyle))
                     }}
                     checked={style.fontStyle == 'italic'}
+                    type={'checkbox'}
+                />
+                <Form.Check
+                    inline
+                    label="توسيط النص"
+                    name="center"
+                    onChange={(e) => {
+                        let newstyle = { ...style, textAlign: e.target.checked ? 'center' : undefined }
+                        setstyle(newstyle)
+                        dispatch(paragraphObject(original, translated, newstyle))
+                    }}
+                    checked={style.textAlign == 'center'}
                     type={'checkbox'}
                 />
             </div>

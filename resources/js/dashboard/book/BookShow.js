@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import { Api } from "../utility/URLs";
 import { ApiCallHandler } from "../../commonFiles/helpers";
 import { Routes } from '../utility/URLs'
+import PagesTable from '../components/PagesTable'
+import Pagination from '../../commonFiles/Pagination'
+import { useHistory } from "react-router-dom"
+import ChangePageTitle from '../../commonFiles/ChangePageTitle'
 
 function Chapter(props) {
     const chapter = props.chapter
@@ -35,19 +39,44 @@ function Section(props) {
 export default function BookShow(props) {
     const { id } = useParams()
     const [book, setbook] = React.useState(null)
-    function setup() {
+
+    function fetchBook() {
         ApiCallHandler(
             async () => await Api.fetchBook(id, {}),
             setbook,
-            'BookShow setup',
+            'BookShow fetchBook',
             true
         )
+
+    }
+    const history = useHistory()
+
+
+    const [pages, setpages] = React.useState([])
+    const [links, setlinks] = React.useState([])
+    function fetchPages(link = null, params = null) {
+        let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
+        let allParams = { book_id: id, page_size: 10, ...linkParams, ...params }
+        ApiCallHandler(
+            async () => await Api.fetchPages(allParams),
+            (data) => { setpages(data.data); setlinks(data.links ?? []); },
+            'PagesIndex fetchPages',
+            true
+        )
+        console.log('all params', allParams)
+        history.replace({
+            pathname: window.location.pathname,
+            search: (new URLSearchParams(allParams)).toString()
+        })
     }
 
     React.useEffect(() => {
-        setup()
+        fetchBook()
+        var params = Object.fromEntries(new URLSearchParams(location.search));
+        fetchPages(null, params)
     }, [])
     return <Col xs={12}>
+        <ChangePageTitle pageTitle={'عرض:' + book?.title} />
         <Link to={Routes.bookEdit(book?.id)}>
             edit
         </Link>
@@ -70,5 +99,11 @@ export default function BookShow(props) {
                 }
             </ListGroup>
         </Col>
+        <h3 className='text-center'>صفحات تشير للكتاب</h3>
+
+        <Col xs={12}>
+            <PagesTable pages={pages} />
+        </Col>
+        <Pagination fetchPage={fetchPages} links={links} />
     </Col>
 }

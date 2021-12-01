@@ -13,35 +13,35 @@ export function TitleComponentRender(props) {
 
     const style = component.style
 
-    const popover = (
-        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
-            <Popover.Header as="h3">ترجمة</Popover.Header>
-            <Popover.Body>
-                {component.translated}
-            </Popover.Body>
-        </Popover>
-    );
+    // const popover = (
+    //     <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
+    //         <Popover.Header as="h3">ترجمة</Popover.Header>
+    //         <Popover.Body>
+    //             {component.translated}
+    //         </Popover.Body>
+    //     </Popover>
+    // );
 
-    return  <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
-            {(() => {
-                switch (render) {
-                    case 'original':
-                        return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
+    // return  <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
+    //         {(() => {
+    switch (render) {
+        case 'original':
+            return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
 
-                    case 'translated':
-                        return <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
+        case 'translated':
+            return <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
 
-                    case 'both':
-                        return <div style={style}>
-                            <h1 dir={originalDir} className='text-center' >{component.original}</h1>
-                            <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
-                        </div>
-                    default:
-                        return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
+        case 'both':
+            return <div style={style}>
+                <h1 dir={originalDir} className='text-center' >{component.original}</h1>
+                <h1 dir={translatedDir} className='text-center'>{component.translated}</h1>
+            </div>
+        default:
+            return <h1 dir={originalDir} className='text-center'>{component.original}</h1>
 
-                }
-            })()}
-        </OverlayTrigger>
+    }
+    //     })()}
+    // </OverlayTrigger>
 }
 
 
