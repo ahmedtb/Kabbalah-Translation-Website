@@ -24,9 +24,11 @@ export default function ArticleShow(props) {
         <Col xs={12}>
             {/* <h1 className='text-center'>{article?.title}</h1> */}
             <Link to={Routes.articlesIndex({ category_id: article?.category_id })}>{article?.category.name}</Link>
-            {/* <div>وصف المقالة {article?.description}</div> */}
+            {article?.description ? <div>وصف المقالة {article?.description}</div> : null }
 
             <PageContentRender page_content={article?.page_content} />
+            
+            {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{article?.source_url}</a></div> : null }
         </Col>
     </div>
 }

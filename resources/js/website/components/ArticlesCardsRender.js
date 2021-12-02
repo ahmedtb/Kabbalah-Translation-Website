@@ -10,9 +10,9 @@ export default function ArticlesCardsRender(props) {
         <Col xs={10} className='mx-auto'>
             {
                 articles?.map((article, index) => <Row key={index} className='my-4 p-2 border rounded'>
-                    <Col xs={2}>
+                    {article.thumbnail ? <Col xs={2}>
                         <img src={article.thumbnail} className='maxWidth100' />
-                    </Col>
+                    </Col> : null}
                     <Col xs={10}>
                         <h4>
                             {article.title}
@@ -21,7 +21,7 @@ export default function ArticlesCardsRender(props) {
                         <div>
                             {article.description}
                         </div>
-                        <Link to={Routes.articleShow(article.id)} >read more</Link>
+                        <Link to={Routes.articleShow(article.id)} >إقرا المزيد</Link>
                     </Col>
                 </Row>)
             }

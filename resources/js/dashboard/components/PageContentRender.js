@@ -1,4 +1,6 @@
 import React from 'react'
+import { Col } from 'react-bootstrap'
+
 import { ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import { TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
@@ -6,18 +8,30 @@ import { ImageComponentRender, } from '../../commonFiles/PageComponents/ImageCom
 import { LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
 import { YoutubeEmbedComponentRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 import { SeperatorComponentRender } from '../../commonFiles/PageComponents/SeperatorComponent'
+import { QuoteComponentRender } from '../../commonFiles/PageComponents/QuoteComponent'
 
-import { 
-    ParagraphComponentClass, 
-    HeaderComponentClass, 
-    TitleComponentClass, 
-    ImageComponentClass, 
+import {
+    ParagraphComponentClass,
+    HeaderComponentClass,
+    TitleComponentClass,
+    ImageComponentClass,
     LinkComponentClass,
     YoutubeEmbedComponentClass,
-    SeperatorComponentClass
+    SeperatorComponentClass,
+    QuoteComponentClass
 } from '../../commonFiles/PageComponents/structure'
 
-import { Col } from 'react-bootstrap'
+const componentsTypes = {
+    [ParagraphComponentClass]: { Render: ParagraphComponentRender },
+    [HeaderComponentClass]: { Render: HeaderComponentRender },
+    [TitleComponentClass]: { Render: TitleComponentRender },
+    [ImageComponentClass]: { Render: ImageComponentRender },
+    [LinkComponentClass]: { Render: LinkComponentRender },
+    [YoutubeEmbedComponentClass]: { Render: YoutubeEmbedComponentRender },
+    [SeperatorComponentClass]: { Render: SeperatorComponentRender },
+    [QuoteComponentClass]: { Render: QuoteComponentRender },
+}
+
 
 export default function PageContentRender(props) {
     const pageContent = props.pageContent
@@ -31,56 +45,9 @@ export default function PageContentRender(props) {
         <Col xs={10} className='mx-auto'>
             {
                 pageContent?.pageComponents.map((pageComponent, index) => {
-                    if (pageComponent.class == ParagraphComponentClass) {
-                        return <ParagraphComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == HeaderComponentClass) {
-                        return <HeaderComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == TitleComponentClass) {
-                        return <TitleComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == ImageComponentClass) {
-                        return <ImageComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == LinkComponentClass) {
-                        return <LinkComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == YoutubeEmbedComponentClass) {
-                        return <YoutubeEmbedComponentRender
-                            key={index}
-                            originalDir={pageContent.originalDir}
-                            translatedDir={pageContent.translatedDir}
-                            render={render}
-                            component={pageComponent}
-                        />
-                    } else if (pageComponent.class == SeperatorComponentClass) {
-                        return <SeperatorComponentRender
+                    if (componentsTypes[pageComponent.class]) {
+                        let Render = componentsTypes[pageComponent.class].Render
+                        return <Render
                             key={index}
                             originalDir={pageContent.originalDir}
                             translatedDir={pageContent.translatedDir}

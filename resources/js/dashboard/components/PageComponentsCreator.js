@@ -7,6 +7,7 @@ import { ImageComponentCreator } from '../../commonFiles/PageComponents/ImageCom
 import { LinkComponentCreator } from '../../commonFiles/PageComponents/LinkComponent'
 import { YoutubeEmbedComponentCreator } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
 import { SeperatorComponentCreator } from '../../commonFiles/PageComponents/SeperatorComponent'
+import { QuoteComponentCreator } from '../../commonFiles/PageComponents/QuoteComponent'
 
 import {
     ParagraphComponentClass,
@@ -16,20 +17,23 @@ import {
     HeaderComponentClass,
     YoutubeEmbedComponentClass,
     SeperatorComponentClass,
+    QuoteComponentClass,
 } from '../../commonFiles/PageComponents/structure'
 
 const paragraphsComponent = 'فقرات متتالية'
 
 const componentsTypes = {
-    [ParagraphComponentClass]: 'نص عادي',
-    [paragraphsComponent]: 'فقرات متتالية',
-    [HeaderComponentClass]: 'عنوان فرعي',
-    [TitleComponentClass]: 'عنوان صفحة',
-    [ImageComponentClass]: 'صورة',
-    [LinkComponentClass]: 'رابط',
-    [YoutubeEmbedComponentClass]: 'رابط فيديو',
-    [SeperatorComponentClass]: 'فاصل',
-    JsonFormat: 'Json'
+    [ParagraphComponentClass]: { label: 'نص عادي', Creator: ParagraphComponentCreator },
+    [paragraphsComponent]: { label: 'فقرات متتالية', Creator: ParagraphsComponentCreator },
+    [HeaderComponentClass]: { label: 'عنوان فرعي', Creator: HeaderComponentCreator },
+    [TitleComponentClass]: { label: 'عنوان صفحة', Creator: TitleComponentCreator },
+    [ImageComponentClass]: { label: 'صورة', Creator: ImageComponentCreator },
+    [LinkComponentClass]: { label: 'رابط', Creator: LinkComponentCreator },
+    [YoutubeEmbedComponentClass]: { label: 'رابط فيديو', Creator: YoutubeEmbedComponentCreator },
+    [SeperatorComponentClass]: { label: 'فاصل', Creator: SeperatorComponentCreator },
+    [QuoteComponentClass]: { label: 'اقتباس', Creator: QuoteComponentCreator },
+
+    JsonFormat: { label: 'Json', Creator: JsonFormatField }
 }
 
 function JsonFormatField(props) {
@@ -56,18 +60,13 @@ function JsonFormatField(props) {
 export default function PageComponentsCreator(props) {
 
     const addComponent = props.addComponent
-    const [selectedType, setSelectedType] = React.useState();
+    const [SelectedType, setSelectedType] = React.useState();
     const [component, setcomponent] = React.useState(null);
-    const [paragraphs, setparagraphs] = React.useState(null);
-
-    // React.useEffect(() => {
-    //     console.log('paragraphs', paragraphs)
-    // }, [paragraphs])
 
     return (
         <div>
             <Col xs={2} className='mx-auto'>
-                <Dropdown onSelect={(e) => { setSelectedType(e); setcomponent(null); setparagraphs(null); }}>
+                <Dropdown onSelect={(e) => { setSelectedType(componentsTypes[e]); setcomponent(null); }}>
                     <Dropdown.Toggle variant="success">
                         اختر نوع العنصر
                     </Dropdown.Toggle>
@@ -77,76 +76,33 @@ export default function PageComponentsCreator(props) {
                                 return <Dropdown.Item
                                     key={index}
                                     eventKey={key} >
-                                    {componentsTypes[key]}
+                                    {componentsTypes[key].label}
                                 </Dropdown.Item>
                             })
                         }
                     </Dropdown.Menu>
                 </Dropdown>
             </Col>
-
-            {
-                (() => {
-                    if (selectedType == ParagraphComponentClass) {
-                        return (
-                            <ParagraphComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == HeaderComponentClass) {
-                        return (
-                            <HeaderComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == TitleComponentClass) {
-                        return (
-                            <TitleComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == ImageComponentClass) {
-                        return (
-                            <ImageComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == LinkComponentClass) {
-                        return (
-                            <LinkComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == YoutubeEmbedComponentClass) {
-                        return (
-                            <YoutubeEmbedComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == paragraphsComponent) {
-                        return (
-                            <ParagraphsComponentCreator dispatch={(paragraphs) => setparagraphs(paragraphs)} />
-                        )
-                    } else if (selectedType == SeperatorComponentClass) {
-                        return (
-                            <SeperatorComponentCreator dispatch={(component) => setcomponent(component)} />
-                        )
-                    } else if (selectedType == 'JsonFormat') {
-                        return (
-                            <JsonFormatField dispatch={(json) => setparagraphs(json)} />
-                        )
-                    }
-                })()
-            }
+            {SelectedType ? <SelectedType.Creator dispatch={(component) => setcomponent(component)} /> : null}
+            
             <Col xs={1} className='mx-auto'>
                 {component ?
                     <Button
                         className='my-2'
                         onClick={() => {
-                            addComponent(component)
-                            setcomponent(null)
-                            setSelectedType(null)
-                        }} variant="primary">اضف</Button>
-                    : null}
-                {paragraphs ?
-                    <Button
-                        className='my-2'
-                        onClick={() => {
-                            paragraphs.forEach(component => {
+                            if (!Array.isArray(component)) {
                                 addComponent(component)
-                            });
-                            // console.log('paragraphs button', paragraphs)
-                            setparagraphs(null)
-                            setSelectedType(null)
-                        }} variant="primary">اضافة فقرات</Button>
+                                setcomponent(null)
+                                setSelectedType(null)
+
+                            } else {
+                                component.forEach(component => {
+                                    addComponent(component)
+                                });
+                                setcomponent(null)
+                                setSelectedType(null)
+                            }
+                        }} variant="primary">اضف</Button>
                     : null}
             </Col>
 

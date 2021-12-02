@@ -8,6 +8,7 @@ export const LinkComponentClass = 'App\\PageComponents\\LinkComponent'
 export const TitleComponentClass = 'App\\PageComponents\\TitleComponent'
 export const YoutubeEmbedComponentClass = 'App\\PageComponents\\YoutubeEmbedComponent'
 export const SeperatorComponentClass = 'App\\PageComponents\\SeperatorComponent'
+export const QuoteComponentClass = 'App\\PageComponents\\QuoteComponent'
 
 export function paragraphObject(original, translated = '', style = {}) {
 
@@ -73,6 +74,18 @@ export function seperatorObject(style){
     return {
         class: SeperatorComponentClass,
         style: style,
+    }
+}
+
+export function quoteObject(originalQuote, originalLabel = null, translatedQuote = null, translatedLabel = null, style = {}) {
+
+    return {
+        class: QuoteComponentClass,
+        originalQuote: originalQuote,
+        originalLabel: originalLabel,
+        translatedQuote: translatedQuote,
+        translatedLabel: translatedLabel,
+        style: style
     }
 }
 

@@ -93,5 +93,7 @@ export default function BookBrowser(props) {
             }
             
         </div>
+        {page?.source_url ? <div>عنوان المصدر <a href={page?.source_url} target='_blank'>{page?.source_url}</a></div> : null }
+
     </div >
 }

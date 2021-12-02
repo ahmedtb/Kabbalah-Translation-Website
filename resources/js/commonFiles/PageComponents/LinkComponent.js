@@ -56,9 +56,13 @@ export function LinkComponentWebsiteRender(props) {
     const translatedLabel = component.translatedLabel
 
     if (translatedLabel)
-        return <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
+        return <div>
+            <a href={translatedLink} dir={translatedDir}>{translatedLabel}</a>
+        </div>
     else if (originalLabel)
-        return <a href={originalLink} dir={originalDir}>{originalLabel}</a>
+        return <div>
+            <a href={originalLink} dir={originalDir}>{originalLabel}</a>
+        </div>
     else return null
 
 }

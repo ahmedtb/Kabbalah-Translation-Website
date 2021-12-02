@@ -1,14 +1,16 @@
 import React from 'react'
 
+import { Col, FormCheck } from 'react-bootstrap'
+import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
+
 import { ParagraphComponentEditor, ParagraphComponentRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { TitleComponentEditor, TitleComponentRender } from '../../commonFiles/PageComponents/TitleComponent'
 import { LinkComponentEditor, LinkComponentRender } from '../../commonFiles/PageComponents/LinkComponent'
 import { ImageComponentEditor, ImageComponentRender } from '../../commonFiles/PageComponents/ImageComponent'
 import { HeaderComponentEditor, HeaderComponentRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import { YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender } from '../../commonFiles/PageComponents/YoutubeEmbedComponent'
-
-import PageComponentsCreator from './PageComponentsCreator'
-import { Col, FormCheck } from 'react-bootstrap'
+import { SeperatorComponentEditor, SeperatorComponentRender } from '../../commonFiles/PageComponents/SeperatorComponent'
+import { QuoteComponentEditor, QuoteComponentRender } from '../../commonFiles/PageComponents/QuoteComponent'
 import {
     ParagraphComponentClass,
     HeaderComponentClass,
@@ -18,11 +20,21 @@ import {
     YoutubeEmbedComponentClass,
     pageContentObject,
     pageContentReducer,
-    SeperatorComponentClass
+    SeperatorComponentClass,
+    QuoteComponentClass
 } from '../../commonFiles/PageComponents/structure'
-import { AiOutlineArrowUp, AiOutlineArrowDown, AiFillEdit, AiFillDelete, AiOutlinePlusCircle } from 'react-icons/ai'
-import { textNewLines } from '../../commonFiles/helpers'
-import { SeperatorComponentEditor, SeperatorComponentRender } from '../../commonFiles/PageComponents/SeperatorComponent'
+import PageComponentsCreator from './PageComponentsCreator'
+
+const componentsTypes = {
+    [ParagraphComponentClass]: { Editor: ParagraphComponentEditor, Render: ParagraphComponentRender },
+    [HeaderComponentClass]: { Editor: HeaderComponentEditor, Render: HeaderComponentRender },
+    [TitleComponentClass]: { Editor: TitleComponentEditor, Render: TitleComponentRender },
+    [ImageComponentClass]: { Editor: ImageComponentEditor, Render: ImageComponentRender },
+    [LinkComponentClass]: { Editor: LinkComponentEditor, Render: LinkComponentRender },
+    [YoutubeEmbedComponentClass]: { Editor: YoutubeEmbedComponentEditor, Render: YoutubeEmbedComponentRender },
+    [SeperatorComponentClass]: { Editor: SeperatorComponentEditor, Render: SeperatorComponentRender },
+    [QuoteComponentClass]: { Editor: QuoteComponentEditor, Render: QuoteComponentRender },
+}
 
 export default function PageContentEditor(props) {
     const setEditedPageContent = props.setEditedPageContent
@@ -160,63 +172,24 @@ export default function PageContentEditor(props) {
                 <Col xs={10} className='mx-auto bg-white'>
 
                     {
-                        (render == 'json') ? <textarea
-                            dir='ltr'
-                            style={{ width: '100%', height: 1000 }}
-                            defaultValue={JSON.stringify(pageComponents, null, '\t')}
-                            onChange={e => {
-                                // console.log(JSON.parse(e.target.value));
-                                dispatch({ actionType: 'set page_content', page_content: pageContentObject(JSON.parse(e.target.value), 'ltr', 'rtl') });
-                            }}
-                        />
-                            : pageComponents?.map((component, index) => {
+                        (render == 'json')
+                            ?
+                            <textarea
+                                dir='ltr'
+                                style={{ width: '100%', height: 1000 }}
+                                defaultValue={JSON.stringify(pageComponents, null, '\t')}
+                                onChange={e => {
+                                    dispatch({ actionType: 'set page_content', page_content: pageContentObject(JSON.parse(e.target.value), 'ltr', 'rtl') });
+                                }}
+                            />
+                            :
+                            pageComponents?.map((component, index) => {
 
-                                // if (render == 'json')
-                                //     return <div key={index} dir='ltr' className='border rounded'>{textNewLines(JSON.stringify(component, null, 4))}</div>
-
-                                if (component.class == ParagraphComponentClass) {
+                                if (componentsTypes[component.class])
                                     return <div key={index}>
-                                        {EditorAndRender(ParagraphComponentEditor, ParagraphComponentRender, index, component, originalDir, translatedDir)}
-
+                                        {EditorAndRender(componentsTypes[component.class].Creator, componentsTypes[component.class].Render, index, component, originalDir, translatedDir)}
                                     </div>
 
-                                } else if (component.class == TitleComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(TitleComponentEditor, TitleComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                } else if (component.class == LinkComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(LinkComponentEditor, LinkComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                } else if (component.class == HeaderComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(HeaderComponentEditor, HeaderComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                } else if (component.class == ImageComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(ImageComponentEditor, ImageComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                } else if (component.class == YoutubeEmbedComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(YoutubeEmbedComponentEditor, YoutubeEmbedComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                } else if (component.class == SeperatorComponentClass) {
-                                    return <div key={index}>
-                                        {EditorAndRender(SeperatorComponentEditor, SeperatorComponentRender, index, component, originalDir, translatedDir)}
-
-                                    </div>
-
-                                }
                             })
                     }
 

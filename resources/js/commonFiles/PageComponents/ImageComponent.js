@@ -111,7 +111,10 @@ export function ImageComponentWebsiteRender(props) {
                 <img src={component.translated} style={{ maxWidth: '100%' }} />
 
                 :
-                <img src={component.original} style={{ maxWidth: '100%' }} />
+                <div className='d-flex justify-content-between'>
+                    <img src={component.original} style={{ maxWidth: '100%' }} />
+                    <div className='opacity-25'>غير مترجم</div>
+                </div>
 
         }
     </Col >

@@ -33,10 +33,10 @@ function TopMenue(props) {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <LinkContainer to={Routes.booksIndex()}>
-                                <Nav.Link>الكتب</Nav.Link>
+                                <Nav.Link className='text-white'>الكتب</Nav.Link>
                             </LinkContainer>
                             <LinkContainer to={Routes.articlesIndex()}>
-                                <Nav.Link>المقالات</Nav.Link>
+                                <Nav.Link className='text-white'>المقالات</Nav.Link>
                             </LinkContainer>
                             {/* <LinkContainer to={Routes.categoriesIndex()}>
                             <Nav.Link>التصنيفات</Nav.Link>
