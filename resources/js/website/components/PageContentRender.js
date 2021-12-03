@@ -1,4 +1,5 @@
 import React from 'react'
+import { Button } from 'react-bootstrap'
 import { ParagraphComponentWebsiteRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { HeaderComponentWebsiteRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import { TitleComponentWebsiteRender } from '../../commonFiles/PageComponents/TitleComponent'
@@ -35,12 +36,20 @@ export default function PageContentRender(props) {
     const page_content = props.page_content
     const translatedDir = page_content?.translatedDir
     const originalDir = page_content?.originalDir
+    const [render, setrender] = React.useState('translated')
 
-    // React.useEffect(() => {
-    //     console.log('PageContentRender', page)
-    // }, [])
-    return <Col xs={12}>
-        <Col xs={10} className='mx-auto bg-white p-2'>
+
+    return <div className='mx-auto bg-white rounded'>
+        {/* <a className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>
+            عرض النص الاصلي
+        </a>
+        <a className={render == 'translated' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('translated')}>
+            عرض الترجمة
+        </a>
+        <a className={render == 'both' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('both')}>
+            كلاهما
+        </a> */}
+        <div className='p-3'>
             {
                 page_content?.pageComponents.map((pageComponent, index) => {
                     if (componentsTypes[pageComponent.class]) {
@@ -51,10 +60,11 @@ export default function PageContentRender(props) {
                             originalDir={originalDir}
                             translatedDir={translatedDir}
                             component={pageComponent}
+                            render={render}
                         />
                     }
                 })
             }
-        </Col>
-    </Col>
+        </div>
+    </div>
 }

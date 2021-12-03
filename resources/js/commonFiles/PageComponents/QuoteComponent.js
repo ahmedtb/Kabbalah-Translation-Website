@@ -12,23 +12,33 @@ export function QuoteComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
+    const render = props.render
 
     const originalQuote = component.originalQuote
     const originalLabel = component.originalLabel
     const translatedQuote = component.translatedQuote
     const translatedLabel = component.translatedLabel
+    const style = component.style
 
-    if (originalQuote)
-        return <div >
+    switch (render) {
+        case 'original':
+            return <div style={{ ...style, padding: '10px 50px 10px 50px' }} >
                 <div dir={originalDir} >{originalQuote}</div>
-                <div dir={originalDir == 'rtl' ? 'ltr' : 'rtl'} >{originalLabel}</div>
-        </div >
-    else if (translatedQuote)
-        return <div >
+                <div dir={originalDir} style={{textAlign: originalDir == 'rtl' ? 'left' : 'right'}}>{originalLabel}</div>
+            </div >
+        case 'translated':
+            return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
                 <div dir={translatedDir} >{translatedQuote}</div>
-                <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{translatedLabel}</div>
-        </div >
-    else return null
+                <div dir={translatedDir} style={{textAlign: translatedDir == 'rtl' ? 'left' : 'right'}} >{translatedLabel}</div>
+            </div >
+        case 'both':
+            return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
+                <div dir={originalDir}>{originalQuote}</div>
+                <div dir={originalDir} style={{textAlign: originalDir == 'rtl' ? 'left' : 'right'}} >{originalLabel}</div>
+                <div dir={translatedDir}>{translatedQuote}</div>
+                <div dir={translatedDir} style={{textAlign: translatedDir == 'rtl' ? 'left' : 'right'}} >{translatedLabel}</div>
+            </div>
+    }
 }
 export function QuoteComponentWebsiteRender(props) {
     const component = props.component
@@ -42,13 +52,13 @@ export function QuoteComponentWebsiteRender(props) {
 
     if (originalQuote)
         return <div >
-                <div dir={originalDir} >{originalQuote}</div>
-                <div dir={originalDir == 'rtl' ? 'ltr' : 'rtl'} >{originalLabel}</div>
+            <div dir={originalDir} >{originalQuote}</div>
+            <div dir={originalDir == 'rtl' ? 'ltr' : 'rtl'} >{originalLabel}</div>
         </div >
     else if (translatedQuote)
         return <div >
-                <div dir={translatedDir} >{translatedQuote}</div>
-                <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{translatedLabel}</div>
+            <div dir={translatedDir} >{translatedQuote}</div>
+            <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{translatedLabel}</div>
         </div >
     else return null
 
@@ -122,7 +132,7 @@ export function QuoteComponentEditor(props) {
         <div>
             <div>الاقتباس الاصلي</div>
             <Form.Control
-                as="input"
+                as="textarea"
                 value={originalQuote ?? ''}
                 onChange={(e) => {
                     setoriginalQuote(e.target.value)
@@ -131,7 +141,7 @@ export function QuoteComponentEditor(props) {
             />
             <div>النص الاصلي</div>
             <Form.Control
-                as="input"
+                as="textarea"
                 value={originalLabel ?? ''}
                 onChange={(e) => {
                     setoriginalLabel(e.target.value)
@@ -140,7 +150,7 @@ export function QuoteComponentEditor(props) {
             />
             <div>الاقتباس المترجم</div>
             <Form.Control
-                as="input"
+                as="textarea"
                 value={translatedQuote ?? ''}
                 onChange={(e) => {
                     settranslatedQuote(e.target.value)
@@ -149,7 +159,7 @@ export function QuoteComponentEditor(props) {
             />
             <div>النص المترجم</div>
             <Form.Control
-                as="input"
+                as="textarea"
                 value={translatedLabel ?? ''}
                 onChange={(e) => {
                     settranslatedLabel(e.target.value)

@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function uploadDatabaseSeedFile(Request $request)
     {
         return $request->file('sqlFile');
-        $path = $request->file('sqlFile')->store('sqlFile');
+        $path = $request->file('sqlFile')->storeAs('sql','sqlFile.sql');
 
         return $path;
     }

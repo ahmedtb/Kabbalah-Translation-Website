@@ -11,18 +11,7 @@ export function ParagraphComponentRender(props) {
     const translatedDir = props.translatedDir
     const render = props.render
 
-    const popover = (
-        <Popover id="popover-basic" style={{ maxWidth: 1000 }}>
-            <Popover.Header as="h3">ترجمة</Popover.Header>
-            <Popover.Body dir={translatedDir}>
-                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-            </Popover.Body>
-        </Popover>
-    );
 
-    // return (
-    // // <OverlayTrigger trigger="click" placement="bottom" overlay={popover} >
-    //     {(() => {
     switch (render) {
         case 'original':
             return <div dir={originalDir} style={component.style}>
@@ -38,9 +27,6 @@ export function ParagraphComponentRender(props) {
                 <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
             </div>
     }
-    //     })()}
-    // // </OverlayTrigger>
-    // )
 }
 
 
@@ -48,22 +34,35 @@ export function ParagraphComponentWebsiteRender(props) {
     const component = props.component
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
+    const render = props.render
 
-    return <div className='mx-auto my-2'>
-        {
-            component.translated ?
-                <div dir={translatedDir} style={component.style}>
-                    {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                </div>
-                :
-                <div className='d-flex justify-content-between'>
-                    <div dir={originalDir} style={component.style}>
-                        {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
-                    </div>
-                    <div className='opacity-25'>غير مترجم</div>
-                </div>
-        }
-    </div >
+    switch (render) {
+        case 'original':
+            return <div dir={originalDir} style={component.style}>
+                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+            </div>
+        case 'translated':
+            return <div className='mx-auto'>
+                {
+                    component.translated ?
+                        <div dir={translatedDir} style={component.style}>
+                            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                        </div>
+                        :
+                        <div className='d-flex justify-content-between'>
+                            <div className='flex-grow-1' dir={originalDir} style={component.style}>
+                                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                            </div>
+                            <div className='opacity-25'>غير مترجم</div>
+                        </div>
+                }
+            </div >
+        case 'both':
+            return <div style={component.style}>
+                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+            </div>
+    }
 }
 
 export function ParagraphComponentCreator(props) {

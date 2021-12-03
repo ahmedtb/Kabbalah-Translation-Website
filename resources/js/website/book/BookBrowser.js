@@ -61,9 +61,8 @@ export default function BookBrowser(props) {
                     : <div >{sections[sectionIndex]?.title}</div>
             }
         </div> */}
-        <div className='bg-white rounded'>
+        <div className='rounded'>
             <PageContentRender page_content={page?.page_content} />
-
         </div>
         <div className='d-flex flex-row justify-content-around'>
         {

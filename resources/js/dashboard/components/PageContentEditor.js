@@ -187,7 +187,7 @@ export default function PageContentEditor(props) {
 
                                 if (componentsTypes[component.class])
                                     return <div key={index}>
-                                        {EditorAndRender(componentsTypes[component.class].Creator, componentsTypes[component.class].Render, index, component, originalDir, translatedDir)}
+                                        {EditorAndRender(componentsTypes[component.class].Editor, componentsTypes[component.class].Render, index, component, originalDir, translatedDir)}
                                     </div>
 
                             })

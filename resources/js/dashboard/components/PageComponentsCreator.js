@@ -96,8 +96,9 @@ export default function PageComponentsCreator(props) {
                                 setSelectedType(null)
 
                             } else {
-                                component.forEach(component => {
-                                    addComponent(component)
+                                console.log('components', component)
+                                component.forEach(element => {
+                                    addComponent(element)
                                 });
                                 setcomponent(null)
                                 setSelectedType(null)
