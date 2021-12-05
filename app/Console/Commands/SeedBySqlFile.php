@@ -12,7 +12,7 @@ class SeedBySqlFile extends Command
      *
      * @var string
      */
-    protected $signature = 'seedBySqlFile';
+    protected $signature = 'seedBySqlFile {filePath}';
 
     /**
      * The console command description.
@@ -38,7 +38,8 @@ class SeedBySqlFile extends Command
      */
     public function handle()
     {
-        DB::unprepared(file_get_contents(storage_path('sqlFile.sql')));
+        // dd(file_get_contents($this->argument('filePath')));
+        DB::unprepared(file_get_contents($this->argument('filePath')));
 
 
         return Command::SUCCESS;

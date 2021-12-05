@@ -7,7 +7,7 @@ import {
     OverlayTrigger
 } from 'react-bootstrap'
 import { quoteObject } from './structure'
-
+import { textNewLines } from '../helpers'
 export function QuoteComponentRender(props) {
     const component = props.component
     const originalDir = props.originalDir
@@ -23,20 +23,20 @@ export function QuoteComponentRender(props) {
     switch (render) {
         case 'original':
             return <div style={{ ...style, padding: '10px 50px 10px 50px' }} >
-                <div dir={originalDir} >{originalQuote}</div>
-                <div dir={originalDir} style={{textAlign: originalDir == 'rtl' ? 'left' : 'right'}}>{originalLabel}</div>
+                <div dir={originalDir} >{textNewLines(originalQuote)}</div>
+                <div dir={originalDir} style={{ textAlign: originalDir == 'rtl' ? 'left' : 'right' }}>{textNewLines(originalLabel)}</div>
             </div >
         case 'translated':
             return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
-                <div dir={translatedDir} >{translatedQuote}</div>
-                <div dir={translatedDir} style={{textAlign: translatedDir == 'rtl' ? 'left' : 'right'}} >{translatedLabel}</div>
+                <div dir={translatedDir} >{textNewLines(translatedQuote)}</div>
+                <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(translatedLabel)}</div>
             </div >
         case 'both':
             return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
-                <div dir={originalDir}>{originalQuote}</div>
-                <div dir={originalDir} style={{textAlign: originalDir == 'rtl' ? 'left' : 'right'}} >{originalLabel}</div>
-                <div dir={translatedDir}>{translatedQuote}</div>
-                <div dir={translatedDir} style={{textAlign: translatedDir == 'rtl' ? 'left' : 'right'}} >{translatedLabel}</div>
+                <div dir={originalDir}>{textNewLines(originalQuote)}</div>
+                <div dir={originalDir} style={{ textAlign: originalDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(originalLabel)}</div>
+                <div dir={translatedDir}>{textNewLines(translatedQuote)}</div>
+                <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(translatedLabel)}</div>
             </div>
     }
 }
@@ -52,13 +52,13 @@ export function QuoteComponentWebsiteRender(props) {
 
     if (originalQuote)
         return <div >
-            <div dir={originalDir} >{originalQuote}</div>
-            <div dir={originalDir == 'rtl' ? 'ltr' : 'rtl'} >{originalLabel}</div>
+            <div dir={originalDir} >{textNewLines(originalQuote)}</div>
+            <div dir={originalDir == 'rtl' ? 'ltr' : 'rtl'} >{textNewLines(originalLabel)}</div>
         </div >
     else if (translatedQuote)
         return <div >
             <div dir={translatedDir} >{translatedQuote}</div>
-            <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{translatedLabel}</div>
+            <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{textNewLines(translatedLabel)}</div>
         </div >
     else return null
 

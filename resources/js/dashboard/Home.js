@@ -18,8 +18,8 @@ export default function Home(props) {
             <div>عدد الصفحات: {statistics?.pagesCount}</div>
             <div>عدد التصنيفات: {statistics?.categoriesCount}</div>
             <div>عدد الكتب: {statistics?.booksCount}</div>
-            <div>عدد المقالات: {statistics?.articlesCount}</div>
             <div>عدد الكتب المفعلة: {statistics?.activatedBooksCount}</div>
+            <div>عدد المقالات: {statistics?.articlesCount}</div>
             <div>عدد المقالات المفعلة: {statistics?.activatedArticlesCount}</div>
 
         </div>

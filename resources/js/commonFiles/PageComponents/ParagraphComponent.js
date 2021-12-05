@@ -202,8 +202,6 @@ export function ParagraphComponentEditor(props) {
     const [translatedScrollHeight, settranslatedScrollHeight] = React.useState(100)
     const [originalScrollHeight, setoriginalScrollHeight] = React.useState(100)
 
-    React.useEffect(() => { }, [component])
-
     return (
 
         <div className='my-2'>
