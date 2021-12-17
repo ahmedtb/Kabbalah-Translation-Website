@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Casts\Json;
 use App\Filters\ArticlesFilters;
+use App\Casts\CastJsonToPageContent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -16,9 +17,11 @@ class Article extends Model
     protected $hidden = ['page_content'];
 
     protected $casts = [
-        'page_content' => Json::class
+        'page_content' => CastJsonToPageContent::class
     ];
-
+    protected $appends  = [
+        'isTranslated'
+    ];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -32,5 +35,14 @@ class Article extends Model
     public function scopeActivated($query)
     {
         return $query->where('activated', true);
+    }
+    public function getIsTranslatedAttribute()
+    {
+        return $this->isTranslated();
+    }
+
+    public function isTranslated()
+    {
+        return $this->page_content->isFullyTranslated();
     }
 }

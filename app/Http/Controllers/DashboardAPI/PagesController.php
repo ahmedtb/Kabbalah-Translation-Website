@@ -17,7 +17,7 @@ class PagesController extends Controller
     {
         $data = $request->validate([
             'book_id' => 'sometimes|nullable|exists:books,id',
-            'title' => ['required', 'string', Rule::unique('pages')->where(function ($query) use($request) {
+            'title' => ['required', 'string', Rule::unique('pages')->where(function ($query) use ($request) {
                 return $query->where('book_id', $request->book_id);
             })],
             'meta_description' => 'nullable|string',
@@ -41,7 +41,12 @@ class PagesController extends Controller
 
     public function show($id)
     {
-        return Page::where('id', $id)->first()->makeVisible('page_content');
+        $page = Page::where('id', $id)->first();
+        if (!$page)
+            throw ValidationException::withMessages(['id' => 'there is no page with this id: ' . $id]);
+        $page->makeVisible('page_content');
+
+        return $page;
     }
 
     public function update(Request $request, $id)

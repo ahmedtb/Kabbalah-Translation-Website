@@ -18,9 +18,9 @@ export function SelectFilter(props) {
         <select
             className="form-control"
             onChange={(e) => { setSelectedOption(e.target.value); }}
-            defaultValue={defaultValue ?? ''}
+            defaultValue={defaultValue ?? 'undefined'}
         >
-            <option value={null}>{label ?? ''}</option>
+            <option value={'undefined'}>{label ?? ''}</option>
             {
                 options?.map((option, index) => (
                     <option key={index} value={option[valueKeyWord ?? 'value']}>{option[nameKeyWord ?? 'name']}</option>
@@ -29,7 +29,7 @@ export function SelectFilter(props) {
         </select>
         <button className="form-control btn btn-success ml-1" onClick={() => {
             let params = Object.assign({},
-                selectedOption === null ? null : { [property]: selectedOption },
+                selectedOption === 'undefined' ? { [property]: undefined } : { [property]: selectedOption },
             )
             fetchPage(params)
         }}>
@@ -65,18 +65,19 @@ export function NumberFilter(props) {
 
 
 export function ScopeFilter(props) {
-    const params = props.params
+    // const params = props.params
     const fetchPage = props.fetchPage
     const property = props.property
     const label = props.label
+    let linkParams = Object.fromEntries(new URLSearchParams(location.search))
 
     return (
         <div className="col-5 border rounded p-1 mx-2">
             <div className="d-flex flex-row my-2 align-items-center">
                 <button
                     type="button"
-                    className={(params?.[property] == 'true') ? "btn btn-success mx-2 my-1" : "btn btn-info mx-2 my-1"}
-                    onClick={() => fetchPage(params[property] == 'true' ? { ...params, [property]: undefined } : { ...params, [property]: 'true' })}
+                    className={(linkParams?.[property] == 'true') ? "btn btn-success mx-2 my-1" : "btn btn-info mx-2 my-1"}
+                    onClick={() => fetchPage(linkParams[property] == 'true' ? { ...linkParams, [property]: undefined } : { ...linkParams, [property]: 'true' })}
                 >
                     {label ?? property}
                 </button>

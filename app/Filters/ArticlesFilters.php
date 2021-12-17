@@ -14,7 +14,8 @@ class ArticlesFilters extends Filters
         'category_id',
         'with',
         'latest',
-        'title'
+        'title',
+        'activated',
     ];
 
     public function search($search)
@@ -38,5 +39,9 @@ class ArticlesFilters extends Filters
     protected function title($title)
     {
         return $this->builder->where('title', 'LIKE', "%{$title}%");
+    }
+    public function activated($activated)
+    {
+        return $this->builder->where('activated', $activated == 'true');
     }
 }

@@ -29,14 +29,18 @@ export function QuoteComponentRender(props) {
         case 'translated':
             return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
                 <div dir={translatedDir} >{textNewLines(translatedQuote)}</div>
-                <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(translatedLabel)}</div>
+
+                <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{translatedLabel?.length ? textNewLines(translatedLabel) : textNewLines(originalLabel)}</div>
+
             </div >
         case 'both':
             return <div style={{ ...style, padding: '10px 50px 10px 50px' }}>
                 <div dir={originalDir}>{textNewLines(originalQuote)}</div>
                 <div dir={originalDir} style={{ textAlign: originalDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(originalLabel)}</div>
                 <div dir={translatedDir}>{textNewLines(translatedQuote)}</div>
-                <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{textNewLines(translatedLabel)}</div>
+                {translatedQuote ? <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{translatedLabel?.length ? textNewLines(translatedLabel) : textNewLines(originalLabel)}</div> : null}
+
+
             </div>
     }
 }
@@ -58,7 +62,9 @@ export function QuoteComponentWebsiteRender(props) {
     else if (translatedQuote)
         return <div >
             <div dir={translatedDir} >{translatedQuote}</div>
-            <div dir={translatedDir == 'rtl' ? 'ltr' : 'rtl'} >{textNewLines(translatedLabel)}</div>
+
+            <div dir={translatedDir} style={{ textAlign: translatedDir == 'rtl' ? 'left' : 'right' }} >{translatedLabel?.length ? textNewLines(translatedLabel) : textNewLines(originalLabel)}</div>
+
         </div >
     else return null
 
@@ -84,7 +90,7 @@ export function QuoteComponentCreator(props) {
         </FloatingLabel>
         <FloatingLabel label="عنوان الاقتباس الاصلي">
             <Form.Control
-                as="input"
+                as="textarea"
                 type='text'
                 value={originalLabel}
                 style={{ height: '100px' }}
@@ -106,7 +112,7 @@ export function QuoteComponentCreator(props) {
         </FloatingLabel>
         <FloatingLabel label="عنوان الاقتباس مترجم">
             <Form.Control
-                as="input"
+                as="textarea"
                 type='text'
                 value={translatedLabel}
                 style={{ height: '100px' }}
@@ -122,11 +128,15 @@ export function QuoteComponentCreator(props) {
 export function QuoteComponentEditor(props) {
     const component = props.component
     const dispatch = props.dispatch
+    const originalDir = props.originalDir
+    const translatedDir = props.translatedDir
     const [originalQuote, setoriginalQuote] = React.useState(component.originalQuote)
     const [originalLabel, setoriginalLabel] = React.useState(component.originalLabel)
     const [translatedQuote, settranslatedQuote] = React.useState(component.translatedQuote)
     const [translatedLabel, settranslatedLabel] = React.useState(component.translatedLabel)
 
+    const [translatedScrollHeight, settranslatedScrollHeight] = React.useState(100)
+    const [originalScrollHeight, setoriginalScrollHeight] = React.useState(100)
 
     return <div>
         <div>
@@ -134,14 +144,21 @@ export function QuoteComponentEditor(props) {
             <Form.Control
                 as="textarea"
                 value={originalQuote ?? ''}
+                style={{ height: originalScrollHeight }}
+
+                dir={originalDir}
                 onChange={(e) => {
                     setoriginalQuote(e.target.value)
+                    setoriginalScrollHeight(e.target.scrollHeight)
+
                     dispatch(quoteObject(e.target.value, originalLabel, translatedQuote, translatedLabel))
                 }}
             />
             <div>النص الاصلي</div>
             <Form.Control
                 as="textarea"
+                dir={originalDir}
+
                 value={originalLabel ?? ''}
                 onChange={(e) => {
                     setoriginalLabel(e.target.value)
@@ -152,14 +169,21 @@ export function QuoteComponentEditor(props) {
             <Form.Control
                 as="textarea"
                 value={translatedQuote ?? ''}
+                dir={translatedDir}
+
+                style={{ height: translatedScrollHeight }}
                 onChange={(e) => {
                     settranslatedQuote(e.target.value)
+                    settranslatedScrollHeight(e.target.scrollHeight)
+
                     dispatch(quoteObject(originalQuote, originalLabel, e.target.value, translatedLabel))
                 }}
             />
             <div>النص المترجم</div>
             <Form.Control
                 as="textarea"
+                dir={translatedDir}
+
                 value={translatedLabel ?? ''}
                 onChange={(e) => {
                     settranslatedLabel(e.target.value)

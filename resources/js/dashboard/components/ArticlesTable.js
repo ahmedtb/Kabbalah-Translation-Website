@@ -10,10 +10,13 @@ export default function ArticlesTable(props) {
 
 
 
-    function hasCategory(Obj, Or) {
+    function hasCategory(Obj, Or = null) {
         if (articles[0]?.category)
             return Obj
         else return Or
+    }
+    function hasIsTransated(Obj, Or = null) {
+        if (articles[0]?.isTranslated != undefined) return Obj; else return Or;
     }
 
     return (
@@ -26,6 +29,8 @@ export default function ArticlesTable(props) {
                     <th>مفعلة؟</th>
                     <th>الوصف</th>
                     <th>thumbnail</th>
+                    {hasIsTransated(<th>مترجم</th>)}
+
                     {deleteArticle ? <th></th> : null}
                 </tr>
             </thead>
@@ -46,6 +51,7 @@ export default function ArticlesTable(props) {
                             <td>{article.activated ? 'مفعل' : 'غير مفعل'}</td>
                             <td>{truncate(article.description)}</td>
                             <td><img src={article.thumbnail} className='maxWidth100' /></td>
+                            {hasIsTransated(<td>{article.isTranslated ? 'نعم' : 'لا'}</td>)}
 
                             {deleteArticle ? <td onClick={() => deleteArticle(article.id)}>حدف</td> : null}
                         </tr>

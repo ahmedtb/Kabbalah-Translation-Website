@@ -16,6 +16,7 @@ class Page extends Model
     ];
 
     protected $guarded = [];
+    protected $hidden = ['page_content'];
 
     protected $appends  = [
         'books',
