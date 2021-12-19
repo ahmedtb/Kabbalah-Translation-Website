@@ -32,7 +32,6 @@ export function ImageComponentCreator(props) {
     const dispatch = props.dispatch
     const [original, setoriginal] = React.useState('')
     const [translated, settranslated] = React.useState('')
-
     return <div className='my-3'>
         <img src={original} width={100} />
         <FloatingLabel label="الصورة الاصلي">

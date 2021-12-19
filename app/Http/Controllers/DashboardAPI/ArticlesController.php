@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Rules\PageContentRule;
 use App\Filters\ArticlesFilters;
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController extends Controller
@@ -44,7 +45,7 @@ class ArticlesController extends Controller
         $data = $request->validate([
             'title' => 'required|string',
             'description' => 'sometimes|nullable|string',
-            'thumbnail' => ['sometimes','nullable', new Base64Rule(200000)],
+            'thumbnail' => ['sometimes', 'nullable', new Base64Rule(200000)],
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean',
             'page_content' => ['required', new PageContentRule()],
@@ -61,7 +62,7 @@ class ArticlesController extends Controller
         $data = $request->validate([
             'title' => 'sometimes|string',
             'description' => 'sometimes|nullable|string',
-            'thumbnail' => ['sometimes','nullable', new Base64Rule(200000)],
+            'thumbnail' => ['sometimes', 'nullable', new Base64Rule(200000)],
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',
             'page_content' => ['sometimes', new PageContentRule()],
@@ -77,4 +78,5 @@ class ArticlesController extends Controller
             return response()->json(['success' => 'article ' . $article->id . ' is updated']);
         }
     }
+
 }

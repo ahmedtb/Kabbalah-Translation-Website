@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardAPI\HomeController;
 
 Route::get('/home', [HomeController::class, 'home']);
 Route::post('/uploadDatabaseSeedFile', [HomeController::class, 'uploadDatabaseSeedFile']);
+Route::get('/fetchBase64DataFromUrl', [HomeController::class, 'fetchBase64DataFromUrl']);
 
 Route::post('/pages', [PagesController::class, 'create']);
 Route::get('/pages', [PagesController::class, 'index']);

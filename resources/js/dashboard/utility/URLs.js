@@ -31,6 +31,7 @@ export const Routes = {
 
 export const Api = {
     home: async () => await axios.get('/dashboardAPI/home'),
+    fetchBase64DataFromUrl: async (url) => await axios.get('/dashboardAPI/fetchBase64DataFromUrl', { params: { url: url } }),
 
     createPage: async (title, meta_description, source_url, page_content, book_id) => {
         return await axios.post('/dashboardAPI/pages',
