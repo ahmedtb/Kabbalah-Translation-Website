@@ -49,6 +49,11 @@ export default function ArticlesIndex(props) {
                 property={'title'}
                 label={'عنوان المقال'}
             />
+            <TextFilter
+                fetchPage={(newparams) => fetchArticles(null, newparams)}
+                property={'source_url'}
+                label={'رابط الاصلي للمقال'}
+            />
             <SelectFilter
                 options={[
                     { value: true, name: 'مفعلة' },

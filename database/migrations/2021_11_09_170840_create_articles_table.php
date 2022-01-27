@@ -18,9 +18,9 @@ class CreateArticlesTable extends Migration
             $table->boolean('activated')->default(false);
             // $table->foreignId('page_id');
             $table->foreignId('category_id');
-            $table->string('title');
+            $table->string('title')->unique();
             $table->text('description')->nullable();
-            $table->string('source_url',500)->nullable();
+            $table->string('source_url',500)->nullable()->unique();
             $table->mediumText('thumbnail')->nullable();
             $table->json('page_content');
             $table->timestamps();

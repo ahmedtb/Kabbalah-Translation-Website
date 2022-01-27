@@ -1,16 +1,16 @@
 import { combineReducers } from 'redux';
 
 const INITIAL_STATE = {
-    user: null,
+    admin: null,
     allowedRoutes: []
 };scrollBy
 
 const stateReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'refresh-user':
+        case 'refresh-admin':
             return {
                 ...state,
-                user: action.user,
+                admin: action.admin,
             };
         default:
             return state

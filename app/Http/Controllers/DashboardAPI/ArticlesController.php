@@ -49,7 +49,7 @@ class ArticlesController extends Controller
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean',
             'page_content' => ['required', new PageContentRule()],
-            'source_url' => 'sometimes|nullable|string'
+            'source_url' => 'sometimes|nullable|string|unique:articles,source_url'
         ]);
 
         $article = Article::create($data);
@@ -66,8 +66,7 @@ class ArticlesController extends Controller
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',
             'page_content' => ['sometimes', new PageContentRule()],
-            'source_url' => 'sometimes|nullable|string'
-
+            'source_url' => 'sometimes|nullable|string|exists:articles,source_url'
         ]);
 
         $article = Article::where('id', $request->id)->first();

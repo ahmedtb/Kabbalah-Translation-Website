@@ -16,6 +16,7 @@ class ArticlesFilters extends Filters
         'latest',
         'title',
         'activated',
+        'source_url'
     ];
 
     public function search($search)
@@ -43,5 +44,9 @@ class ArticlesFilters extends Filters
     public function activated($activated)
     {
         return $this->builder->where('activated', $activated == 'true');
+    }
+    protected function source_url($source_url)
+    {
+        return $this->builder->where('source_url', 'LIKE', "%{$source_url}%");
     }
 }

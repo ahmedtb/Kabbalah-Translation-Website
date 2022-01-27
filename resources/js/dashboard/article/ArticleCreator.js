@@ -76,6 +76,8 @@ export default function ArticleCreator(props) {
                 setactivated(e.target.checked)
             }}
         />
+        <img src={thumbnail} width={100} />
+
         <ImagePicker setImage={(base64) => setthumbnail(base64)} />
 
         <FormCheck>

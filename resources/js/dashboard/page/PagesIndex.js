@@ -4,33 +4,34 @@ import { Api } from '../utility/URLs'
 import { ApiCallHandler } from '../../commonFiles/helpers'
 import { SelectFilter, TextFilter } from '../components/Filters'
 import Pagination from '../../commonFiles/Pagination'
+import Pagination2 from '../../commonFiles/Pagination2'
+
 import { Col } from 'react-bootstrap'
-import { useHistory } from "react-router-dom"
 import ChangePageTitle from "../../commonFiles/ChangePageTitle";
 
 
 export default function PagesIndex(props) {
-    const history = useHistory()
+    // const history = useHistory()
 
 
     const [pages, setpages] = React.useState([])
-    const [links, setlinks] = React.useState([])
+    // const [links, setlinks] = React.useState([])
 
-    function fetchPages(link = null, params = null) {
-        let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
-        let allParams = { with: 'book', page_size: 10, ...linkParams, ...params }
-        ApiCallHandler(
-            async () => await Api.fetchPages(allParams),
-            (data) => { setpages(data.data); setlinks(data.links ?? []); },
-            'PagesIndex fetchPages',
-            true
-        )
-        console.log('all params', allParams)
-        history.replace({
-            pathname: window.location.pathname,
-            search: (new URLSearchParams(allParams)).toString()
-        })
-    }
+    // function fetchPages(link = null, params = null) {
+    //     let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
+    //     let allParams = { with: 'book', page_size: 10, ...linkParams, ...params }
+    //     ApiCallHandler(
+    //         async () => await Api.fetchPages(allParams),
+    //         (data) => { setpages(data.data); setlinks(data.links ?? []); },
+    //         'PagesIndex fetchPages',
+    //         true
+    //     )
+    //     console.log('all params', allParams)
+    //     history.replace({
+    //         pathname: window.location.pathname,
+    //         search: (new URLSearchParams(allParams)).toString()
+    //     })
+    // }
     const [books, setbooks] = React.useState([])
 
     function fetchBooks() {
@@ -42,8 +43,8 @@ export default function PagesIndex(props) {
         )
     }
     React.useEffect(() => {
-        var params = Object.fromEntries(new URLSearchParams(location.search));
-        fetchPages(null, params)
+        // var params = Object.fromEntries(new URLSearchParams(location.search));
+        // fetchPages(null, params)
         fetchBooks()
     }, [])
 
@@ -80,7 +81,9 @@ export default function PagesIndex(props) {
             <Col xs={12}>
                 <PagesTable pages={pages} deletePage={deletePage} />
             </Col>
-            <Pagination fetchPage={fetchPages} links={links} />
+            {/* <Pagination fetchPage={fetchPages} links={links} /> */}
+            <Pagination2 apiCall={Api.fetchPages} useState={[pages, setpages]} />
+
         </div>
     )
 }

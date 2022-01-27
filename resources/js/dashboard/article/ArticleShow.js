@@ -38,6 +38,7 @@ export default function ArticleShow(props) {
                 <div>activated {article?.activated ? 'مفعل' : 'غير مفعل'}</div>
                 <div>description {truncate(article?.description)}</div>
                 <div>image <img src={article?.thumbnail} className='maxWidth100' /></div>
+                <div>source url <a href={article?.source_url} target='_blank' >{article?.source_url}</a></div>
 
 
                 <div>original Dir {article?.page_content.originalDir}</div>
