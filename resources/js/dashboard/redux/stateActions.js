@@ -1,8 +1,8 @@
 
-export const refreshAdmin = (admin) => {
+export const refreshUser = (user) => {
     return {
-        type: 'refresh-admin',
-        admin: admin
+        type: 'refresh-user',
+        user: user
     }
 }
 

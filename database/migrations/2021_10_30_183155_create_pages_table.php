@@ -17,7 +17,7 @@ class CreatePagesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('meta_description', 500)->nullable();
-            $table->json('page_content');
+            $table->longText('page_content');
             $table->string('soruce_url')->nullable();
             $table->foreignId('book_id')->nullable();
             $table->timestamps();

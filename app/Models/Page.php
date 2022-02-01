@@ -19,7 +19,7 @@ class Page extends Model
     protected $hidden = ['page_content'];
 
     protected $appends  = [
-        'books',
+        // 'books',
         'isTranslated'
     ];
 
@@ -28,21 +28,21 @@ class Page extends Model
         return $this->hasMany(Article::class);
     }
 
-    public function getBooksAttribute()
-    {
-        return $this->books()->select(['id', 'title'])->get();
-    }
+    // public function getBooksAttribute()
+    // {
+    //     return $this->books()->select(['id', 'title'])->get();
+    // }
 
     public function book()
     {
         return $this->belongsTo(Book::class);
     }
 
-    public function books()
-    {
-        return Book::whereJsonContains('content_table', ['page_id' => (string)$this->id])
-            ->orWhereJsonContains('content_table', ['sections' => ['page_id' => (string)$this->id]]);
-    }
+    // public function books()
+    // {
+    //     return Book::whereJsonContains('content_table', ['page_id' => (string)$this->id])
+    //         ->orWhereJsonContains('content_table', ['sections' => ['page_id' => (string)$this->id]]);
+    // }
 
     public function scopeFilter($query, PageFilters $filters)
     {

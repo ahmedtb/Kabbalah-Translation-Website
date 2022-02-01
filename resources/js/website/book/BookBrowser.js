@@ -9,7 +9,7 @@ import {
     getnextsection,
     getpresection
 } from "./Table"
-
+import {truncate} from '../../commonFiles/helpers'
 
 export default function BookBrowser(props) {
     const { id, sectionPath } = useParams()
@@ -92,7 +92,7 @@ export default function BookBrowser(props) {
             }
             
         </div>
-        {page?.source_url ? <div>عنوان المصدر <a href={page?.source_url} target='_blank'>{page?.source_url}</a></div> : null }
+        {page?.source_url ? <div>رابط المصدر <a href={page?.source_url} target='_blank'>truncate({page?.source_url})</a></div> : null }
 
     </div >
 }

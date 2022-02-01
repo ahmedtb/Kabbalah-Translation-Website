@@ -49,7 +49,7 @@ export default function Home(props) {
                     <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col xs={3}>
-                    <a href='https://www.facebook.com/WisdomKabbalah/'>
+                    <a href='https://www.facebook.com/WisdomKabbalah/' target={'_blank'}>
                         <AiFillFacebook size={50}/>
                         فيسبوك
                     </a>

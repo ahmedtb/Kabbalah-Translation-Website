@@ -17,7 +17,7 @@ class BooksController extends Controller
 {
 
 
-    public function index(Request $request, BookFilters $filters)
+    public function index(BookFilters $filters)
     {
         return Book::filter($filters)->where('activated', true)->get();
     }

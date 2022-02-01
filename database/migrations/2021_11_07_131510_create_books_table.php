@@ -20,7 +20,7 @@ class CreateBooksTable extends Migration
             $table->boolean('activated')->default(false);
             $table->mediumText('thumbnail');
             $table->string('author');
-            $table->json('content_table');
+            $table->longText('content_table');
             $table->timestamps();
         });
     }

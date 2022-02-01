@@ -5,6 +5,8 @@
 
     RewriteEngine On
 
+    RewriteCond $1 !^(index\.php|images|css|js|robots\.txt|favicon\.ico)
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
