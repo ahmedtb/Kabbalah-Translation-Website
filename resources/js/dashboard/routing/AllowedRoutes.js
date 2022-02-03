@@ -6,7 +6,7 @@ import { Api, ApiCallHandler } from '../utility/URLs'
 import TopMenue from '../components/TopMenue'
 import { Routes } from '../utility/URLs';
 import LoginPage from './LoginPage'
-import Home from '../Home';
+import Home from './Home';
 import PageCreator from '../page/PageCreator';
 import PagesIndex from '../page/PagesIndex';
 import PageShow from '../page/PageShow';
@@ -41,13 +41,15 @@ function AllowedRoutes(props) {
         if (props.admin == null) {
             isLoggedIn()
         }
+        console.log('props', props)
     }, [props.admin])
+
 
 
     if (props.admin)
         return <>
-            <TopMenue />
 
+            <TopMenue />
             <Container >
                 <Switch>
                     <Route exact={true} path={Routes.dashboard()} component={Home} />
@@ -61,9 +63,6 @@ function AllowedRoutes(props) {
                     <Route exact={true} path={Routes.booksIndex()} component={BooksIndex} />
                     <Route exact={true} path={Routes.bookShow()} component={BookShow} />
                     <Route exact={true} path={Routes.bookEdit()} component={BookEdit} />
-
-
-
 
                     <Route exact={true} path={Routes.articleCreator()} component={ArticleCreator} />
                     <Route exact={true} path={Routes.articlesIndex()} component={ArticlesIndex} />
@@ -80,8 +79,7 @@ function AllowedRoutes(props) {
                 </Switch>
             </Container>
         </>
-    else
-        return <LoginPage />
+    else return <LoginPage />
 }
 
 import { refreshAdmin, setAllowedRoutes } from '../redux/stateActions'

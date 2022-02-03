@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Api, Routes } from '../utility/URLs'
 import { ApiCallHandler, logError } from '../../commonFiles/helpers'
 import { Redirect } from 'react-router-dom'
+import { refreshAdmin } from '../redux/stateActions'
+import { connect } from "react-redux"
+
 function LoginPage(props) {
     const [username, setusername] = React.useState('')
     const [password, setpassword] = React.useState('')
@@ -35,16 +38,11 @@ function LoginPage(props) {
     }
 
     React.useEffect(() => {
-        if (props.user) {
+        if (props.admin) {
             setredirect(Routes.dashboard())
         }
-    }, [props.user])
+    }, [props.admin])
 
-    const [redirect, setredirect] = React.useState(null);
-
-    if (redirect) {
-        return <Redirect to={redirect} />
-    }
 
     return (
         <div className='col-5 mx-auto'>
@@ -66,18 +64,16 @@ function LoginPage(props) {
     )
 }
 
-import { refreshAdmin } from '../redux/stateActions'
-import { connect } from "react-redux"
 
 const mapStateToProps = state => {
     return {
-        user: state.state.user,
+        admin: state.state.admin,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        refreshAdmin: (user) => dispatch(refreshAdmin(user)),
+        refreshAdmin: (admin) => dispatch(refreshAdmin(admin)),
     }
 }
 

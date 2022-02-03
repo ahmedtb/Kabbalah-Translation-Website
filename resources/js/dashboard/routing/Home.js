@@ -1,5 +1,5 @@
 import React from "react"
-import { Api, ApiCallHandler } from './utility/URLs'
+import { Api, ApiCallHandler } from '../utility/URLs'
 export default function Home(props) {
 
     const [ statistics, setstatistics] = React.useState()

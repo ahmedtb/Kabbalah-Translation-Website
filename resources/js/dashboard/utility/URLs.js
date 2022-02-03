@@ -37,7 +37,7 @@ export const Api = {
 
     login: async (username, password) => await axios.post(`/${apiPrefix}/login`, { username: username, password: password }),
     logout: async () => await axios.delete(`/${apiPrefix}/logout`),
-    getAdmin: async () => await axios.get(`dashboardAPI/admin`),
+    getAdmin: async () => await axios.get(`/${apiPrefix}/admin`),
 
     fetchBase64DataFromUrl: async (url) => await axios.get(`/${apiPrefix}/fetchBase64DataFromUrl`, { params: { url: url } }),
 

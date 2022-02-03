@@ -1,10 +1,8 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch, } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store'
-import NotFound from './NotFound';
 import AllowedRoutes from './routing/AllowedRoutes'
 
 

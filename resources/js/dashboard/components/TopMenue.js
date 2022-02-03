@@ -2,7 +2,7 @@ import React from 'react'
 import { Routes, Api } from '../utility/URLs';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
-import {ApiCallHandler} from '../../commonFiles/helpers'
+import { ApiCallHandler } from '../../commonFiles/helpers'
 
 function TopMenue(props) {
     async function logout() {
@@ -62,17 +62,20 @@ function TopMenue(props) {
                         </NavDropdown>
 
                     </Nav>
-                    <Nav className="">
-                        {props.admin ? (
+
+                    {
+                        props.admin != null ? (<Nav className="">
                             <NavDropdown title={props.admin.name}>
                                 <NavDropdown.Item onClick={logout} >{'تسجيل الخروج'}</NavDropdown.Item>
                             </NavDropdown>
+                        </Nav>
                         ) : (
                             <LinkContainer to={Routes.loginPage()}>
-                                <NavDropdown.Item >{'تسجيل الدخول'}</NavDropdown.Item>
-                            </LinkContainer>
-                        )}
-                    </Nav>
+                                <Nav.Item >{'تسجيل الدخول'}</Nav.Item>
+                            </LinkContainer>)
+                    }
+
+
                 </Navbar.Collapse>
             </Container>
         </Navbar>
