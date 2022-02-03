@@ -1,20 +1,31 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import NotFound from './NotFound'
-import PrivateRoutesConfig from './PrivateRoutesConfig'
-import { intersection } from 'lodash';
+import { Container } from 'react-bootstrap'
 import { Api, ApiCallHandler } from '../utility/URLs'
+import TopMenue from '../components/TopMenue'
+import { Routes } from '../utility/URLs';
+import LoginPage from './LoginPage'
+import Home from '../Home';
+import PageCreator from '../page/PageCreator';
+import PagesIndex from '../page/PagesIndex';
+import PageShow from '../page/PageShow';
+import PageEditor from '../page/PageEditor';
+import BookCreator from '../book/BookCreator';
+import BooksIndex from '../book/BooksIndex';
+import BookShow from '../book/BookShow'
 
-const calculateAllowedRoutes = (admin) => {
-    const roles = admin?.role?.length ? [admin.role] : []
-    // console.log('calculateAllowedRoutes',roles)
-    return PrivateRoutesConfig.filter(
-        ({ permission }) => {
-            if (!permission) return true;
-            else if (!(Array.isArray(permission) && permission.length)) return true;
-            else return intersection(permission, roles).length;
-        })
-}
+import ArticleCreator from '../article/ArticleCreator';
+import ArticlesIndex from '../article/ArticlesIndex';
+import ArticleShow from '../article/ArticleShow';
+import ArticleEditor from '../article/ArticleEditor';
+
+import CategoryCreator from '../category/CategoryCreator';
+import CategoriesIndex from '../category/CategoriesIndex';
+import CategoryShow from '../category/CategoryShow';
+import CategoryEditor from '../category/CategoryEditor';
+import BookEdit from '../book/BookEdit';
+
 
 function AllowedRoutes(props) {
 
@@ -32,27 +43,45 @@ function AllowedRoutes(props) {
         }
     }, [props.admin])
 
-    React.useEffect(() => {
-        props.setAllowedRoutes(calculateAllowedRoutes(props.admin))
-        console.log('AllowedRoutes', calculateAllowedRoutes(props.admin))
-    }, [props.admin])
 
-    return <Switch>
-        {
-            props.allowedRoutes.map((route, index) => {
-                return <Route
-                    key={index}
-                    exact={route.exact}
-                    title={route.title}
-                    path={route.path}
-                    component={route.component}
-                />
-            })
-        }
-        <Route  component={NotFound} />
+    if (props.admin)
+        return <>
+            <TopMenue />
 
-    </Switch>
+            <Container >
+                <Switch>
+                    <Route exact={true} path={Routes.dashboard()} component={Home} />
 
+                    <Route exact={true} path={Routes.pageCreator()} component={PageCreator} />
+                    <Route exact={true} path={Routes.pagesIndex()} component={PagesIndex} />
+                    <Route exact={true} path={Routes.pageShow()} component={PageShow} />
+                    <Route exact={true} path={Routes.pageEdit()} component={PageEditor} />
+
+                    <Route exact={true} path={Routes.bookCreator()} component={BookCreator} />
+                    <Route exact={true} path={Routes.booksIndex()} component={BooksIndex} />
+                    <Route exact={true} path={Routes.bookShow()} component={BookShow} />
+                    <Route exact={true} path={Routes.bookEdit()} component={BookEdit} />
+
+
+
+
+                    <Route exact={true} path={Routes.articleCreator()} component={ArticleCreator} />
+                    <Route exact={true} path={Routes.articlesIndex()} component={ArticlesIndex} />
+                    <Route exact={true} path={Routes.articleShow()} component={ArticleShow} />
+                    <Route exact={true} path={Routes.articleEdit()} component={ArticleEditor} />
+
+                    <Route exact={true} path={Routes.categoryCreator()} component={CategoryCreator} />
+                    <Route exact={true} path={Routes.categoriesIndex()} component={CategoriesIndex} />
+                    <Route exact={true} path={Routes.categoryShow()} component={CategoryShow} />
+                    <Route exact={true} path={Routes.categoryEdit()} component={CategoryEditor} />
+
+                    <Route component={NotFound} />
+
+                </Switch>
+            </Container>
+        </>
+    else
+        return <LoginPage />
 }
 
 import { refreshAdmin, setAllowedRoutes } from '../redux/stateActions'
