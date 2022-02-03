@@ -1,14 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardAPI\HomeController;
 use App\Http\Controllers\DashboardAPI\BooksController;
 use App\Http\Controllers\DashboardAPI\PagesController;
-use App\Http\Controllers\DashboardAPI\CategoriesController;
 use App\Http\Controllers\DashboardAPI\ArticlesController;
-use App\Http\Controllers\DashboardAPI\HomeController;
+use App\Http\Controllers\DashboardAPI\Auth\LoginController;
+use App\Http\Controllers\DashboardAPI\CategoriesController;
+
+Route::get('/admin', [LoginController::class, 'user']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::delete('/logout', [LoginController::class, 'logout'])->middleware('auth:admin');
 
 Route::get('/home', [HomeController::class, 'home']);
-Route::post('/uploadDatabaseSeedFile', [HomeController::class, 'uploadDatabaseSeedFile']);
 Route::get('/fetchBase64DataFromUrl', [HomeController::class, 'fetchBase64DataFromUrl']);
 
 Route::post('/pages', [PagesController::class, 'create']);

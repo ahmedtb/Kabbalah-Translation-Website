@@ -1,9 +1,8 @@
 import React from 'react'
 import axios from 'axios';
-import logError from '../utility/logError'
-import { Api, Routes } from './utility/URLs';
-import { Redirect } from 'react-router-dom'
-
+import { api, routes } from '../utility/URLs'
+import { logError } from '../../commonFiles/helpers'
+import { Navigate } from 'react-router-dom'
 function LoginPage(props) {
     const [username, setusername] = React.useState('')
     const [password, setpassword] = React.useState('')
@@ -12,10 +11,10 @@ function LoginPage(props) {
     async function handleLogin(username, password) {
         try {
             await axios.get('/sanctum/csrf-cookie')
-            const response = await Api.login(username, password)
+            const response = await api.login(username, password)
             console.log('Admin signed in!', (response.data));
-            props.refreshUser(response.data)
-            setredirect(Routes.dashboard())
+            props.refreshAdmin(response.data)
+            setredirect(routes.dashboard())
 
         } catch (error) {
             logError(error)
@@ -24,14 +23,14 @@ function LoginPage(props) {
 
     React.useEffect(() => {
         if (props.user) {
-            setredirect(Routes.dashboard)
+            setredirect(routes.dashboard())
         }
     }, [props.user])
 
     const [redirect, setredirect] = React.useState(null);
 
     if (redirect) {
-        return <Redirect to={redirect} />
+        return <Navigate to={redirect} />
     }
 
     return (
@@ -54,7 +53,7 @@ function LoginPage(props) {
     )
 }
 
-import { refreshUser } from '../redux/stateActions'
+import { refreshAdmin } from '../redux/stateActions'
 import { connect } from "react-redux"
 
 const mapStateToProps = state => {
@@ -65,7 +64,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        refreshUser: (user) => dispatch(refreshUser(user)),
+        refreshAdmin: (user) => dispatch(refreshAdmin(user)),
     }
 }
 

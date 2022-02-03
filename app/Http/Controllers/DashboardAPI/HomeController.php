@@ -25,13 +25,6 @@ class HomeController extends Controller
         ];
     }
 
-    public function uploadDatabaseSeedFile(Request $request)
-    {
-        return $request->file('sqlFile');
-        $path = $request->file('sqlFile')->storeAs('sql','sqlFile.sql');
-
-        return $path;
-    }
 
     public function fetchBase64DataFromUrl(Request $request)
     {

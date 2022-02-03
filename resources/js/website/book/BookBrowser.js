@@ -9,7 +9,7 @@ import {
     getnextsection,
     getpresection
 } from "./Table"
-import {truncate} from '../../commonFiles/helpers'
+import { truncate } from '../../commonFiles/helpers'
 
 export default function BookBrowser(props) {
     const { id, sectionPath } = useParams()
@@ -65,7 +65,7 @@ export default function BookBrowser(props) {
             <PageContentRender page_content={page?.page_content} />
         </div>
         <div className='d-flex flex-row justify-content-around'>
-        {
+            {
                 getpresection(book?.content_table, sectionPath) ? (
                     <Link
                         to={{
@@ -90,9 +90,9 @@ export default function BookBrowser(props) {
                     </Link>
                 ) : null
             }
-            
+
         </div>
-        {page?.source_url ? <div>رابط المصدر <a href={page?.source_url} target='_blank'>truncate({page?.source_url})</a></div> : null }
+        {page?.source_url ? <div>رابط المصدر <a href={page?.source_url} target='_blank'>{truncate(page?.source_url, 20)}</a></div> : null}
 
     </div >
 }

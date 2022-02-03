@@ -35,7 +35,7 @@ export default function ArticleShow(props) {
 
     return <div>
         search <input onChange={e => setsearch(e.target.value)} />
-        <input type='submit' onClick={() => fetchArticles(null, { search: search })} />
+        <input type='submit' onClick={() => fetchArticles(null, { title: search })} />
         <ArticlesCardsRender articles={articles} />
 
         {/* {

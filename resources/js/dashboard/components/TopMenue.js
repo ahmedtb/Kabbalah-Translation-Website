@@ -1,21 +1,47 @@
 import React from 'react'
-import { Routes } from '../utility/URLs';
+import { Routes, Api } from '../utility/URLs';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 
-import {
-    FaUserTie,
-    FaUserCheck,
-    FaWpforms,
-    FaChalkboardTeacher,
-    FaSuitcase,
-    FaGraduationCap,
-    FaChartLine,
-    FaBuilding,
-    FaNetworkWired,
-    FaLaptop
-} from 'react-icons/fa'
+function AuthComponent(props) {
 
+    async function isLoggedIn() {
+        try {
+            const response = await Api.getAdmin()
+            props.refreshAdmin(response.data)
+            // console.log('/api/admin',response.data)
+        } catch (error) {
+            logError(error)
+        }
+    }
+
+    async function logout() {
+        try {
+            const response = await Api.logout()
+            // console.log('logout', (response.data));
+            props.refreshAdmin(null)
+        } catch (error) {
+            logError(error)
+        }
+    }
+
+    React.useEffect(() => {
+        if (props.admin == null)
+            isLoggedIn()
+        // console.log('top menue', props.admin)
+    }, [props.admin])
+
+
+    return props.admin ? (
+        <NavDropdown title={props.admin.name}>
+            <NavDropdown.Item onClick={logout} >{'تسجيل الخروج'}</NavDropdown.Item>
+        </NavDropdown>
+    ) : (
+        <LinkContainer to={Routes.loginPage()}>
+            <NavDropdown.Item >{'تسجيل الدخول'}</NavDropdown.Item>
+        </LinkContainer>
+    )
+}
 
 function TopMenue(props) {
 
@@ -68,25 +94,28 @@ function TopMenue(props) {
                         </NavDropdown>
 
                     </Nav>
+                    <Nav className="">
+                        <AuthComponent {...props} />
+                    </Nav>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
     )
 }
 
-import { refreshUser } from '../redux/stateActions'
+import { refreshAdmin } from '../redux/stateActions'
 import { connect } from "react-redux"
 
 const mapStateToProps = state => {
     return {
-        user: state.state.user,
+        admin: state.state.admin,
         allowedRoutes: state.state.allowedRoutes,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        refreshUser: (user) => dispatch(refreshUser(user)),
+        refreshAdmin: (admin) => dispatch(refreshAdmin(admin)),
     }
 }
 

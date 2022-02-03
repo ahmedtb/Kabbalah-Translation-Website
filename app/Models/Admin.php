@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends User
+class Admin extends Authenticatable
 {
-    use HasApiTokens,  HasFactory;
+    use HasApiTokens, HasFactory, Notifiable;
 }
