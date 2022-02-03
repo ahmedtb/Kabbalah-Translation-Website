@@ -12,6 +12,11 @@ const stateReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 admin: action.admin,
             };
+        case 'setAllowedRoutes':
+            return {
+                ...state,
+                allowedRoutes: action.allowedRoutes
+            }
         default:
             return state
     }

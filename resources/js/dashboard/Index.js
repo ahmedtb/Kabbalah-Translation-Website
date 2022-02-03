@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import store from './redux/store'
 import NotFound from './NotFound';
 import TopMenue from './components/TopMenue'
+import AllowedRoutes from './routing/AllowedRoutes'
 import { Routes } from './utility/URLs';
 import Home from './Home';
 import PageCreator from './page/PageCreator';
@@ -36,7 +37,9 @@ export default function Dashboard() {
       <Provider store={store}>
         <TopMenue />
         <Container >
-          <Switch>
+          <AllowedRoutes />
+
+          {/* <Switch>
             <Route exact={true} path={Routes.dashboard()} component={Home} />
 
             <Route exact={true} path={Routes.pageCreator()} component={PageCreator} />
@@ -64,7 +67,7 @@ export default function Dashboard() {
 
             <Route component={NotFound} />
 
-          </Switch>
+          </Switch> */}
         </Container>
       </Provider>
 

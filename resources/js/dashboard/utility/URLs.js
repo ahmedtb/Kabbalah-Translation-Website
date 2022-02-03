@@ -33,40 +33,40 @@ export const Routes = {
 
 const apiPrefix = 'dashboardAPI'
 export const Api = {
-    home: async () => await axios.get(`${apiPrefix}/home`),
+    home: async () => await axios.get(`/${apiPrefix}/home`),
 
-    login: async (username, password) => await axios.post(`${apiPrefix}/login`, { username: username, password: password }),
-    logout: async () => await axios.delete(`${apiPrefix}/logout`),
+    login: async (username, password) => await axios.post(`/${apiPrefix}/login`, { username: username, password: password }),
+    logout: async () => await axios.delete(`/${apiPrefix}/logout`),
     getAdmin: async () => await axios.get(`dashboardAPI/admin`),
 
-    fetchBase64DataFromUrl: async (url) => await axios.get(`${apiPrefix}/fetchBase64DataFromUrl`, { params: { url: url } }),
+    fetchBase64DataFromUrl: async (url) => await axios.get(`/${apiPrefix}/fetchBase64DataFromUrl`, { params: { url: url } }),
 
     createPage: async (title, meta_description, source_url, page_content, book_id) => {
-        return await axios.post(`${apiPrefix}/pages`,
+        return await axios.post(`/${apiPrefix}/pages`,
             { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
         )
     },
     editPage: async (id, title, meta_description, source_url, page_content, book_id) => {
-        return await axios.put(`${apiPrefix}/pages/` + id,
+        return await axios.put(`/${apiPrefix}/pages/` + id,
             { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
         )
 
     },
-    fetchPages: async (params) => await axios.get(`${apiPrefix}/pages/`, { params: params }),
-    fetchPage: async (id) => await axios.get(`${apiPrefix}/pages/` + id),
-    deletePage: async (id) => await axios.delete(`${apiPrefix}/pages/` + id),
+    fetchPages: async (params) => await axios.get(`/${apiPrefix}/pages/`, { params: params }),
+    fetchPage: async (id) => await axios.get(`/${apiPrefix}/pages/` + id),
+    deletePage: async (id) => await axios.delete(`/${apiPrefix}/pages/` + id),
 
-    createBook: async (title, description, thumbnail, author, activated, content_table) => await axios.post(`${apiPrefix}/books/create`, {
+    createBook: async (title, description, thumbnail, author, activated, content_table) => await axios.post(`/${apiPrefix}/books/create`, {
         title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
     }),
     editBook: async (id, title, description, thumbnail, author, activated, content_table) => await axios.put(`/dashboardAPI/books/${id}`, {
         title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
     }),
-    fetchBooks: async (params) => await axios.get(`${apiPrefix}/books/`, { params: params }),
-    fetchBook: async (id, params) => await axios.get(`${apiPrefix}/books/` + id, { params: params }),
+    fetchBooks: async (params) => await axios.get(`/${apiPrefix}/books/`, { params: params }),
+    fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/` + id, { params: params }),
 
     createArticle: async (category_id, title, description, thumbnail, activated, page_content, source_url) =>
-        await axios.post(`${apiPrefix}/articles`, {
+        await axios.post(`/${apiPrefix}/articles`, {
             title: title,
             description: description,
             thumbnail: thumbnail,
@@ -75,25 +75,25 @@ export const Api = {
             page_content: page_content,
             source_url: source_url
         }),
-    fetchArticles: async (params) => await axios.get(`${apiPrefix}/articles/`, { params: params }),
-    fetchArticle: async (id) => await axios.get(`${apiPrefix}/articles/` + id),
-    deleteArticle: async (id) => await axios.delete(`${apiPrefix}/articles/` + id),
+    fetchArticles: async (params) => await axios.get(`/${apiPrefix}/articles/`, { params: params }),
+    fetchArticle: async (id) => await axios.get(`/${apiPrefix}/articles/` + id),
+    deleteArticle: async (id) => await axios.delete(`/${apiPrefix}/articles/` + id),
     editArticle: async (id, category_id, title, description, thumbnail, activated, page_content, source_url) => await axios.put(
-        `${apiPrefix}/articles/` + id,
+        `/${apiPrefix}/articles/` + id,
         { category_id: category_id, title: title, description: description, thumbnail: thumbnail, activated: activated, page_content: page_content, source_url: source_url }
     ),
 
-    createCategory: async (name) => await axios.post(`${apiPrefix}/categories`, { name: name }),
-    fetchCategories: async (params) => await axios.get(`${apiPrefix}/categories/`, { params: params }),
-    fetchCategory: async (id, params) => await axios.get(`${apiPrefix}/categories/` + id, { params: params }),
-    editCategory: async (id, name) => await axios.put(`${apiPrefix}/categories/` + id, { name: name }),
-    deleteCategory: async (id) => await axios.delete(`${apiPrefix}/categories/` + id),
+    createCategory: async (name) => await axios.post(`/${apiPrefix}/categories`, { name: name }),
+    fetchCategories: async (params) => await axios.get(`/${apiPrefix}/categories/`, { params: params }),
+    fetchCategory: async (id, params) => await axios.get(`/${apiPrefix}/categories/` + id, { params: params }),
+    editCategory: async (id, name) => await axios.put(`/${apiPrefix}/categories/` + id, { name: name }),
+    deleteCategory: async (id) => await axios.delete(`/${apiPrefix}/categories/` + id),
 
-    createGlossaryTerm: async (name) => await axios.post(`${apiPrefix}/glossaryTerms`, { name: name }),
-    fetchGlossaryTerms: async (params) => await axios.get(`${apiPrefix}/glossaryTerms/`, { params: params }),
-    fetchGlossaryTerm: async (id, params) => await axios.get(`${apiPrefix}/glossaryTerms/` + id, { params: params }),
-    editGlossaryTerm: async (id, name) => await axios.put(`${apiPrefix}/glossaryTerms/` + id, { name: name }),
-    deleteGlossaryTerm: async (id) => await axios.delete(`${apiPrefix}/glossaryTerms/` + id),
+    createGlossaryTerm: async (name) => await axios.post(`/${apiPrefix}/glossaryTerms`, { name: name }),
+    fetchGlossaryTerms: async (params) => await axios.get(`/${apiPrefix}/glossaryTerms/`, { params: params }),
+    fetchGlossaryTerm: async (id, params) => await axios.get(`/${apiPrefix}/glossaryTerms/` + id, { params: params }),
+    editGlossaryTerm: async (id, name) => await axios.put(`/${apiPrefix}/glossaryTerms/` + id, { name: name }),
+    deleteGlossaryTerm: async (id) => await axios.delete(`/${apiPrefix}/glossaryTerms/` + id),
 }
 
 export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {

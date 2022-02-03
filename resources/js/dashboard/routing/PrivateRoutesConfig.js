@@ -1,4 +1,4 @@
-import { Routes } from '../utility/Urls'
+import { Routes } from '../utility/URLs'
 import Roles from './Roles'
 
 // Components
@@ -6,8 +6,6 @@ import Home from '../Home'
 import LoginPage from './LoginPage'
 
 import PageCreator from '../page/PageCreator'
-
-import PageCreator from '../page/PageCreator';
 import PagesIndex from '../page/PagesIndex';
 import PageShow from '../page/PageShow';
 import PageEditor from '../page/PageEditor';
@@ -31,7 +29,7 @@ export default [
     {
         component: Home,
         path: Routes.dashboard(),
-        permission: [Roles.ADMIN],
+        permission: [],
         exact: true,
     }, 
     {

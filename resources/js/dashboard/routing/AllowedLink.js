@@ -19,10 +19,9 @@ function AllowedLink(props) {
 
         if (allowedRoutes.length) {
             for (let i = 0; i < allowedRoutes.length; i++) {
-                // if (
-                //     matchPath({ path: allowedRoutes[i].path, exact: true, strict: false }, path)
-                // ) return true
-                return true
+                if (matchPath(path, { path: allowedRoutes[i].path, exact: true, strict: false }))
+                    return true
+                // return true
             }
         }
         return false;

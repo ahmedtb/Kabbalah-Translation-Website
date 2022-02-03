@@ -1,9 +1,9 @@
 import React from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import NotFound from './NotFound'
 import PrivateRoutesConfig from './PrivateRoutesConfig'
 import { intersection } from 'lodash';
-import { A, ApiCallHandler } from '../utility/URLs'
+import { Api, ApiCallHandler } from '../utility/URLs'
 
 const calculateAllowedRoutes = (admin) => {
     const roles = admin?.role?.length ? [admin.role] : []
@@ -34,10 +34,10 @@ function AllowedRoutes(props) {
 
     React.useEffect(() => {
         props.setAllowedRoutes(calculateAllowedRoutes(props.admin))
-        // console.log('AllowedRoutes', calculateAllowedRoutes(props.admin))
+        console.log('AllowedRoutes', calculateAllowedRoutes(props.admin))
     }, [props.admin])
 
-    return <Routes>
+    return <Switch>
         {
             props.allowedRoutes.map((route, index) => {
                 return <Route
@@ -51,7 +51,7 @@ function AllowedRoutes(props) {
         }
         <Route  component={NotFound} />
 
-    </Routes>
+    </Switch>
 
 }
 

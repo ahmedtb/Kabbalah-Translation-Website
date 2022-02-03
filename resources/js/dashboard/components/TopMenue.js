@@ -1,101 +1,82 @@
 import React from 'react'
 import { Routes, Api } from '../utility/URLs';
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap'
+import AllowedLink from '../routing/AllowedLink'
 
-function AuthComponent(props) {
-
-    async function isLoggedIn() {
-        try {
-            const response = await Api.getAdmin()
-            props.refreshAdmin(response.data)
-            // console.log('/api/admin',response.data)
-        } catch (error) {
-            logError(error)
-        }
-    }
-
-    async function logout() {
-        try {
-            const response = await Api.logout()
-            // console.log('logout', (response.data));
-            props.refreshAdmin(null)
-        } catch (error) {
-            logError(error)
-        }
-    }
-
-    React.useEffect(() => {
-        if (props.admin == null)
-            isLoggedIn()
-        // console.log('top menue', props.admin)
-    }, [props.admin])
-
-
-    return props.admin ? (
-        <NavDropdown title={props.admin.name}>
-            <NavDropdown.Item onClick={logout} >{'تسجيل الخروج'}</NavDropdown.Item>
-        </NavDropdown>
-    ) : (
-        <LinkContainer to={Routes.loginPage()}>
-            <NavDropdown.Item >{'تسجيل الدخول'}</NavDropdown.Item>
-        </LinkContainer>
-    )
-}
+import { refreshAdmin } from '../redux/stateActions'
+import { connect } from "react-redux"
+import { ApiCallHandler } from '../../commonFiles/helpers';
 
 function TopMenue(props) {
+    async function logout() {
+        ApiCallHandler(
+            async () => await Api.logout(),
+            () => props.refreshAdmin(null),
+            'TopMenue logout',
+            true
+        )
+    }
+
 
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <LinkContainer to={Routes.dashboard()}>
+                <AllowedLink hide={true} container={true} to={Routes.dashboard()}>
                     <Navbar.Brand >
                         Kabbalah Translation
                     </Navbar.Brand>
-                </LinkContainer>
+                </AllowedLink>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
 
                         <NavDropdown title="الكتب" id="basic-nav-dropdown">
-                            <LinkContainer to={Routes.bookCreator()}>
+                            <AllowedLink hide={true} container={true} to={Routes.bookCreator()}>
                                 <NavDropdown.Item >انشاء كتاب</NavDropdown.Item>
-                            </LinkContainer>
-                            <LinkContainer to={Routes.pageCreator()}>
+                            </AllowedLink>
+                            <AllowedLink hide={true} container={true} to={Routes.pageCreator()}>
                                 <NavDropdown.Item >انشاء صفحة</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                             <NavDropdown.Divider />
-                            <LinkContainer to={Routes.booksIndex()}>
+                            <AllowedLink hide={true} container={true} to={Routes.booksIndex()}>
                                 <NavDropdown.Item >قائمة الكتب</NavDropdown.Item>
-                            </LinkContainer>
-                            <LinkContainer to={Routes.pagesIndex()}>
+                            </AllowedLink>
+                            <AllowedLink hide={true} container={true} to={Routes.pagesIndex()}>
                                 <NavDropdown.Item >قائمة الصفحات</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                         </NavDropdown>
 
                         <NavDropdown title="المقالات" id="basic-nav-dropdown">
-                            <LinkContainer to={Routes.articleCreator()}>
+                            <AllowedLink hide={true} container={true} to={Routes.articleCreator()}>
                                 <NavDropdown.Item >انشاء مقالة</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                             <NavDropdown.Divider />
-                            <LinkContainer to={Routes.articlesIndex()}>
+                            <AllowedLink hide={true} container={true} to={Routes.articlesIndex()}>
                                 <NavDropdown.Item >قائمة المقالات</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                         </NavDropdown>
 
                         <NavDropdown title="تصنيفات" id="basic-nav-dropdown">
-                            <LinkContainer to={Routes.categoryCreator()}>
+                            <AllowedLink hide={true} container={true} to={Routes.categoryCreator()}>
                                 <NavDropdown.Item >انشاء تصنيف</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                             <NavDropdown.Divider />
-                            <LinkContainer to={Routes.categoriesIndex()}>
+                            <AllowedLink hide={true} container={true} to={Routes.categoriesIndex()}>
                                 <NavDropdown.Item >قائمة تصنيفات</NavDropdown.Item>
-                            </LinkContainer>
+                            </AllowedLink>
                         </NavDropdown>
 
                     </Nav>
                     <Nav className="">
-                        <AuthComponent {...props} />
+                        {props.admin ? (
+                            <NavDropdown title={props.admin.name}>
+                                <NavDropdown.Item onClick={logout} >{'تسجيل الخروج'}</NavDropdown.Item>
+                            </NavDropdown>
+                        ) : (
+                            <AllowedLink hide={true} container={true} to={Routes.loginPage()}>
+                                <NavDropdown.Item >{'تسجيل الدخول'}</NavDropdown.Item>
+                            </AllowedLink>
+                        )}
                     </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -103,8 +84,6 @@ function TopMenue(props) {
     )
 }
 
-import { refreshAdmin } from '../redux/stateActions'
-import { connect } from "react-redux"
 
 const mapStateToProps = state => {
     return {

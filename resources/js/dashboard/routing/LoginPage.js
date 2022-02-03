@@ -1,36 +1,49 @@
 import React from 'react'
 import axios from 'axios';
-import { api, routes } from '../utility/URLs'
-import { logError } from '../../commonFiles/helpers'
-import { Navigate } from 'react-router-dom'
+import { Api, Routes } from '../utility/URLs'
+import { ApiCallHandler, logError } from '../../commonFiles/helpers'
+import { Redirect } from 'react-router-dom'
 function LoginPage(props) {
     const [username, setusername] = React.useState('')
     const [password, setpassword] = React.useState('')
 
 
     async function handleLogin(username, password) {
-        try {
-            await axios.get('/sanctum/csrf-cookie')
-            const response = await api.login(username, password)
-            console.log('Admin signed in!', (response.data));
-            props.refreshAdmin(response.data)
-            setredirect(routes.dashboard())
 
-        } catch (error) {
-            logError(error)
-        }
+        ApiCallHandler(
+            async () => {
+                await axios.get('/sanctum/csrf-cookie')
+                return await Api.login(username, password)
+            },
+            (data) => {
+                props.refreshAdmin(data)
+                setredirect(Routes.dashboard())
+            },
+            'handleLogin',
+            true
+        )
+        // try {
+        //     await axios.get('/sanctum/csrf-cookie')
+        //     const response = await Api.login(username, password)
+        //     console.log('Admin signed in!', (response.data));
+        //     props.refreshAdmin(response.data)
+        //     setredirect(Routes.dashboard())
+
+        // } catch (error) {
+        //     logError(error)
+        // }
     }
 
     React.useEffect(() => {
         if (props.user) {
-            setredirect(routes.dashboard())
+            setredirect(Routes.dashboard())
         }
     }, [props.user])
 
     const [redirect, setredirect] = React.useState(null);
 
     if (redirect) {
-        return <Navigate to={redirect} />
+        return <Redirect to={redirect} />
     }
 
     return (
