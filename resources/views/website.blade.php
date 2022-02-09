@@ -18,6 +18,8 @@
         <script src="{{ asset('js/website.js') }}" defer></script>
     @endif
 
+    <meta property="og:image" content="/favicon.ico" />
+
 </head>
 
 <body>

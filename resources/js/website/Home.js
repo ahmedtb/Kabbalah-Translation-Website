@@ -34,7 +34,7 @@ export default function Home(props) {
                             <Link to={Routes.articleShow(1)}>
                                 <img
                                     className="d-block w-100"
-                                    src="/images/sketch.jpg"
+                                    src="/images/Sketch.jpg"
                                     alt="First slide"
                                 />
                                 <Carousel.Caption>
