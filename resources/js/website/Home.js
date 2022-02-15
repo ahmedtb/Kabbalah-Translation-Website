@@ -27,8 +27,9 @@ export default function Home(props) {
     }, [])
     return (
         <div className='py-3'>
+
             <Row>
-                <Col xs={9}>
+                <Col md={9}>
                     <Carousel interval={3000} fade>
                         <Carousel.Item>
                             <Link to={Routes.articleShow(1)}>
@@ -48,9 +49,9 @@ export default function Home(props) {
                     {/* <YoutubeEmbed embedId="rokGy0huYEA" /> */}
                     <ArticlesCardsRender articles={articles} />
                 </Col>
-                <Col xs={3}>
+                <Col md={3}>
                     <a href='https://www.facebook.com/WisdomKabbalah/' target={'_blank'}>
-                        <AiFillFacebook size={50}/>
+                        <AiFillFacebook size={50} />
                         فيسبوك
                     </a>
                     <h4>تصنيفات</h4>
