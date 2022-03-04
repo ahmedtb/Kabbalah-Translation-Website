@@ -62,7 +62,7 @@ export default function ArticleCreator(props) {
                 setcategory_id(e.target.value)
             }}
         >
-            <option>اختر صفحة</option>
+            <option>تصنيف المقالة</option>
             {
                 categories.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
             }

@@ -4,7 +4,8 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { Col, Container, Button } from "react-bootstrap";
 import PageContentRender from '../components/PageContentRender'
-
+import { Helmet } from 'react-helmet'
+import { truncate } from "../../commonFiles/helpers";
 export default function ArticleShow(props) {
     let { id } = useParams();
     const [article, setarticle] = React.useState(null)
@@ -21,14 +22,22 @@ export default function ArticleShow(props) {
         setup()
     }, [])
     return <div>
+        <Helmet>
+            <meta property="og:title" content={article?.title} />
+            <title>
+                {article?.title}
+            </title>
+            {/* <meta property="og:image" content={article?.thumbnail} /> */}
+
+        </Helmet>
         <Col xs={12}>
             {/* <h1 className='text-center'>{article?.title}</h1> */}
             <Link to={Routes.articlesIndex({ category_id: article?.category_id })}>{article?.category.name}</Link>
-            {article?.description ? <div>وصف المقالة {article?.description}</div> : null }
+            {article?.description ? <div>وصف المقالة {article?.description}</div> : null}
 
             <PageContentRender page_content={article?.page_content} />
-            
-            {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{article?.source_url}</a></div> : null }
+
+            {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{truncate(article?.source_url)}</a></div> : null}
         </Col>
     </div>
 }
