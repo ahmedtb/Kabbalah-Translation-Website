@@ -17,4 +17,5 @@ mix.js('resources/js/dashboard.js', 'public/js')
 
 mix.js('resources/js/website.js', 'public/js')
     .react()
-    .sass('resources/sass/website.scss', 'public/css');
+    .sass('resources/sass/website.scss', 'public/css')
+    .sourceMaps(false, 'source-map');

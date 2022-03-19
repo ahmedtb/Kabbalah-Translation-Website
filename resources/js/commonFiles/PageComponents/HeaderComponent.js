@@ -163,10 +163,11 @@ export function HeaderComponentWebsiteRender(props) {
     const original = component.original
     const translated = component.translated
     const size = component.size
+    const className = props.className
 
     // console.log('HeaderComponentWebsiteRender size', size == 5)
 
-    return <div dir={translatedDir} >
+    return <div dir={translatedDir} className={className}>
         {(() => {
             switch (+size) {
                 case 1:

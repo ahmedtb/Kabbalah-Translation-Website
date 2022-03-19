@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
 import { ParagraphComponentWebsiteRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { HeaderComponentWebsiteRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import { TitleComponentWebsiteRender } from '../../commonFiles/PageComponents/TitleComponent'
@@ -29,26 +29,47 @@ const componentsTypes = {
     [SeperatorComponentClass]: { Render: SeperatorComponentWebsiteRender },
     [QuoteComponentClass]: { Render: QuoteComponentWebsiteRender },
 }
-
-import { Col } from 'react-bootstrap'
+import { GoSettings } from 'react-icons/go'
 
 export default function PageContentRender(props) {
     const page_content = props.page_content
     const translatedDir = page_content?.translatedDir
     const originalDir = page_content?.originalDir
     const [render, setrender] = React.useState('translated')
+    const [darkMode, setdarkMode] = React.useState('')
 
+    return <div className={`mx-auto ${darkMode ? 'bg-dark' : 'bg-white'} rounded`} >
 
-    return <div className='mx-auto bg-white rounded'>
-        {/* <a className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>
-            عرض النص الاصلي
-        </a>
-        <a className={render == 'translated' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('translated')}>
-            عرض الترجمة
-        </a>
-        <a className={render == 'both' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('both')}>
-            كلاهما
-        </a> */}
+        <OverlayTrigger
+            trigger="click"
+            placement={'bottom'}
+            rootClose
+            overlay={
+                <Popover     >
+                    {/* <Popover.Header as="h3"></Popover.Header> */}
+                    <Popover.Body>
+                        <Button className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>
+                            عرض النص الاصلي
+                        </Button>
+                        <Button className={render == 'translated' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('translated')}>
+                            عرض الترجمة
+                        </Button>
+                        <Button className={render == 'both' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('both')}>
+                            كلاهما
+                        </Button>
+
+                        <Button className={darkMode ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setdarkMode(!darkMode)}>
+                            الوضع الليلي
+                        </Button>
+                    </Popover.Body>
+                </Popover>
+            }
+        >
+            <Button variant="primary">
+                <GoSettings />
+            </Button>
+        </OverlayTrigger>
+
         <div className='p-3'>
             {
                 page_content?.pageComponents.map((pageComponent, index) => {
@@ -56,11 +77,11 @@ export default function PageContentRender(props) {
                         let Render = componentsTypes[pageComponent.class].Render
                         return <Render
                             key={index}
-                            key={index}
                             originalDir={originalDir}
                             translatedDir={translatedDir}
                             component={pageComponent}
                             render={render}
+                            className={darkMode ? 'text-white' : ''}
                         />
                     }
                 })

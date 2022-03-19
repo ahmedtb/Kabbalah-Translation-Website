@@ -10,19 +10,18 @@ export function ParagraphComponentRender(props) {
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
     const render = props.render
-
-
+    const className = props.className
     switch (render) {
         case 'original':
-            return <div dir={originalDir} style={component.style}>
+            return <div dir={originalDir} style={component.style} className={className}>
                 {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
             </div>
         case 'translated':
-            return <div dir={translatedDir} style={component.style}>
+            return <div dir={translatedDir} style={component.style} className={className}>
                 {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
             </div>
         case 'both':
-            return <div style={component.style}>
+            return <div style={component.style} className={className}>
                 <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
                 <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
             </div>
@@ -35,21 +34,24 @@ export function ParagraphComponentWebsiteRender(props) {
     const originalDir = props.originalDir
     const translatedDir = props.translatedDir
     const render = props.render
+    const className = props.className
+
+    console.log('className', className)
 
     switch (render) {
         case 'original':
-            return <div dir={originalDir} style={component.style}>
+            return <div dir={originalDir} style={component.style} className={className}>
                 {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
             </div>
         case 'translated':
             return <div className='mx-auto'>
                 {
                     component.translated ?
-                        <div dir={translatedDir} style={component.style}>
+                        <div dir={translatedDir} style={component.style} className={className}>
                             {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
                         </div>
                         :
-                        <div className='d-flex justify-content-between'>
+                        <div className={`d-flex justify-content-between ${className}`} >
                             <div className='flex-grow-1' dir={originalDir} style={component.style}>
                                 {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
                             </div>
@@ -58,7 +60,7 @@ export function ParagraphComponentWebsiteRender(props) {
                 }
             </div >
         case 'both':
-            return <div style={component.style}>
+            return <div style={component.style} className={className}>
                 <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
                 <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
             </div>
