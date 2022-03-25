@@ -17,6 +17,7 @@ import ArticlesIndex from './article/ArticlesIndex';
 import ArticleShow from './article/ArticleShow';
 import CategoriesIndex from './category/CategoriesIndex';
 import BookChapter from './book/BookChapter';
+import Footer from './components/Footer';
 // import CategoryShow from './category/CategoryShow';
 
 export default function Website() {
@@ -48,6 +49,8 @@ export default function Website() {
             <Route component={NotFound} />
           </Switch>
         </Container>
+
+        <Footer />
         
       </Provider>
 

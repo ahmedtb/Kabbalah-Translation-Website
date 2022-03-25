@@ -4,7 +4,7 @@ import { Col, Row, Carousel } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import ArticlesCardsRender from "./components/ArticlesCardsRender"
 import { LinkContainer } from "react-router-bootstrap"
-import { AiFillFacebook } from "react-icons/ai"
+import { AiFillFacebook, AiFillYoutube } from "react-icons/ai"
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -50,18 +50,33 @@ export default function Home(props) {
                     <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col md={3}>
-                    <a href='https://www.facebook.com/WisdomKabbalah/' target={'_blank'}>
-                        <AiFillFacebook size={50} />
-                        فيسبوك
-                    </a>
-                    <h4>تصنيفات</h4>
-                    {
-                        categories?.map((category, index) => (
-                            <div key={index}>
-                                <Link to={Routes.articlesIndex({ category_id: category.id })}> {category.name}  </Link>
+                    <div className="d-flex justify-content-around">
+
+                        <a href='https://www.facebook.com/WisdomKabbalah/' target={'_blank'} className=''>
+                            <AiFillFacebook size={50} />
+                            <div>
+                                فيسبوك
                             </div>
-                        ))
-                    }
+                        </a>
+                        <a href='https://www.youtube.com/channel/UCJ3WaAE9Qb_RWIs9x6dKWNQ' target={'_blank'}>
+                            <AiFillYoutube size={50} />
+                            <div>
+                                يوتيوب
+                            </div>
+                        </a>
+                    </div>
+
+                    <div className="p-3">
+
+                        <h4>تصنيفات</h4>
+                        {
+                            categories?.map((category, index) => (
+                                <div key={index}>
+                                    <Link to={Routes.articlesIndex({ category_id: category.id })}> {category.name}  </Link>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </Col>
             </Row>
         </div>
