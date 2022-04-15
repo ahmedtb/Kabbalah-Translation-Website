@@ -36,7 +36,7 @@ export function ParagraphComponentWebsiteRender(props) {
     const render = props.render
     const className = props.className
 
-    console.log('className', className)
+    // console.log('className', className)
 
     switch (render) {
         case 'original':

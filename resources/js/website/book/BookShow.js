@@ -4,19 +4,24 @@ import { Link } from 'react-router-dom'
 import { Col, ListGroup } from 'react-bootstrap'
 import { Routes, Api, ApiCallHandler } from '../utility/Urls'
 import { Helmet } from 'react-helmet'
-
+import LoadingIndicator from '../../commonFiles/LoadingIndicator'
+import { trackPromise } from 'react-promise-tracker'
 
 
 export default function BookShow(props) {
     const { id } = useParams()
     const [book, setbook] = React.useState()
+    
     function setup() {
-        ApiCallHandler(
-            async () => await Api.fetchBook(id),
-            setbook,
-            'BookShow',
-            false
+        trackPromise(
+            ApiCallHandler(
+                async () => await Api.fetchBook(id),
+                setbook,
+                'BookShow',
+                false
+            )
         )
+
     }
     React.useEffect(() => { setup() }, [])
 
@@ -51,13 +56,14 @@ export default function BookShow(props) {
 
 
     return <Col xs={12}>
+        <LoadingIndicator />
         <Helmet>
             <meta property="og:image" content={book?.thumbnail} />
             <title>{book?.title}</title>
         </Helmet>
         <h1 className='text-center'>{book?.title}</h1>
         <div>{book?.description}</div>
-        <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div>
+        {/* <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div> */}
         <h3 className='text-center'>جدول المحتوى</h3>
 
         <Col xs={8} className='mx-auto'>
