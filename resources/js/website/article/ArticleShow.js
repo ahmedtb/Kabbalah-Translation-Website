@@ -6,24 +6,30 @@ import { Col, Container, Button } from "react-bootstrap";
 import PageContentRender from '../components/PageContentRender'
 import { Helmet } from 'react-helmet'
 import { truncate } from "../../commonFiles/helpers";
+import LoadingIndicator from '../../commonFiles/LoadingIndicator'
+import { trackPromise } from 'react-promise-tracker'
+
 export default function ArticleShow(props) {
     let { id } = useParams();
     const [article, setarticle] = React.useState(null)
 
     async function setup() {
-        ApiCallHandler(
-            async () => await Api.fetchArticle(id),
-            setarticle,
-            'ArticleShow',
-            true
+        trackPromise(
+            ApiCallHandler(
+                async () => await Api.fetchArticle(id),
+                setarticle,
+                'ArticleShow',
+                true
+            )
         )
     }
     React.useEffect(() => {
         setup()
     }, [])
     return <div>
+        <LoadingIndicator />
+
         <Helmet>
-            <meta property="og:title" content={article?.title} />
             <title>
                 {article?.title}
             </title>

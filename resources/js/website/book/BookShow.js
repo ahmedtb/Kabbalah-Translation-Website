@@ -58,7 +58,6 @@ export default function BookShow(props) {
     return <Col xs={12}>
         <LoadingIndicator />
         <Helmet>
-            <meta property="og:image" content={book?.thumbnail} />
             <title>{book?.title}</title>
         </Helmet>
         <h1 className='text-center'>{book?.title}</h1>

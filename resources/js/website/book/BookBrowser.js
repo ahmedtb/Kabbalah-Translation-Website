@@ -10,6 +10,9 @@ import {
     getpresection
 } from "./Table"
 import { truncate } from '../../commonFiles/helpers'
+import { Helmet } from 'react-helmet'
+import LoadingIndicator from '../../commonFiles/LoadingIndicator'
+import { trackPromise } from 'react-promise-tracker'
 
 export default function BookBrowser(props) {
     const { id, sectionPath } = useParams()
@@ -25,13 +28,18 @@ export default function BookBrowser(props) {
             false
         )
     }
+
     function fetchPage(page_id) {
-        ApiCallHandler(
-            async () => await Api.fetchPage(page_id),
-            setpage,
-            'BookBrowser fetchPage',
-            false
+        trackPromise(
+
+            ApiCallHandler(
+                async () => await Api.fetchPage(page_id),
+                setpage,
+                'BookBrowser fetchPage',
+                false
+            )
         )
+
     }
 
     React.useEffect(() => {
@@ -50,17 +58,12 @@ export default function BookBrowser(props) {
 
 
     return <div>
-        {/* <div className='d-flex'>
-            <Link to={Routes.bookShow(id)}>
-                {book?.title}
-            </Link>
-            -
-            {
-                sections[sectionIndex]?.subIndex ?
-                    <div><Link to={Routes.bookChapterShow(book?.id, sections[sectionIndex].index)}>{book?.content_table[sections[sectionIndex].index].title}</Link> - {sections[sectionIndex]?.title}</div>
-                    : <div >{sections[sectionIndex]?.title}</div>
-            }
-        </div> */}
+
+        <LoadingIndicator />
+        <Helmet>
+            <title>{page?.title}</title>
+        </Helmet>
+
         <div className='rounded'>
             <PageContentRender page_content={page?.page_content} />
         </div>

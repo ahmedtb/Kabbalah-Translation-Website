@@ -5,6 +5,9 @@ import { Link } from "react-router-dom"
 import ArticlesCardsRender from "./components/ArticlesCardsRender"
 import { LinkContainer } from "react-router-bootstrap"
 import { AiFillFacebook, AiFillYoutube } from "react-icons/ai"
+import { Helmet } from 'react-helmet';
+import LoadingIndicator from '../commonFiles/LoadingIndicator'
+import { trackPromise } from 'react-promise-tracker'
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -16,10 +19,12 @@ export default function Home(props) {
             'CategoriesIndex fetchCategories',
             true
         )
-        ApiCallHandler(async () => await Api.fetchArticles({ latest: true, with: ['category'] }),
-            (data) => setarticles(data.data),
-            'CategoriesIndex fetchArticles',
-            true
+        trackPromise(
+            ApiCallHandler(async () => await Api.fetchArticles({ latest: true, with: ['category'] }),
+                (data) => setarticles(data.data),
+                'CategoriesIndex fetchArticles',
+                true
+            )
         )
     }
     React.useEffect(() => {
@@ -28,6 +33,11 @@ export default function Home(props) {
     return (
         <div className='py-3'>
 
+            <Helmet>
+                <title>
+                    {process.env.MIX_APP_NAME}
+                </title>
+            </Helmet>
             <Row>
                 <Col md={9}>
                     <Carousel interval={3000} fade>
@@ -45,8 +55,9 @@ export default function Home(props) {
                             </Link>
                         </Carousel.Item>
                     </Carousel>
-                    {/* <h1>Youtube Embed</h1> */}
-                    {/* <YoutubeEmbed embedId="rokGy0huYEA" /> */}
+
+                    <LoadingIndicator />
+
                     <ArticlesCardsRender articles={articles} />
                 </Col>
                 <Col md={3}>
