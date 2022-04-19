@@ -2,9 +2,12 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Book;
-use App\Tournament;
+use App\Models\Article;
 use Closure;
+use App\Tournament;
+use App\Models\Book;
+use App\Models\Page;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 class RedirectCrawlers
@@ -16,7 +19,7 @@ class RedirectCrawlers
      * @param  \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         $crawlers = [
             'facebookexternalhit/1.1',
@@ -26,16 +29,49 @@ class RedirectCrawlers
         ];
 
         $userAgent = $request->header('User-Agent');
+        // return preg_match('/books.*\/section\/.*/', $request->path());
 
         if (in_array($userAgent, $crawlers)) {
-            // dd(Route::getCurrentRoute());
-            // return view('openGraph', compact('book'));
-            switch (Route::getCurrentRoute()->uri) {
-                case "{path}":
-                    $book = Book::first();
-                    return view('openGraph', compact('book'));
+            switch ($request->path()) {
+
+                case 'books':
+                    return view('openGraph.books');
+
+                case (preg_match('/books.*\/section\/.*/', $request->path()) ? true : false):
+                    $id =  explode("/", $request->path())[1];
+                    $book = Book::find($id);
+
+                    $pageIndex =  explode("/", $request->path())[3];
+                    $pageId = $book->content_table[$pageIndex]['page_id'];
+                    $page = Page::find($pageId);
+                    return view('openGraph.page', compact('page'));
+
+                case (preg_match('/books.*\/chapter\/.*/', $request->path()) ? true : false):
+                    $id =  explode("/", $request->path())[1];
+                    // return $id;
+                    $book = Book::find($id);
+                    $chapterIndex =  explode("/", $request->path())[3];
+                    // return $chapterIndex;
+
+                    return view('openGraph.chapter', [
+                        'chapter' => $book->content_table[$chapterIndex]['title']
+                    ]);
+
+                case (preg_match('/books\/.*/', $request->path()) ? true : false):
+                    $id =  explode("/", $request->path())[1];
+
+                    $book = Book::find($id);
+                    return view('openGraph.book', compact('book'));
+
+                case 'articles':
+                    return view('openGraph.articles');
+
+                case (preg_match('/articles\/.*/', $request->path()) ? true : false):
+                    $id =  explode("/", $request->path())[1];
+
+                    $article = Article::find($id);
+                    return view('openGraph.article', compact('article'));
             }
-            
         }
         return $next($request);
     }
