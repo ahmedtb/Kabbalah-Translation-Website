@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, OverlayTrigger, Popover } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { ParagraphComponentWebsiteRender } from '../../commonFiles/PageComponents/ParagraphComponent'
 import { HeaderComponentWebsiteRender } from '../../commonFiles/PageComponents/HeaderComponent'
 import { TitleComponentWebsiteRender } from '../../commonFiles/PageComponents/TitleComponent'
@@ -29,7 +29,7 @@ const componentsTypes = {
     [SeperatorComponentClass]: { Render: SeperatorComponentWebsiteRender },
     [QuoteComponentClass]: { Render: QuoteComponentWebsiteRender },
 }
-import { GoSettings } from 'react-icons/go'
+import { BsFileText, BsTranslate, BsChevronBarContract, BsMoonStars } from 'react-icons/bs'
 
 export default function PageContentRender(props) {
     const page_content = props.page_content
@@ -40,35 +40,25 @@ export default function PageContentRender(props) {
 
     return <div className={`mx-auto ${darkMode ? 'bg-dark' : 'bg-white'} rounded`} >
 
-        <OverlayTrigger
-            trigger="click"
-            placement={'bottom'}
-            rootClose
-            overlay={
-                <Popover     >
-                    {/* <Popover.Header as="h3"></Popover.Header> */}
-                    <Popover.Body>
-                        <Button className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>
-                            عرض النص الاصلي
-                        </Button>
-                        <Button className={render == 'translated' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('translated')}>
-                            عرض الترجمة
-                        </Button>
-                        <Button className={render == 'both' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('both')}>
-                            كلاهما
-                        </Button>
+        <div className='d-flex justify-content-end'>
+            <Button className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>
+                <BsFileText />
 
-                        <Button className={darkMode ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setdarkMode(!darkMode)}>
-                            الوضع الليلي
-                        </Button>
-                    </Popover.Body>
-                </Popover>
-            }
-        >
-            <Button variant="primary">
-                <GoSettings />
             </Button>
-        </OverlayTrigger>
+            <Button className={render == 'translated' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('translated')}>
+                <BsTranslate />
+
+
+            </Button>
+            <Button className={render == 'both' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('both')}>
+                <BsTranslate /> + <BsFileText />
+
+            </Button>
+
+            <Button className={darkMode ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setdarkMode(!darkMode)}>
+                <BsMoonStars />
+            </Button>
+        </div>
 
         <div className='p-3'>
             {
