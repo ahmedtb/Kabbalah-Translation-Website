@@ -40,4 +40,29 @@ class Book extends Model
     {
         return $filters->apply($query);
     }
+
+    public function getContentTableSection($indexes)
+    {
+        $pageIndexes =  explode("-", $indexes);
+        // return  $this->content_table[2]['sections'][1];
+
+        $section = null;
+        foreach($pageIndexes as $index){
+            $section = $section ? $section['sections'][$index] : $this->content_table[$index];
+        }
+        return $section ?? [];
+    }
+
+    
+    public function getContentTableChapter($indexes)
+    {
+        $pageIndexes =  explode("-", $indexes);
+        // return  $this->content_table[2]['sections'][1];
+
+        $section = null;
+        foreach($pageIndexes as $index){
+            $section = $section ? $section['sections'][$index] : $this->content_table[$index];
+        }
+        return $section ?? [];
+    }
 }

@@ -29,7 +29,6 @@ class RedirectCrawlers
         ];
 
         $userAgent = $request->header('User-Agent');
-        // return preg_match('/books.*\/section\/.*/', $request->path());
 
         if (in_array($userAgent, $crawlers)) {
             switch ($request->path()) {
@@ -41,8 +40,8 @@ class RedirectCrawlers
                     $id =  explode("/", $request->path())[1];
                     $book = Book::find($id);
 
-                    $pageIndex =  explode("/", $request->path())[3];
-                    $pageId = $book->content_table[$pageIndex]['page_id'];
+                    $pageIndexs =  explode("/", $request->path())[3];
+                    $pageId = $book->getContentTableSection($pageIndexs)['page_id'];
                     $page = Page::find($pageId);
                     return view('openGraph.page', compact('page'));
 
@@ -50,11 +49,10 @@ class RedirectCrawlers
                     $id =  explode("/", $request->path())[1];
                     // return $id;
                     $book = Book::find($id);
-                    $chapterIndex =  explode("/", $request->path())[3];
-                    // return $chapterIndex;
+                    $chapterIndexes =  explode("/", $request->path())[3];
 
                     return view('openGraph.chapter', [
-                        'chapter' => $book->content_table[$chapterIndex]['title']
+                        'chapter' => $book->getContentTableSection($chapterIndexes)['title']
                     ]);
 
                 case (preg_match('/books\/.*/', $request->path()) ? true : false):
