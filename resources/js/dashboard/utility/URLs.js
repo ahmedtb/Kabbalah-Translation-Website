@@ -52,9 +52,9 @@ export const Api = {
         )
 
     },
-    fetchPages: async (params) => await axios.get(`/${apiPrefix}/pages/`, { params: params }),
-    fetchPage: async (id) => await axios.get(`/${apiPrefix}/pages/` + id),
-    deletePage: async (id) => await axios.delete(`/${apiPrefix}/pages/` + id),
+    fetchPages: async (params) => await axios.get(`/${apiPrefix}/pages`, { params: params }),
+    fetchPage: async (id) => await axios.get(`/${apiPrefix}/pages/${id}`),
+    deletePage: async (id) => await axios.delete(`/${apiPrefix}/pages/${id}`),
 
     createBook: async (title, description, thumbnail, author, activated, content_table) => await axios.post(`/${apiPrefix}/books/create`, {
         title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
@@ -63,7 +63,7 @@ export const Api = {
         title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
     }),
     fetchBooks: async (params) => await axios.get(`/${apiPrefix}/books/`, { params: params }),
-    fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/` + id, { params: params }),
+    fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/${id}`, { params: params }),
 
     createArticle: async (category_id, title, description, thumbnail, activated, page_content, source_url) =>
         await axios.post(`/${apiPrefix}/articles`, {
@@ -76,8 +76,8 @@ export const Api = {
             source_url: source_url
         }),
     fetchArticles: async (params) => await axios.get(`/${apiPrefix}/articles/`, { params: params }),
-    fetchArticle: async (id) => await axios.get(`/${apiPrefix}/articles/` + id),
-    deleteArticle: async (id) => await axios.delete(`/${apiPrefix}/articles/` + id),
+    fetchArticle: async (id) => await axios.get(`/${apiPrefix}/articles/${id}`),
+    deleteArticle: async (id) => await axios.delete(`/${apiPrefix}/articles/${id}`),
     editArticle: async (id, category_id, title, description, thumbnail, activated, page_content, source_url) => await axios.put(
         `/${apiPrefix}/articles/` + id,
         { category_id: category_id, title: title, description: description, thumbnail: thumbnail, activated: activated, page_content: page_content, source_url: source_url }
@@ -85,15 +85,15 @@ export const Api = {
 
     createCategory: async (name) => await axios.post(`/${apiPrefix}/categories`, { name: name }),
     fetchCategories: async (params) => await axios.get(`/${apiPrefix}/categories/`, { params: params }),
-    fetchCategory: async (id, params) => await axios.get(`/${apiPrefix}/categories/` + id, { params: params }),
-    editCategory: async (id, name) => await axios.put(`/${apiPrefix}/categories/` + id, { name: name }),
-    deleteCategory: async (id) => await axios.delete(`/${apiPrefix}/categories/` + id),
+    fetchCategory: async (id, params) => await axios.get(`/${apiPrefix}/categories/${id}`, { params: params }),
+    editCategory: async (id, name) => await axios.put(`/${apiPrefix}/categories/${id}`, { name: name }),
+    deleteCategory: async (id) => await axios.delete(`/${apiPrefix}/categories/${id}`),
 
     createGlossaryTerm: async (name) => await axios.post(`/${apiPrefix}/glossaryTerms`, { name: name }),
     fetchGlossaryTerms: async (params) => await axios.get(`/${apiPrefix}/glossaryTerms/`, { params: params }),
-    fetchGlossaryTerm: async (id, params) => await axios.get(`/${apiPrefix}/glossaryTerms/` + id, { params: params }),
-    editGlossaryTerm: async (id, name) => await axios.put(`/${apiPrefix}/glossaryTerms/` + id, { name: name }),
-    deleteGlossaryTerm: async (id) => await axios.delete(`/${apiPrefix}/glossaryTerms/` + id),
+    fetchGlossaryTerm: async (id, params) => await axios.get(`/${apiPrefix}/glossaryTerms/${id}`, { params: params }),
+    editGlossaryTerm: async (id, name) => await axios.put(`/${apiPrefix}/glossaryTerms/${id}`, { name: name }),
+    deleteGlossaryTerm: async (id) => await axios.delete(`/${apiPrefix}/glossaryTerms/${id}`),
 }
 
 export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = null, logData = false) {

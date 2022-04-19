@@ -11,12 +11,22 @@ export default function PagesTable(props) {
     const deletePage = props.deletePage
 
     function hasArticles(Obj, Or = null) {
-        return pages[0]?.articles ? Obj : Or
+        if (pages)
+            return pages[0]?.articles ? Obj : Or
     }
 
-    function hasBooks(Obj, Or = null) { return pages[0]?.books ? Obj : Or }
-    function hasIsTrasnalted(Obj, Or = null) { return pages[0]?.isTranslated != undefined ? Obj : Or }
-    function hasBook(Obj, Or = null) { return pages[0]?.book ? Obj : Or }
+    function hasBooks(Obj, Or = null) {
+        if (pages)
+            return pages[0]?.books ? Obj : Or
+    }
+    function hasIsTrasnalted(Obj, Or = null) {
+        if (pages)
+            return pages[0]?.isTranslated != undefined ? Obj : Or
+    }
+    function hasBook(Obj, Or = null) {
+        if (pages)
+            return pages[0]?.book ? Obj : Or
+    }
 
     return (
         <Table striped bordered hover responsive >

@@ -12,10 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/dashboard.js', 'public/js')
-    .react()
-    .sass('resources/sass/dashboard.scss', 'public/css');
-
-mix.js('resources/js/website.js', 'public/js')
-    .react()
+    .js('resources/js/website.js', 'public/js')
+    .sass('resources/sass/dashboard.scss', 'public/css')
     .sass('resources/sass/website.scss', 'public/css')
+    .react()
     .sourceMaps(false, 'source-map');

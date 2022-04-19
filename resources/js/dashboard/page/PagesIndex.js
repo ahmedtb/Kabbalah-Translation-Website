@@ -3,35 +3,18 @@ import PagesTable from '../components/PagesTable'
 import { Api } from '../utility/URLs'
 import { ApiCallHandler } from '../../commonFiles/helpers'
 import { SelectFilter, TextFilter } from '../components/Filters'
-import Pagination from '../../commonFiles/Pagination'
-import Pagination2 from '../../commonFiles/Pagination2'
 
 import { Col } from 'react-bootstrap'
 import ChangePageTitle from "../../commonFiles/ChangePageTitle";
+import Paginator from '../../commonFiles/Paginator'
 
 
 export default function PagesIndex(props) {
     // const history = useHistory()
 
 
-    const [pages, setpages] = React.useState([])
-    // const [links, setlinks] = React.useState([])
+    const [pagesPagination, setpagesPagination] = React.useState([])
 
-    // function fetchPages(link = null, params = null) {
-    //     let linkParams = Object.fromEntries(new URLSearchParams(link?.split('?')[1]))
-    //     let allParams = { with: 'book', page_size: 10, ...linkParams, ...params }
-    //     ApiCallHandler(
-    //         async () => await Api.fetchPages(allParams),
-    //         (data) => { setpages(data.data); setlinks(data.links ?? []); },
-    //         'PagesIndex fetchPages',
-    //         true
-    //     )
-    //     console.log('all params', allParams)
-    //     history.replace({
-    //         pathname: window.location.pathname,
-    //         search: (new URLSearchParams(allParams)).toString()
-    //     })
-    // }
     const [books, setbooks] = React.useState([])
 
     function fetchBooks() {
@@ -60,29 +43,24 @@ export default function PagesIndex(props) {
             <ChangePageTitle pageTitle={'قائمة الصفحات'} />
 
             <TextFilter
-                fetchPage={(newparams) => fetchPages(null, newparams)}
+                fetchPage={(newparams) => Api.fetchPages(newparams)}
                 property={'title'}
                 label={'عنوان الصفحة'}
             />
-            {/* <TextFilter
-                fetchPage={(newparams) => fetchPages(null, newparams)}
-                property={'book_title'}
-                label={'عنوان الكتاب'}
-            /> */}
             <SelectFilter
                 options={books}
-                const fetchPage={(params) => fetchPages(null, params)}
-                const property={'book_id'}
-                const label={'احتر كتاب'}
-                const defaultValue={null}
-                const valueKeyWord={'id'}
-                const nameKeyWord={'title'}
+                fetchPage={(params) => Api.fetchPages(params)}
+                property={'book_id'}
+                label={'احتر كتاب'}
+                defaultValue={null}
+                valueKeyWord={'id'}
+                nameKeyWord={'title'}
             />
             <Col xs={12}>
-                <PagesTable pages={pages} deletePage={deletePage} />
+                <PagesTable pages={pagesPagination?.data} deletePage={deletePage} />
             </Col>
-            {/* <Pagination fetchPage={fetchPages} links={links} /> */}
-            <Pagination2 apiCall={Api.fetchPages} useState={[pages, setpages]} />
+
+            <Paginator apiCall={Api.fetchPages} useState={[pagesPagination, setpagesPagination]} />
 
         </div>
     )
