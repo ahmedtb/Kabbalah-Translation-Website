@@ -2,7 +2,6 @@
 <?php
 $title = $article->title;
 $description = $article->description;
-$image = $article->thumbnail;
 $imageUrl = route('article_thumbnail', $article->id);
 
 ?>

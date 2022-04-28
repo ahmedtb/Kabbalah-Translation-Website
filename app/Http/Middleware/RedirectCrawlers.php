@@ -4,11 +4,9 @@ namespace App\Http\Middleware;
 
 use App\Models\Article;
 use Closure;
-use App\Tournament;
 use App\Models\Book;
 use App\Models\Page;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class RedirectCrawlers
 {
@@ -43,7 +41,12 @@ class RedirectCrawlers
                     $pageIndexs =  explode("/", $request->path())[3];
                     $pageId = $book->getContentTableSection($pageIndexs)['page_id'];
                     $page = Page::find($pageId);
-                    return view('openGraph.page', compact('page'));
+
+                    return view('openGraph.page', [
+                        'title' => $page->title,
+                        'description' => $page->description,
+                        'imageUrl' => route('book_thumbnail', $book->id),
+                    ]);
 
                 case (preg_match('/books.*\/chapter\/.*/', $request->path()) ? true : false):
                     $id =  explode("/", $request->path())[1];
@@ -51,15 +54,24 @@ class RedirectCrawlers
                     $book = Book::find($id);
                     $chapterIndexes =  explode("/", $request->path())[3];
 
-                    return view('openGraph.chapter', [
-                        'chapter' => $book->getContentTableSection($chapterIndexes)['title']
+                    
+                    return view('openGraph.page', [
+                        'title' => $book->getContentTableSection($chapterIndexes)['title'],
+                        'description' => '',
+                        'imageUrl' => route('book_thumbnail', $book->id),
                     ]);
+
 
                 case (preg_match('/books\/.*/', $request->path()) ? true : false):
                     $id =  explode("/", $request->path())[1];
 
                     $book = Book::find($id);
-                    return view('openGraph.book', compact('book'));
+                                        
+                    return view('openGraph.page', [
+                        'title' => $book->title,
+                        'description' => $book->description,
+                        'imageUrl' => route('book_thumbnail', $book->id),
+                    ]);
 
                 case 'articles':
                     return view('openGraph.articles');
@@ -68,7 +80,11 @@ class RedirectCrawlers
                     $id =  explode("/", $request->path())[1];
 
                     $article = Article::find($id);
-                    return view('openGraph.article', compact('article'));
+                    return view('openGraph.page', [
+                        'title' => $article->title,
+                        'description' => $article->description,
+                        'imageUrl' => route('article_thumbnail', $article->id),
+                    ]);
             }
         }
         return $next($request);

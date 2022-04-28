@@ -1,7 +1,6 @@
 <?php
 $title = $book->title;
 $description = $book->description;
-$image = $book->thumbnail;
 $imageUrl = route('book_thumbnail', $book->id);
 
 ?>

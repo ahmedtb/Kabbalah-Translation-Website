@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-    FloatingLabel, Form, Popover, OverlayTrigger,
+    Form
 } from 'react-bootstrap'
 import { paragraphObject } from './structure'
 
@@ -115,24 +115,41 @@ export function ParagraphComponentCreator(props) {
             />
         </div>
         <div className="mb-3">
-            <Form.Control
-                as="textarea"
+
+            <div
+                className='p-3 border rounded'
                 style={style}
-                onChange={(e) => {
-                    setoriginal(e.target.value)
-                    dispatch(paragraphObject(e.target.value, translated, style))
+                contentEditable
+                onInput={e => {
+                    console.log('onInput textContent', e.target.textContent);
+                    setoriginal(e.target.textContent)
+                    dispatch(paragraphObject(e.target.textContent, translated, style))
                 }}
-            />
+                onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+
+                    }
+                }}
+            >
+
+            </div>
         </div>
         <div className="mb-3">
-            <Form.Control
-                as="textarea"
+            <div
+                className='p-3 border rounded'
                 style={style}
-                onChange={(e) => {
+                contentEditable
+                onInput={e => {
+                    console.log('onInput textContent', e.target.textContent);
                     settranslated(e.target.value)
                     dispatch(paragraphObject(original, e.target.value, style))
                 }}
-            />
+                onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+
+                    }
+                }}
+            ></div>
         </div>
 
     </div>

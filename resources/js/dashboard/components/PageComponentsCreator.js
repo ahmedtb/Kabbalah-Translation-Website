@@ -63,6 +63,11 @@ export default function PageComponentsCreator(props) {
     const [SelectedType, setSelectedType] = React.useState();
     const [component, setcomponent] = React.useState(null);
 
+    // React.useEffect(() => {
+    //     if (component)
+    //         console.log('PageComponentsCreator component', component)
+    // }, [component])
+
     return (
         <div>
             <Col xs={2} className='mx-auto'>
@@ -84,7 +89,7 @@ export default function PageComponentsCreator(props) {
                 </Dropdown>
             </Col>
             {SelectedType ? <SelectedType.Creator dispatch={(component) => setcomponent(component)} /> : null}
-            
+
             <Col xs={1} className='mx-auto'>
                 {component ?
                     <Button
