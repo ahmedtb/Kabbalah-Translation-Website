@@ -27,7 +27,6 @@ export default function ArticleShow(props) {
         setup()
     }, [])
     return <div>
-        <LoadingIndicator />
 
         <Helmet>
             <title>
@@ -42,6 +41,7 @@ export default function ArticleShow(props) {
             {article?.description ? <div>وصف المقالة {article?.description}</div> : null}
 
             <PageContentRender page_content={article?.page_content} />
+            <LoadingIndicator />
 
             {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{truncate(article?.source_url)}</a></div> : null}
         </Col>

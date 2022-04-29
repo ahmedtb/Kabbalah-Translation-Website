@@ -41,7 +41,7 @@ export function ParagraphComponentWebsiteRender(props) {
     switch (render) {
         case 'original':
             return <div dir={originalDir} style={component.style} className={className}>
-                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                {component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'translated':
             return <div className='mx-auto'>
@@ -121,7 +121,7 @@ export function ParagraphComponentCreator(props) {
         </div>
         <div className="mb-3">
 
-            <div                
+            <div
                 className='p-3 border rounded'
                 style={style}
                 contentEditable
@@ -215,6 +215,15 @@ export function ParagraphComponentEditor(props) {
     const [translatedScrollHeight, settranslatedScrollHeight] = React.useState(100)
     const [originalScrollHeight, setoriginalScrollHeight] = React.useState(100)
 
+    let originalDiv = React.createRef();
+    let translatedDiv = React.createRef();
+
+    React.useEffect(() => {
+        originalDiv.current.innerHTML = component.original
+        translatedDiv.current.innerHTML = component.translated
+
+    }, [])
+
     return (
 
         <div className='my-2'>
@@ -257,37 +266,65 @@ export function ParagraphComponentEditor(props) {
                     checked={style.textAlign == 'center'}
                     type={'checkbox'}
                 />
+
+                <Button onClick={() => {
+                    document.execCommand('bold', false);
+                }}>
+                    bold
+                </Button>
+
+                <Button onClick={() => {
+                    document.execCommand('fontSize', false, '5');
+                }}>
+                    H1
+                </Button>
+                <Button onClick={() => {
+                    document.execCommand('fontSize', false, '7');
+                }}>
+                    H2
+                </Button>
             </div>
-            <textarea
+            <div
+                className='p-3 border rounded'
                 style={{
                     ...style,
-                    backgrounddivor: 'white',
-                    borderWidth: 0,
-                    width: '100%',
-                    height: originalScrollHeight
+                    height: originalScrollHeight,
+                    overflowY: 'scroll'
                 }}
                 dir={originalDir}
-                onChange={(e) => {
-                    setoriginal(e.target.value)
+
+                contentEditable
+                onInput={e => {
+                    console.log('onInput innerHTML', e.target.innerHTML);
+                    setoriginal(e.target.innerHTML)
                     setoriginalScrollHeight(e.target.scrollHeight)
-                    dispatch(paragraphObject(e.target.value, translated, style))
+                    dispatch(paragraphObject(e.target.innerHTML, translated, style))
                 }}
-                value={original ?? ''}
+                ref={originalDiv}
             />
-            <textarea
+
+            <div
+                className='p-3 border rounded'
                 style={{
-                    ...style, width: '100%',
-                    height: translatedScrollHeight
+                    ...style,
+                    height: translatedScrollHeight,
+                    overflowY: 'scroll'
                 }}
                 dir={translatedDir}
-                onChange={(e) => {
-                    settranslated(e.target.value)
+
+                contentEditable
+                onInput={e => {
+                    console.log('onInput innerHTML', e.target.innerHTML);
+                    settranslated(e.target.innerHTML)
                     settranslatedScrollHeight(e.target.scrollHeight)
-                    dispatch(paragraphObject(original, e.target.value, style))
+                    dispatch(paragraphObject(original, e.target.innerHTML, style))
                 }}
-                value={translated ?? ''}
+
+                ref={translatedDiv}
+
             />
         </div >
+
 
     )
 }
