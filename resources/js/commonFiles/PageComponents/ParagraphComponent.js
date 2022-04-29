@@ -1,9 +1,10 @@
 import React from 'react'
 import {
-    Form
-} from 'react-bootstrap'
+    Form,
+    Button
+} from 'react-bootstrap';
 import { paragraphObject } from './structure'
-
+import parse from 'html-react-parser'
 
 export function ParagraphComponentRender(props) {
     const component = props.component
@@ -14,16 +15,16 @@ export function ParagraphComponentRender(props) {
     switch (render) {
         case 'original':
             return <div dir={originalDir} style={component.style} className={className}>
-                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                {component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'translated':
             return <div dir={translatedDir} style={component.style} className={className}>
-                {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                {component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'both':
             return <div style={component.style} className={className}>
-                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
+                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
             </div>
     }
 }
@@ -37,7 +38,6 @@ export function ParagraphComponentWebsiteRender(props) {
     const className = props.className
 
     // console.log('className', className)
-
     switch (render) {
         case 'original':
             return <div dir={originalDir} style={component.style} className={className}>
@@ -48,12 +48,12 @@ export function ParagraphComponentWebsiteRender(props) {
                 {
                     component.translated ?
                         <div dir={translatedDir} style={component.style} className={className}>
-                            {component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                            {component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
                         </div>
                         :
                         <div className={`d-flex justify-content-between ${className}`} >
                             <div className='flex-grow-1' dir={originalDir} style={component.style}>
-                                {component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}
+                                {component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
                             </div>
                             <div className='opacity-25'>غير مترجم</div>
                         </div>
@@ -61,8 +61,8 @@ export function ParagraphComponentWebsiteRender(props) {
             </div >
         case 'both':
             return <div style={component.style} className={className}>
-                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
-                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <p key={index}>{str}</p>)}</div>
+                <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
+                <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
             </div>
     }
 }
@@ -113,25 +113,24 @@ export function ParagraphComponentCreator(props) {
                 checked={style.textAlign == 'center'}
                 type={'checkbox'}
             />
+            <Button onClick={() => {
+                document.execCommand('bold', false);
+            }}>
+                bold selected text
+            </Button>
         </div>
         <div className="mb-3">
 
-            <div
+            <div                
                 className='p-3 border rounded'
                 style={style}
                 contentEditable
                 onInput={e => {
-                    console.log('onInput textContent', e.target.textContent);
-                    setoriginal(e.target.textContent)
-                    dispatch(paragraphObject(e.target.textContent, translated, style))
-                }}
-                onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-
-                    }
+                    console.log('onInput innerHTML', e.target.innerHTML);
+                    setoriginal(e.target.innerHTML)
+                    dispatch(paragraphObject(e.target.innerHTML, translated, style))
                 }}
             >
-
             </div>
         </div>
         <div className="mb-3">
@@ -140,14 +139,9 @@ export function ParagraphComponentCreator(props) {
                 style={style}
                 contentEditable
                 onInput={e => {
-                    console.log('onInput textContent', e.target.textContent);
-                    settranslated(e.target.value)
-                    dispatch(paragraphObject(original, e.target.value, style))
-                }}
-                onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-
-                    }
+                    console.log('onInput textContent', e.target.innerHTML);
+                    settranslated(e.target.innerHTML)
+                    dispatch(paragraphObject(original, e.target.innerHTML, style))
                 }}
             ></div>
         </div>

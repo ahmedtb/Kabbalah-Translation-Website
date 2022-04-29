@@ -59,13 +59,14 @@ export default function BookBrowser(props) {
 
     return <div>
 
-        <LoadingIndicator />
         <Helmet>
             <title>{page?.title}</title>
         </Helmet>
 
         <div className='rounded'>
             <PageContentRender page_content={page?.page_content} />
+            <LoadingIndicator />
+
         </div>
         <div className='d-flex flex-row justify-content-around'>
             {
