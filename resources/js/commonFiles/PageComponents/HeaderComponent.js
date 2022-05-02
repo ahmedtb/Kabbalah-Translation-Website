@@ -163,27 +163,32 @@ export function HeaderComponentWebsiteRender(props) {
     const original = component.original
     const translated = component.translated
     const size = component.size
+    const render = props.render
     const className = props.className
+
 
     // console.log('HeaderComponentWebsiteRender size', size == 5)
 
-    return <div dir={translatedDir} className={className}>
-        {(() => {
-            switch (+size) {
-                case 1:
-                    return <h1>{translated}</h1>
-                case 2:
-                    return <h2>{translated}</h2>
-                case 3:
-                    return <h3>{translated}</h3>
-                case 4:
-                    return <h4>{translated}</h4>
-                case 5:
-                    return <h5>{translated}</h5>
-                default:
-                    return <h1>{translated}</h1>
-            }
-        })()}
-    </div>
+    let text = ''
+    if (render == 'original') {
+        text = <div dir={originalDir}>{original}</div>
+    } else if (render == 'translated')
+        text = <div dir={translatedDir}>{translated}</div>
+    else
+        text = <><div dir={originalDir}>{original}</div> <div dir={translatedDir}>{translated}</div></>
+    switch (+size) {
+        case 1:
+            return <h1 className={className ?? ''} id={1}>{text}</h1>
+        case 2:
+            return <h2 className={className ?? ''} id={1}>{text}</h2>
+        case 3:
+            return <h3 className={className ?? ''} id={1}>{text}</h3>
+        case 4:
+            return <h4 className={className ?? ''} id={1}>{text}</h4>
+        case 5:
+            return <h5 className={className ?? ''} id={1}>{text}</h5>
+        default:
+            return <h1 className={className ?? ''} id={1}>{text}</h1>
+    }
 }
 
