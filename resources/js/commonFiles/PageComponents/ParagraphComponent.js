@@ -118,6 +118,16 @@ export function ParagraphComponentCreator(props) {
             }}>
                 bold selected text
             </Button>
+            <Button onClick={() => {
+                document.execCommand('fontSize', false, '5');
+            }}>
+                H1
+            </Button>
+            <Button onClick={() => {
+                document.execCommand('fontSize', false, '7');
+            }}>
+                H2
+            </Button>
         </div>
         <div className="mb-3">
 
