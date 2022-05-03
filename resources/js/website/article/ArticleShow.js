@@ -43,7 +43,8 @@ export default function ArticleShow(props) {
             <PageContentRender page_content={article?.page_content} />
             <LoadingIndicator />
 
-            {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{truncate(article?.source_url)}</a></div> : null}
+            {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{truncate(article?.source_url, 20)}</a></div> : null}
+
         </Col>
     </div>
 }
