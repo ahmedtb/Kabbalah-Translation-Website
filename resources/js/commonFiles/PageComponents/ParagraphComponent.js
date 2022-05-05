@@ -14,15 +14,15 @@ export function ParagraphComponentRender(props) {
     const className = props.className
     switch (render) {
         case 'original':
-            return <div dir={originalDir} style={component.style} className={className}>
+            return <div dir={originalDir} style={component.style} className={className + ' my-2'}>
                 {component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'translated':
-            return <div dir={translatedDir} style={component.style} className={className}>
+            return <div dir={translatedDir} style={component.style} className={className + ' my-2'}>
                 {component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'both':
-            return <div style={component.style} className={className}>
+            return <div style={component.style} className={className + ' my-2'}>
                 <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
                 <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
             </div>
@@ -40,11 +40,11 @@ export function ParagraphComponentWebsiteRender(props) {
     // console.log('className', className)
     switch (render) {
         case 'original':
-            return <div dir={originalDir} style={component.style} className={className}>
+            return <div dir={originalDir} style={component.style} className={className + ' my-2'}>
                 {component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}
             </div>
         case 'translated':
-            return <div className='mx-auto'>
+            return <div className='mx-auto my-2'>
                 {
                     component.translated ?
                         <div dir={translatedDir} style={component.style} className={className}>
@@ -60,7 +60,7 @@ export function ParagraphComponentWebsiteRender(props) {
                 }
             </div >
         case 'both':
-            return <div style={component.style} className={className}>
+            return <div style={component.style} className={className + ' my-2'}>
                 <div dir={originalDir}>{component.original?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
                 <div dir={translatedDir}>{component.translated?.split('\n').map((str, index) => <div key={index}>{parse(str ?? '')}</div>)}</div>
             </div>
