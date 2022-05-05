@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers\DashboardAPI;
 
-use App\Filters\BookFilters;
 use App\Models\Book;
-use App\Models\Page;
-use Illuminate\Http\Request;
-use App\Rules\ContentTableRule;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\BookChapter;
-use App\Models\BookSection;
 use App\Rules\Base64Rule;
+use Illuminate\Http\Request;
+use App\Filters\BookFilters;
+use App\Rules\ContentTableRule;
+use App\Http\Controllers\Controller;
 use Illuminate\Validation\ValidationException;
 
 class BooksController extends Controller

@@ -38,7 +38,7 @@ export default function PageContentRender(props) {
     const [render, setrender] = React.useState('translated')
     const [darkMode, setdarkMode] = React.useState('')
 
-    return <div className={`mx-auto ${darkMode ? 'bg-dark' : 'bg-white'} rounded`} >
+    return <div className={`mx-auto ${darkMode ? 'bg-dark' : 'bg-white'} border p-1 m-1 rounded shadow `} >
 
         <div className='d-flex justify-content-end'>
             <Button className={render == 'original' ? 'mx-2 text-danger' : 'mx-2'} onClick={() => setrender('original')}>

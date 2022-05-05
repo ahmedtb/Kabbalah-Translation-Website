@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Rules\PageContentRule;
 use App\Filters\ArticlesFilters;
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController extends Controller

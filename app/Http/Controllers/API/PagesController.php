@@ -5,9 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Page;
 use App\Filters\PageFilters;
 use Illuminate\Http\Request;
-use App\Rules\PageContentRule;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
 
 class PagesController extends Controller
 {

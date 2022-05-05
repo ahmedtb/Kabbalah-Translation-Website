@@ -4,13 +4,8 @@ namespace App\Http\Controllers\API;
 
 use App\Filters\BookFilters;
 use App\Models\Book;
-use App\Models\Page;
 use Illuminate\Http\Request;
-use App\Rules\ContentTableRule;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\BookChapter;
-use App\Models\BookSection;
 use Illuminate\Validation\ValidationException;
 
 class BooksController extends Controller

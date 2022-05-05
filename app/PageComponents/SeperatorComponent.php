@@ -2,8 +2,6 @@
 
 namespace App\PageComponents;
 
-use Faker\Generator;
-use Illuminate\Container\Container;
 
 class SeperatorComponent extends PageComponent
 {
