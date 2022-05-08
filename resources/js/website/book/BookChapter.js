@@ -3,8 +3,9 @@ import { useParams, useLocation } from "react-router"
 import { Link } from 'react-router-dom'
 import { Routes, Api, ApiCallHandler } from "../utility/Urls"
 import { getchapter } from "./components/TableFunctions"
-
 import { ListGroup } from "react-bootstrap"
+import ChapterPathRender from './components/ChapterPathRender';
+
 export default function BookChapter(props) {
     const { id, chapterPath } = useParams()
     const [book, setbook] = React.useState(useLocation().state?.book ?? undefined)
@@ -52,6 +53,9 @@ export default function BookChapter(props) {
 
 
     return <div>
+
+        <ChapterPathRender book={book} path={chapterPath} />
+
         <h1 className='text-center'>{getchapter(book?.content_table, chapterPath)?.title}</h1>
         <ListGroup as="ol" numbered>
             {

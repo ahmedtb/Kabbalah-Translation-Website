@@ -1,12 +1,11 @@
 import React from "react"
 import {
-    getelement,
     getchapter
 } from './TableFunctions';
 import { Link } from "react-router-dom";
 import { Routes } from "../../utility/Urls";
 
-export default function PagePathRender(props) {
+export default function ChapterPathRender(props) {
     const book = props.book
     const path = props.path
 
@@ -39,7 +38,7 @@ export default function PagePathRender(props) {
                 })
             }
             <div>
-                {' -> '} {getelement(book?.content_table, path)?.title}
+                {' -> '} {getchapter(book?.content_table, path)?.title}
             </div>
         </div>
     )

@@ -55,7 +55,7 @@ function LoginPage(props) {
                     <input type='username' className='form-control' onChange={e => setusername(e.target.value)} />
                     <label>كلمة المرور</label>
                     <input type='password' className='form-control' onChange={e => setpassword(e.target.value)} />
-                    <button type="button" className="btn btn-success" onClick={() => handleLogin(username, password)}>دخول</button>
+                    <button type="button" className="btn btn-success w-100 my-1" onClick={() => handleLogin(username, password)}>دخول</button>
 
                 </div>
             </div>
