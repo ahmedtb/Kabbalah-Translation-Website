@@ -34,20 +34,12 @@ export default function ArticleShow(props) {
 
 
     return <div>
-        search <input onChange={e => setsearch(e.target.value)} />
-        <input type='submit' onClick={() => fetchArticles(null, { title: search })} />
+        <div className="col-6 d-flex justify-content-start my-2">
+
+            <input placeholder="ابحث باسم المقال" className="form-control bg-white" onChange={e => setsearch(e.target.value)} />
+            <button className="mx-2 btn btn-success" onClick={() => fetchArticles(null, { title: search })} >بحث</button>
+        </div>
         <ArticlesCardsRender articles={articles} />
-
-        {/* {
-
-            articles?.map((article, index) => (
-                <div key={index}>
-                    <h2> <Link to={Routes.articleShow(article.id)}> {article.page?.title}</Link></h2>
-                    <div><Link to={Routes.articlesIndex({ category_id: article.category_id })}> {article.category?.name}</Link></div>
-                    <PageContentRender page={article.page} />
-                </div>
-            ))
-        } */}
 
         <Pagination fetchPage={fetchArticles} links={links} />
     </div>

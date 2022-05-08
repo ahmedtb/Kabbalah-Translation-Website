@@ -9,7 +9,7 @@ export default function ArticlesCardsRender(props) {
     if (!articles?.length)
         return null
 
-    return articles?.map((article, index) => <div key={index} className='col-10 mx-auto my-4 p-2 border rounded d-flex'>
+    return articles?.map((article, index) => <div key={index} className='mx-auto my-4 p-2 border rounded d-flex bg-white'>
 
         {article.hasThumbnail ? <Col xs={2}>
             <img src={Api.articleThumbnail(article?.id)} className='maxWidth100' />
