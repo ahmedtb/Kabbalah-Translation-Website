@@ -35,11 +35,6 @@ class ArticlesController extends Controller
         $article =  Article::find($id);
         if (!$article)
             throw ValidationException::withMessages(['id' => 'no such article ' . $id . ' exists']);
-        if ($article->thumbnail){
-            $extension = explode('/', explode(";", $article->thumbnail)[0])[1];
-            
-            $raw_image_string = base64_decode(explode("base64,", $article->thumbnail)[1]);
-            return response($raw_image_string)->header('Content-Type', 'image/' . $extension);
-        }
+        return $article->thumbnail();
     }
 }

@@ -17,6 +17,12 @@ class Book extends Model
         'content_table' => Json::class
     ];
 
+    protected $hidden = [
+        'thumbnail'
+    ];
+
+    protected $appends = ['hasThumbnail'];
+    
     public function pages()
     {
         // return $this->content_table;
@@ -64,5 +70,23 @@ class Book extends Model
             $section = $section ? $section['sections'][$index] : $this->content_table[$index];
         }
         return $section ?? [];
+    }
+    
+    public function thumbnail()
+    {
+
+        if ($this->thumbnail) {
+            $extension = explode('/', explode(";", $this->thumbnail)[0])[1];
+
+            $raw_image_string = base64_decode(explode("base64,", $this->thumbnail)[1]);
+            return response($raw_image_string)->header('Content-Type', 'thumbnail/' . $extension);
+        }
+        return null;
+    }
+
+    
+    public function getHasThumbnailAttribute()
+    {
+        return $this->thumbnail ? true : false;
     }
 }

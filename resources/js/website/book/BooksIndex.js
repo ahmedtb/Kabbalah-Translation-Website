@@ -27,7 +27,7 @@ export default function BooksIndex(props) {
             books?.map((book, index) => (
                 <Row key={index} className='m-3 p-1 border rounded'>
                     <Col xs={2}>
-                        <img src={book.thumbnail} style={{ maxWidth: '100%' }} />
+                        <img src={book?.hasThumbnail ? Api.bookThumbnail(book.id) : ''} style={{ maxWidth: '100%' }} />
                     </Col>
                     <Col xs={10}>
                         <Link to={Routes.bookShow(book.id)}>

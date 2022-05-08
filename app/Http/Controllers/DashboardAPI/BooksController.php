@@ -60,9 +60,9 @@ class BooksController extends Controller
         if ($request->withoutPagination)
             return Book::filter($filters)->get();
         else
-        return Book::filter($filters)
-            ->paginate($request->input('page_size') ?? 5)
-            ->appends(request()->except('page'));
+            return Book::filter($filters)
+                ->paginate($request->input('page_size') ?? 5)
+                ->appends(request()->except('page'));
     }
     public function show(BookFilters $filters, $id)
     {
@@ -70,5 +70,13 @@ class BooksController extends Controller
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book id exists']);
         return $book;
+    }
+
+    public function thumbnail($id)
+    {
+        $book =  Book::find($id);
+        if (!$book)
+            throw ValidationException::withMessages(['id' => 'no such book ' . $id . ' exists']);
+        return $book->thumbnail();
     }
 }

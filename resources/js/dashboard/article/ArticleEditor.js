@@ -11,6 +11,7 @@ export default function ArticleEditor(props) {
     let { id } = useParams();
 
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
+    const [article, setarticle] = React.useState('')
 
     const [categories, setcategories] = React.useState([]);
     const [category_id, setcategory_id] = React.useState('');
@@ -32,7 +33,8 @@ export default function ArticleEditor(props) {
                 setthumbnail(data.thumbnail)
                 setactivated(data.activated)
                 setsource_url(data.source_url)
-            },
+                setarticle(data)
+            },  
             'ArticleEditor fetchArticle',
             true
         )
@@ -92,7 +94,7 @@ export default function ArticleEditor(props) {
                     setactivated(e.target.checked)
                 }}
             />
-            <img src={thumbnail} className='maxWidth100' />
+            <img src={thumbnail ?? article?.hasThumbnail ? Api.articleThumbnail(id) : '' } className='maxWidth100' />
             <ImagePicker setImage={(base64) => setthumbnail(base64)} />
             <FormCheck>
                 <FormCheck.Label>رابط المصدر</FormCheck.Label>

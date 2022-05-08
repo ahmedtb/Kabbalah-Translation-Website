@@ -29,7 +29,8 @@ Route::middleware('auth:admin')->group(
         Route::put('/books/{id}', [BooksController::class, 'update']);
         Route::get('/books/', [BooksController::class, 'index']);
         Route::get('/books/{id}', [BooksController::class, 'show']);
-
+        Route::get('/books/{id}/thumbnail', [BooksController::class, 'thumbnail']);
+        
         Route::post('/categories', [CategoriesController::class, 'create']);
         Route::get('/categories/', [CategoriesController::class, 'index']);
         Route::get('/categories/{id}', [CategoriesController::class, 'show']);
@@ -41,6 +42,7 @@ Route::middleware('auth:admin')->group(
         Route::get('/articles/{id}', [ArticlesController::class, 'show']);
         Route::put('/articles/{id}', [ArticlesController::class, 'update']);
         Route::delete('/articles/{id}', [ArticlesController::class, 'destroy']);
+        Route::get('/articles/{id}/thumbnail', [ArticlesController::class, 'thumbnail']);
 
         Route::post('/glossaryTerms', [GlossaryTermsController::class, 'create']);
         Route::get('/glossaryTerms/', [GlossaryTermsController::class, 'index']);

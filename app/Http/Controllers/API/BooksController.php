@@ -29,11 +29,6 @@ class BooksController extends Controller
         $book =  Book::find($id);
         if (!$book)
             throw ValidationException::withMessages(['id' => 'no such book ' . $id . ' exists']);
-        if ($book->thumbnail){
-            $extension = explode('/', explode(";", $book->thumbnail)[0])[1];
-            
-            $raw_image_string = base64_decode(explode("base64,", $book->thumbnail)[1]);
-            return response($raw_image_string)->header('Content-Type', 'image/' . $extension);
-        }
+        return $book->thumbnail();
     }
 }

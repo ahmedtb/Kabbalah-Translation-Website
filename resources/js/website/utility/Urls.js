@@ -21,9 +21,11 @@ export const Api = {
     fetchBook: async (id, params) => await axios.get(`/api/books/${id}`, { params: params }),
     fetchSection: async (id, params) => await axios.get(`/api/books/section/${id}`, { params: params }),
     fetchPage: async (id, params) => await axios.get(`/api/pages/${id}`, { params: params }),
+    bookThumbnail: (id) => `/api/books/${id}/thumbnail`,
 
     fetchArticles: async (params) => await axios.get('/api/articles', { params: params }),
     fetchArticle: async (id) => await axios.get('/api/articles/' + id),
+    articleThumbnail: (id) => `/api/articles/${id}/thumbnail`,
 
     fetchCategories: async (params) => await axios.get('/api/categories', { params: params }),
     fetchCategory: async (id) => await axios.get('/api/categories/' + id),

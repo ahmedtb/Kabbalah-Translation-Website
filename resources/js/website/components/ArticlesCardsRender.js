@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { Routes } from '../utility/Urls'
+import { Routes, Api } from '../utility/Urls';
 
 export default function ArticlesCardsRender(props) {
     const articles = props.articles
@@ -11,8 +11,8 @@ export default function ArticlesCardsRender(props) {
 
     return articles?.map((article, index) => <div key={index} className='col-10 mx-auto my-4 p-2 border rounded d-flex'>
 
-        {article.thumbnail ? <Col xs={2}>
-            <img src={article.thumbnail} className='maxWidth100' />
+        {article.hasThumbnail ? <Col xs={2}>
+            <img src={Api.articleThumbnail(article?.id)} className='maxWidth100' />
         </Col> : null}
 
         <div className='flex-grow-1 p-2'>

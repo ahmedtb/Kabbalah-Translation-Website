@@ -25,6 +25,8 @@ class ArticlesController extends Controller
         if (!$article)
             throw ValidationException::withMessages(['id' => 'there is no article with this id: ' . $id]);
         $article->makeVisible('page_content');
+        // $article->makeVisible('thumbnail');
+
         return $article;
     }
 
@@ -77,4 +79,12 @@ class ArticlesController extends Controller
         }
     }
 
+
+    public function thumbnail($id)
+    {
+        $article =  Article::find($id);
+        if (!$article)
+            throw ValidationException::withMessages(['id' => 'no such article ' . $id . ' exists']);
+        return $article->thumbnail();
+    }
 }

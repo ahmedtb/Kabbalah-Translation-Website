@@ -2,7 +2,7 @@ import React from "react"
 import { Table } from "react-bootstrap"
 import { truncate, ApiCallHandler } from "../../commonFiles/helpers"
 import { Link } from "react-router-dom"
-import { Routes } from "../utility/URLs"
+import { Api, Routes } from "../utility/URLs"
 
 export default function ArticlesTable(props) {
     const articles = props.articles
@@ -50,7 +50,7 @@ export default function ArticlesTable(props) {
 
                             <td>{article.activated ? 'مفعل' : 'غير مفعل'}</td>
                             <td>{truncate(article.description)}</td>
-                            <td><img src={article.thumbnail} className='maxWidth100' /></td>
+                            <td><img src={article.hasThumbnail ? Api.articleThumbnail(article?.id) : null} className='maxWidth100' /></td>
                             {hasIsTransated(<td>{article.isTranslated ? 'نعم' : 'لا'}</td>)}
 
                             {deleteArticle ? <td onClick={() => deleteArticle(article.id)}>حدف</td> : null}

@@ -32,7 +32,6 @@ export default function ArticleShow(props) {
             <title>
                 {article?.title}
             </title>
-            {/* <meta property="og:image" content={article?.thumbnail} /> */}
 
         </Helmet>
         <Col xs={12}>

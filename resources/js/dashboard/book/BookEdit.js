@@ -11,6 +11,8 @@ import { Redirect } from 'react-router-dom'
 
 export default function BookEdit(props) {
     const { id } = useParams()
+    const [hasThumbnail, sethasThumbnail] = React.useState([])
+
     const [content_table, setcontent_table] = React.useState([])
 
     const [pages, setpages] = React.useState([])
@@ -30,7 +32,8 @@ export default function BookEdit(props) {
                 setauthor(data.author)
                 setactivated(data.activated)
                 setthumbnail(data.thumbnail)
-                setcontent_table( data.content_table )
+                setcontent_table(data.content_table)
+                sethasThumbnail(data.hasThumbnail)
             },
             'BookEdit fetchBook',
             false
@@ -80,7 +83,7 @@ export default function BookEdit(props) {
             </Row>
             <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.checked)} />
             <h5>صورة الغلاف</h5>
-            <img src={thumbnail} className='maxWidth100' />
+            <img src={thumbnail ?? hasThumbnail ? Api.bookThumbnail(id) : ''} className='maxWidth100' />
             <ImagePicker setImage={base64 => setthumbnail(base64)} />
 
         </Col>

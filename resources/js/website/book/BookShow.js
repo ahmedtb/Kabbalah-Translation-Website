@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
-import { Col, ListGroup } from 'react-bootstrap'
+import { Col, ListGroup, Row } from 'react-bootstrap';
 import { Routes, Api, ApiCallHandler } from '../utility/Urls'
 import { Helmet } from 'react-helmet'
 import LoadingIndicator from '../../commonFiles/LoadingIndicator'
@@ -11,7 +11,7 @@ import { trackPromise } from 'react-promise-tracker'
 export default function BookShow(props) {
     const { id } = useParams()
     const [book, setbook] = React.useState()
-    
+
     function setup() {
         trackPromise(
             ApiCallHandler(
@@ -61,7 +61,13 @@ export default function BookShow(props) {
             <title>{book?.title}</title>
         </Helmet>
         <h1 className='text-center'>{book?.title}</h1>
-        <div>{book?.description}</div>
+        <Row className='justify-content-around my-2'>
+            <Col xs={2}>
+                <img src={book?.hasThumbnail ? Api.bookThumbnail(id) : ''} className='maxWidth100' />
+            </Col>
+
+            <div className='col-9'>{book?.description} </div>
+        </Row>
         {/* <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div> */}
         <h3 className='text-center'>جدول المحتوى</h3>
 
@@ -79,5 +85,5 @@ export default function BookShow(props) {
                 }
             </ListGroup>
         </Col>
-    </Col>
+    </Col >
 }

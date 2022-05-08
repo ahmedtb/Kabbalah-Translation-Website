@@ -29,6 +29,7 @@ export const Routes = {
     glossaryTermShow: (id) => id ? '/dashboard/glossaryTermsIndex/' + id : '/dashboard/glossaryTermsIndex/:id',
     glossaryTermEdit: (id) => id ? '/dashboard/glossaryTermsIndex/' + id + '/edit' : '/dashboard/glossaryTermsIndex/:id/edit',
 
+
 }
 
 const apiPrefix = 'dashboardAPI'
@@ -64,6 +65,7 @@ export const Api = {
     }),
     fetchBooks: async (params) => await axios.get(`/${apiPrefix}/books/`, { params: params }),
     fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/${id}`, { params: params }),
+    bookThumbnail: (id) => `/${apiPrefix}/books/${id}/thumbnail`,
 
     createArticle: async (category_id, title, description, thumbnail, activated, page_content, source_url) =>
         await axios.post(`/${apiPrefix}/articles`, {
@@ -82,6 +84,7 @@ export const Api = {
         `/${apiPrefix}/articles/` + id,
         { category_id: category_id, title: title, description: description, thumbnail: thumbnail, activated: activated, page_content: page_content, source_url: source_url }
     ),
+    articleThumbnail: (id) => `/${apiPrefix}/articles/${id}/thumbnail`,
 
     createCategory: async (name) => await axios.post(`/${apiPrefix}/categories`, { name: name }),
     fetchCategories: async (params) => await axios.get(`/${apiPrefix}/categories/`, { params: params }),

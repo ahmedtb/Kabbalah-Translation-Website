@@ -14,13 +14,14 @@ class Article extends Model
 
     protected $guarded = [];
 
-    protected $hidden = ['page_content'];
+    protected $hidden = ['page_content', 'thumbnail'];
 
     protected $casts = [
         'page_content' => CastJsonToPageContent::class
     ];
     protected $appends  = [
-        'isTranslated'
+        'isTranslated', 'hasThumbnail'
+
     ];
     public function category()
     {
@@ -44,5 +45,23 @@ class Article extends Model
     public function isTranslated()
     {
         return $this->page_content->isFullyTranslated();
+    }
+
+
+    public function thumbnail()
+    {
+
+        if ($this->thumbnail) {
+            $extension = explode('/', explode(";", $this->thumbnail)[0])[1];
+
+            $raw_image_string = base64_decode(explode("base64,", $this->thumbnail)[1]);
+            return response($raw_image_string)->header('Content-Type', 'thumbnail/' . $extension);
+        }
+        return null;
+    }
+
+    public function getHasThumbnailAttribute()
+    {
+        return $this->thumbnail ? true : false;
     }
 }
