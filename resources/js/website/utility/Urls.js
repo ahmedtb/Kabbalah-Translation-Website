@@ -26,6 +26,7 @@ export const Api = {
     fetchArticles: async (params) => await axios.get('/api/articles', { params: params }),
     fetchArticle: async (id) => await axios.get('/api/articles/' + id),
     articleThumbnail: (id) => `/api/articles/${id}/thumbnail`,
+    articlesSuggestion: () => axios.get('/api/articles/suggestion'),
 
     fetchCategories: async (params) => await axios.get('/api/categories', { params: params }),
     fetchCategory: async (id) => await axios.get('/api/categories/' + id),

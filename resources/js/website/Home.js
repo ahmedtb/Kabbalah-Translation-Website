@@ -39,18 +39,18 @@ export default function Home(props) {
                 </title>
             </Helmet>
             <Row>
-                <Col md={9}>
+                <Col lg={9}>
                     <Carousel interval={3000} fade>
                         <Carousel.Item>
                             <Link to={Routes.articleShow(1)}>
                                 <img
                                     className="d-block w-100"
-                                    src="/images/Sketch.jpg"
+                                    src="/images/nature.jpg"
                                     alt="First slide"
                                 />
                                 <Carousel.Caption>
                                     <h3>تعرف على اساسيات علم الكابالا</h3>
-                                    <p>  حكمة الكابالا هي أداة علمية لدراسة العالم الروحي. لاستكشاف عالمنا ، نستخدم العلوم الطبيعية مثل الفيزياء والكيمياء والبيولوجيا. العلوم الطبيعية تدرس فقط العالم المادي الذي ندركه بحواسنا الخمس. لفهم العالم الذي نعيش فيه تمامًا ، نحتاج إلى أداة بحث يمكنها استكشاف العالم الخفي الذي لا تستطيع حواسنا إدراكه. هذه الأداة هي حكمة الكابالا.</p>
+                                    <p className="d-none d-md-block">  حكمة الكابالا هي أداة علمية لدراسة العالم الروحي. لاستكشاف عالمنا ، نستخدم العلوم الطبيعية مثل الفيزياء والكيمياء والبيولوجيا. العلوم الطبيعية تدرس فقط العالم المادي الذي ندركه بحواسنا الخمس. لفهم العالم الذي نعيش فيه تمامًا ، نحتاج إلى أداة بحث يمكنها استكشاف العالم الخفي الذي لا تستطيع حواسنا إدراكه. هذه الأداة هي حكمة الكابالا.</p>
                                 </Carousel.Caption>
                             </Link>
                         </Carousel.Item>
@@ -60,8 +60,8 @@ export default function Home(props) {
 
                     <ArticlesCardsRender articles={articles} />
                 </Col>
-                <Col md={3}>
-                    <div className="d-flex justify-content-around">
+                <Col lg={3}>
+                    <div className="d-flex justify-content-around  border rounded bg-white my-2 p-3">
 
                         <a href='https://www.facebook.com/WisdomKabbalah/' target={'_blank'} className=''>
                             <AiFillFacebook size={50} />
@@ -77,9 +77,9 @@ export default function Home(props) {
                         </a>
                     </div>
 
-                    <div className="p-3">
+                    <div className="p-2 border rounded bg-white my-2">
 
-                        <h4>تصنيفات</h4>
+                        <div className="fw-bold mb-2">تصنيفات المقالات</div>
                         {
                             categories?.map((category, index) => (
                                 <div key={index}>

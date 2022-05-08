@@ -29,6 +29,11 @@ class ArticlesController extends Controller
         }
     }
 
+    public function articlesSuggestion(Request $request)
+    {
+        return Article::activated()->inRandomOrder()->limit(5)->get();
+    }
+
 
     public function thumbnail($id)
     {

@@ -13,7 +13,9 @@ import {
     FaChartLine,
     FaBuilding,
     FaNetworkWired,
-    FaLaptop
+    FaLaptop,
+    FaBookOpen,
+    FaNewspaper
 } from 'react-icons/fa'
 
 
@@ -33,10 +35,20 @@ function TopMenue(props) {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <LinkContainer to={Routes.booksIndex()}>
-                                <Nav.Link className='text-white'>الكتب</Nav.Link>
+                                <Nav.Link className='text-white d-flex align-items-center fs-5'>
+                                    <FaBookOpen />
+                                    <div className='me-1'>
+                                        كتب
+                                    </div>
+                                </Nav.Link>
                             </LinkContainer>
                             <LinkContainer to={Routes.articlesIndex()}>
-                                <Nav.Link className='text-white'>المقالات</Nav.Link>
+                                <Nav.Link className='text-white d-flex align-items-center fs-5'>
+                                    <FaNewspaper />
+                                    <div className='me-1'>
+                                        مقالات
+                                    </div>
+                                </Nav.Link>
                             </LinkContainer>
                             {/* <LinkContainer to={Routes.categoriesIndex()}>
                             <Nav.Link>التصنيفات</Nav.Link>

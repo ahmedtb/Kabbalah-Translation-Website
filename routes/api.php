@@ -18,6 +18,7 @@ Route::get('/pages/{id}', [PagesController::class, 'show']);
 
 
 Route::get('/articles/', [ArticlesController::class, 'index']);
+Route::get('/articles/suggestion', [ArticlesController::class, 'articlesSuggestion']);
 Route::get('/articles/{id}', [ArticlesController::class, 'show']);
 Route::get('/articles/{id}/thumbnail', [ArticlesController::class, 'thumbnail'])->name('article_thumbnail');
 
