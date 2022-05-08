@@ -7,12 +7,14 @@ import {
     getsectionsarray,
     getelement,
     getnextsection,
-    getpresection
-} from "./Table"
+    getpresection,
+} from './components/TableFunctions';
 import { truncate } from '../../commonFiles/helpers'
 import { Helmet } from 'react-helmet'
 import LoadingIndicator from '../../commonFiles/LoadingIndicator'
 import { trackPromise } from 'react-promise-tracker'
+import PagePathRender from "./components/PagePathRender"
+
 
 export default function BookBrowser(props) {
     const { id, sectionPath } = useParams()
@@ -31,7 +33,6 @@ export default function BookBrowser(props) {
 
     function fetchPage(page_id) {
         trackPromise(
-
             ApiCallHandler(
                 async () => await Api.fetchPage(page_id),
                 setpage,
@@ -64,10 +65,13 @@ export default function BookBrowser(props) {
         </Helmet>
 
         <div className='rounded'>
+
+            <PagePathRender book={book} path={sectionPath} />
+
             <PageContentRender page_content={page?.page_content} />
             <LoadingIndicator />
-
         </div>
+
         <div className='d-flex flex-row justify-content-around'>
             {
                 getpresection(book?.content_table, sectionPath) ? (

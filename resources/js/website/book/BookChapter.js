@@ -2,7 +2,7 @@ import React from "react"
 import { useParams, useLocation } from "react-router"
 import { Link } from 'react-router-dom'
 import { Routes, Api, ApiCallHandler } from "../utility/Urls"
-import { getchapter } from "./Table"
+import { getchapter } from "./components/TableFunctions"
 
 import { ListGroup } from "react-bootstrap"
 export default function BookChapter(props) {

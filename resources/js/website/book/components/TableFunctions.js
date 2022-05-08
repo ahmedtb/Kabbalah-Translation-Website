@@ -1,3 +1,4 @@
+
 export function getsectionsarray(content_table, preIndex) {
     let sections = []
     content_table?.forEach((element, index) => {
@@ -53,3 +54,4 @@ export function getchapter(content_table, path) {
         return element
     }
 }
+
