@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ArticlesController;
 use App\Http\Controllers\API\CategoriesController;
 
 Route::get('/books/', [BooksController::class, 'index']);
+Route::get('/books/suggestion', [BooksController::class, 'booksSuggestion']);
 Route::get('/books/{id}', [BooksController::class, 'show']);
 Route::get('/books/{id}/thumbnail', [BooksController::class, 'thumbnail'])->name('book_thumbnail');
 

@@ -31,4 +31,9 @@ class BooksController extends Controller
             throw ValidationException::withMessages(['id' => 'no such book ' . $id . ' exists']);
         return $book->thumbnail();
     }
+
+    public function booksSuggestion(Request $request)
+    {
+        return Book::activated()->inRandomOrder()->limit($request->limit ?? 5)->get();
+    }
 }

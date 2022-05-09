@@ -5,6 +5,7 @@ import { Routes, Api, ApiCallHandler } from "../utility/Urls"
 import { getchapter } from "./components/TableFunctions"
 import { ListGroup } from "react-bootstrap"
 import ChapterPathRender from './components/ChapterPathRender';
+import Helmet from "react-helmet"
 
 export default function BookChapter(props) {
     const { id, chapterPath } = useParams()
@@ -54,6 +55,9 @@ export default function BookChapter(props) {
 
     return <div>
 
+        <Helmet>
+            <title>{getchapter(book?.content_table, chapterPath)?.title}</title>
+        </Helmet>
         <ChapterPathRender book={book} path={chapterPath} />
 
         <h1 className='text-center'>{getchapter(book?.content_table, chapterPath)?.title}</h1>

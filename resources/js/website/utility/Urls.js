@@ -22,6 +22,7 @@ export const Api = {
     fetchSection: async (id, params) => await axios.get(`/api/books/section/${id}`, { params: params }),
     fetchPage: async (id, params) => await axios.get(`/api/pages/${id}`, { params: params }),
     bookThumbnail: (id) => `/api/books/${id}/thumbnail`,
+    booksSuggestion: (params) => axios.get('/api/books/suggestion', { params: params }),
 
     fetchArticles: async (params) => await axios.get('/api/articles', { params: params }),
     fetchArticle: async (id) => await axios.get('/api/articles/' + id),

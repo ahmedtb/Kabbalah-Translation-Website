@@ -8,6 +8,7 @@ import { AiFillFacebook, AiFillYoutube } from "react-icons/ai"
 import { Helmet } from 'react-helmet';
 import LoadingIndicator from '../commonFiles/LoadingIndicator'
 import { trackPromise } from 'react-promise-tracker'
+import CategoriesList from "./category/components/CategoriesList"
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -80,13 +81,7 @@ export default function Home(props) {
                     <div className="p-2 border rounded bg-white my-2">
 
                         <div className="fw-bold mb-2">تصنيفات المقالات</div>
-                        {
-                            categories?.map((category, index) => (
-                                <div key={index}>
-                                    <Link to={Routes.articlesIndex({ category_id: category.id })}> {category.name}  </Link>
-                                </div>
-                            ))
-                        }
+                        <CategoriesList />
                     </div>
                 </Col>
             </Row>

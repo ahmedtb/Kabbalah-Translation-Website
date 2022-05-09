@@ -9,6 +9,10 @@ import { truncate } from "../../commonFiles/helpers";
 import LoadingIndicator from '../../commonFiles/LoadingIndicator'
 import { trackPromise } from 'react-promise-tracker'
 import { BsDot } from 'react-icons/bs'
+import CategoriesList from '../category/components/CategoriesList';
+import ReadMoreList from "./components/ReadMoreList";
+import BooksSuggestion from "../book/components/BooksSuggestion";
+
 export default function ArticleShow(props) {
     let { id } = useParams();
     const [article, setarticle] = React.useState(null)
@@ -24,20 +28,11 @@ export default function ArticleShow(props) {
         )
     }
 
-    const [articlesSuggestion, setarticlesSuggestion] = React.useState(null)
 
-    function fetchArticlesSuggestion() {
-        ApiCallHandler(
-            () => Api.articlesSuggestion(),
-            setarticlesSuggestion,
-            'ArticleShow fetchArticlesSuggestion',
-            true
-        )
-    }
 
     React.useEffect(() => {
+        setarticle()
         setup()
-        fetchArticlesSuggestion()
     }, [id])
     return <div>
 
@@ -60,18 +55,24 @@ export default function ArticleShow(props) {
                 {article?.source_url ? <div>عنوان المصدر <a href={article?.source_url} target='_blank'>{truncate(article?.source_url, 20)}</a></div> : null}
 
             </Col>
-            <Col xl={2} lg={12} className='border rounded p-2 my-2 bg-white'>
-                <div className="fs-5">إقرا ايضا</div>
-                {articlesSuggestion?.map((arti, index) => {
-                    return <Link key={index} className="" to={Routes.articleShow(arti.id)}>
-                        <div className="d-flex my-2">
-                            {/* <BsDot className="" size={30} /> */}
-                            <div>
-                                {arti.title}
-                            </div>
-                        </div>
-                    </Link >
-                })}
+            <Col xl={2} lg={12} >
+                <div className='border rounded p-2 my-2 bg-white'>
+                    <div className="fs-5">إقرا ايضا</div>
+                    <ReadMoreList />
+                </div>
+
+                <div className="p-2 border rounded bg-white my-2">
+
+                    <div className="fw-bold mb-2">تصنيفات المقالات</div>
+                    <CategoriesList />
+                </div>
+
+                <div className='border rounded p-2 my-2 bg-white'>
+                    <div className="fs-5">كتب</div>
+
+                    <BooksSuggestion />
+                </div>
+
             </Col>
         </Row>
     </div>
