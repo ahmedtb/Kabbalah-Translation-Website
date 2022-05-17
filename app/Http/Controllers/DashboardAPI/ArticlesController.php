@@ -46,6 +46,7 @@ class ArticlesController extends Controller
         $data = $request->validate([
             'title' => 'required|string',
             'description' => 'sometimes|nullable|string',
+            'about' => 'sometimes|nullable|string',
             'thumbnail' => ['sometimes', 'nullable', new Base64Rule(200000)],
             'category_id' => 'required|exists:categories,id',
             'activated' => 'required|boolean',
@@ -63,6 +64,7 @@ class ArticlesController extends Controller
         $data = $request->validate([
             'title' => 'sometimes|string',
             'description' => 'sometimes|nullable|string',
+            'about' => 'sometimes|nullable|string',
             'thumbnail' => ['sometimes', 'nullable', new Base64Rule(200000)],
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',

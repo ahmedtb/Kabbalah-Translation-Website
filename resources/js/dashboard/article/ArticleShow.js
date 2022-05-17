@@ -37,6 +37,8 @@ export default function ArticleShow(props) {
                 </Link></div>
                 <div>activated {article?.activated ? 'مفعل' : 'غير مفعل'}</div>
                 <div>description {truncate(article?.description)}</div>
+                <div>about {article?.about}</div>
+
                 <div>image <img src={article?.hasThumbnail ? Api.articleThumbnail(id) : ''} className='maxWidth100' /></div>
                 <div>source url <a href={article?.source_url} target='_blank' >{article?.source_url}</a></div>
 

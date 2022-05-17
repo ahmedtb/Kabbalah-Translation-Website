@@ -57,7 +57,7 @@ class PageFactory extends Factory
         $page_content->generateMockedValues();
         return [
             'title' => $this->faker->unique()->sentence(),
-            'meta_description' => $this->faker->unique()->sentence(),
+            'about' => $this->faker->unique()->sentence(),
             'page_content' => $page_content,
         ];
     }

@@ -116,7 +116,7 @@ export default function PageContentEditor(props) {
         <div className='mb-5'>
             <div className='d-flex flex-row justify-content-between'>
                 <div>
-                    original direction
+                    اتجاه النص الاصلي
 
                     <FormCheck>
                         <FormCheck.Input type='radio' checked={originalDir == 'rtl'} onChange={(e) => dispatch({ actionType: 'set original dir', dir: 'rtl' })} />
@@ -129,7 +129,7 @@ export default function PageContentEditor(props) {
                     </FormCheck>
                 </div>
                 <div>
-                    translated direction
+                    اتجاه النص المترجم
 
                     <FormCheck>
                         <FormCheck.Input type='radio' checked={translatedDir == 'rtl'} onChange={(e) => dispatch({ actionType: 'set translated dir', dir: 'rtl' })} />

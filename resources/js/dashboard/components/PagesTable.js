@@ -59,7 +59,7 @@ export default function PagesTable(props) {
                                 {page.articles?.map((article, index) => article.title)}
                             </td>)}
 
-                            <td>{truncate(page.meta_description, 30)}</td>
+                            <td>{truncate(page.about, 30)}</td>
                             <td>{truncate(page.source_url, 30)}</td>
                             {hasBooks(<td>
                                 {page.books?.map((book, index) => (

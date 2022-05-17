@@ -17,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description',500);
+            $table->text('about')->nullable();
             $table->boolean('activated')->default(false);
             $table->mediumText('thumbnail');
             $table->string('author');

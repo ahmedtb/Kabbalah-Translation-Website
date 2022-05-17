@@ -42,14 +42,14 @@ export const Api = {
 
     fetchBase64DataFromUrl: async (url) => await axios.get(`/${apiPrefix}/fetchBase64DataFromUrl`, { params: { url: url } }),
 
-    createPage: async (title, meta_description, source_url, page_content, book_id) => {
+    createPage: async (title, about, source_url, page_content, book_id) => {
         return await axios.post(`/${apiPrefix}/pages`,
-            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
+            { title: title, about: about, source_url: source_url, page_content: page_content, book_id: book_id }
         )
     },
-    editPage: async (id, title, meta_description, source_url, page_content, book_id) => {
+    editPage: async (id, title, about, source_url, page_content, book_id) => {
         return await axios.put(`/${apiPrefix}/pages/` + id,
-            { title: title, meta_description: meta_description, source_url: source_url, page_content: page_content, book_id: book_id }
+            { title: title, about: about, source_url: source_url, page_content: page_content, book_id: book_id }
         )
 
     },
@@ -67,10 +67,11 @@ export const Api = {
     fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/${id}`, { params: params }),
     bookThumbnail: (id) => `/${apiPrefix}/books/${id}/thumbnail`,
 
-    createArticle: async (category_id, title, description, thumbnail, activated, page_content, source_url) =>
+    createArticle: async (category_id, title, description, about, thumbnail, activated, page_content, source_url) =>
         await axios.post(`/${apiPrefix}/articles`, {
             title: title,
             description: description,
+            about: about,
             thumbnail: thumbnail,
             category_id: category_id,
             activated: activated,

@@ -14,7 +14,7 @@ export default function PageEditor(props) {
     // const [page, setpage] = React.useState(null)
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
     const [title, settitle] = React.useState('');
-    const [meta_description, setmeta_description] = React.useState('');
+    const [about, setabout] = React.useState('');
     const [source_url, setsource_url] = React.useState('');
     const [book_id, setbook_id] = React.useState('');
     const [books, setbooks] = React.useState([]);
@@ -25,7 +25,7 @@ export default function PageEditor(props) {
             (data) => {
                 // setpage(data); 
                 settitle(data.title)
-                setmeta_description(data.meta_description)
+                setabout(data.about)
                 setsource_url(data.source_url)
                 setEditedPageContent(data.page_content)
                 setbook_id(data.book_id)
@@ -49,7 +49,7 @@ export default function PageEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await Api.editPage(id, title, meta_description, source_url, EditedPageContent, book_id),
+            async () => await Api.editPage(id, title, about, source_url, EditedPageContent, book_id),
             (data) => { alert(data.success); setredirect(Routes.pageShow(id)); },
             'PageEditor submit',
             true
@@ -83,7 +83,7 @@ export default function PageEditor(props) {
 
             <FormCheck>
                 <FormCheck.Label>معلومات وصفية</FormCheck.Label>
-                <Form.Control type='textarea' onChange={(e) => setmeta_description(e.target.value)} value={meta_description ?? ''} />
+                <Form.Control as='textarea' onChange={(e) => setabout(e.target.value)} value={about ?? ''} />
             </FormCheck>
 
             <FormCheck>

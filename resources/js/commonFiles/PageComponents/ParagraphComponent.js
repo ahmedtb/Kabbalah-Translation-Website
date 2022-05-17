@@ -5,6 +5,7 @@ import {
 } from 'react-bootstrap';
 import { paragraphObject } from './structure'
 import parse from 'html-react-parser'
+import { BsTypeBold, BsTypeH2, BsTypeH1 } from 'react-icons/bs'
 
 export function ParagraphComponentRender(props) {
     const component = props.component
@@ -113,20 +114,20 @@ export function ParagraphComponentCreator(props) {
                 checked={style.textAlign == 'center'}
                 type={'checkbox'}
             />
-            <Button onClick={() => {
+            <Button variant="outline-secondary mx-1" onClick={() => {
                 document.execCommand('bold', false);
             }}>
-                bold selected text
+                <BsTypeBold size={25} />
             </Button>
-            <Button onClick={() => {
+            <Button variant="outline-secondary mx-1" onClick={() => {
                 document.execCommand('fontSize', false, '5');
             }}>
-                H1
+                <BsTypeH2 size={25} />
             </Button>
-            <Button onClick={() => {
+            <Button variant="outline-secondary mx-1" onClick={() => {
                 document.execCommand('fontSize', false, '7');
             }}>
-                H2
+                <BsTypeH1 size={25} />
             </Button>
         </div>
         <div className="mb-3">

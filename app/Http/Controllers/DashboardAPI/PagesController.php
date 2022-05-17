@@ -20,7 +20,7 @@ class PagesController extends Controller
             'title' => ['required', 'string', Rule::unique('pages')->where(function ($query) use ($request) {
                 return $query->where('book_id', $request->book_id);
             })],
-            'meta_description' => 'nullable|string',
+            'about' => 'nullable|string',
             'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
         ]);
@@ -56,7 +56,7 @@ class PagesController extends Controller
             throw  ValidationException::withMessages(['id' => 'there is no such page with id = ' . $id]);
         $data = $request->validate([
             'title' => ['required', 'string'],
-            'meta_description' => 'nullable|string',
+            'about' => 'nullable|string',
             'source_url' => 'nullable|string',
             'page_content' => ['required', new PageContentRule()],
             'book_id' => 'sometimes|nullable|exists:books,id'

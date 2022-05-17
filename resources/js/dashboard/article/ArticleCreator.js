@@ -13,6 +13,8 @@ export default function ArticleCreator(props) {
 
     const [title, settitle] = React.useState();
     const [description, setdescription] = React.useState();
+    const [about, setabout] = React.useState();
+
     const [thumbnail, setthumbnail] = React.useState();
 
     const [activated, setactivated] = React.useState(false);
@@ -22,7 +24,7 @@ export default function ArticleCreator(props) {
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.createArticle(category_id, title, description, thumbnail, activated, page_content, source_url),
+            async () => await Api.createArticle(category_id, title, description, about, thumbnail, activated, page_content, source_url),
             (data) => {
                 alert(data.success)
                 setredirect(Routes.articlesIndex())
@@ -47,43 +49,54 @@ export default function ArticleCreator(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <div >
-        <FormCheck>
-            <FormCheck.Label>عنوان المقالة</FormCheck.Label>
-            <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
-        </FormCheck>
-        <FormCheck>
-            <FormCheck.Label>وصف المقالة</FormCheck.Label>
-            <Form.Control type='textarea' onChange={(e) => setdescription(e.target.value)} />
-        </FormCheck>
+    return <div>
+        <div className="bg-white p-2">
 
-        <Form.Select
-            onChange={e => {
-                setcategory_id(e.target.value)
-            }}
-        >
-            <option>تصنيف المقالة</option>
-            {
-                categories.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
-            }
-        </Form.Select>
-        <Form.Check
-            inline
-            label="activated"
-            type={'checkbox'}
-            defaultChecked={activated}
-            onChange={(e) => {
-                setactivated(e.target.checked)
-            }}
-        />
-        <img src={thumbnail} width={100} />
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">عنوان المقالة</FormCheck.Label>
+                <Form.Control type='text' onChange={(e) => settitle(e.target.value)} />
+            </FormCheck>
 
-        <ImagePicker setImage={(base64) => setthumbnail(base64)} />
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">وصف المقالة</FormCheck.Label>
+                <Form.Control as='textarea' onChange={(e) => setdescription(e.target.value)} />
+            </FormCheck>
 
-        <FormCheck>
-            <FormCheck.Label>رابط المصدر</FormCheck.Label>
-            <Form.Control type='text' value={source_url} onChange={(e) => setsource_url(e.target.value)} />
-        </FormCheck>
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">حول المقالة</FormCheck.Label>
+                <Form.Control as='textarea' onChange={(e) => setabout(e.target.value)} />
+            </FormCheck>
+
+            <Form.Select
+                onChange={e => {
+                    setcategory_id(e.target.value)
+                }}
+                className="my-2"
+            >
+                <option>تصنيف المقالة</option>
+                {
+                    categories.map((category, index) => <option key={index} value={category.id}>{category.name}</option>)
+                }
+            </Form.Select>
+            <Form.Check
+                className="my-2"
+                inline
+                label="مفعلّة للعرض"
+                type={'checkbox'}
+                defaultChecked={activated}
+                onChange={(e) => {
+                    setactivated(e.target.checked)
+                }}
+            />
+            <img src={thumbnail} width={100} />
+
+            <ImagePicker setImage={(base64) => setthumbnail(base64)} />
+
+            <FormCheck>
+                <FormCheck.Label className="fs-5">رابط المصدر</FormCheck.Label>
+                <Form.Control type='text' value={source_url} onChange={(e) => setsource_url(e.target.value)} />
+            </FormCheck>
+        </div>
 
         <PageContentEditor setEditedPageContent={setpage_content} />
 

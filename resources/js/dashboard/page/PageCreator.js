@@ -10,7 +10,7 @@ import ChangePageTitle from "../../commonFiles/ChangePageTitle";
 export default function PageCreator(props) {
     const [page_content, setpage_content] = React.useState(null)
     const [title, settitle] = React.useState('');
-    const [meta_description, setmeta_description] = React.useState('');
+    const [about, setabout] = React.useState('');
     const [source_url, setsource_url] = React.useState('');
     const [book_id, setbook_id] = React.useState('');
 
@@ -21,7 +21,7 @@ export default function PageCreator(props) {
     function submit() {
 
         ApiCallHandler(
-            async () => await Api.createPage(title, meta_description, source_url, page_content, book_id),
+            async () => await Api.createPage(title, about, source_url, page_content, book_id),
             (data) => {
                 alert(data.success)
                 setredirect(Routes.pagesIndex())
@@ -73,7 +73,7 @@ export default function PageCreator(props) {
         </Form.Select>
         <FormCheck>
             <FormCheck.Label>وصف المحتوى</FormCheck.Label>
-            <Form.Control as='textarea' onChange={(e) => setmeta_description(e.target.value)} rows={3} />
+            <Form.Control as='textarea' onChange={(e) => setabout(e.target.value)} rows={3} />
         </FormCheck>
         <FormCheck>
             <FormCheck.Label>رابط المصدر</FormCheck.Label>
