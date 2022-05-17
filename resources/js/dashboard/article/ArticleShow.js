@@ -26,37 +26,104 @@ export default function ArticleShow(props) {
 
     return (
         <div >
-            <Link to={Routes.articleEdit(article?.id)}>
-                edit
-            </Link>
-            <Col xs={12}>
-                <div>id {article?.id}</div>
-                <div>title {article?.title}</div>
-                <div>category <Link to={Routes.categoryShow(article?.category_id)}>
-                    {article?.category_id}
-                </Link></div>
-                <div>activated {article?.activated ? 'مفعل' : 'غير مفعل'}</div>
-                <div>description {truncate(article?.description)}</div>
-                <div>about {article?.about}</div>
+            <div className="bg-white p-2">
+                <Link to={Routes.articleEdit(article?.id)}>
+                    تعديل
+                </Link>
 
-                <div>image <img src={article?.hasThumbnail ? Api.articleThumbnail(id) : ''} className='maxWidth100' /></div>
-                <div>source url <a href={article?.source_url} target='_blank' >{article?.source_url}</a></div>
+                <div className="my-2 text-center d-flex">
+                    <div className="fw-bold mx-2">
+                        عنوان المقالة
+                    </div>
+                    <div>
+                        {article?.title}
+                    </div>
+                </div>
+                <div className="d-flex justify-content-around">
+                    <div className="my-2 d-flex">
+                        <div className="fw-bold mx-2">
+                            رقم المقالة
+                        </div>
+                        <div>
+                            {article?.id}
+                        </div>
+                    </div>
+                    <div className="my-2 d-flex">
+                        <div className="fw-bold mx-2">
+                            التصنيف
+                        </div>
+                        <Link to={Routes.categoryShow(article?.category_id)}>
+                            {article?.category_id}
+                        </Link>
+                    </div>
+                </div>
 
+                <div className="my-2 d-flex">
+                    <div className="fw-bold mx-2">
+                        تفعيل عرض المقالة
+                    </div>
+                    <div>
+                        {article?.activated ? 'مفعل' : 'غير مفعل'}
+                    </div>
+                </div>
+                <div className="my-2">
+                    <div className="fw-bold">
+                        الوصف
+                    </div>
+                    <textarea disabled className="p-2 border rounded" value={article?.description} />
 
-                <div>original Dir {article?.page_content.originalDir}</div>
-                <div>translated Dir {article?.page_content.translatedDir}</div>
-                <Button onClick={() => setrender('original')}>
+                </div>
+                <div className="my-2">
+                    <div className="fw-bold">
+                        حول المقالة
+                    </div>
+                    <textarea disabled className="p-2 border rounded" value={article?.about} />
+                </div>
+
+                <div className="my-2">
+                    <div className="fw-bold">
+                        صورة العرض
+                    </div>
+                    <img src={article?.hasThumbnail ? Api.articleThumbnail(id) : ''} className='maxWidth100' />
+                </div>
+
+                <div className="my-2 d-flex">
+                    <div className="fw-bold mx-2">
+                        رابط المصدر
+                    </div>
+                    <a href={article?.source_url} target='_blank' >{article?.source_url}</a>
+                </div>
+
+                <div className="d-flex justify-content-around">
+                    <div className="my-2 d-flex">
+                        <div className="fw-bold mx-2">
+                            الاتجاه النص الاصلي
+                        </div>
+                        {article?.page_content.originalDir}
+                    </div>
+                    <div className="my-2 d-flex">
+                        <div className="fw-bold mx-2">
+                            الاتجاه النص المترجم
+                        </div>
+                        {article?.page_content.translatedDir}
+                    </div>
+                </div>
+            </div>
+
+            <div className="d-flex justify-content-around">
+
+                <Button className="my-2" onClick={() => setrender('original')}>
                     عرض النص الاصلي
                 </Button>
-                <Button onClick={() => setrender('translated')}>
+                <Button className="my-2" onClick={() => setrender('translated')}>
                     عرض الترجمة
                 </Button>
-                <h5>عنوان الصفحة{article?.title}</h5>
                 <Button onClick={() => setrender('both')}>
-                    both
+                    عرض كلاهما
                 </Button>
-                <PageContentRender pageContent={article?.page_content} render={render} />
-            </Col>
+            </div>
+
+            <PageContentRender pageContent={article?.page_content} render={render} />
         </div>
     )
 }

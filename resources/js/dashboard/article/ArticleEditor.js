@@ -54,7 +54,7 @@ export default function ArticleEditor(props) {
 
     async function submit() {
         ApiCallHandler(
-            async () => await Api.editArticle(id, category_id, title, description, thumbnail, activated, EditedPageContent, source_url),
+            async () => await Api.editArticle(id, category_id, title, description, about, thumbnail, activated, EditedPageContent, source_url),
             (data) => { alert(data.success); setredirect(Routes.articlesIndex); },
             'ArticleEditor submit',
             true

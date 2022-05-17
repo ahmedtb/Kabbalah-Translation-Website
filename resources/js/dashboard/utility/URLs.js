@@ -3,7 +3,7 @@ import { logError } from '../../commonFiles/helpers'
 export const Routes = {
     dashboard: () => '/dashboard/',
     loginPage: () => '/dashboard/loginPage',
-    
+
     pageCreator: () => '/dashboard/createPage',
     pagesIndex: () => '/dashboard/pagesIndex',
     pageShow: (id) => id ? '/dashboard/pages/' + id : '/dashboard/pages/:id',
@@ -81,9 +81,9 @@ export const Api = {
     fetchArticles: async (params) => await axios.get(`/${apiPrefix}/articles/`, { params: params }),
     fetchArticle: async (id) => await axios.get(`/${apiPrefix}/articles/${id}`),
     deleteArticle: async (id) => await axios.delete(`/${apiPrefix}/articles/${id}`),
-    editArticle: async (id, category_id, title, description, thumbnail, activated, page_content, source_url) => await axios.put(
+    editArticle: async (id, category_id, title, description, about, thumbnail, activated, page_content, source_url) => await axios.put(
         `/${apiPrefix}/articles/` + id,
-        { category_id: category_id, title: title, description: description, thumbnail: thumbnail, activated: activated, page_content: page_content, source_url: source_url }
+        { category_id: category_id, title: title, description: description, about: about, thumbnail: thumbnail, activated: activated, page_content: page_content, source_url: source_url }
     ),
     articleThumbnail: (id) => `/${apiPrefix}/articles/${id}/thumbnail`,
 
