@@ -1,6 +1,6 @@
 <?php
-    $title = 'kabbalah books';
-    $description = 'kabbalah books';
+    $title = 'كتب الكابالا بالعربي';
+    $description = 'كتب الكابالا بالعربي';
     $image = '';
 
 ?>

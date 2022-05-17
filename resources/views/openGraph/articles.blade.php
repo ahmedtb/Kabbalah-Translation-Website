@@ -1,7 +1,7 @@
 
 <?php
-$title = 'kabbalah books';
-$description = 'kabbalah books';
+$title = 'مقالات';
+$description = 'كتابات عن الكابالا';
 $image = '';
 
 ?>

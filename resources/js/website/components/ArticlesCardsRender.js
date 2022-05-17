@@ -2,6 +2,7 @@ import React from 'react'
 import { Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { Routes, Api } from '../utility/Urls';
+import { truncate } from '../../commonFiles/helpers';
 
 export default function ArticlesCardsRender(props) {
     const articles = props.articles
@@ -21,7 +22,7 @@ export default function ArticlesCardsRender(props) {
             </h4>
             <Link to={Routes.articlesIndex({ category_id: article.category_id })}>{article.category?.name}</Link>
             <div>
-                {article.description}
+                {truncate(article.description, 100)}
             </div>
             <div className='d-flex justify-content-end'>
                 <Link to={Routes.articleShow(article.id)} >إقرا</Link>
