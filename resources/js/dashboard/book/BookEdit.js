@@ -18,6 +18,8 @@ export default function BookEdit(props) {
     const [pages, setpages] = React.useState([])
     const [title, settitle] = React.useState('')
     const [description, setdescription] = React.useState('')
+    const [about, setabout] = React.useState('')
+
     const [author, setauthor] = React.useState('')
     const [activated, setactivated] = React.useState(false)
 
@@ -29,6 +31,7 @@ export default function BookEdit(props) {
             (data) => {
                 settitle(data.title)
                 setdescription(data.description)
+                setabout(data.about)
                 setauthor(data.author)
                 setactivated(data.activated)
                 setthumbnail(data.thumbnail)
@@ -52,7 +55,7 @@ export default function BookEdit(props) {
 
     function submit() {
         ApiCallHandler(
-            async () => await Api.editBook(id, title, description, thumbnail, author, activated, content_table),
+            async () => await Api.editBook(id, title, description, about, thumbnail, author, activated, content_table),
             (data) => { alert(data.success); setredirect(Routes.booksIndex()) },
             'BookEdit submit',
             true
@@ -70,30 +73,45 @@ export default function BookEdit(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return <div>
-        <Col xs={12} >
-            <Row>
-                <Form.Control defaultValue={title} as='input' type='text' placeholder='عنوان الكتاب' onChange={e => settitle(e.target.value)} />
-            </Row>
-            <Row>
-                <Form.Control defaultValue={description} as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setdescription(e.target.value)} />
-            </Row>
-            <Row>
-                <Form.Control defaultValue={author} as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
-            </Row>
-            <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.checked)} />
-            <h5>صورة الغلاف</h5>
+    return <div className='bg-white my-2 p-2'>
+        <div className='my-2'>
+            <div className='fw-bold'>عنوان الكتاب</div>
+            <Form.Control defaultValue={title} as='input' type='text' placeholder='عنوان الكتاب' onChange={e => settitle(e.target.value)} />
+        </div>
+        <div className='my-2'>
+            <div className='fw-bold'>وصف الكتاب</div>
+            <Form.Control defaultValue={description ?? ''} as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setdescription(e.target.value)} />
+        </div>
+        <div className='my-2'>
+            <div className='fw-bold'>حول الكتاب</div>
+            <Form.Control defaultValue={about ?? ''} as='textarea' type='text' placeholder='حول الكتاب' onChange={e => setabout(e.target.value)} />
+        </div>
+        <div className='my-2'>
+            <div className='fw-bold'>مؤلف الكتاب</div>
+            <Form.Control defaultValue={author} as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
+        </div>
+
+        <div className='my-2'>
+            <div className='fw-bold'>
+                تفعيل العرض
+            </div>
+            <input checked={activated} type='checkbox' onChange={e => setactivated(e.target.checked)} />
+        </div>
+
+        <div className='my-2'>
+            <h5 className='fw-bold'>صورة الغلاف</h5>
             <img src={thumbnail ?? hasThumbnail ? Api.bookThumbnail(id) : ''} className='maxWidth100' />
             <ImagePicker setImage={base64 => setthumbnail(base64)} />
-
-        </Col>
+        </div>
         <Col xs={10} className='mx-auto'>
             <h3 className='text-center'>جدول المحتوى</h3>
             <ContentTableEditor pages={pages} content_table={content_table} editContentTable={setcontent_table} />
         </Col>
 
-        <Button className='my-2' onClick={submit} variant="secondary" >
+        <Button className='my-2 d-block me-auto' onClick={submit} variant="danger" >
             تعديل الكتاب
         </Button>
     </div>
+
+
 }

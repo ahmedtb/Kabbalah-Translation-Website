@@ -15,6 +15,8 @@ export default function PageEditor(props) {
     const [EditedPageContent, setEditedPageContent] = React.useState(null)
     const [title, settitle] = React.useState('');
     const [about, setabout] = React.useState('');
+    const [description, setdescription] = React.useState('');
+
     const [source_url, setsource_url] = React.useState('');
     const [book_id, setbook_id] = React.useState('');
     const [books, setbooks] = React.useState([]);
@@ -26,6 +28,7 @@ export default function PageEditor(props) {
                 // setpage(data); 
                 settitle(data.title)
                 setabout(data.about)
+                setdescription(data.description)
                 setsource_url(data.source_url)
                 setEditedPageContent(data.page_content)
                 setbook_id(data.book_id)
@@ -60,12 +63,12 @@ export default function PageEditor(props) {
     if (redirect)
         return <Redirect to={redirect} />
 
-    return (
-        <div className='mb-5'>
+    return (<div>
+        <div className="bg-white p-2">
             <ChangePageTitle pageTitle={title} />
 
-            <FormCheck>
-                <FormCheck.Label>عنوان الصفحة</FormCheck.Label>
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">عنوان الصفحة</FormCheck.Label>
                 <Form.Control type='text' onChange={(e) => settitle(e.target.value)} value={title ?? ''} />
             </FormCheck>
             <Form.Select
@@ -81,20 +84,27 @@ export default function PageEditor(props) {
                 }
             </Form.Select>
 
-            <FormCheck>
-                <FormCheck.Label>معلومات وصفية</FormCheck.Label>
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">حول الصفحة {'(لايظهر للمتصفحين)'}</FormCheck.Label>
                 <Form.Control as='textarea' onChange={(e) => setabout(e.target.value)} value={about ?? ''} />
             </FormCheck>
 
-            <FormCheck>
-                <FormCheck.Label>رابط المصدر</FormCheck.Label>
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">وصف للصفحة</FormCheck.Label>
+                <Form.Control as='textarea' onChange={(e) => setdescription(e.target.value)} value={description ?? ''} />
+            </FormCheck>
+
+            <FormCheck className="my-2">
+                <FormCheck.Label className="fs-5">رابط المصدر</FormCheck.Label>
                 <Form.Control as='input' onChange={(e) => setsource_url(e.target.value)} defaultValue={source_url ?? ''} />
             </FormCheck>
-            <Col xs={12}>
-                <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />
-
-                <Button onClick={submit}>submit</Button>
-            </Col>
         </div>
+
+        <div>
+            <PageContentEditor pageContent={EditedPageContent} setEditedPageContent={setEditedPageContent} />
+
+            <Button onClick={submit}>submit</Button>
+        </div>
+    </div>
     )
 }

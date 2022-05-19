@@ -50,7 +50,7 @@ function AllowedRoutes(props) {
         return <>
 
             <TopMenue />
-            <Container >
+            <Container className='my-2' >
                 <Switch>
                     <Route exact={true} path={Routes.dashboard()} component={Home} />
 
@@ -78,12 +78,15 @@ function AllowedRoutes(props) {
 
                 </Switch>
             </Container>
+            <Footer />
+
         </>
     else return <LoginPage />
 }
 
 import { refreshAdmin, setAllowedRoutes } from '../redux/stateActions'
 import { connect } from "react-redux"
+import Footer from '../components/Footer';
 
 const mapStateToProps = state => {
     return {

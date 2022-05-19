@@ -14,6 +14,7 @@ class ArticlesController extends Controller
     {
         return Article::activated()
             ->filter($filters)
+            ->latest()
             ->paginate($request->input('page_size') ?? 5)
             ->appends(request()->except('page'));
     }

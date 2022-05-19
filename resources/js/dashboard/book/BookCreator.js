@@ -16,6 +16,8 @@ export default function BookCreator(props) {
 
     const [title, settitle] = React.useState('')
     const [description, setdescription] = React.useState('')
+    const [about, setabout] = React.useState('')
+
     const [author, setauthor] = React.useState('')
     const [activated, setactivated] = React.useState(false)
 
@@ -37,7 +39,7 @@ export default function BookCreator(props) {
     }
     function submit() {
         ApiCallHandler(
-            async () => await Api.createBook(title, description, thumbnail, author, activated, content_table),
+            async () => await Api.createBook(title, description, about, thumbnail, author, activated, content_table),
             (data) => { alert(data.success); setredirect(Routes.booksIndex()) },
             'BookCreator2 submit',
             true
@@ -55,29 +57,45 @@ export default function BookCreator(props) {
     if (redirect)
         <Redirect to={redirect} />
 
-    return <div>
-        <Col xs={12} >
-            <Row>
+    return <div className='bg-white'>
+        <div xs={12} >
+
+            <div className='my-2'>
+                <div className='fw-bold'>عنوان الكتاب</div>
                 <Form.Control as='input' type='text' placeholder='عنوان الكتاب' onChange={e => settitle(e.target.value)} />
-            </Row>
-            <Row>
+            </div>
+            <div className='my-2'>
+                <div className='fw-bold'>وصف الكتاب</div>
                 <Form.Control as='textarea' type='text' placeholder='وصف الكتاب' onChange={e => setdescription(e.target.value)} />
-            </Row>
-            <Row>
+            </div>
+
+            <div className='my-2'>
+                <div className='fw-bold'>حول الكتاب</div>
+                <Form.Control as='textarea' type='text' placeholder='حول الكتاب' onChange={e => setabout(e.target.value)} />
+            </div>
+            <div className='my-2'>
+                <div className='fw-bold'>مؤلف الكتاب</div>
                 <Form.Control as='input' type='text' placeholder='مؤلف الكتاب' onChange={e => setauthor(e.target.value)} />
-            </Row>
-            <Form.Check checked={activated} type='checkbox' label='تفعيل العرض' onChange={e => setactivated(e.target.value == 'on')} />
+            </div>
+            <div className='my-2'>
+                <div className='fw-bold'>
+                    تفعيل العرض
+                </div>
+                <input checked={activated} type='checkbox' onChange={e => setactivated(e.target.checked)} />
+            </div>
+            <div className='my-2'>
+                <h5>صورة الغلاف</h5>
+                <ImagePicker setImage={base64 => setthumbnail(base64)} />
+            </div>
 
-            <h5>صورة الغلاف</h5>
-            <ImagePicker setImage={base64 => setthumbnail(base64)} />
 
-        </Col>
-        <Col xs={10} className='mx-auto'>
+        </div>
+        <div xs={10} className='mx-auto'>
             <h3 className='text-center'>جدول المحتوى</h3>
             <ContentTableEditor pages={pages} editContentTable={setcontent_table} />
-        </Col>
+        </div>
 
-        <Button className='my-2' onClick={submit} variant="secondary" >
+        <Button className='my-2 d-block me-auto' onClick={submit} variant="success" >
             انشاء الكتاب
         </Button>
     </div>

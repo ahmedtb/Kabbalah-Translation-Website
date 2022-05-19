@@ -75,14 +75,32 @@ export default function BookShow(props) {
         var params = Object.fromEntries(new URLSearchParams(location.search));
         fetchPages(null, params)
     }, [])
-    return <Col xs={12}>
+    return <div className="bg-light p-2">
         <ChangePageTitle pageTitle={'عرض:' + book?.title} />
         <Link to={Routes.bookEdit(book?.id)}>
             edit
         </Link>
         <h1 className='text-center'>{book?.title}</h1>
-        <div>{book?.description}</div>
-        <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div>
+        <div className="border rounded my-2">
+            <div className="fw-bold">حول الكتاب</div>
+            <div>
+                {book?.about}
+            </div>
+        </div>
+        <div className="border rounded my-2">
+            <div className="fw-bold">وصف الكتاب "يعرض للمتصفحين"</div>
+            <div>
+                {book?.description}
+            </div>
+        </div>
+        
+        <div className="border rounded my-2">
+            <div className="fw-bold">عرض الكتاب</div>
+            <div>
+                {book?.activated ? 'مفعل' : 'غير مفعل'}
+            </div>
+        </div>
+
         <h3 className='text-center'>جدول المحتوى</h3>
 
         <Col xs={8} className='mx-auto'>
@@ -101,9 +119,9 @@ export default function BookShow(props) {
         </Col>
         <h3 className='text-center'>صفحات تشير للكتاب</h3>
 
-        <Col xs={12}>
+        <div>
             <PagesTable pages={pages} />
-        </Col>
+        </div>
         <Pagination fetchPage={fetchPages} links={links} />
-    </Col>
+    </div>
 }

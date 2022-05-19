@@ -19,6 +19,7 @@ class BooksController extends Controller
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
+            'about' => 'required|string',
             'thumbnail' => ['required', new Base64Rule(200000)],
             'author' => 'required|string',
             'activated' => 'required|boolean',
@@ -28,6 +29,7 @@ class BooksController extends Controller
         $book = Book::create([
             'title' => $request->title,
             'description' => $request->description,
+            'about' => $request->about,
             'thumbnail' => $request->thumbnail,
             'author' => $request->author,
             'content_table' => $request->content_table,
@@ -41,6 +43,7 @@ class BooksController extends Controller
         $data = $request->validate([
             'title' => 'sometimes|string',
             'description' => 'sometimes|string',
+            'about' => 'sometimes|string',
             'thumbnail' => ['sometimes', new Base64Rule(200000)],
             'author' => 'sometimes|string',
             'activated' => 'sometimes|boolean',

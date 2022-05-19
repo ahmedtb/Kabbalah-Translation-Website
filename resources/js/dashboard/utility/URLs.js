@@ -42,9 +42,9 @@ export const Api = {
 
     fetchBase64DataFromUrl: async (url) => await axios.get(`/${apiPrefix}/fetchBase64DataFromUrl`, { params: { url: url } }),
 
-    createPage: async (title, about, source_url, page_content, book_id) => {
+    createPage: async (title, about, description, source_url, page_content, book_id) => {
         return await axios.post(`/${apiPrefix}/pages`,
-            { title: title, about: about, source_url: source_url, page_content: page_content, book_id: book_id }
+            { title: title, about: about, description: description, source_url: source_url, page_content: page_content, book_id: book_id }
         )
     },
     editPage: async (id, title, about, source_url, page_content, book_id) => {
@@ -57,11 +57,11 @@ export const Api = {
     fetchPage: async (id) => await axios.get(`/${apiPrefix}/pages/${id}`),
     deletePage: async (id) => await axios.delete(`/${apiPrefix}/pages/${id}`),
 
-    createBook: async (title, description, thumbnail, author, activated, content_table) => await axios.post(`/${apiPrefix}/books/create`, {
-        title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
+    createBook: async (title, description, about, thumbnail, author, activated, content_table) => await axios.post(`/${apiPrefix}/books/create`, {
+        title: title, description: description, about: about, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
     }),
-    editBook: async (id, title, description, thumbnail, author, activated, content_table) => await axios.put(`/dashboardAPI/books/${id}`, {
-        title: title, description: description, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
+    editBook: async (id, title, description, about, thumbnail, author, activated, content_table) => await axios.put(`/dashboardAPI/books/${id}`, {
+        title: title, description: description, about: about, thumbnail: thumbnail, author: author, activated: activated, content_table: content_table
     }),
     fetchBooks: async (params) => await axios.get(`/${apiPrefix}/books/`, { params: params }),
     fetchBook: async (id, params) => await axios.get(`/${apiPrefix}/books/${id}`, { params: params }),

@@ -22,42 +22,49 @@ export default function ImagePicker(props) {
     const [fromURL, setFromURL] = React.useState(false)
 
     return (
-        <div>
-            <Form.Check
-                inline
-                label="from url"
-                type={'checkbox'}
-                onChange={(e) => {
-                    setFromURL(e.target.checked)
-                }}
-            />
+        <div className=''>
+
+            <div className='d-flex align-items-center'>
+                <div className='mx-1'>
+                    من الرابط
+                </div>
+                <input type='checkbox' onChange={e => setFromURL(e.target.checked)} />
+            </div>
+
             {!fromURL ?
 
-                <input
-                    type='file'
-                    accept=".jpg,.jpeg,.png,.webp,.gif"
-                    onChange={(e) => {
-                        const file = e.target.files[0]
-
-                        convertFileToBase64(file).then((base64) => {
-                            if (base64.length > maxSize)
-                                alert('حجم الصورة يجب ان لا يفوق ' + maxSize)
-                            else
-                                setImage(base64)
-                        })
-                    }}
-                /> :
-                <div>
-                    from url
-                    <input onChange={(e) => seturl(e.target.value)} />
-                    <button onClick={() => {
+                <div className='d-flex align-items-center'>
+                    <div className='mx-1'>
+                        من الملفات
+                    </div>
+                    <input
+                        type='file'
+                        accept=".jpg,.jpeg,.png,.webp,.gif"
+                        onChange={(e) => {
+                            const file = e.target.files[0]
+                            convertFileToBase64(file).then((base64) => {
+                                if (base64.length > maxSize)
+                                    alert('حجم الصورة يجب ان لا يفوق ' + maxSize)
+                                else
+                                    setImage(base64)
+                            })
+                        }}
+                    />
+                </div>
+                :
+                <div className='d-flex'>
+                    <div className='my-2 d-flex mx-2'>
+                        <div className='mx-2'>من الرابط</div>
+                        <input onChange={(e) => seturl(e.target.value)} />
+                    </div>
+                    <button className='btn btn-success' onClick={() => {
                         getBase64FromUrl(url).then((base64) => {
                             if (base64.length > maxSize)
                                 alert('حجم الصورة يجب ان لا يفوق ' + maxSize)
                             else
                                 setImage(base64)
                         })
-                    }}>fetch image</button>
+                    }}>جلب الصورة</button>
                 </div>
             }
         </div>

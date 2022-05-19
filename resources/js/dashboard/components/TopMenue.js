@@ -14,11 +14,11 @@ function TopMenue(props) {
         )
     }
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="primary" variant="dark" expand="lg" className='natureBackground maxWidth100'>
             <Container>
                 <LinkContainer to={Routes.dashboard()}>
                     <Navbar.Brand >
-                        Kabbalah Translation
+                        لوحة تحكم الكابالا بالعربي
                     </Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
