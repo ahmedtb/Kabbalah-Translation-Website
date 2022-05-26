@@ -29,7 +29,7 @@ export default function PageShow(props) {
     return (
         <div >
             <ChangePageTitle pageTitle={page?.title} />
-            <Link to={Routes.pageEdit(page?.id)}>
+            <Link to={Routes.pageEdit(id)}>
                 edit
             </Link>
             <h5 className='text-center'>عنوان الصفحة {page?.title}</h5>

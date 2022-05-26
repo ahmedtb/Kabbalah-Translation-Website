@@ -107,6 +107,7 @@ export async function ApiCallHandler(ApiEndpoint, setData = null, Identifier = n
             setData(response.data)
         if (Identifier && logData)
             console.log(Identifier, response.data)
+        return response
     } catch (error) {
         if (Identifier)
             logError(error, Identifier)

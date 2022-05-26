@@ -4,7 +4,7 @@ import { usePromiseTracker } from "react-promise-tracker";
 import { TailSpin } from 'react-loader-spinner';
 
 export default function LoadingIndicator(props) {
-    const { promiseInProgress } = usePromiseTracker();
+    const { promiseInProgress } = usePromiseTracker({ area: props.area });
 
     return (
         promiseInProgress && <div

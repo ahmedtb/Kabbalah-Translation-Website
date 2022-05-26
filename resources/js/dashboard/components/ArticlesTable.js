@@ -11,12 +11,12 @@ export default function ArticlesTable(props) {
 
 
     function hasCategory(Obj, Or = null) {
-        if (articles[0]?.category)
+        if (articles && articles[0]?.category)
             return Obj
         else return Or
     }
     function hasIsTransated(Obj, Or = null) {
-        if (articles[0]?.isTranslated != undefined) return Obj; else return Or;
+        if (articles && articles[0]?.isTranslated != undefined) return Obj; else return Or;
     }
 
     return (

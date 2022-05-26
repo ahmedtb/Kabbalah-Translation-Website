@@ -70,14 +70,14 @@ export default function ArticleShow(props) {
                     <div className="fw-bold">
                         الوصف
                     </div>
-                    <textarea disabled className="p-2 border rounded" value={article?.description} />
+                    <textarea disabled className="p-2 border rounded d-block w-100" value={article?.description ?? ''} />
 
                 </div>
                 <div className="my-2">
                     <div className="fw-bold">
                         حول المقالة
                     </div>
-                    <textarea disabled className="p-2 border rounded" value={article?.about} />
+                    <textarea disabled className="p-2 border rounded d-block w-100" value={article?.about ?? ''} />
                 </div>
 
                 <div className="my-2">
