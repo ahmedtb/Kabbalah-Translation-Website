@@ -45,7 +45,7 @@ class RedirectCrawlers
                     return view('openGraph.page', [
                         'title' => $page->title,
                         'description' => $page->description,
-                        'imageUrl' => route('book_thumbnail', $book->id),
+                        'imageUrl' => $book->thumbnail ? route('book_thumbnail', $book->id) : null,
                     ]);
 
                 case (preg_match('/books.*\/chapter\/.*/', $request->path()) ? true : false):
@@ -58,7 +58,7 @@ class RedirectCrawlers
                     return view('openGraph.page', [
                         'title' => $book->getContentTableSection($chapterIndexes)['title'],
                         'description' => '',
-                        'imageUrl' => route('book_thumbnail', $book->id),
+                        'imageUrl' => $book->thumbnail ? route('book_thumbnail', $book->id) : null,
                     ]);
 
 
@@ -70,7 +70,7 @@ class RedirectCrawlers
                     return view('openGraph.page', [
                         'title' => $book->title,
                         'description' => $book->description,
-                        'imageUrl' => route('book_thumbnail', $book->id),
+                        'imageUrl' => $book->thumbnail ? route('book_thumbnail', $book->id) : null,
                     ]);
 
                 case 'articles':
@@ -83,7 +83,7 @@ class RedirectCrawlers
                     return view('openGraph.page', [
                         'title' => $article->title,
                         'description' => $article->description,
-                        'imageUrl' => route('article_thumbnail', $article->id),
+                        'imageUrl' => $article->thumbnail ? route('article_thumbnail', $article->id) : null,
                     ]);
             }
         }
