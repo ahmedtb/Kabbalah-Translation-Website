@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Rules\PageContentRule;
 use App\Filters\ArticlesFilters;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class ArticlesController extends Controller
@@ -69,7 +70,7 @@ class ArticlesController extends Controller
             'category_id' => 'sometimes|exists:categories,id',
             'activated' => 'sometimes|boolean',
             'page_content' => ['sometimes', new PageContentRule()],
-            'source_url' => 'sometimes|nullable|string|exists:articles,source_url'
+            'source_url' => ['sometimes', 'nullable', 'string', Rule::unique('articles', 'source_url')->ignore($id, 'id')]
         ]);
 
         $article = Article::where('id', $request->id)->first();
