@@ -44,6 +44,7 @@ export default function BookBrowser(props) {
     }
 
     React.useEffect(() => {
+        setpage()
         if (!book)
             setup()
         else {
@@ -76,6 +77,8 @@ export default function BookBrowser(props) {
             {
                 getpresection(book?.content_table, sectionPath) ? (
                     <Link
+                    
+
                         to={{
                             pathname: Routes.bookBrowser(id, getpresection(book?.content_table, sectionPath)?.path),
                             state: { book: book }
@@ -89,6 +92,7 @@ export default function BookBrowser(props) {
             {
                 getnextsection(book?.content_table, sectionPath) ? (
                     <Link
+                    
                         to={{
                             pathname: Routes.bookBrowser(id, getnextsection(book?.content_table, sectionPath)?.path),
                             state: { book: book }
