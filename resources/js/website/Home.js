@@ -57,9 +57,18 @@ export default function Home(props) {
                         </Carousel.Item>
                     </Carousel>
 
-                    <LoadingIndicator />
+                    <div className="mt-2 bg-light border rounded p-2">
+                        <div className='fs-5 fw-bold'>
+                            أخر مقالات....
+                        </div>
+                        <LoadingIndicator />
 
-                    <ArticlesCardsRender articles={articles} />
+                        <ArticlesCardsRender articles={articles} />
+
+                        <div className="text-center mt-2">
+                            <Link className="fs-5" to={Routes.articlesIndex()}>المزيد المقالات</Link>
+                        </div>
+                    </div>
                 </Col>
                 <Col lg={3}>
                     <div className="d-flex justify-content-around  border rounded bg-white my-2 p-3">
