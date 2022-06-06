@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Col, Container, Button } from "react-bootstrap";
 import { ApiCallHandler, truncate } from "../../commonFiles/helpers";
 import PageContentRender from "../components/PageContentRender";
+import ChangePageTitle from '../../commonFiles/ChangePageTitle';
 
 export default function ArticleShow(props) {
 
@@ -26,6 +27,8 @@ export default function ArticleShow(props) {
 
     return (
         <div >
+            <ChangePageTitle pageTitle={article?.title} />
+            
             <div className="bg-white p-2">
                 <Link to={Routes.articleEdit(article?.id)}>
                     تعديل

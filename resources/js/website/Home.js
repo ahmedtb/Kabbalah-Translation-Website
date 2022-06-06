@@ -9,6 +9,7 @@ import { Helmet } from 'react-helmet';
 import LoadingIndicator from '../commonFiles/LoadingIndicator'
 import { trackPromise } from 'react-promise-tracker'
 import CategoriesList from "./category/components/CategoriesList"
+import BooksSuggestion from "./book/components/BooksSuggestion";
 
 export default function Home(props) {
     const [categories, setcategories] = React.useState(null)
@@ -66,7 +67,7 @@ export default function Home(props) {
                         <ArticlesCardsRender articles={articles} />
 
                         <div className="text-center mt-2">
-                            <Link className="fs-5" to={Routes.articlesIndex()}>المزيد المقالات</Link>
+                            <Link className="fs-5" to={Routes.articlesIndex()}>المزيد من المقالات</Link>
                         </div>
                     </div>
                 </Col>
@@ -79,7 +80,7 @@ export default function Home(props) {
                                 فيسبوك
                             </div>
                         </a>
-                        <a href='https://www.youtube.com/channel/UCJ3WaAE9Qb_RWIs9x6dKWNQ' target={'_blank'}>
+                        <a className="text-danger" href='https://www.youtube.com/channel/UCJ3WaAE9Qb_RWIs9x6dKWNQ' target={'_blank'}>
                             <AiFillYoutube size={50} />
                             <div>
                                 يوتيوب
@@ -91,6 +92,12 @@ export default function Home(props) {
 
                         <div className="fw-bold mb-2">تصنيفات المقالات</div>
                         <CategoriesList />
+                    </div>
+
+                    <div className='border rounded p-2 my-2 bg-white'>
+                        <Link to={Routes.booksIndex()}>كتب</Link>
+
+                        <BooksSuggestion />
                     </div>
                 </Col>
             </Row>

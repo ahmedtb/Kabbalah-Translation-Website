@@ -26,7 +26,7 @@ export default function Website() {
 
     <BrowserRouter dir="rtl">
       <Provider store={store}>
-        
+
         <TopMenue />
 
         <Container>
@@ -36,13 +36,13 @@ export default function Website() {
             <Route exact={true} title={'BookShow'} path={Routes.bookShow()} component={BookShow} />
             <Route exact={true} path={Routes.bookBrowser()} component={BookBrowser} />
             <Route exact={true} path={Routes.bookChapterShow()} component={BookChapter} />
-            
+
             {/* <Route exact={true} path={Routes.bookBrowser2()} component={BookBrowser} /> */}
             {/* <Route exact={true} path={Routes.bookBrowser1()} component={BookBrowser} /> */}
 
             <Route exact={true} title={'ArticlesIndex'} path={Routes.articlesIndex()} component={ArticlesIndex} />
             <Route exact={true} title={'ArticleShow'} path={Routes.articleShow()} component={ArticleShow} />
-            
+
             <Route exact={true} title={'CategoriesIndex'} path={Routes.categoriesIndex()} component={CategoriesIndex} />
             {/* <Route exact={true} title={'CategoryShow'} path={Routes.categoryShow()} component={CategoryShow} /> */}
 
@@ -51,7 +51,7 @@ export default function Website() {
         </Container>
 
         <Footer />
-        
+
       </Provider>
 
     </BrowserRouter>
