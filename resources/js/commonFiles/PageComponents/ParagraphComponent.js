@@ -137,7 +137,7 @@ export function ParagraphComponentCreator(props) {
                 style={style}
                 contentEditable
                 onInput={e => {
-                    console.log('onInput innerHTML', e.target.innerHTML);
+                    // console.log('onInput innerHTML', e.target.innerHTML);
                     setoriginal(e.target.innerHTML)
                     dispatch(paragraphObject(e.target.innerHTML, translated, style))
                 }}
@@ -306,7 +306,7 @@ export function ParagraphComponentEditor(props) {
 
                 contentEditable
                 onInput={e => {
-                    console.log('onInput innerHTML', e.target.innerHTML);
+                    // console.log('onInput innerHTML', e.target.innerHTML);
                     setoriginal(e.target.innerHTML)
                     setoriginalScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(e.target.innerHTML, translated, style))
@@ -325,7 +325,7 @@ export function ParagraphComponentEditor(props) {
 
                 contentEditable
                 onInput={e => {
-                    console.log('onInput innerHTML', e.target.innerHTML);
+                    // console.log('onInput innerHTML', e.target.innerHTML);
                     settranslated(e.target.innerHTML)
                     settranslatedScrollHeight(e.target.scrollHeight)
                     dispatch(paragraphObject(original, e.target.innerHTML, style))

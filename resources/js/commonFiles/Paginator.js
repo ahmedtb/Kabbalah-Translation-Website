@@ -33,7 +33,7 @@ export default function Paginator(props) {
     }, [update])
 
     return (
-        <Pagination>
+        <Pagination size="sm">
             <LoadingIndicator />
 
             {

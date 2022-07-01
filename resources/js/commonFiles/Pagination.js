@@ -6,7 +6,7 @@ export default function Pagination1(props) {
     const links = props.links
     // console.log('links',links)
     return (
-            <Pagination>
+            <Pagination size="sm">
                 {
                     // if only one page don't show links
                     links?.length != 3 ?
