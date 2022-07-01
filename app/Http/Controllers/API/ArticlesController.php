@@ -15,7 +15,7 @@ class ArticlesController extends Controller
         return Article::activated()
             ->filter($filters)
             ->latest()
-            ->paginate($request->input('page_size') ?? 5)
+            ->paginate($request->input('page_size') ?? 5)->onEachSide($request->input('onEachSide') ?? 0)
             ->appends(request()->except('page'));
     }
 
