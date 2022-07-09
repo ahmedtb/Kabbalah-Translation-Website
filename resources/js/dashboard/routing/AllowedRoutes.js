@@ -38,10 +38,13 @@ function AllowedRoutes(props) {
         )
     }
     React.useEffect(() => {
-        if (props.admin == null) {
+
+        if (window.admin) {
+            props.refreshAdmin(window.admin)
+        } else if (props.admin == null) {
             isLoggedIn()
         }
-        console.log('props', props)
+        // console.log('props', props)
     }, [props.admin])
 
 
