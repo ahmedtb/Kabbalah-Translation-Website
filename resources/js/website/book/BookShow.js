@@ -30,60 +30,60 @@ export default function BookShow(props) {
         const chapter = props.chapter
         const path = props.path
 
-        return <ListGroup as="ol" numbered>
-            <Link to={Routes.bookChapterShow(id, path)}>{chapter?.title}</Link>
-            {
-                chapter?.sections?.map((element, index) => {
-                    if (element.type == 'section')
-                        return <Section path={`${path}-${index}`} key={index} section={element} />
+        return <div numbered className='py-1 m-0'>
+            <Link to={Routes.bookChapterShow(id, path)} className='fw-bold'>{chapter?.title}</Link>
+            <div className='pe-2'>
 
-                    else if (element.type == 'chapter')
-                        return <Chapter path={`${path}-${index}`} key={index} chapter={element} />
-                })
-            }
-        </ListGroup>
+                {
+                    chapter?.sections?.map((element, index) => {
+                        if (element.type == 'section')
+                            return <Section path={`${path}-${index}`} key={index} section={element} />
+
+                        else if (element.type == 'chapter')
+                            return <Chapter path={`${path}-${index}`} key={index} chapter={element} />
+                    })
+                }
+            </div>
+        </div>
     }
     function Section(props) {
         const section = props.section
         const path = props.path
         console.log('section path', path)
-        return <ListGroup.Item as="li">
+        return <div>
             <Link to={Routes.bookBrowser(id, path)}>
                 {section.title}
             </Link>
-        </ListGroup.Item>
+        </div>
     }
 
 
-    return <Col xs={12}>
+    return <div className='p-1 bg-white'>
         <LoadingIndicator />
         <Helmet>
             <title>{book?.title}</title>
         </Helmet>
         <h1 className='text-center'>{book?.title}</h1>
-        <Row className='justify-content-around my-2'>
-            <Col xs={2}>
+        <div className='row justify-content-around my-2'>
+            <div className='col-lg-2'>
                 <img src={book?.hasThumbnail ? Api.bookThumbnail(id) : ''} className='maxWidth100' />
-            </Col>
+            </div>
 
-            <div className='col-9'>{book?.description} </div>
-        </Row>
+            <div className='col-lg-9'>{book?.description} </div>
+        </div>
         {/* <div>{book?.activated ? 'عرض الكتاب مفعل' : 'عرض الكتاب غير مفعل'}</div> */}
         <h3 className='text-center'>جدول المحتوى</h3>
 
-        <Col xs={8} className='mx-auto'>
+        <div className='col-10 mx-auto'>
+            {
+                book?.content_table.map((element, index) => {
+                    if (element.type == 'chapter')
+                        return <Chapter path={`${index}`} chapter={element} key={index} />
+                    else
+                        return <Section path={`${index}`} section={element} key={index} />
 
-            <ListGroup as="ol" numbered>
-                {
-                    book?.content_table.map((element, index) => {
-                        if (element.type == 'chapter')
-                            return <Chapter path={`${index}`} chapter={element} key={index} />
-                        else
-                            return <Section path={`${index}`} section={element} key={index} />
-
-                    })
-                }
-            </ListGroup>
-        </Col>
-    </Col >
+                })
+            }
+        </div>
+    </div >
 }
