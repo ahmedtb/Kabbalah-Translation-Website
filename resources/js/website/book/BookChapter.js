@@ -29,27 +29,36 @@ export default function BookChapter(props) {
             console.log('book chapter getchapter', getchapter(book?.content_table, chapterPath))
         }
     }, [book, chapterPath])
+
     function Chapter(props) {
         const chapter = props.chapter
         const path = props.path
 
-        return <ListGroup as="li" >
-            <div>
-                <Link to={Routes.bookChapterShow(id, path)}>
-                    {chapter?.title}
-                </Link>
+        return <div numbered className='py-1 m-0'>
+            <Link to={Routes.bookChapterShow(id, path)} className='fw-bold'>{chapter?.title}</Link>
+            <div className='pe-2'>
+
+                {
+                    chapter?.sections?.map((element, index) => {
+                        if (element.type == 'section')
+                            return <Section path={`${path}-${index}`} key={index} section={element} />
+
+                        else if (element.type == 'chapter')
+                            return <Chapter path={`${path}-${index}`} key={index} chapter={element} />
+                    })
+                }
             </div>
-        </ListGroup>
+        </div>
     }
     function Section(props) {
         const section = props.section
         const path = props.path
-
-        return <ListGroup.Item as="li">
+        console.log('section path', path)
+        return <div>
             <Link to={Routes.bookBrowser(id, path)}>
                 {section.title}
             </Link>
-        </ListGroup.Item>
+        </div>
     }
 
 
@@ -60,7 +69,7 @@ export default function BookChapter(props) {
         </Helmet>
         <ChapterPathRender book={book} path={chapterPath} />
 
-        <h1 className='text-center'>{getchapter(book?.content_table, chapterPath)?.title}</h1>
+        <h3 className='text-center'>{getchapter(book?.content_table, chapterPath)?.title}</h3>
         <ListGroup as="ol" numbered>
             {
                 getchapter(book?.content_table, chapterPath)?.sections.map((element, index) => {
